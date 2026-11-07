@@ -17,7 +17,8 @@ L1 learning (multiplicative weights from DELAYED labels). The scores of every de
 until its ground-truth label arrives (the runner delivers it >= 4 h to 72 h later, never earlier), then
     w_i <- w_i * exp(-eta * |score_i - is_attack|),  renormalised to sum 1, every w_i >= min_weight.
 A specialist that raised the alarm on an attack, or stayed quiet on an honest payout, keeps its weight; a
-specialist that missed an attack or cried wolf loses some. `learn_weights=False` gives the frozen swarm
+specialist that missed an attack or cried wolf loses some. With params.l1_abstain == 1 (a gene of L2) the loss
+is abstention-aware instead: see `Swarm.abstain_loss`. `learn_weights=False` gives the frozen swarm
 (baseline d): same specialists, same initial weights, never updated.
 """
 from __future__ import annotations
@@ -98,13 +99,25 @@ class Swarm:
         return verdict
 
     # --- L1 ---
+    @staticmethod
+    def abstain_loss(score: float, is_attack: bool) -> float:
+        """Abstention-aware loss (params.l1_abstain == 1): a specialist that stayed below ACTIVE_SCORE on an
+        attack abstained (it sees a different lens), so it is not blamed; one that spoke up pays 1 - score.
+        On an honest payout every specialist pays its own score (crying wolf)."""
+        if not is_attack:
+            return score
+        return 1.0 - score if score >= ACTIVE_SCORE else 0.0
+
     def learn(self, event: Event, is_attack: bool) -> None:
         scores = self._pending.pop(event.id, None)
         if scores is None or not self.learn_weights:
             return
         y = 1.0 if is_attack else 0.0
         eta = self.params.eta
-        updated = {n: self.weights[n] * math.exp(-eta * abs(scores[n] - y)) for n in NAMES}
+        if self.params.l1_abstain:
+            updated = {n: self.weights[n] * math.exp(-eta * self.abstain_loss(scores[n], is_attack)) for n in NAMES}
+        else:
+            updated = {n: self.weights[n] * math.exp(-eta * abs(scores[n] - y)) for n in NAMES}
         self.weights = normalize_with_floor(updated, self.params.min_weight)
 
 

@@ -1,0 +1,4226 @@
+[
+  {
+    "generation": 0,
+    "champion_id": "default",
+    "champion_gate": {
+      "objective": 19.956847,
+      "leakage_pct": 16.371209,
+      "honest_block_rate": 6.262375,
+      "honest_unpaid_rate": 0.454451
+    },
+    "challenger": {
+      "id": "g0-12",
+      "params": {
+        "vel_usd_lo": 1000.0,
+        "vel_usd_width": 1000.0,
+        "vel_n_lo": 7.920965558581697,
+        "vel_n_width": 4.0,
+        "graph_dens_lo": 0.4,
+        "graph_dens_width": 0.2,
+        "graph_min_workers": 4,
+        "graph_size_width": 2.0,
+        "graph_share_min": 3,
+        "drift_min_history": 4,
+        "drift_ratio_lo": 3.0,
+        "drift_ratio_width": 3.0,
+        "drift_rate_lo": 3.5,
+        "drift_rate_width": 2.0,
+        "policy_cap_base_usd": 150.0,
+        "policy_cap_per_day_usd": 8.0,
+        "policy_cap_max_usd": 500.0,
+        "policy_window_mult": 3.0,
+        "w0_velocity": 1.0,
+        "w0_graph": 1.0,
+        "w0_drift": 1.0,
+        "w0_policy": 1.0,
+        "step_up_threshold": 0.3,
+        "hold_threshold": 0.5808304492084191,
+        "eta": 0.02,
+        "min_weight": 0.07742422211206051,
+        "l1_abstain": 0
+      },
+      "objective_a": 17.049554,
+      "objective_b": 19.908794,
+      "gate": {
+        "objective": 19.908794,
+        "leakage_pct": 16.354269,
+        "honest_block_rate": 6.188833,
+        "honest_unpaid_rate": 0.460108
+      }
+    },
+    "promoted": false,
+    "rolled_back": false,
+    "rollback": null,
+    "champion_id_after": "default",
+    "attackers_scored_against": "default",
+    "strongest_attacker": {
+      "ring": {
+        "family": "ring",
+        "params": {
+          "ring_size": 30,
+          "n_requesters": 2,
+          "rate_per_day": 0.9378456646934756,
+          "amount_median": 98.00561136683804,
+          "amount_sigma": 0.42095506304044117,
+          "account_age_days": 63.9950841381536,
+          "start_day": 0.0
+        },
+        "leaked_usd": 11174.03,
+        "attack_usd": 86084.85,
+        "leakage_pct": 12.9803
+      },
+      "structuring": {
+        "family": "structuring",
+        "params": {
+          "n_accounts": 4,
+          "eps": 11.555825972108716,
+          "k": 6,
+          "burst_window_hours": 8.15683149134486,
+          "n_bursts": 2,
+          "account_age_days": 16.84698648657948,
+          "start_day": 3.661618972217541
+        },
+        "leaked_usd": 5864.93,
+        "attack_usd": 46895.9,
+        "leakage_pct": 12.5063
+      }
+    },
+    "strongest_attacker_family": "ring",
+    "attacker_pools": {
+      "ring": [
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 2,
+            "rate_per_day": 0.9378456646934756,
+            "amount_median": 98.00561136683804,
+            "amount_sigma": 0.42095506304044117,
+            "account_age_days": 63.9950841381536,
+            "start_day": 0.0
+          },
+          "leaked_usd": 11174.03,
+          "attack_usd": 86084.85,
+          "leakage_pct": 12.9803
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 1,
+            "rate_per_day": 0.7829253503923046,
+            "amount_median": 84.11602856139893,
+            "amount_sigma": 0.358040094086191,
+            "account_age_days": 110.74022977424387,
+            "start_day": 1.6346935043680482
+          },
+          "leaked_usd": 5608.24,
+          "attack_usd": 51459.99,
+          "leakage_pct": 10.8983
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 21,
+            "n_requesters": 4,
+            "rate_per_day": 1.1078403517428865,
+            "amount_median": 36.60004842489498,
+            "amount_sigma": 0.6497187606336525,
+            "account_age_days": 436.56339673310913,
+            "start_day": 1.9026340771909185
+          },
+          "leaked_usd": 5082.4,
+          "attack_usd": 24860.54,
+          "leakage_pct": 20.4436
+        }
+      ],
+      "structuring": [
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 11.555825972108716,
+            "k": 6,
+            "burst_window_hours": 8.15683149134486,
+            "n_bursts": 2,
+            "account_age_days": 16.84698648657948,
+            "start_day": 3.661618972217541
+          },
+          "leaked_usd": 5864.93,
+          "attack_usd": 46895.9,
+          "leakage_pct": 12.5063
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 21.929406332369638,
+            "k": 5,
+            "burst_window_hours": 8.129327246631746,
+            "n_bursts": 1,
+            "account_age_days": 14.028484553578622,
+            "start_day": 3.417047912186234
+          },
+          "leaked_usd": 3343.95,
+          "attack_usd": 19115.9,
+          "leakage_pct": 17.493
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 2,
+            "eps": 30.040356927023282,
+            "k": 5,
+            "burst_window_hours": 1.0,
+            "n_bursts": 2,
+            "account_age_days": 28.447354690566687,
+            "start_day": 6.0
+          },
+          "leaked_usd": 2822.11,
+          "attack_usd": 18791.47,
+          "leakage_pct": 15.018
+        }
+      ]
+    },
+    "champion_weights": {
+      "velocity": 0.073789,
+      "graph": 0.765921,
+      "drift": 0.096077,
+      "policy": 0.064213
+    },
+    "fitness_best": 17.049554,
+    "fitness_mean": 30.399979
+  },
+  {
+    "generation": 1,
+    "champion_id": "default",
+    "champion_gate": {
+      "objective": 20.053097,
+      "leakage_pct": 16.464576,
+      "honest_block_rate": 6.280385,
+      "honest_unpaid_rate": 0.448329
+    },
+    "challenger": {
+      "id": "g0-1",
+      "params": {
+        "vel_usd_lo": 1000.0,
+        "vel_usd_width": 1000.0,
+        "vel_n_lo": 7.0,
+        "vel_n_width": 4.0,
+        "graph_dens_lo": 0.4,
+        "graph_dens_width": 0.2,
+        "graph_min_workers": 4,
+        "graph_size_width": 2.0,
+        "graph_share_min": 3,
+        "drift_min_history": 4,
+        "drift_ratio_lo": 3.0,
+        "drift_ratio_width": 3.0,
+        "drift_rate_lo": 3.5,
+        "drift_rate_width": 2.0,
+        "policy_cap_base_usd": 150.0,
+        "policy_cap_per_day_usd": 8.0,
+        "policy_cap_max_usd": 500.0,
+        "policy_window_mult": 3.0,
+        "w0_velocity": 1.0,
+        "w0_graph": 1.0,
+        "w0_drift": 1.0,
+        "w0_policy": 1.0,
+        "step_up_threshold": 0.3,
+        "hold_threshold": 0.6,
+        "eta": 0.02,
+        "min_weight": 0.05,
+        "l1_abstain": 1
+      },
+      "objective_a": 17.765388,
+      "objective_b": 20.062463,
+      "gate": {
+        "objective": 20.062463,
+        "leakage_pct": 16.470159,
+        "honest_block_rate": 6.284169,
+        "honest_unpaid_rate": 0.45022
+      }
+    },
+    "promoted": false,
+    "rolled_back": false,
+    "rollback": null,
+    "champion_id_after": "default",
+    "attackers_scored_against": "default",
+    "strongest_attacker": {
+      "ring": {
+        "family": "ring",
+        "params": {
+          "ring_size": 30,
+          "n_requesters": 1,
+          "rate_per_day": 1.2726009677622505,
+          "amount_median": 102.08183060220122,
+          "amount_sigma": 0.3,
+          "account_age_days": 60.0,
+          "start_day": 0.015169131132139763
+        },
+        "leaked_usd": 10829.48,
+        "attack_usd": 113774.86,
+        "leakage_pct": 9.5183
+      },
+      "structuring": {
+        "family": "structuring",
+        "params": {
+          "n_accounts": 4,
+          "eps": 11.555825972108716,
+          "k": 6,
+          "burst_window_hours": 8.15683149134486,
+          "n_bursts": 2,
+          "account_age_days": 16.84698648657948,
+          "start_day": 3.661618972217541
+        },
+        "leaked_usd": 4394.6,
+        "attack_usd": 46894.61,
+        "leakage_pct": 9.3712
+      }
+    },
+    "strongest_attacker_family": "ring",
+    "attacker_pools": {
+      "ring": [
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 1,
+            "rate_per_day": 1.2726009677622505,
+            "amount_median": 102.08183060220122,
+            "amount_sigma": 0.3,
+            "account_age_days": 60.0,
+            "start_day": 0.015169131132139763
+          },
+          "leaked_usd": 10829.48,
+          "attack_usd": 113774.86,
+          "leakage_pct": 9.5183
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 2,
+            "rate_per_day": 0.9378456646934756,
+            "amount_median": 98.00561136683804,
+            "amount_sigma": 0.42095506304044117,
+            "account_age_days": 63.9950841381536,
+            "start_day": 0.0
+          },
+          "leaked_usd": 9913.41,
+          "attack_usd": 82648.16,
+          "leakage_pct": 11.9947
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 25,
+            "n_requesters": 3,
+            "rate_per_day": 0.46385206834013637,
+            "amount_median": 117.03783120368963,
+            "amount_sigma": 0.4824770456522065,
+            "account_age_days": 241.457048861878,
+            "start_day": 1.777249704425704
+          },
+          "leaked_usd": 8350.8,
+          "attack_usd": 39632.66,
+          "leakage_pct": 21.0705
+        }
+      ],
+      "structuring": [
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 11.555825972108716,
+            "k": 6,
+            "burst_window_hours": 8.15683149134486,
+            "n_bursts": 2,
+            "account_age_days": 16.84698648657948,
+            "start_day": 3.661618972217541
+          },
+          "leaked_usd": 4394.6,
+          "attack_usd": 46894.61,
+          "leakage_pct": 9.3712
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 2,
+            "eps": 30.040356927023282,
+            "k": 5,
+            "burst_window_hours": 1.0,
+            "n_bursts": 2,
+            "account_age_days": 28.447354690566687,
+            "start_day": 6.0
+          },
+          "leaked_usd": 3292.37,
+          "attack_usd": 18802.51,
+          "leakage_pct": 17.5103
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 3.30066785382842,
+            "k": 6,
+            "burst_window_hours": 6.358295827524089,
+            "n_bursts": 2,
+            "account_age_days": 10.827717986380083,
+            "start_day": 6.0
+          },
+          "leaked_usd": 2980.27,
+          "attack_usd": 47687.04,
+          "leakage_pct": 6.2496
+        }
+      ]
+    },
+    "champion_weights": {
+      "velocity": 0.240352,
+      "graph": 0.286867,
+      "drift": 0.227876,
+      "policy": 0.244904
+    },
+    "fitness_best": 17.765388,
+    "fitness_mean": 22.299646
+  },
+  {
+    "generation": 2,
+    "champion_id": "default",
+    "champion_gate": {
+      "objective": 19.722768,
+      "leakage_pct": 16.089566,
+      "honest_block_rate": 6.325022,
+      "honest_unpaid_rate": 0.470691
+    },
+    "challenger": {
+      "id": "g2-11",
+      "params": {
+        "vel_usd_lo": 1000.0,
+        "vel_usd_width": 950.6973488880046,
+        "vel_n_lo": 7.0,
+        "vel_n_width": 3.099436508824762,
+        "graph_dens_lo": 0.4,
+        "graph_dens_width": 0.2,
+        "graph_min_workers": 4,
+        "graph_size_width": 2.0,
+        "graph_share_min": 3,
+        "drift_min_history": 4,
+        "drift_ratio_lo": 3.0,
+        "drift_ratio_width": 5.045989714936338,
+        "drift_rate_lo": 2.9711629347369666,
+        "drift_rate_width": 1.1969989296387373,
+        "policy_cap_base_usd": 94.10322941486113,
+        "policy_cap_per_day_usd": 8.0,
+        "policy_cap_max_usd": 451.0215031576875,
+        "policy_window_mult": 3.0,
+        "w0_velocity": 1.0,
+        "w0_graph": 1.0,
+        "w0_drift": 1.0,
+        "w0_policy": 0.5766859079598705,
+        "step_up_threshold": 0.5,
+        "hold_threshold": 0.55,
+        "eta": 0.005,
+        "min_weight": 0.05071273613977411,
+        "l1_abstain": 0
+      },
+      "objective_a": 16.855539,
+      "objective_b": 19.890569,
+      "gate": {
+        "objective": 19.890569,
+        "leakage_pct": 16.941664,
+        "honest_block_rate": 4.937525,
+        "honest_unpaid_rate": 0.480142
+      }
+    },
+    "promoted": false,
+    "rolled_back": false,
+    "rollback": null,
+    "champion_id_after": "default",
+    "attackers_scored_against": "default",
+    "strongest_attacker": {
+      "ring": {
+        "family": "ring",
+        "params": {
+          "ring_size": 30,
+          "n_requesters": 1,
+          "rate_per_day": 1.2726009677622505,
+          "amount_median": 102.08183060220122,
+          "amount_sigma": 0.3,
+          "account_age_days": 60.0,
+          "start_day": 0.015169131132139763
+        },
+        "leaked_usd": 11505.29,
+        "attack_usd": 108262.96,
+        "leakage_pct": 10.6272
+      },
+      "structuring": {
+        "family": "structuring",
+        "params": {
+          "n_accounts": 4,
+          "eps": 11.555825972108716,
+          "k": 6,
+          "burst_window_hours": 8.15683149134486,
+          "n_bursts": 2,
+          "account_age_days": 16.84698648657948,
+          "start_day": 3.661618972217541
+        },
+        "leaked_usd": 5373.94,
+        "attack_usd": 46885.21,
+        "leakage_pct": 11.4619
+      }
+    },
+    "strongest_attacker_family": "ring",
+    "attacker_pools": {
+      "ring": [
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 1,
+            "rate_per_day": 1.2726009677622505,
+            "amount_median": 102.08183060220122,
+            "amount_sigma": 0.3,
+            "account_age_days": 60.0,
+            "start_day": 0.015169131132139763
+          },
+          "leaked_usd": 11505.29,
+          "attack_usd": 108262.96,
+          "leakage_pct": 10.6272
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 24,
+            "n_requesters": 4,
+            "rate_per_day": 0.5264910702810645,
+            "amount_median": 120.0,
+            "amount_sigma": 0.5661753912114161,
+            "account_age_days": 244.5392999078149,
+            "start_day": 2.0332255772536927
+          },
+          "leaked_usd": 11208.15,
+          "attack_usd": 45232.52,
+          "leakage_pct": 24.779
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 2,
+            "rate_per_day": 1.1839442954910933,
+            "amount_median": 110.53379390038356,
+            "amount_sigma": 0.3,
+            "account_age_days": 106.10992601129757,
+            "start_day": 1.397367289938366
+          },
+          "leaked_usd": 11129.59,
+          "attack_usd": 102585.16,
+          "leakage_pct": 10.8491
+        }
+      ],
+      "structuring": [
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 11.555825972108716,
+            "k": 6,
+            "burst_window_hours": 8.15683149134486,
+            "n_bursts": 2,
+            "account_age_days": 16.84698648657948,
+            "start_day": 3.661618972217541
+          },
+          "leaked_usd": 5373.94,
+          "attack_usd": 46885.21,
+          "leakage_pct": 11.4619
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 3.30066785382842,
+            "k": 6,
+            "burst_window_hours": 6.358295827524089,
+            "n_bursts": 2,
+            "account_age_days": 10.827717986380083,
+            "start_day": 6.0
+          },
+          "leaked_usd": 4474.07,
+          "attack_usd": 47677.68,
+          "leakage_pct": 9.384
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 17.33542869424824,
+            "k": 6,
+            "burst_window_hours": 5.1694019475289,
+            "n_bursts": 1,
+            "account_age_days": 2.752125418950447,
+            "start_day": 6.0
+          },
+          "leaked_usd": 2414.02,
+          "attack_usd": 23160.55,
+          "leakage_pct": 10.423
+        }
+      ]
+    },
+    "champion_weights": {
+      "velocity": 0.050213,
+      "graph": 0.849361,
+      "drift": 0.050213,
+      "policy": 0.050213
+    },
+    "fitness_best": 16.855539,
+    "fitness_mean": 19.930589
+  },
+  {
+    "generation": 3,
+    "champion_id": "default",
+    "champion_gate": {
+      "objective": 19.234276,
+      "leakage_pct": 15.591842,
+      "honest_block_rate": 6.342811,
+      "honest_unpaid_rate": 0.471029
+    },
+    "challenger": {
+      "id": "g3-21",
+      "params": {
+        "vel_usd_lo": 1000.0,
+        "vel_usd_width": 1915.2429041454734,
+        "vel_n_lo": 7.0,
+        "vel_n_width": 4.208287778065746,
+        "graph_dens_lo": 0.4,
+        "graph_dens_width": 0.2,
+        "graph_min_workers": 4,
+        "graph_size_width": 2.710306073103985,
+        "graph_share_min": 3,
+        "drift_min_history": 4,
+        "drift_ratio_lo": 3.8130808000503773,
+        "drift_ratio_width": 5.85949239891467,
+        "drift_rate_lo": 3.6187574632707795,
+        "drift_rate_width": 2.679445126112961,
+        "policy_cap_base_usd": 150.0,
+        "policy_cap_per_day_usd": 1.2854956754502833,
+        "policy_cap_max_usd": 509.02103395607514,
+        "policy_window_mult": 3.0,
+        "w0_velocity": 1.0,
+        "w0_graph": 0.9106667498105456,
+        "w0_drift": 0.671466842991433,
+        "w0_policy": 0.3955550317242497,
+        "step_up_threshold": 0.3,
+        "hold_threshold": 0.6,
+        "eta": 0.010453002779761633,
+        "min_weight": 0.042846510223036066,
+        "l1_abstain": 0
+      },
+      "objective_a": 15.777276,
+      "objective_b": 18.944594,
+      "gate": {
+        "objective": 18.944594,
+        "leakage_pct": 15.443091,
+        "honest_block_rate": 6.129051,
+        "honest_unpaid_rate": 0.436979
+      }
+    },
+    "promoted": false,
+    "rolled_back": false,
+    "rollback": null,
+    "champion_id_after": "default",
+    "attackers_scored_against": "default",
+    "strongest_attacker": {
+      "ring": {
+        "family": "ring",
+        "params": {
+          "ring_size": 29,
+          "n_requesters": 1,
+          "rate_per_day": 1.4954826470201206,
+          "amount_median": 120.0,
+          "amount_sigma": 0.3725432976602338,
+          "account_age_days": 60.0,
+          "start_day": 1.5221428693758479
+        },
+        "leaked_usd": 13111.82,
+        "attack_usd": 135619.09,
+        "leakage_pct": 9.6681
+      },
+      "structuring": {
+        "family": "structuring",
+        "params": {
+          "n_accounts": 3,
+          "eps": 7.834897612072475,
+          "k": 6,
+          "burst_window_hours": 11.276644856274194,
+          "n_bursts": 3,
+          "account_age_days": 15.926403875817186,
+          "start_day": 4.953465165145102
+        },
+        "leaked_usd": 5905.0,
+        "attack_usd": 53146.34,
+        "leakage_pct": 11.1108
+      }
+    },
+    "strongest_attacker_family": "ring",
+    "attacker_pools": {
+      "ring": [
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 29,
+            "n_requesters": 1,
+            "rate_per_day": 1.4954826470201206,
+            "amount_median": 120.0,
+            "amount_sigma": 0.3725432976602338,
+            "account_age_days": 60.0,
+            "start_day": 1.5221428693758479
+          },
+          "leaked_usd": 13111.82,
+          "attack_usd": 135619.09,
+          "leakage_pct": 9.6681
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 2,
+            "rate_per_day": 1.1839442954910933,
+            "amount_median": 110.53379390038356,
+            "amount_sigma": 0.3,
+            "account_age_days": 106.10992601129757,
+            "start_day": 1.397367289938366
+          },
+          "leaked_usd": 12022.9,
+          "attack_usd": 102248.91,
+          "leakage_pct": 11.7585
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 1,
+            "rate_per_day": 1.308254119244549,
+            "amount_median": 116.54536904442662,
+            "amount_sigma": 0.3,
+            "account_age_days": 60.0,
+            "start_day": 0.6350961152780069
+          },
+          "leaked_usd": 11569.4,
+          "attack_usd": 128138.02,
+          "leakage_pct": 9.0289
+        }
+      ],
+      "structuring": [
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 3,
+            "eps": 7.834897612072475,
+            "k": 6,
+            "burst_window_hours": 11.276644856274194,
+            "n_bursts": 3,
+            "account_age_days": 15.926403875817186,
+            "start_day": 4.953465165145102
+          },
+          "leaked_usd": 5905.0,
+          "attack_usd": 53146.34,
+          "leakage_pct": 11.1108
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 11.555825972108716,
+            "k": 6,
+            "burst_window_hours": 8.15683149134486,
+            "n_bursts": 2,
+            "account_age_days": 16.84698648657948,
+            "start_day": 3.661618972217541
+          },
+          "leaked_usd": 4883.67,
+          "attack_usd": 46885.23,
+          "leakage_pct": 10.4162
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 3,
+            "eps": 1.0,
+            "k": 6,
+            "burst_window_hours": 1.00736910078545,
+            "n_bursts": 1,
+            "account_age_days": 10.219879146605154,
+            "start_day": 5.5188480009368766
+          },
+          "leaked_usd": 4484.47,
+          "attack_usd": 17958.2,
+          "leakage_pct": 24.9717
+        }
+      ]
+    },
+    "champion_weights": {
+      "velocity": 0.05,
+      "graph": 0.85,
+      "drift": 0.05,
+      "policy": 0.05
+    },
+    "fitness_best": 15.777276,
+    "fitness_mean": 18.103747
+  },
+  {
+    "generation": 4,
+    "champion_id": "default",
+    "champion_gate": {
+      "objective": 18.234949,
+      "leakage_pct": 14.559769,
+      "honest_block_rate": 6.402779,
+      "honest_unpaid_rate": 0.473791
+    },
+    "challenger": {
+      "id": "g4-0",
+      "params": {
+        "vel_usd_lo": 1128.6883329442917,
+        "vel_usd_width": 2000.0,
+        "vel_n_lo": 7.764593809360377,
+        "vel_n_width": 3.099436508824762,
+        "graph_dens_lo": 0.4,
+        "graph_dens_width": 0.2,
+        "graph_min_workers": 4,
+        "graph_size_width": 2.0,
+        "graph_share_min": 3,
+        "drift_min_history": 4,
+        "drift_ratio_lo": 3.8130808000503773,
+        "drift_ratio_width": 4.637666878886606,
+        "drift_rate_lo": 3.5,
+        "drift_rate_width": 1.1969989296387373,
+        "policy_cap_base_usd": 94.10322941486113,
+        "policy_cap_per_day_usd": 6.329692613220754,
+        "policy_cap_max_usd": 509.02103395607514,
+        "policy_window_mult": 3.0,
+        "w0_velocity": 1.0,
+        "w0_graph": 1.0,
+        "w0_drift": 0.9149574726127427,
+        "w0_policy": 0.5766859079598705,
+        "step_up_threshold": 0.5,
+        "hold_threshold": 0.55,
+        "eta": 0.005,
+        "min_weight": 0.05,
+        "l1_abstain": 0
+      },
+      "objective_a": 14.461772,
+      "objective_b": 17.075476,
+      "gate": {
+        "objective": 17.075476,
+        "leakage_pct": 14.902835,
+        "honest_block_rate": 3.661967,
+        "honest_unpaid_rate": 0.341658
+      }
+    },
+    "promoted": true,
+    "rolled_back": false,
+    "rollback": null,
+    "champion_id_after": "g4-0",
+    "attackers_scored_against": "default",
+    "strongest_attacker": {
+      "ring": {
+        "family": "ring",
+        "params": {
+          "ring_size": 29,
+          "n_requesters": 1,
+          "rate_per_day": 1.4907710803638143,
+          "amount_median": 120.0,
+          "amount_sigma": 0.4045450682741739,
+          "account_age_days": 60.0,
+          "start_day": 0.5318357592025134
+        },
+        "leaked_usd": 20084.18,
+        "attack_usd": 157848.6,
+        "leakage_pct": 12.7237
+      },
+      "structuring": {
+        "family": "structuring",
+        "params": {
+          "n_accounts": 4,
+          "eps": 23.5302406361812,
+          "k": 6,
+          "burst_window_hours": 7.114730365395382,
+          "n_bursts": 2,
+          "account_age_days": 30.016153483849845,
+          "start_day": 0.327121500959227
+        },
+        "leaked_usd": 6194.09,
+        "attack_usd": 45742.99,
+        "leakage_pct": 13.5411
+      }
+    },
+    "strongest_attacker_family": "ring",
+    "attacker_pools": {
+      "ring": [
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 29,
+            "n_requesters": 1,
+            "rate_per_day": 1.4907710803638143,
+            "amount_median": 120.0,
+            "amount_sigma": 0.4045450682741739,
+            "account_age_days": 60.0,
+            "start_day": 0.5318357592025134
+          },
+          "leaked_usd": 20084.18,
+          "attack_usd": 157848.6,
+          "leakage_pct": 12.7237
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 1,
+            "rate_per_day": 1.308254119244549,
+            "amount_median": 116.54536904442662,
+            "amount_sigma": 0.3,
+            "account_age_days": 60.0,
+            "start_day": 0.6350961152780069
+          },
+          "leaked_usd": 16733.99,
+          "attack_usd": 134302.56,
+          "leakage_pct": 12.4599
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 29,
+            "n_requesters": 1,
+            "rate_per_day": 1.4954826470201206,
+            "amount_median": 120.0,
+            "amount_sigma": 0.3725432976602338,
+            "account_age_days": 60.0,
+            "start_day": 1.5221428693758479
+          },
+          "leaked_usd": 14634.25,
+          "attack_usd": 139054.06,
+          "leakage_pct": 10.5241
+        }
+      ],
+      "structuring": [
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 23.5302406361812,
+            "k": 6,
+            "burst_window_hours": 7.114730365395382,
+            "n_bursts": 2,
+            "account_age_days": 30.016153483849845,
+            "start_day": 0.327121500959227
+          },
+          "leaked_usd": 6194.09,
+          "attack_usd": 45742.99,
+          "leakage_pct": 13.5411
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 3,
+            "eps": 7.834897612072475,
+            "k": 6,
+            "burst_window_hours": 11.276644856274194,
+            "n_bursts": 3,
+            "account_age_days": 15.926403875817186,
+            "start_day": 4.953465165145102
+          },
+          "leaked_usd": 4429.24,
+          "attack_usd": 53156.55,
+          "leakage_pct": 8.3324
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 11.555825972108716,
+            "k": 6,
+            "burst_window_hours": 8.15683149134486,
+            "n_bursts": 2,
+            "account_age_days": 16.84698648657948,
+            "start_day": 3.661618972217541
+          },
+          "leaked_usd": 2930.23,
+          "attack_usd": 46892.56,
+          "leakage_pct": 6.2488
+        }
+      ]
+    },
+    "champion_weights": {
+      "velocity": 0.052173,
+      "graph": 0.844042,
+      "drift": 0.05,
+      "policy": 0.053785
+    },
+    "fitness_best": 14.461772,
+    "fitness_mean": 18.13809
+  },
+  {
+    "generation": 5,
+    "champion_id": "g4-0",
+    "champion_gate": {
+      "objective": 17.404847,
+      "leakage_pct": 15.236466,
+      "honest_block_rate": 3.658261,
+      "honest_unpaid_rate": 0.339251
+    },
+    "challenger": {
+      "id": "g5-18",
+      "params": {
+        "vel_usd_lo": 1130.4885623131413,
+        "vel_usd_width": 2000.0,
+        "vel_n_lo": 9.039832439535413,
+        "vel_n_width": 1.0,
+        "graph_dens_lo": 0.4,
+        "graph_dens_width": 0.1524532494369824,
+        "graph_min_workers": 4,
+        "graph_size_width": 2.710306073103985,
+        "graph_share_min": 3,
+        "drift_min_history": 5,
+        "drift_ratio_lo": 3.064641819775206,
+        "drift_ratio_width": 2.990277546941746,
+        "drift_rate_lo": 4.515521865059614,
+        "drift_rate_width": 2.2924225686695934,
+        "policy_cap_base_usd": 177.84463543299674,
+        "policy_cap_per_day_usd": 5.395895638878066,
+        "policy_cap_max_usd": 498.81762832179845,
+        "policy_window_mult": 3.8966142924894265,
+        "w0_velocity": 1.0,
+        "w0_graph": 1.0,
+        "w0_drift": 0.7028991625624658,
+        "w0_policy": 1.0,
+        "step_up_threshold": 0.3770511868539222,
+        "hold_threshold": 0.6036807315449438,
+        "eta": 0.010453002779761633,
+        "min_weight": 0.05,
+        "l1_abstain": 0
+      },
+      "objective_a": 15.318201,
+      "objective_b": 17.297131,
+      "gate": {
+        "objective": 17.297131,
+        "leakage_pct": 15.19283,
+        "honest_block_rate": 3.609258,
+        "honest_unpaid_rate": 0.299672
+      }
+    },
+    "promoted": false,
+    "rolled_back": false,
+    "rollback": null,
+    "champion_id_after": "g4-0",
+    "attackers_scored_against": "g4-0",
+    "strongest_attacker": {
+      "ring": {
+        "family": "ring",
+        "params": {
+          "ring_size": 29,
+          "n_requesters": 1,
+          "rate_per_day": 1.4907710803638143,
+          "amount_median": 120.0,
+          "amount_sigma": 0.4045450682741739,
+          "account_age_days": 60.0,
+          "start_day": 0.5318357592025134
+        },
+        "leaked_usd": 16447.68,
+        "attack_usd": 153801.49,
+        "leakage_pct": 10.6941
+      },
+      "structuring": {
+        "family": "structuring",
+        "params": {
+          "n_accounts": 4,
+          "eps": 9.145143679678494,
+          "k": 6,
+          "burst_window_hours": 10.556437850599094,
+          "n_bursts": 3,
+          "account_age_days": 10.870166350046162,
+          "start_day": 4.44890289728366
+        },
+        "leaked_usd": 6882.6,
+        "attack_usd": 70692.11,
+        "leakage_pct": 9.736
+      }
+    },
+    "strongest_attacker_family": "ring",
+    "attacker_pools": {
+      "ring": [
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 29,
+            "n_requesters": 1,
+            "rate_per_day": 1.4907710803638143,
+            "amount_median": 120.0,
+            "amount_sigma": 0.4045450682741739,
+            "account_age_days": 60.0,
+            "start_day": 0.5318357592025134
+          },
+          "leaked_usd": 16447.68,
+          "attack_usd": 153801.49,
+          "leakage_pct": 10.6941
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 29,
+            "n_requesters": 1,
+            "rate_per_day": 1.4954826470201206,
+            "amount_median": 120.0,
+            "amount_sigma": 0.3725432976602338,
+            "account_age_days": 60.0,
+            "start_day": 1.5221428693758479
+          },
+          "leaked_usd": 15937.6,
+          "attack_usd": 144116.5,
+          "leakage_pct": 11.0588
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 2,
+            "rate_per_day": 1.2017288603601854,
+            "amount_median": 120.0,
+            "amount_sigma": 0.3,
+            "account_age_days": 60.0,
+            "start_day": 0.67814900644402
+          },
+          "leaked_usd": 15163.89,
+          "attack_usd": 123032.28,
+          "leakage_pct": 12.3251
+        }
+      ],
+      "structuring": [
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 9.145143679678494,
+            "k": 6,
+            "burst_window_hours": 10.556437850599094,
+            "n_bursts": 3,
+            "account_age_days": 10.870166350046162,
+            "start_day": 4.44890289728366
+          },
+          "leaked_usd": 6882.6,
+          "attack_usd": 70692.11,
+          "leakage_pct": 9.736
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 3,
+            "eps": 7.834897612072475,
+            "k": 6,
+            "burst_window_hours": 11.276644856274194,
+            "n_bursts": 3,
+            "account_age_days": 15.926403875817186,
+            "start_day": 4.953465165145102
+          },
+          "leaked_usd": 6400.65,
+          "attack_usd": 53157.7,
+          "leakage_pct": 12.0409
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 11.555825972108716,
+            "k": 6,
+            "burst_window_hours": 8.15683149134486,
+            "n_bursts": 2,
+            "account_age_days": 16.84698648657948,
+            "start_day": 3.661618972217541
+          },
+          "leaked_usd": 5864.93,
+          "attack_usd": 46895.9,
+          "leakage_pct": 12.5063
+        }
+      ]
+    },
+    "champion_weights": {
+      "velocity": 0.145938,
+      "graph": 0.647254,
+      "drift": 0.129231,
+      "policy": 0.077577
+    },
+    "fitness_best": 15.174527,
+    "fitness_mean": 18.856152
+  },
+  {
+    "generation": 6,
+    "champion_id": "g4-0",
+    "champion_gate": {
+      "objective": 17.252762,
+      "leakage_pct": 15.157254,
+      "honest_block_rate": 3.51773,
+      "honest_unpaid_rate": 0.336643
+    },
+    "challenger": {
+      "id": "g5-18",
+      "params": {
+        "vel_usd_lo": 1130.4885623131413,
+        "vel_usd_width": 2000.0,
+        "vel_n_lo": 9.039832439535413,
+        "vel_n_width": 1.0,
+        "graph_dens_lo": 0.4,
+        "graph_dens_width": 0.1524532494369824,
+        "graph_min_workers": 4,
+        "graph_size_width": 2.710306073103985,
+        "graph_share_min": 3,
+        "drift_min_history": 5,
+        "drift_ratio_lo": 3.064641819775206,
+        "drift_ratio_width": 2.990277546941746,
+        "drift_rate_lo": 4.515521865059614,
+        "drift_rate_width": 2.2924225686695934,
+        "policy_cap_base_usd": 177.84463543299674,
+        "policy_cap_per_day_usd": 5.395895638878066,
+        "policy_cap_max_usd": 498.81762832179845,
+        "policy_window_mult": 3.8966142924894265,
+        "w0_velocity": 1.0,
+        "w0_graph": 1.0,
+        "w0_drift": 0.7028991625624658,
+        "w0_policy": 1.0,
+        "step_up_threshold": 0.3770511868539222,
+        "hold_threshold": 0.6036807315449438,
+        "eta": 0.010453002779761633,
+        "min_weight": 0.05,
+        "l1_abstain": 0
+      },
+      "objective_a": 14.860752,
+      "objective_b": 17.123098,
+      "gate": {
+        "objective": 17.123098,
+        "leakage_pct": 15.085273,
+        "honest_block_rate": 3.485579,
+        "honest_unpaid_rate": 0.295035
+      }
+    },
+    "promoted": false,
+    "rolled_back": false,
+    "rollback": null,
+    "champion_id_after": "g4-0",
+    "attackers_scored_against": "g4-0",
+    "strongest_attacker": {
+      "ring": {
+        "family": "ring",
+        "params": {
+          "ring_size": 29,
+          "n_requesters": 1,
+          "rate_per_day": 1.4907710803638143,
+          "amount_median": 120.0,
+          "amount_sigma": 0.4045450682741739,
+          "account_age_days": 60.0,
+          "start_day": 0.5318357592025134
+        },
+        "leaked_usd": 16965.16,
+        "attack_usd": 151490.83,
+        "leakage_pct": 11.1988
+      },
+      "structuring": {
+        "family": "structuring",
+        "params": {
+          "n_accounts": 4,
+          "eps": 9.145143679678494,
+          "k": 6,
+          "burst_window_hours": 10.556437850599094,
+          "n_bursts": 3,
+          "account_age_days": 10.870166350046162,
+          "start_day": 4.44890289728366
+        },
+        "leaked_usd": 8839.29,
+        "attack_usd": 70706.71,
+        "leakage_pct": 12.5013
+      }
+    },
+    "strongest_attacker_family": "ring",
+    "attacker_pools": {
+      "ring": [
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 29,
+            "n_requesters": 1,
+            "rate_per_day": 1.4907710803638143,
+            "amount_median": 120.0,
+            "amount_sigma": 0.4045450682741739,
+            "account_age_days": 60.0,
+            "start_day": 0.5318357592025134
+          },
+          "leaked_usd": 16965.16,
+          "attack_usd": 151490.83,
+          "leakage_pct": 11.1988
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 28,
+            "n_requesters": 1,
+            "rate_per_day": 1.5,
+            "amount_median": 120.0,
+            "amount_sigma": 0.4094165012310958,
+            "account_age_days": 112.13899492684996,
+            "start_day": 0.6228815893881239
+          },
+          "leaked_usd": 16137.38,
+          "attack_usd": 146031.02,
+          "leakage_pct": 11.0507
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 1,
+            "rate_per_day": 1.426203371136114,
+            "amount_median": 120.0,
+            "amount_sigma": 0.3360295468351553,
+            "account_age_days": 109.6010747611399,
+            "start_day": 2.4798937871489213
+          },
+          "leaked_usd": 14473.16,
+          "attack_usd": 124413.91,
+          "leakage_pct": 11.6331
+        }
+      ],
+      "structuring": [
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 9.145143679678494,
+            "k": 6,
+            "burst_window_hours": 10.556437850599094,
+            "n_bursts": 3,
+            "account_age_days": 10.870166350046162,
+            "start_day": 4.44890289728366
+          },
+          "leaked_usd": 8839.29,
+          "attack_usd": 70706.71,
+          "leakage_pct": 12.5013
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 3,
+            "eps": 7.834897612072475,
+            "k": 6,
+            "burst_window_hours": 11.276644856274194,
+            "n_bursts": 3,
+            "account_age_days": 15.926403875817186,
+            "start_day": 4.953465165145102
+          },
+          "leaked_usd": 5416.7,
+          "attack_usd": 53162.69,
+          "leakage_pct": 10.1889
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 1.0,
+            "k": 5,
+            "burst_window_hours": 9.438922421923792,
+            "n_bursts": 2,
+            "account_age_days": 0.9289243653453862,
+            "start_day": 4.254873381385013
+          },
+          "leaked_usd": 4990.28,
+          "attack_usd": 39912.14,
+          "leakage_pct": 12.5032
+        }
+      ]
+    },
+    "champion_weights": {
+      "velocity": 0.108414,
+      "graph": 0.734002,
+      "drift": 0.101513,
+      "policy": 0.056071
+    },
+    "fitness_best": 14.834681,
+    "fitness_mean": 17.778438
+  },
+  {
+    "generation": 7,
+    "champion_id": "g4-0",
+    "champion_gate": {
+      "objective": 17.631453,
+      "leakage_pct": 15.514297,
+      "honest_block_rate": 3.562259,
+      "honest_unpaid_rate": 0.336027
+    },
+    "challenger": {
+      "id": "g5-18",
+      "params": {
+        "vel_usd_lo": 1130.4885623131413,
+        "vel_usd_width": 2000.0,
+        "vel_n_lo": 9.039832439535413,
+        "vel_n_width": 1.0,
+        "graph_dens_lo": 0.4,
+        "graph_dens_width": 0.1524532494369824,
+        "graph_min_workers": 4,
+        "graph_size_width": 2.710306073103985,
+        "graph_share_min": 3,
+        "drift_min_history": 5,
+        "drift_ratio_lo": 3.064641819775206,
+        "drift_ratio_width": 2.990277546941746,
+        "drift_rate_lo": 4.515521865059614,
+        "drift_rate_width": 2.2924225686695934,
+        "policy_cap_base_usd": 177.84463543299674,
+        "policy_cap_per_day_usd": 5.395895638878066,
+        "policy_cap_max_usd": 498.81762832179845,
+        "policy_window_mult": 3.8966142924894265,
+        "w0_velocity": 1.0,
+        "w0_graph": 1.0,
+        "w0_drift": 0.7028991625624658,
+        "w0_policy": 1.0,
+        "step_up_threshold": 0.3770511868539222,
+        "hold_threshold": 0.6036807315449438,
+        "eta": 0.010453002779761633,
+        "min_weight": 0.05,
+        "l1_abstain": 0
+      },
+      "objective_a": 13.98081,
+      "objective_b": 17.570745,
+      "gate": {
+        "objective": 17.570745,
+        "leakage_pct": 15.497008,
+        "honest_block_rate": 3.543381,
+        "honest_unpaid_rate": 0.302046
+      }
+    },
+    "promoted": false,
+    "rolled_back": false,
+    "rollback": null,
+    "champion_id_after": "g4-0",
+    "attackers_scored_against": "g4-0",
+    "strongest_attacker": {
+      "ring": {
+        "family": "ring",
+        "params": {
+          "ring_size": 29,
+          "n_requesters": 1,
+          "rate_per_day": 1.4907710803638143,
+          "amount_median": 120.0,
+          "amount_sigma": 0.4045450682741739,
+          "account_age_days": 60.0,
+          "start_day": 0.5318357592025134
+        },
+        "leaked_usd": 18011.54,
+        "attack_usd": 144902.3,
+        "leakage_pct": 12.4301
+      },
+      "structuring": {
+        "family": "structuring",
+        "params": {
+          "n_accounts": 4,
+          "eps": 9.145143679678494,
+          "k": 6,
+          "burst_window_hours": 10.556437850599094,
+          "n_bursts": 3,
+          "account_age_days": 10.870166350046162,
+          "start_day": 4.44890289728366
+        },
+        "leaked_usd": 6872.91,
+        "attack_usd": 70682.35,
+        "leakage_pct": 9.7237
+      }
+    },
+    "strongest_attacker_family": "ring",
+    "attacker_pools": {
+      "ring": [
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 29,
+            "n_requesters": 1,
+            "rate_per_day": 1.4907710803638143,
+            "amount_median": 120.0,
+            "amount_sigma": 0.4045450682741739,
+            "account_age_days": 60.0,
+            "start_day": 0.5318357592025134
+          },
+          "leaked_usd": 18011.54,
+          "attack_usd": 144902.3,
+          "leakage_pct": 12.4301
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 2,
+            "rate_per_day": 1.2584144398323134,
+            "amount_median": 116.32022951085152,
+            "amount_sigma": 0.3921545230714848,
+            "account_age_days": 60.0,
+            "start_day": 0.6461975777337354
+          },
+          "leaked_usd": 15890.74,
+          "attack_usd": 127904.08,
+          "leakage_pct": 12.424
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 28,
+            "n_requesters": 1,
+            "rate_per_day": 1.5,
+            "amount_median": 120.0,
+            "amount_sigma": 0.4094165012310958,
+            "account_age_days": 112.13899492684996,
+            "start_day": 0.6228815893881239
+          },
+          "leaked_usd": 13935.63,
+          "attack_usd": 139855.4,
+          "leakage_pct": 9.9643
+        }
+      ],
+      "structuring": [
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 9.145143679678494,
+            "k": 6,
+            "burst_window_hours": 10.556437850599094,
+            "n_bursts": 3,
+            "account_age_days": 10.870166350046162,
+            "start_day": 4.44890289728366
+          },
+          "leaked_usd": 6872.91,
+          "attack_usd": 70682.35,
+          "leakage_pct": 9.7237
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 14.02218027533307,
+            "k": 6,
+            "burst_window_hours": 10.675205844750284,
+            "n_bursts": 3,
+            "account_age_days": 0.29237767564953465,
+            "start_day": 2.9367242763443038
+          },
+          "leaked_usd": 6319.49,
+          "attack_usd": 69980.02,
+          "leakage_pct": 9.0304
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 3,
+            "eps": 7.834897612072475,
+            "k": 6,
+            "burst_window_hours": 11.276644856274194,
+            "n_bursts": 3,
+            "account_age_days": 15.926403875817186,
+            "start_day": 4.953465165145102
+          },
+          "leaked_usd": 4924.7,
+          "attack_usd": 53147.86,
+          "leakage_pct": 9.266
+        }
+      ]
+    },
+    "champion_weights": {
+      "velocity": 0.10451,
+      "graph": 0.750389,
+      "drift": 0.090047,
+      "policy": 0.055054
+    },
+    "fitness_best": 13.875842,
+    "fitness_mean": 17.18881
+  },
+  {
+    "generation": 8,
+    "champion_id": "g4-0",
+    "champion_gate": {
+      "objective": 17.534532,
+      "leakage_pct": 15.42203,
+      "honest_block_rate": 3.560994,
+      "honest_unpaid_rate": 0.332005
+    },
+    "challenger": {
+      "id": "g8-11",
+      "params": {
+        "vel_usd_lo": 1130.4885623131413,
+        "vel_usd_width": 2000.0,
+        "vel_n_lo": 9.039832439535413,
+        "vel_n_width": 3.099436508824762,
+        "graph_dens_lo": 0.4,
+        "graph_dens_width": 0.1524532494369824,
+        "graph_min_workers": 4,
+        "graph_size_width": 2.710306073103985,
+        "graph_share_min": 3,
+        "drift_min_history": 3,
+        "drift_ratio_lo": 3.064641819775206,
+        "drift_ratio_width": 5.85949239891467,
+        "drift_rate_lo": 4.896264883728476,
+        "drift_rate_width": 2.2924225686695934,
+        "policy_cap_base_usd": 196.64903422051012,
+        "policy_cap_per_day_usd": 1.2854956754502833,
+        "policy_cap_max_usd": 498.81762832179845,
+        "policy_window_mult": 4.292189153666135,
+        "w0_velocity": 0.6104727078719084,
+        "w0_graph": 0.9161373149750417,
+        "w0_drift": 0.671466842991433,
+        "w0_policy": 1.0,
+        "step_up_threshold": 0.3770511868539222,
+        "hold_threshold": 0.6036807315449438,
+        "eta": 0.010453002779761633,
+        "min_weight": 0.05,
+        "l1_abstain": 0
+      },
+      "objective_a": 14.593109,
+      "objective_b": 17.473517,
+      "gate": {
+        "objective": 17.473517,
+        "leakage_pct": 15.463462,
+        "honest_block_rate": 3.481313,
+        "honest_unpaid_rate": 0.269399
+      }
+    },
+    "promoted": false,
+    "rolled_back": false,
+    "rollback": null,
+    "champion_id_after": "g4-0",
+    "attackers_scored_against": "g4-0",
+    "strongest_attacker": {
+      "ring": {
+        "family": "ring",
+        "params": {
+          "ring_size": 29,
+          "n_requesters": 1,
+          "rate_per_day": 1.4907710803638143,
+          "amount_median": 120.0,
+          "amount_sigma": 0.4045450682741739,
+          "account_age_days": 60.0,
+          "start_day": 0.5318357592025134
+        },
+        "leaked_usd": 14393.5,
+        "attack_usd": 154364.04,
+        "leakage_pct": 9.3244
+      },
+      "structuring": {
+        "family": "structuring",
+        "params": {
+          "n_accounts": 4,
+          "eps": 9.145143679678494,
+          "k": 6,
+          "burst_window_hours": 10.556437850599094,
+          "n_bursts": 3,
+          "account_age_days": 10.870166350046162,
+          "start_day": 4.44890289728366
+        },
+        "leaked_usd": 8339.09,
+        "attack_usd": 70674.74,
+        "leakage_pct": 11.7993
+      }
+    },
+    "strongest_attacker_family": "ring",
+    "attacker_pools": {
+      "ring": [
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 29,
+            "n_requesters": 1,
+            "rate_per_day": 1.4907710803638143,
+            "amount_median": 120.0,
+            "amount_sigma": 0.4045450682741739,
+            "account_age_days": 60.0,
+            "start_day": 0.5318357592025134
+          },
+          "leaked_usd": 14393.5,
+          "attack_usd": 154364.04,
+          "leakage_pct": 9.3244
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 28,
+            "n_requesters": 2,
+            "rate_per_day": 1.3329274483628253,
+            "amount_median": 96.55602736158774,
+            "amount_sigma": 0.35745823245520647,
+            "account_age_days": 60.0,
+            "start_day": 0.0
+          },
+          "leaked_usd": 13690.28,
+          "attack_usd": 108205.26,
+          "leakage_pct": 12.6521
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 29,
+            "n_requesters": 1,
+            "rate_per_day": 1.5,
+            "amount_median": 111.85792436938463,
+            "amount_sigma": 0.3230149595050739,
+            "account_age_days": 60.0,
+            "start_day": 0.0
+          },
+          "leaked_usd": 12788.05,
+          "attack_usd": 145315.43,
+          "leakage_pct": 8.8002
+        }
+      ],
+      "structuring": [
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 9.145143679678494,
+            "k": 6,
+            "burst_window_hours": 10.556437850599094,
+            "n_bursts": 3,
+            "account_age_days": 10.870166350046162,
+            "start_day": 4.44890289728366
+          },
+          "leaked_usd": 8339.09,
+          "attack_usd": 70674.74,
+          "leakage_pct": 11.7993
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 21.2707136144164,
+            "k": 6,
+            "burst_window_hours": 10.15574510131192,
+            "n_bursts": 3,
+            "account_age_days": 11.638770482335488,
+            "start_day": 4.7672360337038
+          },
+          "leaked_usd": 7659.88,
+          "attack_usd": 68928.64,
+          "leakage_pct": 11.1128
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 3,
+            "eps": 7.834897612072475,
+            "k": 6,
+            "burst_window_hours": 11.276644856274194,
+            "n_bursts": 3,
+            "account_age_days": 15.926403875817186,
+            "start_day": 4.953465165145102
+          },
+          "leaked_usd": 5905.0,
+          "attack_usd": 53146.34,
+          "leakage_pct": 11.1108
+        }
+      ]
+    },
+    "champion_weights": {
+      "velocity": 0.081375,
+      "graph": 0.795579,
+      "drift": 0.072971,
+      "policy": 0.050075
+    },
+    "fitness_best": 14.593109,
+    "fitness_mean": 17.122262
+  },
+  {
+    "generation": 9,
+    "champion_id": "g4-0",
+    "champion_gate": {
+      "objective": 17.327856,
+      "leakage_pct": 15.17979,
+      "honest_block_rate": 3.614026,
+      "honest_unpaid_rate": 0.341053
+    },
+    "challenger": {
+      "id": "g8-11",
+      "params": {
+        "vel_usd_lo": 1130.4885623131413,
+        "vel_usd_width": 2000.0,
+        "vel_n_lo": 9.039832439535413,
+        "vel_n_width": 3.099436508824762,
+        "graph_dens_lo": 0.4,
+        "graph_dens_width": 0.1524532494369824,
+        "graph_min_workers": 4,
+        "graph_size_width": 2.710306073103985,
+        "graph_share_min": 3,
+        "drift_min_history": 3,
+        "drift_ratio_lo": 3.064641819775206,
+        "drift_ratio_width": 5.85949239891467,
+        "drift_rate_lo": 4.896264883728476,
+        "drift_rate_width": 2.2924225686695934,
+        "policy_cap_base_usd": 196.64903422051012,
+        "policy_cap_per_day_usd": 1.2854956754502833,
+        "policy_cap_max_usd": 498.81762832179845,
+        "policy_window_mult": 4.292189153666135,
+        "w0_velocity": 0.6104727078719084,
+        "w0_graph": 0.9161373149750417,
+        "w0_drift": 0.671466842991433,
+        "w0_policy": 1.0,
+        "step_up_threshold": 0.3770511868539222,
+        "hold_threshold": 0.6036807315449438,
+        "eta": 0.010453002779761633,
+        "min_weight": 0.05,
+        "l1_abstain": 0
+      },
+      "objective_a": 14.240795,
+      "objective_b": 17.139576,
+      "gate": {
+        "objective": 17.139576,
+        "leakage_pct": 15.15921,
+        "honest_block_rate": 3.421831,
+        "honest_unpaid_rate": 0.26945
+      }
+    },
+    "promoted": false,
+    "rolled_back": false,
+    "rollback": null,
+    "champion_id_after": "g4-0",
+    "attackers_scored_against": "g4-0",
+    "strongest_attacker": {
+      "ring": {
+        "family": "ring",
+        "params": {
+          "ring_size": 29,
+          "n_requesters": 1,
+          "rate_per_day": 1.4907710803638143,
+          "amount_median": 120.0,
+          "amount_sigma": 0.4045450682741739,
+          "account_age_days": 60.0,
+          "start_day": 0.5318357592025134
+        },
+        "leaked_usd": 20084.18,
+        "attack_usd": 157848.6,
+        "leakage_pct": 12.7237
+      },
+      "structuring": {
+        "family": "structuring",
+        "params": {
+          "n_accounts": 4,
+          "eps": 21.2707136144164,
+          "k": 6,
+          "burst_window_hours": 10.15574510131192,
+          "n_bursts": 3,
+          "account_age_days": 11.638770482335488,
+          "start_day": 4.7672360337038
+        },
+        "leaked_usd": 11494.75,
+        "attack_usd": 68947.99,
+        "leakage_pct": 16.6716
+      }
+    },
+    "strongest_attacker_family": "ring",
+    "attacker_pools": {
+      "ring": [
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 29,
+            "n_requesters": 1,
+            "rate_per_day": 1.4907710803638143,
+            "amount_median": 120.0,
+            "amount_sigma": 0.4045450682741739,
+            "account_age_days": 60.0,
+            "start_day": 0.5318357592025134
+          },
+          "leaked_usd": 20084.18,
+          "attack_usd": 157848.6,
+          "leakage_pct": 12.7237
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 29,
+            "n_requesters": 1,
+            "rate_per_day": 1.4723477811730845,
+            "amount_median": 120.0,
+            "amount_sigma": 0.4530772525388418,
+            "account_age_days": 60.0,
+            "start_day": 0.6348186676165459
+          },
+          "leaked_usd": 19104.15,
+          "attack_usd": 160994.8,
+          "leakage_pct": 11.8663
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 28,
+            "n_requesters": 3,
+            "rate_per_day": 1.247217700708587,
+            "amount_median": 120.0,
+            "amount_sigma": 0.37120833735729786,
+            "account_age_days": 60.0,
+            "start_day": 0.40773958949132133
+          },
+          "leaked_usd": 18978.42,
+          "attack_usd": 130282.89,
+          "leakage_pct": 14.5671
+        }
+      ],
+      "structuring": [
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 21.2707136144164,
+            "k": 6,
+            "burst_window_hours": 10.15574510131192,
+            "n_bursts": 3,
+            "account_age_days": 11.638770482335488,
+            "start_day": 4.7672360337038
+          },
+          "leaked_usd": 11494.75,
+          "attack_usd": 68947.99,
+          "leakage_pct": 16.6716
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 22.99137223913281,
+            "k": 6,
+            "burst_window_hours": 10.244878190657666,
+            "n_bursts": 3,
+            "account_age_days": 19.620994658422575,
+            "start_day": 3.7763682580287083
+          },
+          "leaked_usd": 9536.88,
+          "attack_usd": 68700.19,
+          "leakage_pct": 13.8819
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 9.145143679678494,
+            "k": 6,
+            "burst_window_hours": 10.556437850599094,
+            "n_bursts": 3,
+            "account_age_days": 10.870166350046162,
+            "start_day": 4.44890289728366
+          },
+          "leaked_usd": 7372.09,
+          "attack_usd": 70694.09,
+          "leakage_pct": 10.4282
+        }
+      ]
+    },
+    "champion_weights": {
+      "velocity": 0.146797,
+      "graph": 0.649829,
+      "drift": 0.12477,
+      "policy": 0.078603
+    },
+    "fitness_best": 14.240795,
+    "fitness_mean": 16.734038
+  },
+  {
+    "generation": 10,
+    "champion_id": "g4-0",
+    "champion_gate": {
+      "objective": 16.622811,
+      "leakage_pct": 14.538182,
+      "honest_block_rate": 3.516811,
+      "honest_unpaid_rate": 0.326224
+    },
+    "challenger": {
+      "id": "g8-11",
+      "params": {
+        "vel_usd_lo": 1130.4885623131413,
+        "vel_usd_width": 2000.0,
+        "vel_n_lo": 9.039832439535413,
+        "vel_n_width": 3.099436508824762,
+        "graph_dens_lo": 0.4,
+        "graph_dens_width": 0.1524532494369824,
+        "graph_min_workers": 4,
+        "graph_size_width": 2.710306073103985,
+        "graph_share_min": 3,
+        "drift_min_history": 3,
+        "drift_ratio_lo": 3.064641819775206,
+        "drift_ratio_width": 5.85949239891467,
+        "drift_rate_lo": 4.896264883728476,
+        "drift_rate_width": 2.2924225686695934,
+        "policy_cap_base_usd": 196.64903422051012,
+        "policy_cap_per_day_usd": 1.2854956754502833,
+        "policy_cap_max_usd": 498.81762832179845,
+        "policy_window_mult": 4.292189153666135,
+        "w0_velocity": 0.6104727078719084,
+        "w0_graph": 0.9161373149750417,
+        "w0_drift": 0.671466842991433,
+        "w0_policy": 1.0,
+        "step_up_threshold": 0.3770511868539222,
+        "hold_threshold": 0.6036807315449438,
+        "eta": 0.010453002779761633,
+        "min_weight": 0.05,
+        "l1_abstain": 0
+      },
+      "objective_a": 14.670942,
+      "objective_b": 16.54202,
+      "gate": {
+        "objective": 16.54202,
+        "leakage_pct": 14.575246,
+        "honest_block_rate": 3.405555,
+        "honest_unpaid_rate": 0.263997
+      }
+    },
+    "promoted": false,
+    "rolled_back": false,
+    "rollback": null,
+    "champion_id_after": "g4-0",
+    "attackers_scored_against": "g4-0",
+    "strongest_attacker": {
+      "ring": {
+        "family": "ring",
+        "params": {
+          "ring_size": 30,
+          "n_requesters": 2,
+          "rate_per_day": 1.5,
+          "amount_median": 120.0,
+          "amount_sigma": 0.46949898952764163,
+          "account_age_days": 62.97765389956644,
+          "start_day": 0.0
+        },
+        "leaked_usd": 20099.85,
+        "attack_usd": 174113.57,
+        "leakage_pct": 11.5441
+      },
+      "structuring": {
+        "family": "structuring",
+        "params": {
+          "n_accounts": 4,
+          "eps": 22.01070004930909,
+          "k": 6,
+          "burst_window_hours": 9.928494393931581,
+          "n_bursts": 3,
+          "account_age_days": 6.211425627474944,
+          "start_day": 5.21670082766632
+        },
+        "leaked_usd": 9085.1,
+        "attack_usd": 68839.46,
+        "leakage_pct": 13.1975
+      }
+    },
+    "strongest_attacker_family": "ring",
+    "attacker_pools": {
+      "ring": [
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 2,
+            "rate_per_day": 1.5,
+            "amount_median": 120.0,
+            "amount_sigma": 0.46949898952764163,
+            "account_age_days": 62.97765389956644,
+            "start_day": 0.0
+          },
+          "leaked_usd": 20099.85,
+          "attack_usd": 174113.57,
+          "leakage_pct": 11.5441
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 28,
+            "n_requesters": 3,
+            "rate_per_day": 1.405475113628191,
+            "amount_median": 120.0,
+            "amount_sigma": 0.34764645345888345,
+            "account_age_days": 60.0,
+            "start_day": 0.9314621501698752
+          },
+          "leaked_usd": 17122.64,
+          "attack_usd": 129902.2,
+          "leakage_pct": 13.1812
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 29,
+            "n_requesters": 1,
+            "rate_per_day": 1.4907710803638143,
+            "amount_median": 120.0,
+            "amount_sigma": 0.4045450682741739,
+            "account_age_days": 60.0,
+            "start_day": 0.5318357592025134
+          },
+          "leaked_usd": 16447.68,
+          "attack_usd": 153801.49,
+          "leakage_pct": 10.6941
+        }
+      ],
+      "structuring": [
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 22.01070004930909,
+            "k": 6,
+            "burst_window_hours": 9.928494393931581,
+            "n_bursts": 3,
+            "account_age_days": 6.211425627474944,
+            "start_day": 5.21670082766632
+          },
+          "leaked_usd": 9085.1,
+          "attack_usd": 68839.46,
+          "leakage_pct": 13.1975
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 21.2707136144164,
+            "k": 6,
+            "burst_window_hours": 10.15574510131192,
+            "n_bursts": 3,
+            "account_age_days": 11.638770482335488,
+            "start_day": 4.7672360337038
+          },
+          "leaked_usd": 8137.73,
+          "attack_usd": 68946.02,
+          "leakage_pct": 11.803
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 22.626049454681073,
+            "k": 6,
+            "burst_window_hours": 11.65645690725594,
+            "n_bursts": 3,
+            "account_age_days": 14.73791854054367,
+            "start_day": 3.049360577471975
+          },
+          "leaked_usd": 8123.49,
+          "attack_usd": 68750.82,
+          "leakage_pct": 11.8158
+        }
+      ]
+    },
+    "champion_weights": {
+      "velocity": 0.115844,
+      "graph": 0.727345,
+      "drift": 0.09163,
+      "policy": 0.06518
+    },
+    "fitness_best": 14.670942,
+    "fitness_mean": 16.149741
+  },
+  {
+    "generation": 11,
+    "champion_id": "g4-0",
+    "champion_gate": {
+      "objective": 17.122727,
+      "leakage_pct": 15.020123,
+      "honest_block_rate": 3.543121,
+      "honest_unpaid_rate": 0.331044
+    },
+    "challenger": {
+      "id": "g8-11",
+      "params": {
+        "vel_usd_lo": 1130.4885623131413,
+        "vel_usd_width": 2000.0,
+        "vel_n_lo": 9.039832439535413,
+        "vel_n_width": 3.099436508824762,
+        "graph_dens_lo": 0.4,
+        "graph_dens_width": 0.1524532494369824,
+        "graph_min_workers": 4,
+        "graph_size_width": 2.710306073103985,
+        "graph_share_min": 3,
+        "drift_min_history": 3,
+        "drift_ratio_lo": 3.064641819775206,
+        "drift_ratio_width": 5.85949239891467,
+        "drift_rate_lo": 4.896264883728476,
+        "drift_rate_width": 2.2924225686695934,
+        "policy_cap_base_usd": 196.64903422051012,
+        "policy_cap_per_day_usd": 1.2854956754502833,
+        "policy_cap_max_usd": 498.81762832179845,
+        "policy_window_mult": 4.292189153666135,
+        "w0_velocity": 0.6104727078719084,
+        "w0_graph": 0.9161373149750417,
+        "w0_drift": 0.671466842991433,
+        "w0_policy": 1.0,
+        "step_up_threshold": 0.3770511868539222,
+        "hold_threshold": 0.6036807315449438,
+        "eta": 0.010453002779761633,
+        "min_weight": 0.05,
+        "l1_abstain": 0
+      },
+      "objective_a": 15.114687,
+      "objective_b": 17.066324,
+      "gate": {
+        "objective": 17.066324,
+        "leakage_pct": 15.07722,
+        "honest_block_rate": 3.425837,
+        "honest_unpaid_rate": 0.276186
+      }
+    },
+    "promoted": false,
+    "rolled_back": false,
+    "rollback": null,
+    "champion_id_after": "g4-0",
+    "attackers_scored_against": "g4-0",
+    "strongest_attacker": {
+      "ring": {
+        "family": "ring",
+        "params": {
+          "ring_size": 30,
+          "n_requesters": 3,
+          "rate_per_day": 1.5,
+          "amount_median": 120.0,
+          "amount_sigma": 0.5051780430614142,
+          "account_age_days": 60.0,
+          "start_day": 0.0
+        },
+        "leaked_usd": 20402.81,
+        "attack_usd": 171094.98,
+        "leakage_pct": 11.9248
+      },
+      "structuring": {
+        "family": "structuring",
+        "params": {
+          "n_accounts": 3,
+          "eps": 8.996029799393279,
+          "k": 6,
+          "burst_window_hours": 10.408468680229337,
+          "n_bursts": 3,
+          "account_age_days": 7.408284733435319,
+          "start_day": 4.343083902748604
+        },
+        "leaked_usd": 9816.35,
+        "attack_usd": 53037.31,
+        "leakage_pct": 18.5084
+      }
+    },
+    "strongest_attacker_family": "ring",
+    "attacker_pools": {
+      "ring": [
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 3,
+            "rate_per_day": 1.5,
+            "amount_median": 120.0,
+            "amount_sigma": 0.5051780430614142,
+            "account_age_days": 60.0,
+            "start_day": 0.0
+          },
+          "leaked_usd": 20402.81,
+          "attack_usd": 171094.98,
+          "leakage_pct": 11.9248
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 29,
+            "n_requesters": 1,
+            "rate_per_day": 1.5,
+            "amount_median": 120.0,
+            "amount_sigma": 0.41818043813062394,
+            "account_age_days": 60.0,
+            "start_day": 0.0
+          },
+          "leaked_usd": 20178.36,
+          "attack_usd": 164037.11,
+          "leakage_pct": 12.3011
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 2,
+            "rate_per_day": 1.5,
+            "amount_median": 120.0,
+            "amount_sigma": 0.46949898952764163,
+            "account_age_days": 62.97765389956644,
+            "start_day": 0.0
+          },
+          "leaked_usd": 18299.12,
+          "attack_usd": 168262.15,
+          "leakage_pct": 10.8754
+        }
+      ],
+      "structuring": [
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 3,
+            "eps": 8.996029799393279,
+            "k": 6,
+            "burst_window_hours": 10.408468680229337,
+            "n_bursts": 3,
+            "account_age_days": 7.408284733435319,
+            "start_day": 4.343083902748604
+          },
+          "leaked_usd": 9816.35,
+          "attack_usd": 53037.31,
+          "leakage_pct": 18.5084
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 21.2707136144164,
+            "k": 6,
+            "burst_window_hours": 10.15574510131192,
+            "n_bursts": 3,
+            "account_age_days": 11.638770482335488,
+            "start_day": 4.7672360337038
+          },
+          "leaked_usd": 8142.54,
+          "attack_usd": 68960.58,
+          "leakage_pct": 11.8075
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 28.18340737940935,
+            "k": 6,
+            "burst_window_hours": 12.0,
+            "n_bursts": 3,
+            "account_age_days": 15.122705428692088,
+            "start_day": 3.164862266579972
+          },
+          "leaked_usd": 7560.24,
+          "attack_usd": 67965.18,
+          "leakage_pct": 11.1237
+        }
+      ]
+    },
+    "champion_weights": {
+      "velocity": 0.066194,
+      "graph": 0.827447,
+      "drift": 0.056358,
+      "policy": 0.05
+    },
+    "fitness_best": 15.114687,
+    "fitness_mean": 18.327079
+  },
+  {
+    "generation": 12,
+    "champion_id": "g4-0",
+    "champion_gate": {
+      "objective": 17.159373,
+      "leakage_pct": 14.983611,
+      "honest_block_rate": 3.644544,
+      "honest_unpaid_rate": 0.35349
+    },
+    "challenger": {
+      "id": "g8-11",
+      "params": {
+        "vel_usd_lo": 1130.4885623131413,
+        "vel_usd_width": 2000.0,
+        "vel_n_lo": 9.039832439535413,
+        "vel_n_width": 3.099436508824762,
+        "graph_dens_lo": 0.4,
+        "graph_dens_width": 0.1524532494369824,
+        "graph_min_workers": 4,
+        "graph_size_width": 2.710306073103985,
+        "graph_share_min": 3,
+        "drift_min_history": 3,
+        "drift_ratio_lo": 3.064641819775206,
+        "drift_ratio_width": 5.85949239891467,
+        "drift_rate_lo": 4.896264883728476,
+        "drift_rate_width": 2.2924225686695934,
+        "policy_cap_base_usd": 196.64903422051012,
+        "policy_cap_per_day_usd": 1.2854956754502833,
+        "policy_cap_max_usd": 498.81762832179845,
+        "policy_window_mult": 4.292189153666135,
+        "w0_velocity": 0.6104727078719084,
+        "w0_graph": 0.9161373149750417,
+        "w0_drift": 0.671466842991433,
+        "w0_policy": 1.0,
+        "step_up_threshold": 0.3770511868539222,
+        "hold_threshold": 0.6036807315449438,
+        "eta": 0.010453002779761633,
+        "min_weight": 0.05,
+        "l1_abstain": 0
+      },
+      "objective_a": 14.405813,
+      "objective_b": 16.841341,
+      "gate": {
+        "objective": 16.841341,
+        "leakage_pct": 14.843269,
+        "honest_block_rate": 3.421485,
+        "honest_unpaid_rate": 0.287329
+      }
+    },
+    "promoted": false,
+    "rolled_back": false,
+    "rollback": null,
+    "champion_id_after": "g4-0",
+    "attackers_scored_against": "g4-0",
+    "strongest_attacker": {
+      "ring": {
+        "family": "ring",
+        "params": {
+          "ring_size": 30,
+          "n_requesters": 3,
+          "rate_per_day": 1.5,
+          "amount_median": 120.0,
+          "amount_sigma": 0.5051780430614142,
+          "account_age_days": 60.0,
+          "start_day": 0.0
+        },
+        "leaked_usd": 25469.11,
+        "attack_usd": 175636.79,
+        "leakage_pct": 14.501
+      },
+      "structuring": {
+        "family": "structuring",
+        "params": {
+          "n_accounts": 4,
+          "eps": 28.18340737940935,
+          "k": 6,
+          "burst_window_hours": 12.0,
+          "n_bursts": 3,
+          "account_age_days": 15.122705428692088,
+          "start_day": 3.164862266579972
+        },
+        "leaked_usd": 9903.14,
+        "attack_usd": 67940.81,
+        "leakage_pct": 14.5761
+      }
+    },
+    "strongest_attacker_family": "ring",
+    "attacker_pools": {
+      "ring": [
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 3,
+            "rate_per_day": 1.5,
+            "amount_median": 120.0,
+            "amount_sigma": 0.5051780430614142,
+            "account_age_days": 60.0,
+            "start_day": 0.0
+          },
+          "leaked_usd": 25469.11,
+          "attack_usd": 175636.79,
+          "leakage_pct": 14.501
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 2,
+            "rate_per_day": 1.5,
+            "amount_median": 120.0,
+            "amount_sigma": 0.46949898952764163,
+            "account_age_days": 62.97765389956644,
+            "start_day": 0.0
+          },
+          "leaked_usd": 21674.39,
+          "attack_usd": 172628.08,
+          "leakage_pct": 12.5555
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 29,
+            "n_requesters": 1,
+            "rate_per_day": 1.5,
+            "amount_median": 120.0,
+            "amount_sigma": 0.41818043813062394,
+            "account_age_days": 60.0,
+            "start_day": 0.0
+          },
+          "leaked_usd": 19270.2,
+          "attack_usd": 158535.86,
+          "leakage_pct": 12.1551
+        }
+      ],
+      "structuring": [
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 28.18340737940935,
+            "k": 6,
+            "burst_window_hours": 12.0,
+            "n_bursts": 3,
+            "account_age_days": 15.122705428692088,
+            "start_day": 3.164862266579972
+          },
+          "leaked_usd": 9903.14,
+          "attack_usd": 67940.81,
+          "leakage_pct": 14.5761
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 21.2707136144164,
+            "k": 6,
+            "burst_window_hours": 10.15574510131192,
+            "n_bursts": 3,
+            "account_age_days": 11.638770482335488,
+            "start_day": 4.7672360337038
+          },
+          "leaked_usd": 8615.38,
+          "attack_usd": 68936.33,
+          "leakage_pct": 12.4976
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 11.884123173242289,
+            "k": 5,
+            "burst_window_hours": 12.0,
+            "n_bursts": 3,
+            "account_age_days": 11.608549638544286,
+            "start_day": 3.4395065592747844
+          },
+          "leaked_usd": 5376.46,
+          "attack_usd": 58568.42,
+          "leakage_pct": 9.1798
+        }
+      ]
+    },
+    "champion_weights": {
+      "velocity": 0.072907,
+      "graph": 0.81339,
+      "drift": 0.063701,
+      "policy": 0.050002
+    },
+    "fitness_best": 14.405813,
+    "fitness_mean": 16.346072
+  },
+  {
+    "generation": 13,
+    "champion_id": "g4-0",
+    "champion_gate": {
+      "objective": 17.363421,
+      "leakage_pct": 15.286354,
+      "honest_block_rate": 3.514746,
+      "honest_unpaid_rate": 0.319694
+    },
+    "challenger": {
+      "id": "g13-5",
+      "params": {
+        "vel_usd_lo": 1116.5839445911836,
+        "vel_usd_width": 1641.139753033103,
+        "vel_n_lo": 8.210631108056633,
+        "vel_n_width": 2.913867426638004,
+        "graph_dens_lo": 0.4,
+        "graph_dens_width": 0.11957345325171785,
+        "graph_min_workers": 4,
+        "graph_size_width": 3.3926763360094494,
+        "graph_share_min": 3,
+        "drift_min_history": 3,
+        "drift_ratio_lo": 4.66863510474504,
+        "drift_ratio_width": 4.316655302236067,
+        "drift_rate_lo": 4.134421097085525,
+        "drift_rate_width": 2.790033490322813,
+        "policy_cap_base_usd": 94.10322941486113,
+        "policy_cap_per_day_usd": 5.437081850400011,
+        "policy_cap_max_usd": 498.81762832179845,
+        "policy_window_mult": 4.343249716043787,
+        "w0_velocity": 0.6104727078719084,
+        "w0_graph": 1.0,
+        "w0_drift": 0.671466842991433,
+        "w0_policy": 0.5766859079598705,
+        "step_up_threshold": 0.5,
+        "hold_threshold": 0.5572073021872906,
+        "eta": 0.005,
+        "min_weight": 0.05,
+        "l1_abstain": 0
+      },
+      "objective_a": 14.325281,
+      "objective_b": 16.970948,
+      "gate": {
+        "objective": 16.970948,
+        "leakage_pct": 15.2533,
+        "honest_block_rate": 2.882924,
+        "honest_unpaid_rate": 0.276186
+      }
+    },
+    "promoted": false,
+    "rolled_back": false,
+    "rollback": null,
+    "champion_id_after": "g4-0",
+    "attackers_scored_against": "g4-0",
+    "strongest_attacker": {
+      "ring": {
+        "family": "ring",
+        "params": {
+          "ring_size": 30,
+          "n_requesters": 3,
+          "rate_per_day": 1.5,
+          "amount_median": 120.0,
+          "amount_sigma": 0.5051780430614142,
+          "account_age_days": 60.0,
+          "start_day": 0.0
+        },
+        "leaked_usd": 23553.83,
+        "attack_usd": 167990.68,
+        "leakage_pct": 14.0209
+      },
+      "structuring": {
+        "family": "structuring",
+        "params": {
+          "n_accounts": 4,
+          "eps": 21.2707136144164,
+          "k": 6,
+          "burst_window_hours": 10.15574510131192,
+          "n_bursts": 3,
+          "account_age_days": 11.638770482335488,
+          "start_day": 4.7672360337038
+        },
+        "leaked_usd": 7659.88,
+        "attack_usd": 68928.64,
+        "leakage_pct": 11.1128
+      }
+    },
+    "strongest_attacker_family": "ring",
+    "attacker_pools": {
+      "ring": [
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 3,
+            "rate_per_day": 1.5,
+            "amount_median": 120.0,
+            "amount_sigma": 0.5051780430614142,
+            "account_age_days": 60.0,
+            "start_day": 0.0
+          },
+          "leaked_usd": 23553.83,
+          "attack_usd": 167990.68,
+          "leakage_pct": 14.0209
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 2,
+            "rate_per_day": 1.5,
+            "amount_median": 120.0,
+            "amount_sigma": 0.46949898952764163,
+            "account_age_days": 62.97765389956644,
+            "start_day": 0.0
+          },
+          "leaked_usd": 19011.56,
+          "attack_usd": 165145.0,
+          "leakage_pct": 11.512
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 2,
+            "rate_per_day": 1.5,
+            "amount_median": 120.0,
+            "amount_sigma": 0.36661426294997734,
+            "account_age_days": 60.0,
+            "start_day": 0.0
+          },
+          "leaked_usd": 18083.19,
+          "attack_usd": 158270.17,
+          "leakage_pct": 11.4255
+        }
+      ],
+      "structuring": [
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 21.2707136144164,
+            "k": 6,
+            "burst_window_hours": 10.15574510131192,
+            "n_bursts": 3,
+            "account_age_days": 11.638770482335488,
+            "start_day": 4.7672360337038
+          },
+          "leaked_usd": 7659.88,
+          "attack_usd": 68928.64,
+          "leakage_pct": 11.1128
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 11.884123173242289,
+            "k": 5,
+            "burst_window_hours": 12.0,
+            "n_bursts": 3,
+            "account_age_days": 11.608549638544286,
+            "start_day": 3.4395065592747844
+          },
+          "leaked_usd": 6346.22,
+          "attack_usd": 58572.7,
+          "leakage_pct": 10.8348
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 28.18340737940935,
+            "k": 6,
+            "burst_window_hours": 12.0,
+            "n_bursts": 3,
+            "account_age_days": 15.122705428692088,
+            "start_day": 3.164862266579972
+          },
+          "leaked_usd": 4717.44,
+          "attack_usd": 67933.26,
+          "leakage_pct": 6.9442
+        }
+      ]
+    },
+    "champion_weights": {
+      "velocity": 0.067315,
+      "graph": 0.825837,
+      "drift": 0.056849,
+      "policy": 0.05
+    },
+    "fitness_best": 14.325281,
+    "fitness_mean": 15.882855
+  },
+  {
+    "generation": 14,
+    "champion_id": "g4-0",
+    "champion_gate": {
+      "objective": 17.529409,
+      "leakage_pct": 15.418115,
+      "honest_block_rate": 3.558148,
+      "honest_unpaid_rate": 0.33222
+    },
+    "challenger": {
+      "id": "g13-5",
+      "params": {
+        "vel_usd_lo": 1116.5839445911836,
+        "vel_usd_width": 1641.139753033103,
+        "vel_n_lo": 8.210631108056633,
+        "vel_n_width": 2.913867426638004,
+        "graph_dens_lo": 0.4,
+        "graph_dens_width": 0.11957345325171785,
+        "graph_min_workers": 4,
+        "graph_size_width": 3.3926763360094494,
+        "graph_share_min": 3,
+        "drift_min_history": 3,
+        "drift_ratio_lo": 4.66863510474504,
+        "drift_ratio_width": 4.316655302236067,
+        "drift_rate_lo": 4.134421097085525,
+        "drift_rate_width": 2.790033490322813,
+        "policy_cap_base_usd": 94.10322941486113,
+        "policy_cap_per_day_usd": 5.437081850400011,
+        "policy_cap_max_usd": 498.81762832179845,
+        "policy_window_mult": 4.343249716043787,
+        "w0_velocity": 0.6104727078719084,
+        "w0_graph": 1.0,
+        "w0_drift": 0.671466842991433,
+        "w0_policy": 0.5766859079598705,
+        "step_up_threshold": 0.5,
+        "hold_threshold": 0.5572073021872906,
+        "eta": 0.005,
+        "min_weight": 0.05,
+        "l1_abstain": 0
+      },
+      "objective_a": 15.654926,
+      "objective_b": 17.142819,
+      "gate": {
+        "objective": 17.142819,
+        "leakage_pct": 15.391116,
+        "honest_block_rate": 2.937124,
+        "honest_unpaid_rate": 0.283142
+      }
+    },
+    "promoted": false,
+    "rolled_back": false,
+    "rollback": null,
+    "champion_id_after": "g4-0",
+    "attackers_scored_against": "g4-0",
+    "strongest_attacker": {
+      "ring": {
+        "family": "ring",
+        "params": {
+          "ring_size": 30,
+          "n_requesters": 3,
+          "rate_per_day": 1.5,
+          "amount_median": 120.0,
+          "amount_sigma": 0.5051780430614142,
+          "account_age_days": 60.0,
+          "start_day": 0.0
+        },
+        "leaked_usd": 21421.19,
+        "attack_usd": 176175.36,
+        "leakage_pct": 12.159
+      },
+      "structuring": {
+        "family": "structuring",
+        "params": {
+          "n_accounts": 4,
+          "eps": 21.2707136144164,
+          "k": 6,
+          "burst_window_hours": 10.15574510131192,
+          "n_bursts": 3,
+          "account_age_days": 11.638770482335488,
+          "start_day": 4.7672360337038
+        },
+        "leaked_usd": 11494.75,
+        "attack_usd": 68947.99,
+        "leakage_pct": 16.6716
+      }
+    },
+    "strongest_attacker_family": "ring",
+    "attacker_pools": {
+      "ring": [
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 3,
+            "rate_per_day": 1.5,
+            "amount_median": 120.0,
+            "amount_sigma": 0.5051780430614142,
+            "account_age_days": 60.0,
+            "start_day": 0.0
+          },
+          "leaked_usd": 21421.19,
+          "attack_usd": 176175.36,
+          "leakage_pct": 12.159
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 3,
+            "rate_per_day": 1.152626541488027,
+            "amount_median": 120.0,
+            "amount_sigma": 0.5937099533502628,
+            "account_age_days": 60.0,
+            "start_day": 0.0
+          },
+          "leaked_usd": 20464.83,
+          "attack_usd": 143486.44,
+          "leakage_pct": 14.2626
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 2,
+            "rate_per_day": 1.5,
+            "amount_median": 120.0,
+            "amount_sigma": 0.46949898952764163,
+            "account_age_days": 62.97765389956644,
+            "start_day": 0.0
+          },
+          "leaked_usd": 17865.11,
+          "attack_usd": 173145.99,
+          "leakage_pct": 10.3179
+        }
+      ],
+      "structuring": [
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 21.2707136144164,
+            "k": 6,
+            "burst_window_hours": 10.15574510131192,
+            "n_bursts": 3,
+            "account_age_days": 11.638770482335488,
+            "start_day": 4.7672360337038
+          },
+          "leaked_usd": 11494.75,
+          "attack_usd": 68947.99,
+          "leakage_pct": 16.6716
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 28.18340737940935,
+            "k": 6,
+            "burst_window_hours": 12.0,
+            "n_bursts": 3,
+            "account_age_days": 15.122705428692088,
+            "start_day": 3.164862266579972
+          },
+          "leaked_usd": 6603.19,
+          "attack_usd": 67952.59,
+          "leakage_pct": 9.7173
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 11.884123173242289,
+            "k": 5,
+            "burst_window_hours": 12.0,
+            "n_bursts": 3,
+            "account_age_days": 11.608549638544286,
+            "start_day": 3.4395065592747844
+          },
+          "leaked_usd": 6353.04,
+          "attack_usd": 58572.09,
+          "leakage_pct": 10.8465
+        }
+      ]
+    },
+    "champion_weights": {
+      "velocity": 0.075335,
+      "graph": 0.808305,
+      "drift": 0.06636,
+      "policy": 0.05
+    },
+    "fitness_best": 15.654926,
+    "fitness_mean": 16.801304
+  },
+  {
+    "generation": 15,
+    "champion_id": "g4-0",
+    "champion_gate": {
+      "objective": 18.17175,
+      "leakage_pct": 16.00808,
+      "honest_block_rate": 3.622451,
+      "honest_unpaid_rate": 0.352444
+    },
+    "challenger": {
+      "id": "g13-5",
+      "params": {
+        "vel_usd_lo": 1116.5839445911836,
+        "vel_usd_width": 1641.139753033103,
+        "vel_n_lo": 8.210631108056633,
+        "vel_n_width": 2.913867426638004,
+        "graph_dens_lo": 0.4,
+        "graph_dens_width": 0.11957345325171785,
+        "graph_min_workers": 4,
+        "graph_size_width": 3.3926763360094494,
+        "graph_share_min": 3,
+        "drift_min_history": 3,
+        "drift_ratio_lo": 4.66863510474504,
+        "drift_ratio_width": 4.316655302236067,
+        "drift_rate_lo": 4.134421097085525,
+        "drift_rate_width": 2.790033490322813,
+        "policy_cap_base_usd": 94.10322941486113,
+        "policy_cap_per_day_usd": 5.437081850400011,
+        "policy_cap_max_usd": 498.81762832179845,
+        "policy_window_mult": 4.343249716043787,
+        "w0_velocity": 0.6104727078719084,
+        "w0_graph": 1.0,
+        "w0_drift": 0.671466842991433,
+        "w0_policy": 0.5766859079598705,
+        "step_up_threshold": 0.5,
+        "hold_threshold": 0.5572073021872906,
+        "eta": 0.005,
+        "min_weight": 0.05,
+        "l1_abstain": 0
+      },
+      "objective_a": 15.324484,
+      "objective_b": 17.67659,
+      "gate": {
+        "objective": 17.67659,
+        "leakage_pct": 15.907771,
+        "honest_block_rate": 2.934524,
+        "honest_unpaid_rate": 0.301557
+      }
+    },
+    "promoted": false,
+    "rolled_back": false,
+    "rollback": null,
+    "champion_id_after": "g4-0",
+    "attackers_scored_against": "g4-0",
+    "strongest_attacker": {
+      "ring": {
+        "family": "ring",
+        "params": {
+          "ring_size": 30,
+          "n_requesters": 4,
+          "rate_per_day": 1.181395074325416,
+          "amount_median": 106.56423194838071,
+          "amount_sigma": 0.5978376966192445,
+          "account_age_days": 60.0,
+          "start_day": 0.0
+        },
+        "leaked_usd": 25391.3,
+        "attack_usd": 129730.74,
+        "leakage_pct": 19.5723
+      },
+      "structuring": {
+        "family": "structuring",
+        "params": {
+          "n_accounts": 4,
+          "eps": 34.95381251726773,
+          "k": 5,
+          "burst_window_hours": 12.0,
+          "n_bursts": 3,
+          "account_age_days": 13.006581824422971,
+          "start_day": 3.540758409599102
+        },
+        "leaked_usd": 8838.1,
+        "attack_usd": 55797.05,
+        "leakage_pct": 15.8397
+      }
+    },
+    "strongest_attacker_family": "ring",
+    "attacker_pools": {
+      "ring": [
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 4,
+            "rate_per_day": 1.181395074325416,
+            "amount_median": 106.56423194838071,
+            "amount_sigma": 0.5978376966192445,
+            "account_age_days": 60.0,
+            "start_day": 0.0
+          },
+          "leaked_usd": 25391.3,
+          "attack_usd": 129730.74,
+          "leakage_pct": 19.5723
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 3,
+            "rate_per_day": 1.5,
+            "amount_median": 120.0,
+            "amount_sigma": 0.5051780430614142,
+            "account_age_days": 60.0,
+            "start_day": 0.0
+          },
+          "leaked_usd": 22707.58,
+          "attack_usd": 176927.74,
+          "leakage_pct": 12.8344
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 2,
+            "rate_per_day": 1.5,
+            "amount_median": 120.0,
+            "amount_sigma": 0.46949898952764163,
+            "account_age_days": 62.97765389956644,
+            "start_day": 0.0
+          },
+          "leaked_usd": 20099.85,
+          "attack_usd": 174113.57,
+          "leakage_pct": 11.5441
+        }
+      ],
+      "structuring": [
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 34.95381251726773,
+            "k": 5,
+            "burst_window_hours": 12.0,
+            "n_bursts": 3,
+            "account_age_days": 13.006581824422971,
+            "start_day": 3.540758409599102
+          },
+          "leaked_usd": 8838.1,
+          "attack_usd": 55797.05,
+          "leakage_pct": 15.8397
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 11.884123173242289,
+            "k": 5,
+            "burst_window_hours": 12.0,
+            "n_bursts": 3,
+            "account_age_days": 11.608549638544286,
+            "start_day": 3.4395065592747844
+          },
+          "leaked_usd": 8298.83,
+          "attack_usd": 58565.42,
+          "leakage_pct": 14.1702
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 21.2707136144164,
+            "k": 6,
+            "burst_window_hours": 10.15574510131192,
+            "n_bursts": 3,
+            "account_age_days": 11.638770482335488,
+            "start_day": 4.7672360337038
+          },
+          "leaked_usd": 8137.73,
+          "attack_usd": 68946.02,
+          "leakage_pct": 11.803
+        }
+      ]
+    },
+    "champion_weights": {
+      "velocity": 0.081427,
+      "graph": 0.797676,
+      "drift": 0.070897,
+      "policy": 0.05
+    },
+    "fitness_best": 15.324484,
+    "fitness_mean": 16.586818
+  },
+  {
+    "generation": 16,
+    "champion_id": "g4-0",
+    "champion_gate": {
+      "objective": 18.381498,
+      "leakage_pct": 16.295446,
+      "honest_block_rate": 3.536643,
+      "honest_unpaid_rate": 0.31773
+    },
+    "challenger": {
+      "id": "g16-1",
+      "params": {
+        "vel_usd_lo": 1226.2086358509941,
+        "vel_usd_width": 1641.139753033103,
+        "vel_n_lo": 9.348209888552793,
+        "vel_n_width": 2.913867426638004,
+        "graph_dens_lo": 0.4,
+        "graph_dens_width": 0.12283175098517732,
+        "graph_min_workers": 4,
+        "graph_size_width": 2.710306073103985,
+        "graph_share_min": 3,
+        "drift_min_history": 3,
+        "drift_ratio_lo": 4.66863510474504,
+        "drift_ratio_width": 4.148316148398215,
+        "drift_rate_lo": 2.8031367136819636,
+        "drift_rate_width": 2.790033490322813,
+        "policy_cap_base_usd": 220.82158435282275,
+        "policy_cap_per_day_usd": 3.832125373305253,
+        "policy_cap_max_usd": 498.81762832179845,
+        "policy_window_mult": 4.343249716043787,
+        "w0_velocity": 0.6104727078719084,
+        "w0_graph": 1.0,
+        "w0_drift": 0.6104220230519607,
+        "w0_policy": 0.5766859079598705,
+        "step_up_threshold": 0.5,
+        "hold_threshold": 0.5525615635640005,
+        "eta": 0.005,
+        "min_weight": 0.05,
+        "l1_abstain": 0
+      },
+      "objective_a": 15.571408,
+      "objective_b": 17.90954,
+      "gate": {
+        "objective": 17.90954,
+        "leakage_pct": 16.17337,
+        "honest_block_rate": 2.94279,
+        "honest_unpaid_rate": 0.264775
+      }
+    },
+    "promoted": false,
+    "rolled_back": false,
+    "rollback": null,
+    "champion_id_after": "g4-0",
+    "attackers_scored_against": "g4-0",
+    "strongest_attacker": {
+      "ring": {
+        "family": "ring",
+        "params": {
+          "ring_size": 30,
+          "n_requesters": 4,
+          "rate_per_day": 1.181395074325416,
+          "amount_median": 106.56423194838071,
+          "amount_sigma": 0.5978376966192445,
+          "account_age_days": 60.0,
+          "start_day": 0.0
+        },
+        "leaked_usd": 24289.55,
+        "attack_usd": 129740.01,
+        "leakage_pct": 18.7217
+      },
+      "structuring": {
+        "family": "structuring",
+        "params": {
+          "n_accounts": 4,
+          "eps": 11.884123173242289,
+          "k": 5,
+          "burst_window_hours": 12.0,
+          "n_bursts": 3,
+          "account_age_days": 11.608549638544286,
+          "start_day": 3.4395065592747844
+        },
+        "leaked_usd": 9767.68,
+        "attack_usd": 58580.63,
+        "leakage_pct": 16.6739
+      }
+    },
+    "strongest_attacker_family": "ring",
+    "attacker_pools": {
+      "ring": [
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 4,
+            "rate_per_day": 1.181395074325416,
+            "amount_median": 106.56423194838071,
+            "amount_sigma": 0.5978376966192445,
+            "account_age_days": 60.0,
+            "start_day": 0.0
+          },
+          "leaked_usd": 24289.55,
+          "attack_usd": 129740.01,
+          "leakage_pct": 18.7217
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 3,
+            "rate_per_day": 1.4834404475395047,
+            "amount_median": 120.0,
+            "amount_sigma": 0.46383223380570726,
+            "account_age_days": 195.7246519571555,
+            "start_day": 0.0
+          },
+          "leaked_usd": 22591.13,
+          "attack_usd": 169062.0,
+          "leakage_pct": 13.3626
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 3,
+            "rate_per_day": 1.5,
+            "amount_median": 120.0,
+            "amount_sigma": 0.5051780430614142,
+            "account_age_days": 60.0,
+            "start_day": 0.0
+          },
+          "leaked_usd": 20402.81,
+          "attack_usd": 171094.98,
+          "leakage_pct": 11.9248
+        }
+      ],
+      "structuring": [
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 11.884123173242289,
+            "k": 5,
+            "burst_window_hours": 12.0,
+            "n_bursts": 3,
+            "account_age_days": 11.608549638544286,
+            "start_day": 3.4395065592747844
+          },
+          "leaked_usd": 9767.68,
+          "attack_usd": 58580.63,
+          "leakage_pct": 16.6739
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 21.2707136144164,
+            "k": 6,
+            "burst_window_hours": 10.15574510131192,
+            "n_bursts": 3,
+            "account_age_days": 11.638770482335488,
+            "start_day": 4.7672360337038
+          },
+          "leaked_usd": 8142.54,
+          "attack_usd": 68960.58,
+          "leakage_pct": 11.8075
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 41.7842733627839,
+            "k": 5,
+            "burst_window_hours": 9.856637491225937,
+            "n_bursts": 2,
+            "account_age_days": 11.53350332582063,
+            "start_day": 3.215020186717818
+          },
+          "leaked_usd": 7795.39,
+          "attack_usd": 36659.22,
+          "leakage_pct": 21.2645
+        }
+      ]
+    },
+    "champion_weights": {
+      "velocity": 0.08394,
+      "graph": 0.786679,
+      "drift": 0.07938,
+      "policy": 0.05
+    },
+    "fitness_best": 15.571408,
+    "fitness_mean": 16.911299
+  },
+  {
+    "generation": 17,
+    "champion_id": "g4-0",
+    "champion_gate": {
+      "objective": 19.094322,
+      "leakage_pct": 17.010202,
+      "honest_block_rate": 3.541494,
+      "honest_unpaid_rate": 0.313373
+    },
+    "challenger": {
+      "id": "g17-7",
+      "params": {
+        "vel_usd_lo": 1377.651621317464,
+        "vel_usd_width": 1641.139753033103,
+        "vel_n_lo": 9.808655158209607,
+        "vel_n_width": 2.6378879250695135,
+        "graph_dens_lo": 0.4097716540821028,
+        "graph_dens_width": 0.07441139106995405,
+        "graph_min_workers": 4,
+        "graph_size_width": 2.710306073103985,
+        "graph_share_min": 3,
+        "drift_min_history": 5,
+        "drift_ratio_lo": 4.695850324564708,
+        "drift_ratio_width": 6.0,
+        "drift_rate_lo": 2.808367711789791,
+        "drift_rate_width": 3.476425328729291,
+        "policy_cap_base_usd": 220.82158435282275,
+        "policy_cap_per_day_usd": 3.832125373305253,
+        "policy_cap_max_usd": 498.81762832179845,
+        "policy_window_mult": 4.292189153666135,
+        "w0_velocity": 0.5022655215514782,
+        "w0_graph": 1.0,
+        "w0_drift": 0.6923301665935403,
+        "w0_policy": 0.4966672047738837,
+        "step_up_threshold": 0.5,
+        "hold_threshold": 0.55,
+        "eta": 0.005,
+        "min_weight": 0.014686901351744785,
+        "l1_abstain": 0
+      },
+      "objective_a": 16.218465,
+      "objective_b": 18.121674,
+      "gate": {
+        "objective": 18.121674,
+        "leakage_pct": 16.189521,
+        "honest_block_rate": 3.233784,
+        "honest_unpaid_rate": 0.315261
+      }
+    },
+    "promoted": true,
+    "rolled_back": false,
+    "rollback": null,
+    "champion_id_after": "g17-7",
+    "attackers_scored_against": "g4-0",
+    "strongest_attacker": {
+      "ring": {
+        "family": "ring",
+        "params": {
+          "ring_size": 29,
+          "n_requesters": 5,
+          "rate_per_day": 1.1366555009999473,
+          "amount_median": 101.41001035613367,
+          "amount_sigma": 0.5738857037939331,
+          "account_age_days": 60.0,
+          "start_day": 0.0
+        },
+        "leaked_usd": 27135.41,
+        "attack_usd": 116571.11,
+        "leakage_pct": 23.278
+      },
+      "structuring": {
+        "family": "structuring",
+        "params": {
+          "n_accounts": 4,
+          "eps": 21.2707136144164,
+          "k": 6,
+          "burst_window_hours": 10.15574510131192,
+          "n_bursts": 3,
+          "account_age_days": 11.638770482335488,
+          "start_day": 4.7672360337038
+        },
+        "leaked_usd": 8615.38,
+        "attack_usd": 68936.33,
+        "leakage_pct": 12.4976
+      }
+    },
+    "strongest_attacker_family": "ring",
+    "attacker_pools": {
+      "ring": [
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 29,
+            "n_requesters": 5,
+            "rate_per_day": 1.1366555009999473,
+            "amount_median": 101.41001035613367,
+            "amount_sigma": 0.5738857037939331,
+            "account_age_days": 60.0,
+            "start_day": 0.0
+          },
+          "leaked_usd": 27135.41,
+          "attack_usd": 116571.11,
+          "leakage_pct": 23.278
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 4,
+            "rate_per_day": 1.181395074325416,
+            "amount_median": 106.56423194838071,
+            "amount_sigma": 0.5978376966192445,
+            "account_age_days": 60.0,
+            "start_day": 0.0
+          },
+          "leaked_usd": 25675.61,
+          "attack_usd": 129277.05,
+          "leakage_pct": 19.8609
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 3,
+            "rate_per_day": 1.5,
+            "amount_median": 120.0,
+            "amount_sigma": 0.5051780430614142,
+            "account_age_days": 60.0,
+            "start_day": 0.0
+          },
+          "leaked_usd": 25469.11,
+          "attack_usd": 175636.79,
+          "leakage_pct": 14.501
+        }
+      ],
+      "structuring": [
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 21.2707136144164,
+            "k": 6,
+            "burst_window_hours": 10.15574510131192,
+            "n_bursts": 3,
+            "account_age_days": 11.638770482335488,
+            "start_day": 4.7672360337038
+          },
+          "leaked_usd": 8615.38,
+          "attack_usd": 68936.33,
+          "leakage_pct": 12.4976
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 3.59469380370977,
+            "k": 5,
+            "burst_window_hours": 7.029917737666443,
+            "n_bursts": 3,
+            "account_age_days": 12.190587467341704,
+            "start_day": 4.578009906820946
+          },
+          "leaked_usd": 5948.95,
+          "attack_usd": 59563.13,
+          "leakage_pct": 9.9876
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 11.884123173242289,
+            "k": 5,
+            "burst_window_hours": 12.0,
+            "n_bursts": 3,
+            "account_age_days": 11.608549638544286,
+            "start_day": 3.4395065592747844
+          },
+          "leaked_usd": 5376.46,
+          "attack_usd": 58568.42,
+          "leakage_pct": 9.1798
+        }
+      ]
+    },
+    "champion_weights": {
+      "velocity": 0.110439,
+      "graph": 0.734512,
+      "drift": 0.093896,
+      "policy": 0.061153
+    },
+    "fitness_best": 16.218465,
+    "fitness_mean": 18.035582
+  },
+  {
+    "generation": 18,
+    "champion_id": "g17-7",
+    "champion_gate": {
+      "objective": 18.367252,
+      "leakage_pct": 16.463439,
+      "honest_block_rate": 3.192943,
+      "honest_unpaid_rate": 0.307342
+    },
+    "challenger": {
+      "id": "g18-16",
+      "params": {
+        "vel_usd_lo": 909.8717972014816,
+        "vel_usd_width": 1641.139753033103,
+        "vel_n_lo": 9.348209888552793,
+        "vel_n_width": 2.3482011246963403,
+        "graph_dens_lo": 0.3796560933960288,
+        "graph_dens_width": 0.146076879622754,
+        "graph_min_workers": 4,
+        "graph_size_width": 3.3926763360094494,
+        "graph_share_min": 4,
+        "drift_min_history": 3,
+        "drift_ratio_lo": 4.550436804576091,
+        "drift_ratio_width": 4.316655302236067,
+        "drift_rate_lo": 4.43449965652975,
+        "drift_rate_width": 3.0519878968195218,
+        "policy_cap_base_usd": 94.10322941486113,
+        "policy_cap_per_day_usd": 5.437081850400011,
+        "policy_cap_max_usd": 498.81762832179845,
+        "policy_window_mult": 4.343249716043787,
+        "w0_velocity": 0.6104727078719084,
+        "w0_graph": 1.0,
+        "w0_drift": 0.6104220230519607,
+        "w0_policy": 0.6349867275995046,
+        "step_up_threshold": 0.5,
+        "hold_threshold": 0.55,
+        "eta": 0.005,
+        "min_weight": 0.05,
+        "l1_abstain": 0
+      },
+      "objective_a": 15.105546,
+      "objective_b": 18.486674,
+      "gate": {
+        "objective": 18.486674,
+        "leakage_pct": 16.7242,
+        "honest_block_rate": 2.974768,
+        "honest_unpaid_rate": 0.27509
+      }
+    },
+    "promoted": false,
+    "rolled_back": false,
+    "rollback": null,
+    "champion_id_after": "g17-7",
+    "attackers_scored_against": "g17-7",
+    "strongest_attacker": {
+      "ring": {
+        "family": "ring",
+        "params": {
+          "ring_size": 30,
+          "n_requesters": 5,
+          "rate_per_day": 1.2286199358174477,
+          "amount_median": 115.05426717837905,
+          "amount_sigma": 0.6210658992043541,
+          "account_age_days": 60.0,
+          "start_day": 0.0
+        },
+        "leaked_usd": 27123.85,
+        "attack_usd": 139852.07,
+        "leakage_pct": 19.3947
+      },
+      "structuring": {
+        "family": "structuring",
+        "params": {
+          "n_accounts": 4,
+          "eps": 3.59469380370977,
+          "k": 5,
+          "burst_window_hours": 7.029917737666443,
+          "n_bursts": 3,
+          "account_age_days": 12.190587467341704,
+          "start_day": 4.578009906820946
+        },
+        "leaked_usd": 8437.13,
+        "attack_usd": 59567.46,
+        "leakage_pct": 14.164
+      }
+    },
+    "strongest_attacker_family": "ring",
+    "attacker_pools": {
+      "ring": [
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 5,
+            "rate_per_day": 1.2286199358174477,
+            "amount_median": 115.05426717837905,
+            "amount_sigma": 0.6210658992043541,
+            "account_age_days": 60.0,
+            "start_day": 0.0
+          },
+          "leaked_usd": 27123.85,
+          "attack_usd": 139852.07,
+          "leakage_pct": 19.3947
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 3,
+            "rate_per_day": 1.5,
+            "amount_median": 120.0,
+            "amount_sigma": 0.5051780430614142,
+            "account_age_days": 60.0,
+            "start_day": 0.0
+          },
+          "leaked_usd": 21609.93,
+          "attack_usd": 167990.68,
+          "leakage_pct": 12.8638
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 4,
+            "rate_per_day": 1.181395074325416,
+            "amount_median": 106.56423194838071,
+            "amount_sigma": 0.5978376966192445,
+            "account_age_days": 60.0,
+            "start_day": 0.0
+          },
+          "leaked_usd": 20865.31,
+          "attack_usd": 134952.73,
+          "leakage_pct": 15.4612
+        }
+      ],
+      "structuring": [
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 3.59469380370977,
+            "k": 5,
+            "burst_window_hours": 7.029917737666443,
+            "n_bursts": 3,
+            "account_age_days": 12.190587467341704,
+            "start_day": 4.578009906820946
+          },
+          "leaked_usd": 8437.13,
+          "attack_usd": 59567.46,
+          "leakage_pct": 14.164
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 21.2707136144164,
+            "k": 6,
+            "burst_window_hours": 10.15574510131192,
+            "n_bursts": 3,
+            "account_age_days": 11.638770482335488,
+            "start_day": 4.7672360337038
+          },
+          "leaked_usd": 7659.88,
+          "attack_usd": 68928.64,
+          "leakage_pct": 11.1128
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 11.884123173242289,
+            "k": 5,
+            "burst_window_hours": 12.0,
+            "n_bursts": 3,
+            "account_age_days": 11.608549638544286,
+            "start_day": 3.4395065592747844
+          },
+          "leaked_usd": 6346.22,
+          "attack_usd": 58572.7,
+          "leakage_pct": 10.8348
+        }
+      ]
+    },
+    "champion_weights": {
+      "velocity": 0.081865,
+      "graph": 0.72155,
+      "drift": 0.110019,
+      "policy": 0.086567
+    },
+    "fitness_best": 15.105546,
+    "fitness_mean": 17.088378
+  },
+  {
+    "generation": 19,
+    "champion_id": "g17-7",
+    "champion_gate": {
+      "objective": 18.492803,
+      "leakage_pct": 16.568023,
+      "honest_block_rate": 3.227752,
+      "honest_unpaid_rate": 0.310904
+    },
+    "challenger": {
+      "id": "g19-8",
+      "params": {
+        "vel_usd_lo": 1500.0,
+        "vel_usd_width": 1641.139753033103,
+        "vel_n_lo": 8.210631108056633,
+        "vel_n_width": 2.913867426638004,
+        "graph_dens_lo": 0.3026047636385144,
+        "graph_dens_width": 0.2679502256051055,
+        "graph_min_workers": 4,
+        "graph_size_width": 2.710306073103985,
+        "graph_share_min": 3,
+        "drift_min_history": 4,
+        "drift_ratio_lo": 4.643208850956646,
+        "drift_ratio_width": 4.233903139330966,
+        "drift_rate_lo": 3.064317588751247,
+        "drift_rate_width": 2.9536183324024865,
+        "policy_cap_base_usd": 150.38540299945532,
+        "policy_cap_per_day_usd": 3.9475490110376708,
+        "policy_cap_max_usd": 478.3628315206295,
+        "policy_window_mult": 4.343249716043787,
+        "w0_velocity": 0.5842725176698356,
+        "w0_graph": 1.0,
+        "w0_drift": 0.6167478075644072,
+        "w0_policy": 0.5226849228509949,
+        "step_up_threshold": 0.4712224859435043,
+        "hold_threshold": 0.5525615635640005,
+        "eta": 0.006547678588549225,
+        "min_weight": 0.0872649887566295,
+        "l1_abstain": 1
+      },
+      "objective_a": 16.315469,
+      "objective_b": 18.557138,
+      "gate": {
+        "objective": 18.557138,
+        "leakage_pct": 16.431683,
+        "honest_block_rate": 3.587647,
+        "honest_unpaid_rate": 0.331631
+      }
+    },
+    "promoted": false,
+    "rolled_back": false,
+    "rollback": null,
+    "champion_id_after": "g17-7",
+    "attackers_scored_against": "g17-7",
+    "strongest_attacker": {
+      "ring": {
+        "family": "ring",
+        "params": {
+          "ring_size": 30,
+          "n_requesters": 5,
+          "rate_per_day": 1.2286199358174477,
+          "amount_median": 115.05426717837905,
+          "amount_sigma": 0.6210658992043541,
+          "account_age_days": 60.0,
+          "start_day": 0.0
+        },
+        "leaked_usd": 26588.59,
+        "attack_usd": 150633.81,
+        "leakage_pct": 17.6511
+      },
+      "structuring": {
+        "family": "structuring",
+        "params": {
+          "n_accounts": 4,
+          "eps": 21.2707136144164,
+          "k": 6,
+          "burst_window_hours": 10.15574510131192,
+          "n_bursts": 3,
+          "account_age_days": 11.638770482335488,
+          "start_day": 4.7672360337038
+        },
+        "leaked_usd": 11494.75,
+        "attack_usd": 68947.99,
+        "leakage_pct": 16.6716
+      }
+    },
+    "strongest_attacker_family": "ring",
+    "attacker_pools": {
+      "ring": [
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 5,
+            "rate_per_day": 1.2286199358174477,
+            "amount_median": 115.05426717837905,
+            "amount_sigma": 0.6210658992043541,
+            "account_age_days": 60.0,
+            "start_day": 0.0
+          },
+          "leaked_usd": 26588.59,
+          "attack_usd": 150633.81,
+          "leakage_pct": 17.6511
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 29,
+            "n_requesters": 5,
+            "rate_per_day": 0.9403410548495408,
+            "amount_median": 116.50994721248158,
+            "amount_sigma": 0.6945039461019085,
+            "account_age_days": 69.3625240664364,
+            "start_day": 0.0
+          },
+          "leaked_usd": 21085.88,
+          "attack_usd": 109239.26,
+          "leakage_pct": 19.3025
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 3,
+            "rate_per_day": 1.5,
+            "amount_median": 120.0,
+            "amount_sigma": 0.5051780430614142,
+            "account_age_days": 60.0,
+            "start_day": 0.0
+          },
+          "leaked_usd": 20147.5,
+          "attack_usd": 176175.36,
+          "leakage_pct": 11.436
+        }
+      ],
+      "structuring": [
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 21.2707136144164,
+            "k": 6,
+            "burst_window_hours": 10.15574510131192,
+            "n_bursts": 3,
+            "account_age_days": 11.638770482335488,
+            "start_day": 4.7672360337038
+          },
+          "leaked_usd": 11494.75,
+          "attack_usd": 68947.99,
+          "leakage_pct": 16.6716
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 3,
+            "eps": 3.1326975442722484,
+            "k": 5,
+            "burst_window_hours": 6.269059938099718,
+            "n_bursts": 3,
+            "account_age_days": 5.811591003304441,
+            "start_day": 3.314279265708004
+          },
+          "leaked_usd": 9443.02,
+          "attack_usd": 44708.46,
+          "leakage_pct": 21.1213
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 3.59469380370977,
+            "k": 5,
+            "burst_window_hours": 7.029917737666443,
+            "n_bursts": 3,
+            "account_age_days": 12.190587467341704,
+            "start_day": 4.578009906820946
+          },
+          "leaked_usd": 7445.08,
+          "attack_usd": 59566.79,
+          "leakage_pct": 12.4987
+        }
+      ]
+    },
+    "champion_weights": {
+      "velocity": 0.060878,
+      "graph": 0.793817,
+      "drift": 0.078105,
+      "policy": 0.0672
+    },
+    "fitness_best": 16.176665,
+    "fitness_mean": 17.646284
+  },
+  {
+    "generation": 20,
+    "champion_id": "g17-7",
+    "champion_gate": {
+      "objective": 19.155081,
+      "leakage_pct": 17.23922,
+      "honest_block_rate": 3.205672,
+      "honest_unpaid_rate": 0.313024
+    },
+    "challenger": {
+      "id": "g20-19",
+      "params": {
+        "vel_usd_lo": 1365.3660142909623,
+        "vel_usd_width": 1562.8047725542501,
+        "vel_n_lo": 9.808655158209607,
+        "vel_n_width": 2.6143943103581933,
+        "graph_dens_lo": 0.4,
+        "graph_dens_width": 0.07441139106995405,
+        "graph_min_workers": 4,
+        "graph_size_width": 2.7155088824197735,
+        "graph_share_min": 3,
+        "drift_min_history": 5,
+        "drift_ratio_lo": 4.695850324564708,
+        "drift_ratio_width": 3.060082052803947,
+        "drift_rate_lo": 3.0155018542763043,
+        "drift_rate_width": 3.476425328729291,
+        "policy_cap_base_usd": 220.82158435282275,
+        "policy_cap_per_day_usd": 3.1358824566011236,
+        "policy_cap_max_usd": 555.0748826749222,
+        "policy_window_mult": 4.21593383704178,
+        "w0_velocity": 0.6104727078719084,
+        "w0_graph": 1.0,
+        "w0_drift": 0.7087242193698612,
+        "w0_policy": 0.6536291257710446,
+        "step_up_threshold": 0.5,
+        "hold_threshold": 0.55,
+        "eta": 0.005,
+        "min_weight": 0.014686901351744785,
+        "l1_abstain": 1
+      },
+      "objective_a": 17.575867,
+      "objective_b": 18.94938,
+      "gate": {
+        "objective": 18.94938,
+        "leakage_pct": 16.986377,
+        "honest_block_rate": 3.288642,
+        "honest_unpaid_rate": 0.318682
+      }
+    },
+    "promoted": false,
+    "rolled_back": false,
+    "rollback": null,
+    "champion_id_after": "g17-7",
+    "attackers_scored_against": "g17-7",
+    "strongest_attacker": {
+      "ring": {
+        "family": "ring",
+        "params": {
+          "ring_size": 30,
+          "n_requesters": 5,
+          "rate_per_day": 1.0131414801529057,
+          "amount_median": 120.0,
+          "amount_sigma": 0.5923643618218,
+          "account_age_days": 60.0,
+          "start_day": 0.0
+        },
+        "leaked_usd": 24078.57,
+        "attack_usd": 124690.96,
+        "leakage_pct": 19.3106
+      },
+      "structuring": {
+        "family": "structuring",
+        "params": {
+          "n_accounts": 4,
+          "eps": 21.2707136144164,
+          "k": 6,
+          "burst_window_hours": 10.15574510131192,
+          "n_bursts": 3,
+          "account_age_days": 11.638770482335488,
+          "start_day": 4.7672360337038
+        },
+        "leaked_usd": 8137.73,
+        "attack_usd": 68946.02,
+        "leakage_pct": 11.803
+      }
+    },
+    "strongest_attacker_family": "ring",
+    "attacker_pools": {
+      "ring": [
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 5,
+            "rate_per_day": 1.0131414801529057,
+            "amount_median": 120.0,
+            "amount_sigma": 0.5923643618218,
+            "account_age_days": 60.0,
+            "start_day": 0.0
+          },
+          "leaked_usd": 24078.57,
+          "attack_usd": 124690.96,
+          "leakage_pct": 19.3106
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 28,
+            "n_requesters": 5,
+            "rate_per_day": 0.9997855350515088,
+            "amount_median": 110.20315539011219,
+            "amount_sigma": 0.7,
+            "account_age_days": 82.31634960857454,
+            "start_day": 0.0
+          },
+          "leaked_usd": 23480.89,
+          "attack_usd": 115188.04,
+          "leakage_pct": 20.3848
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 5,
+            "rate_per_day": 1.2286199358174477,
+            "amount_median": 115.05426717837905,
+            "amount_sigma": 0.6210658992043541,
+            "account_age_days": 60.0,
+            "start_day": 0.0
+          },
+          "leaked_usd": 23422.55,
+          "attack_usd": 143893.43,
+          "leakage_pct": 16.2777
+        }
+      ],
+      "structuring": [
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 21.2707136144164,
+            "k": 6,
+            "burst_window_hours": 10.15574510131192,
+            "n_bursts": 3,
+            "account_age_days": 11.638770482335488,
+            "start_day": 4.7672360337038
+          },
+          "leaked_usd": 8137.73,
+          "attack_usd": 68946.02,
+          "leakage_pct": 11.803
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 3,
+            "eps": 3.1326975442722484,
+            "k": 5,
+            "burst_window_hours": 6.269059938099718,
+            "n_bursts": 3,
+            "account_age_days": 5.811591003304441,
+            "start_day": 3.314279265708004
+          },
+          "leaked_usd": 7457.43,
+          "attack_usd": 44716.99,
+          "leakage_pct": 16.6769
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 27.76777069518765,
+            "k": 6,
+            "burst_window_hours": 10.200514272467688,
+            "n_bursts": 2,
+            "account_age_days": 14.297409998370624,
+            "start_day": 5.583951408105292
+          },
+          "leaked_usd": 5669.47,
+          "attack_usd": 45339.6,
+          "leakage_pct": 12.5045
+        }
+      ]
+    },
+    "champion_weights": {
+      "velocity": 0.086871,
+      "graph": 0.713066,
+      "drift": 0.109913,
+      "policy": 0.090151
+    },
+    "fitness_best": 17.575867,
+    "fitness_mean": 19.051365
+  },
+  {
+    "generation": 21,
+    "champion_id": "g17-7",
+    "champion_gate": {
+      "objective": 18.833727,
+      "leakage_pct": 16.934478,
+      "honest_block_rate": 3.178026,
+      "honest_unpaid_rate": 0.310236
+    },
+    "challenger": {
+      "id": "g20-19",
+      "params": {
+        "vel_usd_lo": 1365.3660142909623,
+        "vel_usd_width": 1562.8047725542501,
+        "vel_n_lo": 9.808655158209607,
+        "vel_n_width": 2.6143943103581933,
+        "graph_dens_lo": 0.4,
+        "graph_dens_width": 0.07441139106995405,
+        "graph_min_workers": 4,
+        "graph_size_width": 2.7155088824197735,
+        "graph_share_min": 3,
+        "drift_min_history": 5,
+        "drift_ratio_lo": 4.695850324564708,
+        "drift_ratio_width": 3.060082052803947,
+        "drift_rate_lo": 3.0155018542763043,
+        "drift_rate_width": 3.476425328729291,
+        "policy_cap_base_usd": 220.82158435282275,
+        "policy_cap_per_day_usd": 3.1358824566011236,
+        "policy_cap_max_usd": 555.0748826749222,
+        "policy_window_mult": 4.21593383704178,
+        "w0_velocity": 0.6104727078719084,
+        "w0_graph": 1.0,
+        "w0_drift": 0.7087242193698612,
+        "w0_policy": 0.6536291257710446,
+        "step_up_threshold": 0.5,
+        "hold_threshold": 0.55,
+        "eta": 0.005,
+        "min_weight": 0.014686901351744785,
+        "l1_abstain": 1
+      },
+      "objective_a": 17.298049,
+      "objective_b": 18.526016,
+      "gate": {
+        "objective": 18.526016,
+        "leakage_pct": 16.552992,
+        "honest_block_rate": 3.302877,
+        "honest_unpaid_rate": 0.321586
+      }
+    },
+    "promoted": false,
+    "rolled_back": false,
+    "rollback": null,
+    "champion_id_after": "g17-7",
+    "attackers_scored_against": "g17-7",
+    "strongest_attacker": {
+      "ring": {
+        "family": "ring",
+        "params": {
+          "ring_size": 30,
+          "n_requesters": 5,
+          "rate_per_day": 1.2286199358174477,
+          "amount_median": 115.05426717837905,
+          "amount_sigma": 0.6210658992043541,
+          "account_age_days": 60.0,
+          "start_day": 0.0
+        },
+        "leaked_usd": 32222.24,
+        "attack_usd": 140827.22,
+        "leakage_pct": 22.8807
+      },
+      "structuring": {
+        "family": "structuring",
+        "params": {
+          "n_accounts": 4,
+          "eps": 21.392539021927032,
+          "k": 6,
+          "burst_window_hours": 10.512543722436012,
+          "n_bursts": 3,
+          "account_age_days": 10.796132451588257,
+          "start_day": 5.058139347491214
+        },
+        "leaked_usd": 10533.8,
+        "attack_usd": 68943.07,
+        "leakage_pct": 15.279
+      }
+    },
+    "strongest_attacker_family": "ring",
+    "attacker_pools": {
+      "ring": [
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 5,
+            "rate_per_day": 1.2286199358174477,
+            "amount_median": 115.05426717837905,
+            "amount_sigma": 0.6210658992043541,
+            "account_age_days": 60.0,
+            "start_day": 0.0
+          },
+          "leaked_usd": 32222.24,
+          "attack_usd": 140827.22,
+          "leakage_pct": 22.8807
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 30,
+            "n_requesters": 5,
+            "rate_per_day": 1.009910800219206,
+            "amount_median": 120.0,
+            "amount_sigma": 0.6367086708000678,
+            "account_age_days": 73.76550445683554,
+            "start_day": 0.0
+          },
+          "leaked_usd": 29924.26,
+          "attack_usd": 119679.87,
+          "leakage_pct": 25.0036
+        },
+        {
+          "family": "ring",
+          "params": {
+            "ring_size": 28,
+            "n_requesters": 5,
+            "rate_per_day": 0.9997855350515088,
+            "amount_median": 110.20315539011219,
+            "amount_sigma": 0.7,
+            "account_age_days": 82.31634960857454,
+            "start_day": 0.0
+          },
+          "leaked_usd": 26001.7,
+          "attack_usd": 107203.55,
+          "leakage_pct": 24.2545
+        }
+      ],
+      "structuring": [
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 21.392539021927032,
+            "k": 6,
+            "burst_window_hours": 10.512543722436012,
+            "n_bursts": 3,
+            "account_age_days": 10.796132451588257,
+            "start_day": 5.058139347491214
+          },
+          "leaked_usd": 10533.8,
+          "attack_usd": 68943.07,
+          "leakage_pct": 15.279
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 21.2707136144164,
+            "k": 6,
+            "burst_window_hours": 10.15574510131192,
+            "n_bursts": 3,
+            "account_age_days": 11.638770482335488,
+            "start_day": 4.7672360337038
+          },
+          "leaked_usd": 8142.54,
+          "attack_usd": 68960.58,
+          "leakage_pct": 11.8075
+        },
+        {
+          "family": "structuring",
+          "params": {
+            "n_accounts": 4,
+            "eps": 27.76777069518765,
+            "k": 6,
+            "burst_window_hours": 10.200514272467688,
+            "n_bursts": 2,
+            "account_age_days": 14.297409998370624,
+            "start_day": 5.583951408105292
+          },
+          "leaked_usd": 7555.45,
+          "attack_usd": 45338.2,
+          "leakage_pct": 16.6646
+        }
+      ]
+    },
+    "champion_weights": {
+      "velocity": 0.116906,
+      "graph": 0.612493,
+      "drift": 0.150784,
+      "policy": 0.119817
+    },
+    "fitness_best": 17.298049,
+    "fitness_mean": 18.532183
+  }
+]

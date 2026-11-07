@@ -110,8 +110,8 @@ class _Recorder:
     def decide(self, event, log):
         v = self.swarm.decide(event, log)
         s = self.swarm.last_signals
-        self.signals[event.id] = ({"scores": dict(s["scores"]), "risk": s["risk"], "top": s["top"],
-                                   "active": list(s["active"])}, dict(s["weights"]))
+        # The contract's `signals` is a flat specialist -> score map (payguard.api.replay.EpisodeEvent).
+        self.signals[event.id] = (dict(s["scores"]), dict(s["weights"]))
         return v
 
     def learn(self, event, is_attack):
@@ -190,4 +190,7 @@ def validate_replay(doc: dict) -> None:
         assert set(e) == set(EVENT_KEYS), e
         assert isinstance(e["id"], int) and isinstance(e["paid"], bool) and isinstance(e["is_attack"], bool)
         assert e["verdict"] in {"RELEASE", "HOLD", "STEP_UP"}
-        assert set(e["signals"]) == {"scores", "risk", "top", "active"} and isinstance(e["weights"], dict)
+        assert set(e["signals"]) == set(SPECIALIST_NAMES) and isinstance(e["weights"], dict)
+    # The dashboard's own Pydantic contract is the final word; it raises ReplayError (a ValueError).
+    from ..api.replay import parse_replay
+    parse_replay(doc, "evolution replay")

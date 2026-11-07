@@ -409,7 +409,8 @@ def test_replay_json_follows_the_schema_version_1_contract(quick_cli):
     ep = doc["episode"]
     assert ep["seed"] == TRAIN_SEEDS[0] and ep["split"] == "TRAIN" and ep["defender"] == "swarm_evolved"
     ev0 = ep["events"][0]
-    assert set(ev0) == set(rx.EVENT_KEYS) and set(ev0["signals"]) == {"scores", "risk", "top", "active"}
+    assert set(ev0) == set(rx.EVENT_KEYS) and set(ev0["signals"]) == set(NAMES)
+    assert all(isinstance(v, (int, float)) for v in ev0["signals"].values())  # flat, as the dashboard expects
     assert set(ev0["weights"]) == set(NAMES) and ev0["verdict"] in {"RELEASE", "HOLD", "STEP_UP"}
     assert any(e["is_attack"] for e in ep["events"]) and {e["family"] for e in ep["events"]} >= {"honest", "ring"}
     assert all(len(repr(e["t"]).split(".")[-1]) <= 3 for e in ep["events"][:200])   # rounded to 3 decimals

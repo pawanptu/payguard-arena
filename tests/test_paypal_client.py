@@ -72,3 +72,10 @@ def test_sender_batch_ids_are_distinct_per_label_and_short():
     ids = {make_sender_batch_id(f"ep{i}") for i in range(1000)}
     assert len(ids) == 1000
     assert all(0 < len(i) <= 64 for i in ids)
+
+
+def test_sender_batch_id_is_idempotent_per_label_and_random_without_one():
+    assert make_sender_batch_id("episode 7/decision#3") == make_sender_batch_id("episode 7/decision#3")
+    assert "/" not in make_sender_batch_id("a/b") and "#" not in make_sender_batch_id("a#b")
+    assert len(make_sender_batch_id("x" * 500)) <= 64
+    assert make_sender_batch_id() != make_sender_batch_id()

@@ -7,6 +7,8 @@ Endpoints used (PayPal Payouts v1):
 """
 from __future__ import annotations
 
+import os
+import re
 import time
 import uuid
 from decimal import ROUND_HALF_UP, Decimal
@@ -28,20 +30,22 @@ class PayPalError(RuntimeError):
         self.debug_id = debug_id
 
 
+# One id per process run (override with PAYGUARD_RUN_ID for a reproducible run). PayPal requires
+# `sender_batch_id` to be unique per sender for 30 days, so separate runs must never collide.
+_RUN_ID = os.environ.get("PAYGUARD_RUN_ID") or uuid.uuid4().hex[:8]
+_UNSAFE = re.compile(r"[^A-Za-z0-9_-]")
+
+
 def make_sender_batch_id(label: str = "") -> str:
-    """Return the `sender_batch_id` for one payout batch.
+    """Return the `sender_batch_id` for one payout batch (always under 64 chars).
 
-    PayPal requires it to be unique per sender for 30 days, so reusing one is
-    rejected as a duplicate. That is the design tension: random ids are always
-    accepted but make a retry or a deterministic replay create a SECOND payout;
-    ids derived from (run, episode, decision) make a retry idempotent but must
-    never collide across runs.
-
-    TODO(human): replace the placeholder below with your scheme (3-8 lines).
-    Keep it under 64 characters, and return the same id for the same `label`
-    only if you want retries to be idempotent.
+    Same `label` within one run -> same id, so a retry of that batch is rejected by PayPal as a
+    duplicate instead of paying twice. Different runs get different prefixes, so they never
+    collide. With no label the id is random (never idempotent).
     """
-    return f"pg-{uuid.uuid4().hex[:24]}"
+    if not label:
+        return f"pg-{_RUN_ID}-{uuid.uuid4().hex[:12]}"
+    return f"pg-{_RUN_ID}-{_UNSAFE.sub('-', label)[:40]}"
 
 
 def payout_item(

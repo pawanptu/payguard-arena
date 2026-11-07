@@ -1,0 +1,59 @@
+{
+  "split": "TRAIN only",
+  "seeds": [
+    1000,
+    1019
+  ],
+  "random_configs": 20000,
+  "search_seed": 0,
+  "objective": "leakage_pct + 0.5*honest_block_rate + 1.0*honest_unpaid_rate",
+  "untuned": {
+    "config": {
+      "big_usd": 500.0,
+      "big_action": "HOLD",
+      "window_usd": 800.0,
+      "window_action": "HOLD",
+      "device_workers": 3,
+      "device_action": "HOLD",
+      "young_days": 7.0,
+      "young_usd": 150.0,
+      "young_action": "STEP_UP",
+      "velocity_n": 6,
+      "velocity_action": "STEP_UP",
+      "drift_ratio": null,
+      "drift_action": "STEP_UP"
+    },
+    "train": {
+      "leakage_pct": 65.39494545576237,
+      "honest_block_rate": 11.357238860852584,
+      "honest_unpaid_rate": 0.9687317728805822,
+      "objective": 72.04229665906925
+    }
+  },
+  "tuned": {
+    "config": {
+      "big_usd": 300.0,
+      "big_action": "HOLD",
+      "window_usd": null,
+      "window_action": "STEP_UP",
+      "device_workers": null,
+      "device_action": "STEP_UP",
+      "young_days": 1.0,
+      "young_usd": 250.0,
+      "young_action": "STEP_UP",
+      "velocity_n": null,
+      "velocity_action": "STEP_UP",
+      "drift_ratio": 2.0,
+      "drift_action": "HOLD"
+    },
+    "train": {
+      "leakage_pct": 49.483953361391926,
+      "honest_block_rate": 9.833134684147796,
+      "honest_unpaid_rate": 0.9978951639489768,
+      "objective": 55.3984158674148
+    },
+    "ring_leakage_pct": 86.41431574137337,
+    "structuring_leakage_pct": 11.538804291010761,
+    "honest_median_ttp_h": 0.0
+  }
+}

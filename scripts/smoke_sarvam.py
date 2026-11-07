@@ -43,6 +43,10 @@ CASES = [
     {"worker_age_days": 35, "payout_usd": 190, "payouts_last_24h": 3, "shared_device_with_workers": 1},
 ]
 ROUNDS = 2
+# sarvam-105b is a reasoning model: hidden reasoning used 700-1250 completion tokens per call in
+# our 2026-11-07 tests, so a small cap truncates the JSON (finish_reason=length).
+MAX_TOKENS = 2000
+REASONING_MODELS = {"sarvam-105b"}
 
 
 def valid(parsed: object) -> bool:
@@ -62,7 +66,7 @@ def main() -> int:
     except MissingConfig as exc:
         print(f"FAIL config: {exc}")
         return 2
-    model = optional("SARVAM_MODEL", "sarvam-105b")
+    model = optional("SARVAM_MODEL", "sarvam-105b-conversations")
     base = optional("SARVAM_BASE_URL", "https://api.sarvam.ai")
     headers = {
         # Docs list both headers; sending both avoids guessing which is enforced.
@@ -85,13 +89,15 @@ def main() -> int:
                         {"role": "user", "content": json.dumps(case)},
                     ],
                     "temperature": 0.2,
-                    "max_tokens": 600,
-                    "reasoning_effort": "low",
+                    "max_tokens": MAX_TOKENS,
                     "response_format": {
                         "type": "json_schema",
                         "json_schema": {"name": "defender_verdict", "schema": SCHEMA},
                     },
                 }
+                if model in REASONING_MODELS:
+                    # The docs list none..max, but the live API only accepted low|medium|high.
+                    body["reasoning_effort"] = "low"
                 t0 = time.perf_counter()
                 resp = http.post("/v1/chat/completions", json=body, headers=headers)
                 dt = time.perf_counter() - t0

@@ -170,7 +170,10 @@ class LLMAssessor:
         return Assessment(risk_to_verdict(risk), risk, f"fallback({reason})", "fallback", called)
 
     def assess(self, event: Event, log: PlatformLog) -> Assessment:
-        payload = judge_payload(event, log)
+        return self.assess_payload(judge_payload(event, log))
+
+    def assess_payload(self, payload: dict) -> Assessment:
+        """Same resolution order as `assess`, for a payload already built (scripts/llm_warm.py)."""
         key = cache_key(self.model, PROMPT_VERSION, payload)
         got = self._from_cache(key)
         if got is not None:

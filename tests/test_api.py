@@ -231,3 +231,29 @@ def test_committed_web_dist_is_served_if_present():
     c = TestClient(create_app(DEFAULT_REPLAY))
     r = c.get("/")
     assert r.status_code == 200 and '<div id="root">' in r.text
+
+
+def test_default_replay_prefers_env_then_live_run_then_evolution_then_fixture(tmp_path, monkeypatch):
+    import payguard.api.app as app_module
+
+    live, evo = tmp_path / "replay_live.json", tmp_path / "replay.json"
+    monkeypatch.setattr(app_module, "REPLAY_CANDIDATES", (live, evo, DEFAULT_REPLAY))
+    monkeypatch.delenv("PAYGUARD_REPLAY_PATH", raising=False)
+    assert app_module.default_replay_path() == DEFAULT_REPLAY
+    evo.write_text("{}", encoding="utf-8")
+    assert app_module.default_replay_path() == evo
+    live.write_text("{}", encoding="utf-8")
+    assert app_module.default_replay_path() == live
+    monkeypatch.setenv("PAYGUARD_REPLAY_PATH", str(tmp_path / "chosen.json"))
+    assert app_module.default_replay_path() == tmp_path / "chosen.json"
+
+
+@pytest.mark.parametrize("name", ["replay.json", "replay_live.json"])
+def test_committed_eval_replays_follow_the_contract(name):
+    path = Path(__file__).resolve().parent.parent / "eval" / name
+    if not path.is_file():
+        pytest.skip(f"eval/{name} not generated yet")
+    r = load_replay(path)  # what the deployed app serves; must never break the dashboard
+    assert r.simulated is True and r.synthetic_fixture is False
+    assert r.results and r.episode.events
+    assert all(isinstance(v, (int, float)) for e in r.episode.events[:50] for v in (e.signals or {}).values())

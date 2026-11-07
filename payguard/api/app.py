@@ -1,6 +1,6 @@
 """FastAPI app: a read-only replay API plus the prebuilt React app (web/dist) when it exists.
 
-Run:  uvicorn payguard.api.app:app          (replay path: env PAYGUARD_REPLAY_PATH, else the sample fixture)
+Run:  uvicorn payguard.api.app:app          (replay: env PAYGUARD_REPLAY_PATH, else eval/replay_live.json, else eval/replay.json, else the sample fixture)
 No secrets are needed; Replay mode works on any machine.
 """
 from __future__ import annotations
@@ -27,6 +27,16 @@ MAX_EVENTS_PER_PAGE = 1000
 MAX_RUNTIME_RECEIPTS = 50
 DEFAULT_WEBHOOKS_LIMIT = 50
 MAX_WEBHOOKS_LIMIT = 200
+# Without an explicit path or PAYGUARD_REPLAY_PATH the most complete committed artefact wins: the recorded
+# live run, then the evolution replay, then the synthetic sample fixture (a checkout without eval outputs).
+REPLAY_CANDIDATES = (REPO_ROOT / "eval" / "replay_live.json", REPO_ROOT / "eval" / "replay.json", DEFAULT_REPLAY)
+
+
+def default_replay_path() -> Path:
+    env = os.environ.get("PAYGUARD_REPLAY_PATH", "").strip()
+    if env:
+        return Path(env)
+    return next((p for p in REPLAY_CANDIDATES if p.is_file()), DEFAULT_REPLAY)
 
 
 def create_app(replay_path: str | Path | None = None, *, web_dist: str | Path | None = None,
@@ -36,7 +46,7 @@ def create_app(replay_path: str | Path | None = None, *, web_dist: str | Path | 
     `web_dist` overrides where the built React app is looked for (default: <repo>/web/dist).
     `receipt_store` is shared with the payout rails and the webhook (default: a fresh in-memory store).
     """
-    path = Path(replay_path or os.environ.get("PAYGUARD_REPLAY_PATH") or DEFAULT_REPLAY)
+    path = Path(replay_path) if replay_path else default_replay_path()
     replay: Replay = load_replay(path)
     dist = Path(web_dist) if web_dist is not None else DEFAULT_WEB_DIST
 

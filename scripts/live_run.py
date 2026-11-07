@@ -239,7 +239,8 @@ def build_out_replay(replay: Replay, receipts: list[PayoutReceipt], webhooks: li
 def write_json_atomic(path: Path, data: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp = path.with_name(path.name + ".tmp")
-    tmp.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
+    # Compact, like the evolution export: the episode alone is about 1 MB, indenting would double it.
+    tmp.write_text(json.dumps(data, separators=(",", ":"), allow_nan=False), encoding="utf-8")
     os.replace(tmp, path)
 
 

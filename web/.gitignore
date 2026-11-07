@@ -1,0 +1,4 @@
+node_modules/
+*.tsbuildinfo
+# Root .gitignore ignores dist/; web/dist is intentionally committed (Render serves the prebuilt app, Python only)
+!dist/

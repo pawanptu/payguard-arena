@@ -157,6 +157,8 @@ cd web && npm ci && npm run dev                 # UI development server, proxies
 cd web && npm run build                         # rebuild web/dist (commit it; the deploy has no Node)
 ```
 
+Deploy (Render, Python only, no secrets needed for Replay mode): build `pip install -r requirements.txt`, start `uvicorn payguard.api.app:app --host 0.0.0.0 --port $PORT`, health check `/api/health`.
+
 The PayPal webhook (`POST /webhooks/paypal`) accepts nothing until `PAYPAL_WEBHOOK_ID` is set: it returns 503, and every event is checked with PayPal's verify-webhook-signature API before it changes a receipt.
 
 ## How PayPal and AI are used

@@ -7,9 +7,10 @@ Every event is verified with PayPal's verify-webhook-signature API before anythi
 Event names: https://developer.paypal.com/api/rest/webhooks/event-names/
 Payout statuses: https://developer.paypal.com/api/payments.payouts-batch/v1/schema.yaml
 
-The app owner wires this up by including `router` and, if desired, overriding the three
-dependencies (`get_receipt_store`, `get_webhook_id`, `get_paypal_client`) via
-`app.dependency_overrides`.
+The app owner wires this up by including `router` and, if desired, overriding the four
+dependencies (`get_receipt_store`, `get_event_log`, `get_webhook_id`, `get_paypal_client`) via
+`app.dependency_overrides`. Verified, handled events are also appended to a `WebhookEventLog`
+(ids and statuses only) that the dashboard reads.
 """
 from __future__ import annotations
 
@@ -25,9 +26,13 @@ from fastapi.responses import JSONResponse
 from ..config import MissingConfig, optional, require
 from ..paypal_client import PayPalClient
 from .base import BATCH_STATUSES, ITEM_STATUSES
+from .events import WebhookEventLog
 from .store import ReceiptStore
 
-__all__ = ["router", "ReceiptStore", "get_receipt_store", "get_webhook_id", "get_paypal_client"]
+__all__ = [
+    "router", "ReceiptStore", "WebhookEventLog", "get_receipt_store", "get_event_log", "get_webhook_id",
+    "get_paypal_client",
+]
 
 log = logging.getLogger("payguard.rail.webhook")
 router = APIRouter()
@@ -63,12 +68,17 @@ _SIG_HEADERS = {
 
 # ---- dependencies (override with app.dependency_overrides) ------------------------------------
 _store = ReceiptStore()
+_event_log = WebhookEventLog()
 _client: PayPalClient | None = None
 _client_lock = threading.Lock()
 
 
 def get_receipt_store() -> ReceiptStore:
     return _store
+
+
+def get_event_log() -> WebhookEventLog:
+    return _event_log
 
 
 def get_webhook_id() -> str | None:
@@ -119,6 +129,7 @@ def _extract(event_type: str, resource: dict) -> tuple[str | None, str | None, s
 async def paypal_webhook(
     request: Request,
     store: ReceiptStore = Depends(get_receipt_store),
+    event_log: WebhookEventLog = Depends(get_event_log),
     webhook_id: str | None = Depends(get_webhook_id),
     client: PayPalClient | None = Depends(get_paypal_client),
 ) -> JSONResponse:
@@ -172,6 +183,16 @@ async def paypal_webhook(
         sender_batch_id=sender_batch_id,
         batch_status=batch_status,
         item_status=item_status,
+    )
+    # Verified, not a duplicate, handled, and it names a batch: now (and only now) it is logged.
+    event_log.record(
+        event_id=event_id,
+        event_type=event_type,
+        payout_batch_id=payout_batch_id,
+        sender_batch_id=sender_batch_id,
+        batch_status=batch_status,
+        item_status=item_status,
+        outcome="processed" if receipt is not None else "pending_receipt",
     )
     if receipt is None:
         return _resp(200, "pending_receipt")  # parked; applied if the receipt is stored later

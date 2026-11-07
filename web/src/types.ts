@@ -50,6 +50,28 @@ export interface Payout {
   created_at: string;
 }
 
+/** A PayPal payouts webhook whose signature was verified server-side (ids and statuses only). */
+export interface VerifiedWebhook {
+  event_id: string;
+  event_type: string;
+  received_at: string;
+  payout_batch_id?: string | null;
+  sender_batch_id?: string | null;
+  batch_status?: string | null;
+  item_status?: string | null;
+}
+
+/** A row of GET /api/webhooks/recent: the replay's fields plus where it came from. */
+export interface WebhookEvent extends VerifiedWebhook {
+  outcome: "processed" | "pending_receipt" | null;
+  source: "runtime" | "replay";
+}
+
+export interface WebhooksResponse {
+  configured: boolean;
+  events: WebhookEvent[];
+}
+
 export interface EpisodeMeta {
   seed: number;
   split: string;
@@ -67,6 +89,7 @@ export interface Summary {
   evolution: EvolutionRow[];
   episode: EpisodeMeta;
   payouts: Payout[];
+  verified_webhooks?: VerifiedWebhook[];
 }
 
 export interface EventsPage {

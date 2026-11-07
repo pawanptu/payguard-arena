@@ -82,6 +82,18 @@ class Payout(BaseModel):
     created_at: str
 
 
+class VerifiedWebhook(BaseModel):
+    """A PayPal payouts webhook whose signature was verified server-side (ids and statuses only)."""
+
+    event_id: str
+    event_type: str
+    received_at: str
+    payout_batch_id: str | None = None
+    sender_batch_id: str | None = None
+    batch_status: str | None = None
+    item_status: str | None = None
+
+
 class Replay(BaseModel):
     schema_version: Literal[1]
     simulated: Literal[True]
@@ -92,6 +104,8 @@ class Replay(BaseModel):
     evolution: list[EvolutionRow]
     episode: Episode
     payouts: list[Payout]
+    # Additive and optional (schema_version stays 1): older replays simply have none.
+    verified_webhooks: list[VerifiedWebhook] = []
 
 
 class ReplayError(ValueError):

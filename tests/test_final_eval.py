@@ -119,16 +119,21 @@ def test_spend_ledger_accumulates_across_runs(tmp_path, monkeypatch):
     assert [r["calls"] for r in s["sarvam"]["runs"]] == [250, 100] and s["sarvam"]["budget"] == 600
 
 
+def test_dashboard_episode_is_the_pre_chosen_heldout_one():
+    assert fe.EPISODE == ("TEST_HELDOUT", 3000)  # D-031, chosen before any TEST number existed
+
+
 def test_final_replay_is_a_valid_contract_with_memory_signals():
-    """TRAIN only: rows for one split, the primary defender's TRAIN episode, the dashboard's Pydantic contract."""
+    """TRAIN only (the real run uses fe.EPISODE): rows for one split, the primary defender's episode,
+    the dashboard's Pydantic contract."""
     champion, meta = fe.load_champion()
     assert meta["id"] and len(meta["sha256"]) == 64
     names = fe.display_names("single_policy")
     m = {(n, "TRAIN"): metrics(10.0 + i) for i, n in enumerate(names)}
-    doc = fe.build_final_replay(m, "single_policy", champion, "2026-11-08T00:00:00+00:00")
+    doc = fe.build_final_replay(m, "single_policy", champion, "2026-11-08T00:00:00+00:00", ("TRAIN", 1000))
     assert [r["defender"] for r in doc["results"]] == names and {r["split"] for r in doc["results"]} == {"TRAIN"}
     ep = doc["episode"]
-    assert ep["defender"] == fe.PRIMARY and ep["split"] == "TRAIN" and ep["seed"] == fe.EPISODE_SEED
+    assert ep["defender"] == fe.PRIMARY and ep["split"] == "TRAIN" and ep["seed"] == 1000
     assert all(set(e["signals"]) == {*SPECIALIST_NAMES, "memory"} for e in ep["events"])
     assert any(e["signals"]["memory"] > 0 for e in ep["events"])
     assert doc["payouts"] == [] and doc["evolution"]

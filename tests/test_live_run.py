@@ -9,7 +9,7 @@ import httpx
 import pytest
 
 from payguard.api.app import DEFAULT_REPLAY
-from payguard.api.replay import load_replay
+from payguard.api.replay import EpisodeEvent, load_replay
 from payguard.paypal_client import PayPalError
 from payguard.rail import LiveRail, ReceiptStore
 from scripts import live_run
@@ -99,15 +99,30 @@ def expected_ids(replay_file, n):
 
 
 # ---- selection -------------------------------------------------------------------------------------
-def test_select_live_events_first_released_and_paid(replay_file):
+def worry(e) -> float:
+    return max(e.signals.values()) if e.signals else 0.0
+
+
+def test_select_live_events_honest_most_worried_first(replay_file):
     ep = load_replay(replay_file).episode
+    eligible = [e for e in ep.events if e.verdict == "RELEASE" and e.paid]
     picked = live_run.select_live_events(ep, 3)
     assert len(picked) == 3
     assert all(e.verdict == "RELEASE" and e.paid for e in picked)
-    expect = [e.id for e in ep.events if e.verdict == "RELEASE" and e.paid][:3]
+    # Independent restatement of the policy: honest before attack, then most worried, then episode order.
+    expect = [e.id for _, e in sorted(enumerate(eligible), key=lambda p: (p[1].is_attack, -worry(p[1]), p[0]))][:3]
     assert [e.id for e in picked] == expect
     assert [e.id for e in live_run.select_live_events(ep, 2, exclude_ids={expect[0]})] == [expect[1], expect[2]]
     assert live_run.select_live_events(ep, 0) == []
+
+
+def test_demo_priority_honest_first_then_most_worried_then_episode_order():
+    def ev(i, attack, signals):
+        return EpisodeEvent(id=i, t=float(i), worker_id=1, requester_id=1, amount=10.0, verdict="RELEASE",
+                            paid=True, is_attack=attack, family="ring" if attack else "honest", signals=signals)
+    events = [ev(1, True, {"graph": 0.9}), ev(2, False, {"graph": 0.1, "velocity": 0.4}), ev(3, False, None),
+              ev(4, False, {"graph": 0.4}), ev(5, False, {"policy": 0.7, "memory": 0.2})]
+    assert [e.id for e in sorted(events, key=live_run.demo_priority)] == [5, 2, 4, 3, 1]
 
 
 # ---- dry run and argument limits -------------------------------------------------------------------

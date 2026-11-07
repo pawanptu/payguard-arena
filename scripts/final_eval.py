@@ -73,7 +73,9 @@ PRIMARY = "swarm_evolved_memory"
 DECISIVE_SPLIT = "TEST_HELDOUT"
 MARGIN = 3.0
 SWARMS = ("swarm_frozen", "swarm_l1", "swarm_evolved", "swarm_memory", "swarm_evolved_memory")
-EPISODE_SEED = TRAIN_SEEDS[0]  # the dashboard's episode: the primary defender on TRAIN, as before
+# The dashboard's episode, played by the primary defender: the first held-out sleeper episode (user's choice
+# D-031, made before any TEST number existed, so it is not cherry-picked). Shown whatever the result is.
+EPISODE = ("TEST_HELDOUT", TEST_HELDOUT_SEEDS[0])
 
 
 # ---------------------------------------------------------------- payloads, plan, warm ----------------
@@ -249,8 +251,9 @@ class _Recorder:
         self.swarm.learn(event, is_attack)
 
 
-def episode_doc(champion: SwarmParams, seed: int = EPISODE_SEED) -> dict:
-    ep = episode_for(seed, TRAIN_FAMILIES)
+def episode_doc(champion: SwarmParams, episode: tuple[str, int] = EPISODE) -> dict:
+    split, seed = episode
+    ep = episode_for(seed, SPLITS[split][1])
     rec = _Recorder(make_memory_swarm(champion, None, name=PRIMARY))
     res = run_episode(ep, rec)
     events = []
@@ -261,7 +264,7 @@ def episode_doc(champion: SwarmParams, seed: int = EPISODE_SEED) -> dict:
                        "amount": e.amount, "verdict": res.verdicts[e.id].value, "paid": bool(oc.paid),
                        "paid_at": oc.paid_at, "is_attack": bool(tr.is_attack), "family": tr.family,
                        "signals": sig, "weights": w})
-    return {"seed": seed, "split": "TRAIN", "defender": PRIMARY, "events": events}
+    return {"seed": seed, "split": split, "defender": PRIMARY, "events": events}
 
 
 def display_names(best_single: str) -> list[str]:
@@ -270,13 +273,13 @@ def display_names(best_single: str) -> list[str]:
 
 
 def build_final_replay(metrics: dict[tuple[str, str], Metrics], best_single: str, champion: SwarmParams,
-                       generated_at: str) -> dict:
+                       generated_at: str, episode: tuple[str, int] = EPISODE) -> dict:
     rows = [rx.result_row(n, metrics[(n, s)], s) for s in SPLITS for n in display_names(best_single)
             if (n, s) in metrics]
     lineage = json.loads(LINEAGE_PATH.read_text(encoding="utf-8"))
     doc = rx.clean({"schema_version": 1, "simulated": True, "synthetic_fixture": False, "generated_at": generated_at,
                     "objective": rx.OBJECTIVE_TEXT, "results": rows, "evolution": rx.evolution_rows(lineage),
-                    "episode": episode_doc(champion), "payouts": []})
+                    "episode": episode_doc(champion, episode), "payouts": []})
     parse_replay(doc, "final replay")  # the dashboard's contract is the final word
     size = len(json.dumps(doc, separators=(",", ":")))
     if size > rx.MAX_BYTES:

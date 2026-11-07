@@ -63,18 +63,35 @@ EXIT_OK, EXIT_FAIL, EXIT_USAGE = 0, 1, 2
 
 
 # ---- selection and limits -------------------------------------------------------------------------
+def demo_priority(event: EpisodeEvent) -> tuple:
+    """Sort key for the demo: among eligible events (RELEASE, paid, not yet live), LOWER keys are sent first.
+
+    Python's sort is stable, so events with equal keys keep their episode order.
+    Available per event: id, t (hours since episode start), worker_id, requester_id, amount (USD in the
+    simulation; the real sandbox payout is always --amount), is_attack, family ("honest", "ring",
+    "structuring", ...), signals (specialist -> risk in [0, 1], plus "memory" in the final replay, or None),
+    weights (specialist -> L1 weight, or None).
+
+    Policy (user's choice, D-031): "false alarm overruled". Honest workers first; among them, the payout one
+    voice was most worried about but the swarm still released, so the demo shows the swarm weighing its
+    specialists instead of blocking on a single alarm. Events without signals count as no worry.
+    """
+    worry = max(event.signals.values()) if event.signals else 0.0
+    return (event.is_attack, -worry)
+
+
 def select_live_events(
     episode: Episode, count: int, *, exclude_ids: frozenset[int] | set[int] = frozenset()
 ) -> list[EpisodeEvent]:
     """Which episode events get a real sandbox payout.
 
-    Default policy: the first `count` events (in episode order) whose verdict is RELEASE and that
-    were paid. `exclude_ids` skips events that already have a live payout in the replay, so a
-    re-run never pays the same event twice. Change this function to change the sampling policy.
+    Policy: events whose verdict is RELEASE and that were paid, ordered by `demo_priority` (episode order
+    on ties), first `count` of them. `exclude_ids` skips events that already have a live payout in the
+    replay, so a re-run never pays the same event twice.
     """
-    picked = [e for e in episode.events
-              if e.verdict == "RELEASE" and e.paid and e.id not in exclude_ids]
-    return picked[:count]
+    eligible = [e for e in episode.events
+                if e.verdict == "RELEASE" and e.paid and e.id not in exclude_ids]
+    return sorted(eligible, key=demo_priority)[:count]
 
 
 def payout_cap() -> Decimal:

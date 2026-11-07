@@ -1,4 +1,4 @@
-import type { EpisodeEvent, EventsPage, Payout, Summary } from "./types";
+import type { EpisodeEvent, EventsPage, Payout, Summary, WebhooksResponse } from "./types";
 
 async function getJson<T>(url: string): Promise<T> {
   const res = await fetch(url, { headers: { Accept: "application/json" } });
@@ -18,3 +18,5 @@ export async function fetchAllEvents(pageSize = 1000): Promise<EpisodeEvent[]> {
 }
 
 export const fetchPayouts = () => getJson<{ source: string; payouts: Payout[] }>("/api/payouts");
+
+export const fetchWebhooks = (limit = 50) => getJson<WebhooksResponse>(`/api/webhooks/recent?limit=${limit}`);

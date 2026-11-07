@@ -7,13 +7,16 @@ from __future__ import annotations
 
 import os
 from dataclasses import asdict
+from datetime import datetime, timezone
 from pathlib import Path
 
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import Depends, FastAPI, HTTPException, Query
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from ..rail import webhook
+from ..rail.base import PayoutReceipt, parse_iso
+from ..rail.events import WebhookEventLog
 from ..rail.store import ReceiptStore
 from .replay import Replay, load_replay
 
@@ -22,6 +25,8 @@ DEFAULT_REPLAY = Path(__file__).resolve().parent / "fixtures" / "sample_replay.j
 DEFAULT_WEB_DIST = REPO_ROOT / "web" / "dist"
 MAX_EVENTS_PER_PAGE = 1000
 MAX_RUNTIME_RECEIPTS = 50
+DEFAULT_WEBHOOKS_LIMIT = 50
+MAX_WEBHOOKS_LIMIT = 200
 
 
 def create_app(replay_path: str | Path | None = None, *, web_dist: str | Path | None = None,
@@ -40,15 +45,34 @@ def create_app(replay_path: str | Path | None = None, *, web_dist: str | Path | 
     app.state.replay_path = str(path)
 
     # --- Payout receipts: one ReceiptStore shared by the rails and the verified PayPal webhook. -----
-    # Receipts written at runtime (SimRail / LiveRail, then webhook status updates) come first,
-    # newest first; the replay file's recorded payouts follow. Rows carry their own mode (sim|live).
+    # The store is seeded with the replay's recorded LIVE payouts, so a webhook for a batch that a local
+    # run sent (and recorded) finds its receipt even after this process restarted. Receipts written at
+    # runtime (SimRail / LiveRail, then webhook status updates) come first, most recently updated first;
+    # the replay file's remaining payouts follow. Rows carry their own mode (sim|live).
     store = receipt_store if receipt_store is not None else ReceiptStore()
+    event_log = WebhookEventLog()
     app.state.receipt_store = store
+    app.state.event_log = event_log
+    seeded: dict[str, PayoutReceipt] = {}
+    for p in replay.payouts:
+        if p.mode == "live" and store.get(p.event_id) is None:  # never clobber a receipt already held
+            rec = store.upsert(PayoutReceipt(
+                event_id=p.event_id, mode=p.mode, sender_batch_id=p.sender_batch_id,
+                payout_batch_id=p.payout_batch_id, batch_status=p.batch_status, item_status=p.item_status,
+                amount_usd=p.amount_usd, created_at=p.created_at, updated_at=p.created_at))
+            seeded[rec.sender_batch_id] = rec
     app.include_router(webhook.router)
     app.dependency_overrides[webhook.get_receipt_store] = lambda: store
+    app.dependency_overrides[webhook.get_event_log] = lambda: event_log
 
     def payouts_provider() -> list[dict]:
-        return [asdict(r) for r in store.recent(MAX_RUNTIME_RECEIPTS)] + [p.model_dump() for p in replay.payouts]
+        rows = [asdict(r) for r in store.recent(MAX_RUNTIME_RECEIPTS)]
+        shown = {r["sender_batch_id"] for r in rows}  # one row per sender_batch_id: the store's wins
+        return rows + [p.model_dump() for p in replay.payouts if p.sender_batch_id not in shown]
+
+    def has_runtime_rows() -> bool:
+        """True when the store holds anything beyond the untouched rows seeded from the replay."""
+        return any(seeded.get(r.sender_batch_id) != r for r in store.recent(len(store)))
 
     app.state.payouts_provider = payouts_provider
     # -----------------------------------------------------------------------------------------------
@@ -76,7 +100,23 @@ def create_app(replay_path: str | Path | None = None, *, web_dist: str | Path | 
     @app.get("/api/payouts")
     def payouts() -> dict:
         provider = app.state.payouts_provider
-        return {"source": "runtime+replay" if len(store) else "replay", "payouts": provider()}
+        return {"source": "runtime+replay" if has_runtime_rows() else "replay", "payouts": provider()}
+
+    @app.get("/api/webhooks/recent")
+    def webhooks_recent(
+        limit: int = DEFAULT_WEBHOOKS_LIMIT,
+        webhook_id: str | None = Depends(webhook.get_webhook_id),
+    ) -> dict:
+        """Verified PayPal webhook events, newest first: this process's log merged with the replay's
+        recorded ones (runtime wins on the same event_id). `limit` is clamped to 1..200."""
+        limit = max(1, min(limit, MAX_WEBHOOKS_LIMIT))
+        merged: dict[str, dict] = {}
+        for e in event_log.recent(MAX_WEBHOOKS_LIMIT):
+            merged[e["event_id"]] = {**e, "source": "runtime"}
+        for w in replay.verified_webhooks:
+            merged.setdefault(w.event_id, {**w.model_dump(), "outcome": None, "source": "replay"})
+        ordered = sorted(merged.values(), key=lambda e: _when(e["received_at"]), reverse=True)
+        return {"configured": bool(webhook_id), "events": ordered[:limit]}
 
     @app.get("/api/{rest:path}", include_in_schema=False)
     def api_not_found(rest: str):
@@ -98,6 +138,15 @@ def create_app(replay_path: str | Path | None = None, *, web_dist: str | Path | 
             return FileResponse(index)
 
     return app
+
+
+def _when(iso: str) -> datetime:
+    """Sort key for received_at; an unparsable value sorts oldest."""
+    try:
+        dt = parse_iso(iso)
+    except ValueError:
+        return datetime.min.replace(tzinfo=timezone.utc)
+    return dt if dt.tzinfo else dt.replace(tzinfo=timezone.utc)
 
 
 app = create_app()

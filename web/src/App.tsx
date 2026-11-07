@@ -5,6 +5,7 @@ import DecisionFeed from "./components/DecisionFeed";
 import EvolutionChart from "./components/EvolutionChart";
 import ResultsTable from "./components/ResultsTable";
 import Receipts from "./components/Receipts";
+import WebhookLog from "./components/WebhookLog";
 import ModeToggle from "./components/ModeToggle";
 import ThemeToggle from "./components/ThemeToggle";
 
@@ -66,7 +67,10 @@ export default function App() {
               <EvolutionChart rows={data.summary.evolution} synthetic={data.summary.synthetic_fixture} />
             </div>
             <ResultsTable rows={data.summary.results} objective={data.summary.objective} />
-            <Receipts payouts={data.payouts} />
+            <div className="grid-rec">
+              <Receipts payouts={data.payouts} />
+              <WebhookLog />
+            </div>
           </>
         )}
       </main>

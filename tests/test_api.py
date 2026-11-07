@@ -106,7 +106,7 @@ def test_summary_has_everything_but_the_events(client, raw):
     assert r.status_code == 200
     body = r.json()
     assert set(body) == {"schema_version", "simulated", "synthetic_fixture", "generated_at", "objective",
-                         "results", "evolution", "episode", "payouts"}
+                         "results", "evolution", "episode", "payouts", "verified_webhooks"}
     assert "events" not in body["episode"]
     assert body["episode"] == {"seed": 1000, "split": "TRAIN", "defender": "static_rules",
                                "n_events": len(raw["episode"]["events"])}

@@ -24,3 +24,8 @@ class LLMHTTPError(LLMError):
 
 class LLMSchemaError(LLMError):
     """The reply was not JSON or did not satisfy the schema's required fields, types or enums."""
+
+
+class LLMQuotaError(LLMHTTPError):
+    """HTTP 429 that signals an exhausted DAILY or project quota: retrying now is pointless, so it is raised
+    at once. A later run (after the quota resets) can resume from the cache."""

@@ -3,6 +3,8 @@
 One line per entry: {"key", "model", "prompt_version", "payload", "response"}. Loaded fully at start-up and
 appended on every put (a torn last line is skipped on the next load). Thread-safe.
 Default path is data/llm_cache.jsonl (eval/ is frozen); override with PAYGUARD_LLM_CACHE.
+The Gemini judge has its own file, data/llm_cache_gemini.jsonl (override PAYGUARD_LLM_CACHE_GEMINI), so the
+two providers' answers are never mixed.
 A cache with path=None lives in memory only (tests).
 """
 from __future__ import annotations
@@ -14,11 +16,17 @@ import threading
 from pathlib import Path
 
 DEFAULT_PATH = Path(__file__).resolve().parents[2] / "data" / "llm_cache.jsonl"
+DEFAULT_GEMINI_PATH = Path(__file__).resolve().parents[2] / "data" / "llm_cache_gemini.jsonl"
 
 
 def default_cache_path() -> Path:
     env = os.environ.get("PAYGUARD_LLM_CACHE", "").strip()
     return Path(env) if env else DEFAULT_PATH
+
+
+def default_gemini_cache_path() -> Path:
+    env = os.environ.get("PAYGUARD_LLM_CACHE_GEMINI", "").strip()
+    return Path(env) if env else DEFAULT_GEMINI_PATH
 
 
 def canonical(payload: dict) -> str:

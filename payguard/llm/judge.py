@@ -10,6 +10,10 @@ Both sit on an `LLMAssessor`, which resolves a payout to a verdict + risk in thi
   4. real API call; on any LLMError: fallback (not cached, so a later run can retry it).
 Only validated API replies are cached. `llm_calls` counts real API calls (logical calls: client retries
 are visible in `client.requests_made`). The fallback is deterministic, a function of the bucketed payload only.
+
+A second provider, Google Gemini, is built with `make_assessor("gemini")`: same prompt, schema and payload, its own
+client and its own cache file (data/llm_cache_gemini.jsonl), never mixed with Sarvam's inside one result. A client
+that signals an exhausted daily quota (LLMQuotaError) is not called again by that assessor (fallback "quota").
 """
 from __future__ import annotations
 
@@ -22,9 +26,11 @@ from dataclasses import dataclass
 from ..config import optional
 from ..sim.features import PlatformLog
 from ..sim.types import Event, Verdict
-from .cache import LLMCache, cache_key, default_cache_path
+from .cache import LLMCache, cache_key, default_cache_path, default_gemini_cache_path
 from .client import DEFAULT_MODEL, SarvamClient, validate_schema
-from .errors import LLMError, LLMSchemaError
+from .errors import LLMError, LLMQuotaError, LLMSchemaError
+from .gemini import DEFAULT_MODEL as GEMINI_DEFAULT_MODEL
+from .gemini import GeminiClient
 from .payload import COHORT_FIELD, judge_payload, level
 
 PROMPT_VERSION = "v1"
@@ -141,7 +147,8 @@ class LLMAssessor:
         self.max_calls = int(max_calls if max_calls is not None else env_cap or DEFAULT_MAX_CALLS)
         self.calls = 0       # real API calls
         self.cache_hits = 0
-        self.fallbacks: Counter[str] = Counter()  # reason -> count: "offline", "cap", "error"
+        self.fallbacks: Counter[str] = Counter()  # reason -> count: "offline", "cap", "error", "quota"
+        self.quota_exhausted = False  # set when the client reported an exhausted daily/project quota
         self._lock = threading.Lock()
 
     @property
@@ -184,6 +191,8 @@ class LLMAssessor:
                 return got
             if self.client is None:
                 return self._fallback(payload, "offline")
+            if self.quota_exhausted:
+                return self._fallback(payload, "quota")
             if self.calls >= self.max_calls:
                 return self._fallback(payload, "cap")
             self.calls += 1  # counted before the request: an attempted call may be billed
@@ -192,6 +201,9 @@ class LLMAssessor:
             try:
                 reply = self.client.complete_json(messages, SCHEMA)
                 v, r, why = _parse(reply)
+            except LLMQuotaError:
+                self.quota_exhausted = True
+                return self._fallback(payload, "error", called=True)
             except LLMError:
                 return self._fallback(payload, "error", called=True)
             self.cache.put(key, reply, model=self.model, prompt_version=PROMPT_VERSION, payload=payload)
@@ -201,9 +213,11 @@ class LLMAssessor:
 class _Face:
     """Shared plumbing: each face counts the real API calls it triggered itself."""
 
-    def __init__(self, assessor: LLMAssessor | None = None, **kw):
+    def __init__(self, assessor: LLMAssessor | None = None, *, name: str | None = None, **kw):
         self.assessor = assessor if assessor is not None else LLMAssessor(**kw)
         self.llm_calls = 0
+        if name is not None:
+            self.name = name  # e.g. "llm_judge_gemini"; the class attribute is the default
 
     def _assess(self, event: Event, log: PlatformLog) -> Assessment:
         a = self.assessor.assess(event, log)
@@ -231,3 +245,34 @@ class QualityDefender(_Face):
 
     def score(self, event: Event, log: PlatformLog) -> float:
         return self._assess(event, log).risk
+
+
+def make_assessor(provider: str = "sarvam", **kw) -> LLMAssessor:
+    """Build the assessor for `provider` ("sarvam" or "gemini"); `kw` goes to LLMAssessor.
+
+    "sarvam" is exactly `LLMAssessor(**kw)`. "gemini" builds a GeminiClient only when not offline and
+    GEMINI_API_KEY is set (otherwise cache-only, never touching SARVAM_*), keys the cache by the Gemini model
+    (the client's, else GEMINI_MODEL, so offline keys are right) and reads/writes data/llm_cache_gemini.jsonl
+    (env PAYGUARD_LLM_CACHE_GEMINI). Paid/free calls stay opt-in: the cap defaults to 0 like Sarvam's."""
+    if provider == "sarvam":
+        return LLMAssessor(**kw)
+    if provider != "gemini":
+        raise ValueError(f"unknown provider {provider!r}: expected 'sarvam' or 'gemini'")
+    client = kw.pop("client", None)
+    offline = kw.pop("offline", None)
+    model = kw.pop("model", None)
+    if kw.get("cache") is None:
+        kw["cache"] = LLMCache(default_gemini_cache_path())
+    has_key = bool(optional("GEMINI_API_KEY", ""))  # also loads .env; the value is never kept or printed here
+    if offline is None:
+        offline = _truthy("PAYGUARD_LLM_OFFLINE")
+    if client is None and not offline:
+        if has_key:
+            client = GeminiClient()
+        else:
+            offline = True  # no key: cache-only
+    if not (model or getattr(client, "model", None)):
+        model = optional("GEMINI_MODEL", GEMINI_DEFAULT_MODEL)
+    if client is None:
+        offline = True  # never let LLMAssessor fall back to building a Sarvam client
+    return LLMAssessor(client, offline=offline, model=model, **kw)

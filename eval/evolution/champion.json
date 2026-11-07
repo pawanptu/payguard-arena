@@ -1,0 +1,43 @@
+{
+  "id": "g17-7",
+  "params": {
+    "vel_usd_lo": 1377.651621317464,
+    "vel_usd_width": 1641.139753033103,
+    "vel_n_lo": 9.808655158209607,
+    "vel_n_width": 2.6378879250695135,
+    "graph_dens_lo": 0.4097716540821028,
+    "graph_dens_width": 0.07441139106995405,
+    "graph_min_workers": 4,
+    "graph_size_width": 2.710306073103985,
+    "graph_share_min": 3,
+    "drift_min_history": 5,
+    "drift_ratio_lo": 4.695850324564708,
+    "drift_ratio_width": 6.0,
+    "drift_rate_lo": 2.808367711789791,
+    "drift_rate_width": 3.476425328729291,
+    "policy_cap_base_usd": 220.82158435282275,
+    "policy_cap_per_day_usd": 3.832125373305253,
+    "policy_cap_max_usd": 498.81762832179845,
+    "policy_window_mult": 4.292189153666135,
+    "w0_velocity": 0.5022655215514782,
+    "w0_graph": 1.0,
+    "w0_drift": 0.6923301665935403,
+    "w0_policy": 0.4966672047738837,
+    "step_up_threshold": 0.5,
+    "hold_threshold": 0.55,
+    "eta": 0.005,
+    "min_weight": 0.014686901351744785,
+    "l1_abstain": 0
+  },
+  "provenance": {
+    "generation": 17,
+    "objective_a": 16.218465,
+    "objective_b": 18.121674,
+    "protocol_train_a_objective": 16.1374,
+    "protocol_train_b_objective": 20.494468,
+    "git_rev": "27f0a10e4f26afe407f26731a7ab8dfce5f62f06",
+    "seed": 0,
+    "mode": "full",
+    "generated_at": "2026-11-07T18:14:26+00:00"
+  }
+}

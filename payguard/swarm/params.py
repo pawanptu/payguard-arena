@@ -53,6 +53,7 @@ class SwarmParams:
     hold_threshold: float = 0.6         # aggregated risk at which the payout goes to human review
     eta: float = 0.02                   # L1 learning rate of the multiplicative-weights update
     min_weight: float = 0.05            # no specialist's weight ever falls below this
+    l1_abstain: int = 0                 # 1 = abstention-aware L1 loss: a silent specialist is not blamed for a missed attack
 
 
 BOUNDS: dict[str, tuple[float, float]] = dict(
@@ -66,9 +67,9 @@ BOUNDS: dict[str, tuple[float, float]] = dict(
     policy_cap_max_usd=(250.0, 1000.0), policy_window_mult=(1.5, 6.0),
     w0_velocity=(0.1, 1.0), w0_graph=(0.1, 1.0), w0_drift=(0.1, 1.0), w0_policy=(0.1, 1.0),
     step_up_threshold=(0.1, 0.5), hold_threshold=(0.55, 0.95),
-    eta=(0.005, 0.5), min_weight=(0.01, 0.2),
+    eta=(0.005, 0.5), min_weight=(0.01, 0.2), l1_abstain=(0, 1),
 )
-INT_FIELDS = {"graph_min_workers", "graph_share_min", "drift_min_history"}
+INT_FIELDS = {"graph_min_workers", "graph_share_min", "drift_min_history", "l1_abstain"}
 
 
 def default_params() -> SwarmParams:

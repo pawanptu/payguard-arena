@@ -1,0 +1,338 @@
+{
+  "champion": {
+    "id": "g17-7",
+    "generation_promoted": 17,
+    "changed_genes": {
+      "vel_usd_lo": {
+        "default": 1000.0,
+        "champion": 1377.651621317464
+      },
+      "vel_usd_width": {
+        "default": 1000.0,
+        "champion": 1641.139753033103
+      },
+      "vel_n_lo": {
+        "default": 7.0,
+        "champion": 9.808655158209607
+      },
+      "vel_n_width": {
+        "default": 4.0,
+        "champion": 2.6378879250695135
+      },
+      "graph_dens_lo": {
+        "default": 0.4,
+        "champion": 0.4097716540821028
+      },
+      "graph_dens_width": {
+        "default": 0.2,
+        "champion": 0.07441139106995405
+      },
+      "graph_size_width": {
+        "default": 2.0,
+        "champion": 2.710306073103985
+      },
+      "drift_min_history": {
+        "default": 4,
+        "champion": 5
+      },
+      "drift_ratio_lo": {
+        "default": 3.0,
+        "champion": 4.695850324564708
+      },
+      "drift_ratio_width": {
+        "default": 3.0,
+        "champion": 6.0
+      },
+      "drift_rate_lo": {
+        "default": 3.5,
+        "champion": 2.808367711789791
+      },
+      "drift_rate_width": {
+        "default": 2.0,
+        "champion": 3.476425328729291
+      },
+      "policy_cap_base_usd": {
+        "default": 150.0,
+        "champion": 220.82158435282275
+      },
+      "policy_cap_per_day_usd": {
+        "default": 8.0,
+        "champion": 3.832125373305253
+      },
+      "policy_cap_max_usd": {
+        "default": 500.0,
+        "champion": 498.81762832179845
+      },
+      "policy_window_mult": {
+        "default": 3.0,
+        "champion": 4.292189153666135
+      },
+      "w0_velocity": {
+        "default": 1.0,
+        "champion": 0.5022655215514782
+      },
+      "w0_drift": {
+        "default": 1.0,
+        "champion": 0.6923301665935403
+      },
+      "w0_policy": {
+        "default": 1.0,
+        "champion": 0.4966672047738837
+      },
+      "step_up_threshold": {
+        "default": 0.3,
+        "champion": 0.5
+      },
+      "hold_threshold": {
+        "default": 0.6,
+        "champion": 0.55
+      },
+      "eta": {
+        "default": 0.02,
+        "champion": 0.005
+      },
+      "min_weight": {
+        "default": 0.05,
+        "champion": 0.014686901351744785
+      }
+    },
+    "uses_l1_abstain": false
+  },
+  "best_single": "single_policy",
+  "tables": {
+    "TRAIN_A": {
+      "swarm_evolved": {
+        "objective": 16.1374,
+        "leakage_pct": 14.491223,
+        "honest_block_rate": 2.747123,
+        "honest_unpaid_rate": 0.272615
+      },
+      "swarm_l1_default": {
+        "objective": 18.305289,
+        "leakage_pct": 15.171524,
+        "honest_block_rate": 5.523081,
+        "honest_unpaid_rate": 0.372225
+      },
+      "swarm_frozen_default": {
+        "objective": 18.310531,
+        "leakage_pct": 15.171524,
+        "honest_block_rate": 5.533566,
+        "honest_unpaid_rate": 0.372225
+      },
+      "swarm_l1_default+abstain": {
+        "objective": 18.305289,
+        "leakage_pct": 15.171524,
+        "honest_block_rate": 5.523081,
+        "honest_unpaid_rate": 0.372225
+      },
+      "static_rules": {
+        "objective": 51.031083,
+        "leakage_pct": 45.295677,
+        "honest_block_rate": 9.441925,
+        "honest_unpaid_rate": 1.014443
+      },
+      "single_policy": {
+        "objective": 52.007476,
+        "leakage_pct": 51.096574,
+        "honest_block_rate": 1.606857,
+        "honest_unpaid_rate": 0.107473
+      }
+    },
+    "TRAIN_B": {
+      "swarm_evolved": {
+        "objective": 20.494468,
+        "leakage_pct": 18.578807,
+        "honest_block_rate": 3.207505,
+        "honest_unpaid_rate": 0.311909
+      },
+      "swarm_l1_default": {
+        "objective": 22.250416,
+        "leakage_pct": 18.626623,
+        "honest_block_rate": 6.32414,
+        "honest_unpaid_rate": 0.461724
+      },
+      "swarm_frozen_default": {
+        "objective": 22.380637,
+        "leakage_pct": 18.748248,
+        "honest_block_rate": 6.341332,
+        "honest_unpaid_rate": 0.461724
+      },
+      "swarm_l1_default+abstain": {
+        "objective": 22.237703,
+        "leakage_pct": 18.616366,
+        "honest_block_rate": 6.319228,
+        "honest_unpaid_rate": 0.461724
+      },
+      "static_rules": {
+        "objective": 59.726416,
+        "leakage_pct": 53.64419,
+        "honest_block_rate": 10.199671,
+        "honest_unpaid_rate": 0.982391
+      },
+      "single_policy": {
+        "objective": 63.901371,
+        "leakage_pct": 62.68689,
+        "honest_block_rate": 2.114596,
+        "honest_unpaid_rate": 0.157183
+      }
+    }
+  },
+  "all_train": {
+    "always_release": {
+      "objective": 100.0,
+      "leakage_pct": 100.0,
+      "honest_block_rate": 0.0,
+      "honest_unpaid_rate": 0.0
+    },
+    "always_hold": {
+      "objective": 70.713134,
+      "leakage_pct": 10.698679,
+      "honest_block_rate": 100.0,
+      "honest_unpaid_rate": 10.014455
+    },
+    "static_rules": {
+      "objective": 55.398416,
+      "leakage_pct": 49.483953,
+      "honest_block_rate": 9.833135,
+      "honest_unpaid_rate": 0.997895
+    },
+    "single_velocity": {
+      "objective": 76.86612,
+      "leakage_pct": 75.93416,
+      "honest_block_rate": 1.64583,
+      "honest_unpaid_rate": 0.109046
+    },
+    "single_graph": {
+      "objective": 61.1906,
+      "leakage_pct": 59.298149,
+      "honest_block_rate": 3.328431,
+      "honest_unpaid_rate": 0.228235
+    },
+    "single_drift": {
+      "objective": 96.048151,
+      "leakage_pct": 95.457909,
+      "honest_block_rate": 1.023255,
+      "honest_unpaid_rate": 0.078614
+    },
+    "single_policy": {
+      "objective": 57.978829,
+      "leakage_pct": 56.911196,
+      "honest_block_rate": 1.868993,
+      "honest_unpaid_rate": 0.133137
+    },
+    "swarm_frozen": {
+      "objective": 20.359623,
+      "leakage_pct": 16.965892,
+      "honest_block_rate": 5.9506,
+      "honest_unpaid_rate": 0.418431
+    },
+    "swarm_l1": {
+      "objective": 20.291633,
+      "leakage_pct": 16.904876,
+      "honest_block_rate": 5.936652,
+      "honest_unpaid_rate": 0.418431
+    },
+    "swarm_evolved": {
+      "objective": 18.327186,
+      "leakage_pct": 16.541879,
+      "honest_block_rate": 2.98481,
+      "honest_unpaid_rate": 0.292902
+    }
+  },
+  "attacker_evolution": {
+    "arena_episodes_per_pool": 12,
+    "arena": {
+      "TRAIN_A/initial_pool": {
+        "swarm_l1_default": {
+          "objective": 15.950837,
+          "leakage_pct": 12.674183,
+          "honest_block_rate": 5.696522,
+          "honest_unpaid_rate": 0.428393
+        },
+        "swarm_evolved": {
+          "objective": 14.366109,
+          "leakage_pct": 12.6097,
+          "honest_block_rate": 2.897691,
+          "honest_unpaid_rate": 0.307564
+        }
+      },
+      "TRAIN_A/final_pool": {
+        "swarm_l1_default": {
+          "objective": 22.900476,
+          "leakage_pct": 19.652381,
+          "honest_block_rate": 5.683341,
+          "honest_unpaid_rate": 0.406424
+        },
+        "swarm_evolved": {
+          "objective": 19.908519,
+          "leakage_pct": 18.153208,
+          "honest_block_rate": 2.943826,
+          "honest_unpaid_rate": 0.283398
+        }
+      },
+      "TRAIN_B/initial_pool": {
+        "swarm_l1_default": {
+          "objective": 14.446997,
+          "leakage_pct": 10.881532,
+          "honest_block_rate": 6.202403,
+          "honest_unpaid_rate": 0.464264
+        },
+        "swarm_evolved": {
+          "objective": 12.844015,
+          "leakage_pct": 10.85664,
+          "honest_block_rate": 3.30279,
+          "honest_unpaid_rate": 0.33598
+        }
+      },
+      "TRAIN_B/final_pool": {
+        "swarm_l1_default": {
+          "objective": 20.105998,
+          "leakage_pct": 16.618928,
+          "honest_block_rate": 6.155569,
+          "honest_unpaid_rate": 0.409285
+        },
+        "swarm_evolved": {
+          "objective": 17.157376,
+          "leakage_pct": 15.261632,
+          "honest_block_rate": 3.176542,
+          "honest_unpaid_rate": 0.307473
+        }
+      }
+    },
+    "leakage_gain_vs_default_swarm_l1_pct_points": {
+      "TRAIN_A": 6.978198,
+      "TRAIN_B": 5.737396
+    },
+    "leakage_gain_vs_champion_pct_points": {
+      "TRAIN_A": 5.543508,
+      "TRAIN_B": 4.404992
+    },
+    "strongest_attacker_leakage_gen0": {
+      "ring": 12.9803,
+      "structuring": 12.5063
+    },
+    "strongest_attacker_leakage_final_gen": {
+      "ring": 22.8807,
+      "structuring": 15.279
+    }
+  },
+  "robustness_final_pool_train_b": {
+    "swarm_l1_default": {
+      "objective": 20.105998,
+      "leakage_pct": 16.618928,
+      "honest_block_rate": 6.155569,
+      "honest_unpaid_rate": 0.409285
+    },
+    "swarm_evolved": {
+      "objective": 17.157376,
+      "leakage_pct": 15.261632,
+      "honest_block_rate": 3.176542,
+      "honest_unpaid_rate": 0.307473
+    }
+  },
+  "promotions": [
+    4,
+    17
+  ],
+  "rollbacks": []
+}

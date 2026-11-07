@@ -4,6 +4,7 @@ Endpoints used (PayPal Payouts v1):
   POST /v1/oauth2/token              client-credentials token
   POST /v1/payments/payouts          create a payout batch
   GET  /v1/payments/payouts/{id}     batch + item status
+  POST /v1/notifications/verify-webhook-signature   verify an incoming webhook
 """
 from __future__ import annotations
 
@@ -138,3 +139,37 @@ class PayPalClient:
         )
         self._check(resp)
         return resp.json()
+
+    def verify_webhook_signature(
+        self,
+        *,
+        auth_algo: str,
+        cert_url: str,
+        transmission_id: str,
+        transmission_sig: str,
+        transmission_time: str,
+        webhook_id: str,
+        webhook_event: dict,
+    ) -> bool:
+        """Ask PayPal whether a webhook is genuine. True only when verification_status == SUCCESS.
+
+        POST /v1/notifications/verify-webhook-signature. The first five arguments are the values
+        of the PAYPAL-AUTH-ALGO, PAYPAL-CERT-URL, PAYPAL-TRANSMISSION-ID, PAYPAL-TRANSMISSION-SIG
+        and PAYPAL-TRANSMISSION-TIME headers; `webhook_event` is the received JSON body, unmodified.
+        Docs: https://developer.paypal.com/api/rest/webhooks/rest/ and the schema at
+        https://developer.paypal.com/api/webhooks/v1/schema.yaml (response: SUCCESS | FAILURE).
+        """
+        body = {
+            "auth_algo": auth_algo,
+            "cert_url": cert_url,
+            "transmission_id": transmission_id,
+            "transmission_sig": transmission_sig,
+            "transmission_time": transmission_time,
+            "webhook_id": webhook_id,
+            "webhook_event": webhook_event,
+        }
+        resp = self._http.post(
+            "/v1/notifications/verify-webhook-signature", json=body, headers=self._headers()
+        )
+        self._check(resp)
+        return resp.json().get("verification_status") == "SUCCESS"

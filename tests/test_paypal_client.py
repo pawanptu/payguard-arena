@@ -79,3 +79,29 @@ def test_sender_batch_id_is_idempotent_per_label_and_random_without_one():
     assert "/" not in make_sender_batch_id("a/b") and "#" not in make_sender_batch_id("a#b")
     assert len(make_sender_batch_id("x" * 500)) <= 64
     assert make_sender_batch_id() != make_sender_batch_id()
+
+
+def test_verify_webhook_signature_posts_documented_body_and_maps_status():
+    seen = {}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/v1/oauth2/token":
+            return httpx.Response(200, json={"access_token": "tok", "expires_in": 3600})
+        assert request.url.path == "/v1/notifications/verify-webhook-signature"
+        assert request.headers["authorization"] == "Bearer tok"
+        seen["body"] = json.loads(request.content)
+        status = "SUCCESS" if seen["body"]["transmission_id"] == "good" else "FAILURE"
+        return httpx.Response(200, json={"verification_status": status})
+
+    client = make_client(handler)
+    kw = dict(
+        auth_algo="SHA256withRSA", cert_url="https://api.sandbox.paypal.com/c", transmission_sig="s",
+        transmission_time="2026-11-07T00:00:00Z", webhook_id="WH-1", webhook_event={"id": "WH-EV-1"},
+    )
+    assert client.verify_webhook_signature(transmission_id="good", **kw) is True
+    assert set(seen["body"]) == {
+        "auth_algo", "cert_url", "transmission_id", "transmission_sig", "transmission_time",
+        "webhook_id", "webhook_event",
+    }
+    assert seen["body"]["webhook_event"] == {"id": "WH-EV-1"}
+    assert client.verify_webhook_signature(transmission_id="bad", **kw) is False

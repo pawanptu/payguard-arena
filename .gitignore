@@ -10,8 +10,8 @@ __pycache__/
 venv/
 .pytest_cache/
 *.egg-info/
-build/
-dist/
+/build/
+/dist/
 
 # Local data and caches (LLM response cache, SQLite, run artifacts)
 *.sqlite
@@ -19,9 +19,8 @@ dist/
 .cache/
 runs/local/
 
-# Dashboard
+# Dashboard (web/dist IS committed: the deploy serves the prebuilt UI without Node)
 node_modules/
-dashboard/dist/
 
 # OS / editor
 .DS_Store

@@ -6,25 +6,30 @@ No secrets are needed; Replay mode works on any machine.
 from __future__ import annotations
 
 import os
+from dataclasses import asdict
 from pathlib import Path
-from typing import Callable
 
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
+from ..rail import webhook
+from ..rail.store import ReceiptStore
 from .replay import Replay, load_replay
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_REPLAY = Path(__file__).resolve().parent / "fixtures" / "sample_replay.json"
 DEFAULT_WEB_DIST = REPO_ROOT / "web" / "dist"
 MAX_EVENTS_PER_PAGE = 1000
+MAX_RUNTIME_RECEIPTS = 50
 
 
-def create_app(replay_path: str | Path | None = None, *, web_dist: str | Path | None = None) -> FastAPI:
+def create_app(replay_path: str | Path | None = None, *, web_dist: str | Path | None = None,
+               receipt_store: ReceiptStore | None = None) -> FastAPI:
     """Build the app. Raises ReplayError at startup if the replay file is missing or breaks the contract.
 
     `web_dist` overrides where the built React app is looked for (default: <repo>/web/dist).
+    `receipt_store` is shared with the payout rails and the webhook (default: a fresh in-memory store).
     """
     path = Path(replay_path or os.environ.get("PAYGUARD_REPLAY_PATH") or DEFAULT_REPLAY)
     replay: Replay = load_replay(path)
@@ -34,12 +39,17 @@ def create_app(replay_path: str | Path | None = None, *, web_dist: str | Path | 
     app.state.replay = replay
     app.state.replay_path = str(path)
 
-    # --- SEAM (director): live PayPal receipts. ---------------------------------------------------
-    # Replace this callable with one backed by the ReceiptStore from the rail track, e.g.
-    #   app.state.payouts_provider = lambda: [r.to_payout_dict() for r in store.list()]
-    # It must return dicts shaped like replay.Payout (event_id, mode "sim"|"live", sender_batch_id,
-    # payout_batch_id, batch_status, item_status, amount_usd, created_at). Until then: replay payouts.
-    payouts_provider: Callable[[], list[dict]] = lambda: [p.model_dump() for p in replay.payouts]  # noqa: E731
+    # --- Payout receipts: one ReceiptStore shared by the rails and the verified PayPal webhook. -----
+    # Receipts written at runtime (SimRail / LiveRail, then webhook status updates) come first,
+    # newest first; the replay file's recorded payouts follow. Rows carry their own mode (sim|live).
+    store = receipt_store if receipt_store is not None else ReceiptStore()
+    app.state.receipt_store = store
+    app.include_router(webhook.router)
+    app.dependency_overrides[webhook.get_receipt_store] = lambda: store
+
+    def payouts_provider() -> list[dict]:
+        return [asdict(r) for r in store.recent(MAX_RUNTIME_RECEIPTS)] + [p.model_dump() for p in replay.payouts]
+
     app.state.payouts_provider = payouts_provider
     # -----------------------------------------------------------------------------------------------
 
@@ -66,7 +76,7 @@ def create_app(replay_path: str | Path | None = None, *, web_dist: str | Path | 
     @app.get("/api/payouts")
     def payouts() -> dict:
         provider = app.state.payouts_provider
-        return {"source": "replay", "payouts": provider()}
+        return {"source": "runtime+replay" if len(store) else "replay", "payouts": provider()}
 
     @app.get("/api/{rest:path}", include_in_schema=False)
     def api_not_found(rest: str):

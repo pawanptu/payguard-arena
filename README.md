@@ -89,9 +89,16 @@ Two trivial bounds frame every result:
 Pre-committed baselines, fixed before any swarm code was written:
 
 - **(a) `static_rules`** (implemented, final): six candidate per-account rules (big payout, 24 h total, device sharing, young account, velocity, drift from the worker's own median). It uses no cross-account graph features and does not learn. To make it a fair opponent, its thresholds and HOLD/STEP_UP actions were tuned once on TRAIN seeds only, with the same pre-registered objective the swarm is scored with (`python -m scripts.tune_static`: 20,000 random configurations plus coordinate descent; the report is in `eval/static_rules_tuning.json`). The tuned rules keep three: HOLD a payout of USD 300 or more, STEP_UP a payout of USD 250 or more from an account under one day old, and HOLD a payout at least 2x the worker's own median.
-- **(b)** best single defender, **(c)** single cached LLM judge, **(d)** frozen swarm, **(e)** evolved swarm, **(f)** evolved swarm + shared memory: not built yet.
+- **(b) best single defender** (implemented): each of the four swarm specialists on its own (`payguard/swarm/single.py`); the best one is chosen on TRAIN.
+- **(c) single cached LLM judge** (implemented, `payguard/llm/judge.py`): one Sarvam model sees a coarse, truth-free summary of each payout and decides it. Replies are cached by payload, so a warmed cache replays offline and deterministically. Paid calls are opt-in: `PAYGUARD_LLM_MAX_CALLS` defaults to 0, and past the cap a fixed fallback rule decides.
+- **(d) frozen swarm** (implemented): the four specialists (Velocity, Graph, BaselineDrift, Policy) and the coordinator, with weights that never change (`payguard/swarm/`).
+- **(e) evolved swarm** and **(f) evolved swarm + shared memory**: in progress.
 
-`scripts/run_baselines.py` runs the two bounds and `static_rules` on each of the three splits and prints a header per split, then one line per defender.
+`scripts/run_baselines.py` runs the two bounds and `static_rules` on each of the three splits and prints a header per split, then one line per defender. `scripts/run_swarm.py` runs (a), (b), (d) and the L1 swarm on TRAIN only.
+
+So far, on TRAIN only (SIMULATED), lower is better: frozen swarm 20.4, static rules 55.4, best single specialist (Policy) 58.0. TEST splits have not been run for the swarm; they are run once, after the evolved champion is fixed. Two known limits:
+- The Graph specialist's default cluster-size threshold (4 workers) sits just above the simulator's honest small-shop size (3 workers). That is a design choice that knows the simulator.
+- Online reputation learning (L1) adds nothing on TRAIN yet. The gain comes from the specialists complementing each other.
 
 ### Freeze
 
@@ -104,7 +111,7 @@ The freeze exists so that no defender is tuned against a moving benchmark. Chang
 
 ### Honesty note
 
-Everything here is a simulated replay on synthetic data. The parameters are design choices, not calibrated to real-world fraud statistics, and this README makes no claim about real fraud rates. The simulator never calls PayPal. Real PayPal Sandbox Payouts are used only by the separate live adapter (in progress), never by the benchmark.
+Everything here is a simulated replay on synthetic data. The parameters are design choices, not calibrated to real-world fraud statistics, and this README makes no claim about real fraud rates. The simulator never calls PayPal. Real PayPal Sandbox Payouts are used only by the separate live rail (`payguard/rail/live_rail.py`), never by the benchmark.
 
 ## What is in the repo today
 
@@ -120,6 +127,14 @@ Everything here is a simulated replay on synthetic data. The parameters are desi
 | `scripts/run_baselines.py` | Prints the baseline table on all three splits |
 | `scripts/tune_static.py` | One-time TRAIN-only tuning of the static baseline (`eval/static_rules_tuning.json`) |
 | `scripts/freeze.py` | Freezes / verifies the benchmark files (`eval/FROZEN.json`) |
+| `payguard/swarm/` | Four specialist defenders, the reputation-weighted coordinator (L1), single-specialist baselines |
+| `scripts/run_swarm.py` | TRAIN-only table: baselines vs single specialists vs swarm |
+| `payguard/rail/` | Payout rails: `SimRail` (simulated) and `LiveRail` (PayPal sandbox, guarded by a per-payout cap, a session budget and a receiver allowlist), a receipt store, and the signature-verified webhook `POST /webhooks/paypal` |
+| `payguard/llm/` | Cached Sarvam LLM judge (baseline c) and LLM quality specialist; truth-free payload, opt-in paid calls |
+| `scripts/estimate_llm_cost.py` | Offline count of the LLM calls a cold cache would need (makes no API call) |
+| `payguard/api/` | FastAPI app: replay API, payout receipts, PayPal webhook, and the built dashboard |
+| `web/` | React + Vite + Recharts dashboard; `web/dist` is the committed build that the API serves |
+| `scripts/make_sample_replay.py` | Builds the sample replay fixture (TRAIN seed 1000, marked `synthetic_fixture`) |
 | `tests/` | Offline tests (no network, no keys) |
 
 ## Quick start
@@ -133,6 +148,16 @@ cp .env.example .env             # then fill in your own sandbox credentials
 python -m scripts.smoke_paypal_payouts
 python -m scripts.smoke_sarvam
 ```
+
+Dashboard (no keys needed; replays the file in `PAYGUARD_REPLAY_PATH`, by default the sample fixture):
+
+```bash
+uvicorn payguard.api.app:app --port 8000        # serves the API and the built UI at http://127.0.0.1:8000
+cd web && npm ci && npm run dev                 # UI development server, proxies /api to port 8000
+cd web && npm run build                         # rebuild web/dist (commit it; the deploy has no Node)
+```
+
+The PayPal webhook (`POST /webhooks/paypal`) accepts nothing until `PAYPAL_WEBHOOK_ID` is set: it returns 503, and every event is checked with PayPal's verify-webhook-signature API before it changes a receipt.
 
 ## How PayPal and AI are used
 

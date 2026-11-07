@@ -148,9 +148,44 @@ def test_payouts_endpoint_and_seam(raw):
     assert body["source"] == "replay" and len(body["payouts"]) == len(raw["payouts"])
     assert {"event_id", "mode", "sender_batch_id", "payout_batch_id", "batch_status", "item_status",
             "amount_usd", "created_at"} <= set(body["payouts"][0])
-    # the seam: the director swaps the provider for a live ReceiptStore
+    # the provider is swappable (tests, alternative stores)
     app.state.payouts_provider = lambda: [{**body["payouts"][0], "mode": "live"}]
     assert c.get("/api/payouts").json()["payouts"][0]["mode"] == "live"
+
+
+def test_runtime_receipts_and_verified_webhook_reach_the_payouts_endpoint(raw):
+    """End to end inside one app: a rail writes a receipt to the shared store, a verified PayPal
+    webhook advances it, and /api/payouts lists it first (newest runtime receipts before replay rows)."""
+    from payguard.rail import webhook as wh
+    from payguard.rail.base import PayoutRequest
+    from payguard.rail.sim_rail import SimRail
+    from payguard.rail.store import ReceiptStore
+
+    class Verifier:
+        def verify_webhook_signature(self, **kw):
+            return kw["webhook_id"] == "WH-1"
+
+    store = ReceiptStore()
+    app = create_app(DEFAULT_REPLAY, web_dist=Path("does-not-exist"), receipt_store=store)
+    app.dependency_overrides[wh.get_webhook_id] = lambda: "WH-1"
+    app.dependency_overrides[wh.get_paypal_client] = lambda: Verifier()
+    c = TestClient(app)
+
+    receipt = SimRail(store=store).submit(PayoutRequest(7, 3.0, "worker@example.com"))
+    event = {"id": "WH-EV-9", "event_type": "PAYMENT.PAYOUTS-ITEM.SUCCEEDED",
+             "resource": {"payout_batch_id": receipt.payout_batch_id, "sender_batch_id": receipt.sender_batch_id,
+                          "transaction_status": "SUCCESS"}}
+    sig = {"PAYPAL-AUTH-ALGO": "SHA256withRSA", "PAYPAL-CERT-URL": "https://api.sandbox.paypal.com/cert",
+           "PAYPAL-TRANSMISSION-ID": "tx-9", "PAYPAL-TRANSMISSION-SIG": "sig",
+           "PAYPAL-TRANSMISSION-TIME": "2026-11-07T12:00:00Z"}
+    r = c.post("/webhooks/paypal", json=event, headers=sig)
+    assert r.status_code == 200 and r.json()["status"] == "processed"
+
+    body = c.get("/api/payouts").json()
+    assert body["source"] == "runtime+replay"
+    assert len(body["payouts"]) == 1 + len(raw["payouts"])
+    first = body["payouts"][0]
+    assert first["event_id"] == 7 and first["mode"] == "sim" and first["item_status"] == "SUCCESS"
 
 
 def test_unknown_api_path_is_404_json(client):

@@ -6,7 +6,7 @@ fresh defender per episode, then the frozen `payguard.sim.metrics.evaluate` over
 Episodes are described by hashable SPECS and built once per process (cache), so jobs shipped to worker
 processes are tiny plain tuples/dicts (Windows `spawn` needs top-level functions and picklable arguments):
 
-    ("proto", seed)                          protocol TRAIN episode (`protocol.episode_for`)
+    ("proto", seed[, families])              protocol TRAIN episode (`protocol.episode_for`, both TRAIN families by default)
     ("arena", seed, ((family, items), ...))  `build_episode(seed, campaigns)`: the honest traffic of `seed`
                                              plus the given attack campaigns (items = sorted attack-param pairs)
 
@@ -39,8 +39,12 @@ _EPISODES: dict[Spec, Episode] = {}
 
 
 # --- specs ---
-def proto_spec(seed: int) -> Spec:
-    return ("proto", int(seed))
+def proto_spec(seed: int, families: tuple[str, ...] | None = None) -> Spec:
+    """Protocol TRAIN episode. The default families (ring + structuring) give the plain spec ("proto", seed), which
+    keeps every existing lineage byte-for-byte; any other family tuple adds it as a third item."""
+    if families is None or tuple(families) == TRAIN_FAMILIES:
+        return ("proto", int(seed))
+    return ("proto", int(seed), tuple(families))
 
 
 def arena_spec(seed: int, campaigns: list[tuple[str, Any]]) -> Spec:
@@ -54,7 +58,7 @@ def get_episode(spec: Spec) -> Episode:
     ep = _EPISODES.get(spec)
     if ep is None:
         if spec[0] == "proto":
-            ep = episode_for(spec[1], TRAIN_FAMILIES)
+            ep = episode_for(spec[1], spec[2] if len(spec) > 2 else TRAIN_FAMILIES)
         else:
             ep = build_episode(spec[1], [(fam, PARAMS[fam](**dict(items))) for fam, items in spec[2]])
             arena = [k for k in _EPISODES if k[0] == "arena"]

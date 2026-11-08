@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import type { ResultRow, Split } from "../types";
 import { defenderLabel, num1, num2, ordinal, pct, SEP, SPLIT_LABEL, SPLIT_ORDER } from "../format";
-import { PRIMARY_DEFENDER } from "../verdict";
+import { PRIMARY_DEFENDER, TESTS } from "../verdict";
 import InfoTip from "./InfoTip";
 import { InboxIcon, StarIcon } from "./Icons";
 import { CardHeader, EmptyState, Pill, Segmented, Switch } from "./ui";
@@ -32,6 +32,12 @@ const MORE_COLS: Col[] = [
   { key: "never_contained_rate", label: "Never contained %", tip: "Attack rings never stopped.", fmt: pct },
 ];
 
+/** swarm_r2 was designed after the round-1 result on TEST_HELDOUT was known, so its row there is not a clean test. */
+const POST_HOC: Partial<Record<Split, string>> = { TEST_HELDOUT: "swarm_r2" };
+
+/** The defender pinned as "Primary" for a split: the one under test there, else the round-1 primary. */
+const primaryFor = (split: Split) => TESTS.find((t) => t.split === split)?.primary ?? PRIMARY_DEFENDER;
+
 export default function ResultsTable({ rows }: { rows: ResultRow[] }) {
   const available = useMemo(() => SPLIT_ORDER.filter((s) => rows.some((r) => r.split === s)), [rows]);
   const [picked, setPicked] = useState<Split | null>(null);
@@ -46,9 +52,10 @@ export default function ResultsTable({ rows }: { rows: ResultRow[] }) {
     );
   }
 
+  // SPLIT_ORDER lists the newest held-out split first, so it is the default whenever the replay has rows for it.
   const split: Split = picked && available.includes(picked) ? picked : available[0];
   const inSplit = rows.filter((r) => r.split === split);
-  const primary = inSplit.find((r) => r.defender === PRIMARY_DEFENDER);
+  const primary = inSplit.find((r) => r.defender === primaryFor(split));
   const ordered = [
     ...(primary ? [primary] : []),
     ...inSplit.filter((r) => r !== primary).sort((a, b) => a.objective - b.objective),
@@ -98,12 +105,21 @@ export default function ResultsTable({ rows }: { rows: ResultRow[] }) {
           <tbody>
             {ordered.map((r) => {
               const isPrimary = r === primary;
+              const postHoc = POST_HOC[r.split] === r.defender;
               return (
                 <tr key={`${r.split}|${r.defender}`} className={isPrimary ? "row-primary" : ""}>
                   <th scope="row" title={r.defender}>
                     <span className="def">
                       {defenderLabel(r.defender)}
                       {isPrimary && <Pill variant="headline">Primary</Pill>}
+                      {postHoc && (
+                        <span className="def-note">
+                          Post-hoc
+                          <InfoTip label="why this row is not a clean test">
+                            Designed after the round-1 result on this split was known.
+                          </InfoTip>
+                        </span>
+                      )}
                     </span>
                   </th>
                   {cols.map((c) => {

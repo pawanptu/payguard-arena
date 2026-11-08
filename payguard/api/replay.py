@@ -23,7 +23,7 @@ def _finite(v: float) -> float:
 
 
 Num = Annotated[float, AfterValidator(_finite)]
-Split = Literal["TRAIN", "TEST_SEEN", "TEST_HELDOUT"]
+Split = Literal["TRAIN", "TEST_SEEN", "TEST_HELDOUT", "TEST_HELDOUT2"]  # TEST_HELDOUT2: round 2 (D-034)
 Verdict = Literal["RELEASE", "STEP_UP", "HOLD"]
 
 

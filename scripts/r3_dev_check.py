@@ -14,6 +14,10 @@ lower id. Section 3 (K1): winner vs its dreamer_nowm twin (use_wm=False), evolut
 twin's mean LOFO is >= 1.0 higher. The DreamConfig handed to `train` has `families` = the training families, so dreams
 can never be drawn from the held-out family. Results are memoized per (cfg, families, evo_seed): train is
 deterministic by contract, so the winner's seed-0 run is not repeated.
+
+Checkpoint (D-044): every finished fold is appended to `<out>.folds.jsonl` (next to the output) and reloaded on a
+restart, so a crash after hours of training loses at most the fold in progress. Because `train` is deterministic a
+resumed fold equals a re-trained one; the checkpoint is deleted only by hand, never by this script.
 """
 from __future__ import annotations
 
@@ -67,13 +71,33 @@ def default_score(params: SwarmParams, eps: list) -> Metrics:
 
 class DevCheck:
     def __init__(self, train: TrainFn, *, score: ScoreFn = default_score, seeds: Sequence[int] = TRAIN_B,
-                 families: tuple[str, ...] = TRAIN_FAMILIES, log: Callable[[str], None] = lambda s: None):
+                 families: tuple[str, ...] = TRAIN_FAMILIES, log: Callable[[str], None] = lambda s: None,
+                 checkpoint: Path | None = None):
         for s in seeds:
             assert_seed_allowed(s)  # TRAIN or dev seeds only; a TEST seed raises here
         self.train, self.score, self.seeds, self.families, self.log = train, score, tuple(seeds), tuple(families), log
         self._eps = {f: [episode_for(s, (f,)) for s in self.seeds] for f in self.families}
         self._memo: dict[tuple, dict] = {}
         self.train_calls = 0
+        self.resumed = 0
+        self.checkpoint = checkpoint
+        if checkpoint is not None and checkpoint.exists():
+            for line in checkpoint.read_text(encoding="utf-8").splitlines():
+                if line.strip():
+                    rec = json.loads(line)
+                    self._memo[self._key_from_record(rec)] = rec["fold"]
+            self.resumed = len(self._memo)
+            self.log(f"  resumed {len(self._memo)} finished fold(s) from {checkpoint.name}")
+
+    @staticmethod
+    def _ckpt_key(cfg: DreamConfig, held_out: str, evo_seed: int) -> str:
+        return json.dumps({"config": r3eval.dream_config_to_dict(cfg), "held_out": held_out, "evo_seed": int(evo_seed)},
+                          sort_keys=True)
+
+    @staticmethod
+    def _key_from_record(rec: dict) -> tuple:
+        k = json.loads(rec["key"])
+        return (r3eval.dream_config_from_dict(k["config"]), k["held_out"], k["evo_seed"])
 
     def fold(self, cfg: DreamConfig, held_out: str, evo_seed: int) -> dict:
         """Train on every family but `held_out`, score on the TRAIN_B episodes of `held_out` only."""
@@ -89,6 +113,10 @@ class DevCheck:
                                "params_sha256": hashlib.sha256(
                                    json.dumps(asdict(params), sort_keys=True).encode()).hexdigest()}
             self.log(f"    held out {held_out:11s} evo_seed={evo_seed} obj={self._memo[key]['objective']:6.2f}")
+            if self.checkpoint is not None:
+                self.checkpoint.parent.mkdir(parents=True, exist_ok=True)
+                with open(self.checkpoint, "a", encoding="utf-8") as fh:
+                    fh.write(json.dumps({"key": self._ckpt_key(cfg, held_out, evo_seed), "fold": self._memo[key]}) + "\n")
         return self._memo[key]
 
     def lofo(self, cfg: DreamConfig, evo_seed: int) -> dict:
@@ -115,6 +143,7 @@ class DevCheck:
         return {"rule": "eval/r3/SELECTION_RULE.md sections 2-3", "split": "TRAIN_B (leave-one-family-out)",
                 "seeds": list(self.seeds), "families": list(self.families), "grid": grid, "winner": winner,
                 "winner_config": r3eval.dream_config_to_dict(wcfg), "k1": k1_out, "train_calls": self.train_calls,
+                "folds_resumed_from_checkpoint": self.resumed,
                 "verdict": "K1 passed: proceed to the freeze" if k1_out["pass"]
                            else "K1 FAILED: stop, publish the negative finding, do not run TEST_HELDOUT3"}
 
@@ -135,6 +164,7 @@ def run_dev_check(train: TrainFn | None = None, out_path: Path = OUT_PATH, **kw)
                          "Delete it deliberately (and log why) to repeat.")
     train = train if train is not None else resolve_train()
     t0 = time.time()
+    kw.setdefault("checkpoint", out_path.with_suffix(".folds.jsonl"))
     doc = DevCheck(train, log=lambda s: print(s, flush=True), **kw).run()
     doc["seconds"] = round(time.time() - t0, 1)
     r3eval.write_once(out_path, json.dumps(rx.clean(doc), indent=2, allow_nan=False) + "\n")

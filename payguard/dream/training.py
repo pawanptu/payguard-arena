@@ -18,10 +18,13 @@ attacked, observed or dreamed during training.
 """
 from __future__ import annotations
 
+import hashlib
+import json
 import os
 from collections.abc import Callable, Sequence
 from dataclasses import asdict, replace
 from functools import partial
+from pathlib import Path
 from typing import Any
 
 from ..evolve.evaluation import Evaluator
@@ -35,7 +38,11 @@ from .skeptic import HoldoutSkeptic
 from .worldmodel import AbcWorldModel
 
 WORKERS_ENV = "PAYGUARD_WORKERS"
-EVOLVE_CONFIG: EvolveConfig = EvolveConfig(pop=28, gens=22, name="full")   # D-028 full config (pop 28, 22 generations)
+# D-028 full config (pop 28, 22 generations). The 28-minute wall-clock budget guard is OFF for every round-3 arm
+# (D-044): with dreams it would stop runs near generation 9 at a point that depends on machine load, so arms would
+# not be comparable. All arms run exactly `gens` generations.
+EVOLVE_CONFIG: EvolveConfig = EvolveConfig(pop=28, gens=22, budget_min=1e9, name="full")
+RUN_LOG_ENV = "PAYGUARD_R3_RUNLOG"   # directory: when set, `train` also writes each full run (lineage etc.) as JSON
 
 
 def default_workers() -> int:
@@ -92,4 +99,26 @@ def train_run(cfg: DreamConfig, families: Sequence[str], evo_seed: int, *, evolv
 
 def train(cfg: DreamConfig, families: tuple[str, ...], evo_seed: int) -> SwarmParams:
     """The champion's SwarmParams after a dream-trained evolution on `families` (see module docstring)."""
-    return train_run(cfg, families, evo_seed)["champion_params"]
+    run = train_run(cfg, families, evo_seed)
+    log_dir = os.environ.get(RUN_LOG_ENV, "").strip()
+    if log_dir:
+        save_run(run, Path(log_dir))
+    return run["champion_params"]
+
+
+def run_name(run: dict) -> str:
+    """Stable file name of a run: hash of (dream config, families, evo seed)."""
+    key = json.dumps({"dream_config": run["dream_config"], "families": run["families"], "evo_seed": run["evo_seed"]},
+                     sort_keys=True)
+    return f"run_{'-'.join(run['families'])}_s{run['evo_seed']}_{hashlib.sha256(key.encode()).hexdigest()[:12]}.json"
+
+
+def save_run(run: dict, log_dir: Path) -> Path:
+    """Write a `train_run` result (minus the SwarmParams object) as JSON; returns the path. Overwrites a same-key run,
+    which is the same deterministic run."""
+    from ..evolve import replay_export as rx
+    log_dir.mkdir(parents=True, exist_ok=True)
+    path = log_dir / run_name(run)
+    doc = {k: v for k, v in run.items() if k != "champion_params"}
+    path.write_text(json.dumps(rx.clean(doc), indent=1, allow_nan=False) + "\n", encoding="utf-8")
+    return path

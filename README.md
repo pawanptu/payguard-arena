@@ -315,7 +315,7 @@ The round-1 table is stored in `eval/final/results.json` and the round-2 table i
 | `payguard/robust/`, `scripts/r2_select.py` | Round 2: `swarm_r2` (honest-calibrated anomaly layer) and its TRAIN-only leave-one-family-out selection (`eval/r2/`) |
 | `scripts/final_eval_r2.py` | Round-2 one-shot (`eval/final_r2/results.json`) and the replay the dashboard shows (`eval/replay.json`) |
 | `scripts/llm_warm.py` | Fills the LLM caches on TRAIN under an explicit call cap (the one-shot scripts warm their own test splits, also capped) |
-| `scripts/live_run.py` | Recorded live run: pays a few released replay events through the PayPal sandbox and records receipts and verified webhooks (dry run unless `--send`) |
+| `scripts/live_run.py` | Recorded live run: pays a few released replay events through the PayPal sandbox and records receipts and verified webhooks (dry run unless `--send`). `--reattach` carries recorded receipts onto a rebuilt replay without paying again, and refuses if any paid event is no longer a released payout there |
 | `eval/live/` | Kept live-run receipts |
 | `tests/` | Offline tests (no network, no keys) |
 

@@ -1,0 +1,116 @@
+{
+ "pop": 20,
+ "gens": 10,
+ "seed": 0,
+ "lam": 80.0,
+ "scope": "structuring->ring@h1",
+ "result": {
+  "params": {
+   "vel_usd_lo": 1000.0,
+   "vel_usd_width": 1000.0,
+   "vel_n_lo": 7.0,
+   "vel_n_width": 4.0,
+   "graph_dens_lo": 0.4,
+   "graph_dens_width": 0.2,
+   "graph_min_workers": 4,
+   "graph_size_width": 2.0,
+   "graph_share_min": 3,
+   "drift_min_history": 4,
+   "drift_ratio_lo": 3.0,
+   "drift_ratio_width": 3.0,
+   "drift_rate_lo": 3.5,
+   "drift_rate_width": 2.0,
+   "policy_cap_base_usd": 150.0,
+   "policy_cap_per_day_usd": 8.0,
+   "policy_cap_max_usd": 500.0,
+   "policy_window_mult": 3.0,
+   "w0_velocity": 1.0,
+   "w0_graph": 1.0,
+   "w0_drift": 1.0,
+   "w0_policy": 1.0,
+   "step_up_threshold": 0.3,
+   "hold_threshold": 0.6,
+   "eta": 0.02,
+   "min_weight": 0.05,
+   "l1_abstain": 0
+  },
+  "fit": 15.154697984484523,
+  "obj_fit_set": 15.154697984484523,
+  "block_fit_set": 6.031878576515951,
+  "d": 0.0,
+  "static_block_fit_set": 10.19967089913304,
+  "trace": [
+   {
+    "gen": 0,
+    "best_fit": 15.154697984484523,
+    "mean_fit": 203.75590757629126,
+    "best_obj": 15.154697984484523,
+    "best_d": 0.0
+   },
+   {
+    "gen": 1,
+    "best_fit": 15.154697984484523,
+    "mean_fit": 199.32879932453093,
+    "best_obj": 15.154697984484523,
+    "best_d": 0.0
+   },
+   {
+    "gen": 2,
+    "best_fit": 15.154697984484523,
+    "mean_fit": 160.87037554988297,
+    "best_obj": 15.154697984484523,
+    "best_d": 0.0
+   },
+   {
+    "gen": 3,
+    "best_fit": 15.154697984484523,
+    "mean_fit": 121.44153621737243,
+    "best_obj": 15.154697984484523,
+    "best_d": 0.0
+   },
+   {
+    "gen": 4,
+    "best_fit": 15.154697984484523,
+    "mean_fit": 81.72624534957492,
+    "best_obj": 15.154697984484523,
+    "best_d": 0.0
+   },
+   {
+    "gen": 5,
+    "best_fit": 15.154697984484523,
+    "mean_fit": 99.61667568927389,
+    "best_obj": 15.154697984484523,
+    "best_d": 0.0
+   },
+   {
+    "gen": 6,
+    "best_fit": 15.154697984484523,
+    "mean_fit": 94.34166014935029,
+    "best_obj": 15.154697984484523,
+    "best_d": 0.0
+   },
+   {
+    "gen": 7,
+    "best_fit": 15.154697984484523,
+    "mean_fit": 47.90983084158877,
+    "best_obj": 15.154697984484523,
+    "best_d": 0.0
+   },
+   {
+    "gen": 8,
+    "best_fit": 15.154697984484523,
+    "mean_fit": 22.145075101126135,
+    "best_obj": 15.154697984484523,
+    "best_d": 0.0
+   },
+   {
+    "gen": 9,
+    "best_fit": 15.154697984484523,
+    "mean_fit": 93.71157801901943,
+    "best_obj": 15.154697984484523,
+    "best_d": 0.0
+   }
+  ],
+  "evaluated": 173
+ }
+}

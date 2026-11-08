@@ -1,0 +1,2610 @@
+{
+ "rule": "eval/r2/SELECTION_RULE.md",
+ "generated_by": "python -m scripts.r2_select",
+ "git_rev": "53c41acd48e0c16157750cf0f4db01309877f5fe",
+ "settings": {
+  "ga_pop": 20,
+  "ga_gens": 10,
+  "ga_seed": 0,
+  "lam_grid": [
+   0.0,
+   20.0,
+   80.0
+  ],
+  "beta_grid": [
+   [
+    0.005,
+    0.02
+   ],
+   [
+    0.01,
+    0.03
+   ],
+   [
+    0.01,
+    0.05
+   ],
+   [
+    0.02,
+    0.05
+   ],
+   [
+    0.02,
+    0.08
+   ]
+  ],
+  "margin": 3.0,
+  "train_slack": 3.0,
+  "block_margin": 0.75,
+  "band": 1.5,
+  "block_tie": 0.25
+ },
+ "protocol": {
+  "halves": "H0 = seeds 1000-1009, H1 = seeds 1010-1019",
+  "fold": "fit on family A / one half, evaluate on family B / the other half",
+  "folds": [
+   {
+    "tag": "ring->structuring@h0",
+    "fit_seeds": [
+     1000,
+     1001,
+     1002,
+     1003,
+     1004,
+     1005,
+     1006,
+     1007,
+     1008,
+     1009
+    ],
+    "fit_family": "ring",
+    "eval_seeds": [
+     1010,
+     1011,
+     1012,
+     1013,
+     1014,
+     1015,
+     1016,
+     1017,
+     1018,
+     1019
+    ],
+    "eval_family": "structuring"
+   },
+   {
+    "tag": "ring->structuring@h1",
+    "fit_seeds": [
+     1010,
+     1011,
+     1012,
+     1013,
+     1014,
+     1015,
+     1016,
+     1017,
+     1018,
+     1019
+    ],
+    "fit_family": "ring",
+    "eval_seeds": [
+     1000,
+     1001,
+     1002,
+     1003,
+     1004,
+     1005,
+     1006,
+     1007,
+     1008,
+     1009
+    ],
+    "eval_family": "structuring"
+   },
+   {
+    "tag": "structuring->ring@h0",
+    "fit_seeds": [
+     1000,
+     1001,
+     1002,
+     1003,
+     1004,
+     1005,
+     1006,
+     1007,
+     1008,
+     1009
+    ],
+    "fit_family": "structuring",
+    "eval_seeds": [
+     1010,
+     1011,
+     1012,
+     1013,
+     1014,
+     1015,
+     1016,
+     1017,
+     1018,
+     1019
+    ],
+    "eval_family": "ring"
+   },
+   {
+    "tag": "structuring->ring@h1",
+    "fit_seeds": [
+     1010,
+     1011,
+     1012,
+     1013,
+     1014,
+     1015,
+     1016,
+     1017,
+     1018,
+     1019
+    ],
+    "fit_family": "structuring",
+    "eval_seeds": [
+     1000,
+     1001,
+     1002,
+     1003,
+     1004,
+     1005,
+     1006,
+     1007,
+     1008,
+     1009
+    ],
+    "eval_family": "ring"
+   }
+  ]
+ },
+ "references": {
+  "static_rules": {
+   "folds": {
+    "ring->structuring@h0": {
+     "objective": 16.8765,
+     "leakage_pct": 10.7599,
+     "honest_block_rate": 10.1997,
+     "honest_unpaid_rate": 1.0168,
+     "leakage_pct_by_family": {
+      "structuring": 10.7599
+     }
+    },
+    "ring->structuring@h1": {
+     "objective": 19.6217,
+     "leakage_pct": 13.9623,
+     "honest_block_rate": 9.4419,
+     "honest_unpaid_rate": 0.9384,
+     "leakage_pct_by_family": {
+      "structuring": 13.9623
+     }
+    },
+    "structuring->ring@h0": {
+     "objective": 91.5024,
+     "leakage_pct": 85.4349,
+     "honest_block_rate": 10.1997,
+     "honest_unpaid_rate": 0.9677,
+     "leakage_pct_by_family": {
+      "ring": 85.4349
+     }
+    },
+    "structuring->ring@h1": {
+     "objective": 89.8916,
+     "leakage_pct": 84.2086,
+     "honest_block_rate": 9.4419,
+     "honest_unpaid_rate": 0.962,
+     "leakage_pct_by_family": {
+      "ring": 84.2086
+     }
+    }
+   },
+   "directions": {
+    "ring->structuring": {
+     "objective": 18.2491,
+     "leakage_pct": 12.3611,
+     "honest_block_rate": 9.8208,
+     "honest_unpaid_rate": 0.9776
+    },
+    "structuring->ring": {
+     "objective": 90.697,
+     "leakage_pct": 84.8218,
+     "honest_block_rate": 9.8208,
+     "honest_unpaid_rate": 0.9648
+    }
+   },
+   "lofo_score": 54.4731,
+   "worst_direction": 90.697,
+   "lofo_leakage_pct": 48.5914,
+   "lofo_honest_block_rate": 9.8208,
+   "full_train": {
+    "objective": 55.3984,
+    "leakage_pct": 49.484,
+    "honest_block_rate": 9.8331,
+    "honest_unpaid_rate": 0.9979,
+    "leakage_pct_by_family": {
+     "ring": 86.4143,
+     "structuring": 11.5388
+    }
+   }
+  },
+  "single_policy": {
+   "folds": {
+    "ring->structuring@h0": {
+     "objective": 13.1686,
+     "leakage_pct": 11.9394,
+     "honest_block_rate": 2.1146,
+     "honest_unpaid_rate": 0.1719,
+     "leakage_pct_by_family": {
+      "structuring": 11.9394
+     }
+    },
+    "ring->structuring@h1": {
+     "objective": 15.6827,
+     "leakage_pct": 14.7587,
+     "honest_block_rate": 1.6069,
+     "honest_unpaid_rate": 0.1206,
+     "leakage_pct_by_family": {
+      "structuring": 14.7587
+     }
+    },
+    "structuring->ring@h0": {
+     "objective": 100.2506,
+     "leakage_pct": 99.0165,
+     "honest_block_rate": 2.1146,
+     "honest_unpaid_rate": 0.1768,
+     "leakage_pct_by_family": {
+      "ring": 99.0165
+     }
+    },
+    "structuring->ring@h1": {
+     "objective": 99.6493,
+     "leakage_pct": 98.741,
+     "honest_block_rate": 1.6069,
+     "honest_unpaid_rate": 0.1049,
+     "leakage_pct_by_family": {
+      "ring": 98.741
+     }
+    }
+   },
+   "directions": {
+    "ring->structuring": {
+     "objective": 14.4257,
+     "leakage_pct": 13.349,
+     "honest_block_rate": 1.8607,
+     "honest_unpaid_rate": 0.1462
+    },
+    "structuring->ring": {
+     "objective": 99.95,
+     "leakage_pct": 98.8787,
+     "honest_block_rate": 1.8607,
+     "honest_unpaid_rate": 0.1409
+    }
+   },
+   "lofo_score": 57.1879,
+   "worst_direction": 99.95,
+   "lofo_leakage_pct": 56.1138,
+   "lofo_honest_block_rate": 1.8607,
+   "full_train": {
+    "objective": 57.9788,
+    "leakage_pct": 56.9112,
+    "honest_block_rate": 1.869,
+    "honest_unpaid_rate": 0.1331,
+    "leakage_pct_by_family": {
+     "ring": 99.4294,
+     "structuring": 13.2247
+    }
+   }
+  },
+  "swarm_l1": {
+   "folds": {
+    "ring->structuring@h0": {
+     "objective": 15.1547,
+     "leakage_pct": 11.6697,
+     "honest_block_rate": 6.0319,
+     "honest_unpaid_rate": 0.4691,
+     "leakage_pct_by_family": {
+      "structuring": 11.6697
+     }
+    },
+    "ring->structuring@h1": {
+     "objective": 17.4012,
+     "leakage_pct": 14.291,
+     "honest_block_rate": 5.5336,
+     "honest_unpaid_rate": 0.3434,
+     "leakage_pct_by_family": {
+      "structuring": 14.291
+     }
+    },
+    "structuring->ring@h0": {
+     "objective": 21.8228,
+     "leakage_pct": 18.0185,
+     "honest_block_rate": 6.5575,
+     "honest_unpaid_rate": 0.5256,
+     "leakage_pct_by_family": {
+      "ring": 18.0185
+     }
+    },
+    "structuring->ring@h1": {
+     "objective": 22.1253,
+     "leakage_pct": 18.7399,
+     "honest_block_rate": 5.932,
+     "honest_unpaid_rate": 0.4194,
+     "leakage_pct_by_family": {
+      "ring": 18.7399
+     }
+    }
+   },
+   "directions": {
+    "ring->structuring": {
+     "objective": 16.278,
+     "leakage_pct": 12.9804,
+     "honest_block_rate": 5.7828,
+     "honest_unpaid_rate": 0.4062
+    },
+    "structuring->ring": {
+     "objective": 21.974,
+     "leakage_pct": 18.3792,
+     "honest_block_rate": 6.2447,
+     "honest_unpaid_rate": 0.4725
+    }
+   },
+   "lofo_score": 19.126,
+   "worst_direction": 21.974,
+   "lofo_leakage_pct": 15.6798,
+   "lofo_honest_block_rate": 6.0137,
+   "full_train": {
+    "objective": 20.2916,
+    "leakage_pct": 16.9049,
+    "honest_block_rate": 5.9367,
+    "honest_unpaid_rate": 0.4184,
+    "leakage_pct_by_family": {
+     "ring": 20.6071,
+     "structuring": 13.1009
+    }
+   }
+  },
+  "swarm_evolved": {
+   "folds": {
+    "ring->structuring@h0": {
+     "objective": 12.6228,
+     "leakage_pct": 10.7599,
+     "honest_block_rate": 3.0872,
+     "honest_unpaid_rate": 0.3193,
+     "leakage_pct_by_family": {
+      "structuring": 10.7599
+     }
+    },
+    "ring->structuring@h1": {
+     "objective": 15.56,
+     "leakage_pct": 13.9623,
+     "honest_block_rate": 2.6659,
+     "honest_unpaid_rate": 0.2648,
+     "leakage_pct_by_family": {
+      "structuring": 13.9623
+     }
+    },
+    "structuring->ring@h0": {
+     "objective": 20.6085,
+     "leakage_pct": 18.5185,
+     "honest_block_rate": 3.4335,
+     "honest_unpaid_rate": 0.3733,
+     "leakage_pct_by_family": {
+      "ring": 18.5185
+     }
+    },
+    "structuring->ring@h1": {
+     "objective": 20.726,
+     "leakage_pct": 18.8806,
+     "honest_block_rate": 3.1089,
+     "honest_unpaid_rate": 0.291,
+     "leakage_pct_by_family": {
+      "ring": 18.8806
+     }
+    }
+   },
+   "directions": {
+    "ring->structuring": {
+     "objective": 14.0914,
+     "leakage_pct": 12.3611,
+     "honest_block_rate": 2.8765,
+     "honest_unpaid_rate": 0.292
+    },
+    "structuring->ring": {
+     "objective": 20.6672,
+     "leakage_pct": 18.6996,
+     "honest_block_rate": 3.2712,
+     "honest_unpaid_rate": 0.3322
+    }
+   },
+   "lofo_score": 17.3793,
+   "worst_direction": 20.6672,
+   "lofo_leakage_pct": 15.5304,
+   "lofo_honest_block_rate": 3.0739,
+   "full_train": {
+    "objective": 18.3272,
+    "leakage_pct": 16.5419,
+    "honest_block_rate": 2.9848,
+    "honest_unpaid_rate": 0.2929,
+    "leakage_pct_by_family": {
+     "ring": 21.4112,
+     "structuring": 11.5388
+    }
+   }
+  },
+  "swarm_evolved_memory": {
+   "folds": {
+    "ring->structuring@h0": {
+     "objective": 12.6608,
+     "leakage_pct": 10.7599,
+     "honest_block_rate": 3.1535,
+     "honest_unpaid_rate": 0.3242,
+     "leakage_pct_by_family": {
+      "structuring": 10.7599
+     }
+    },
+    "ring->structuring@h1": {
+     "objective": 15.5889,
+     "leakage_pct": 13.9623,
+     "honest_block_rate": 2.713,
+     "honest_unpaid_rate": 0.27,
+     "leakage_pct_by_family": {
+      "structuring": 13.9623
+     }
+    },
+    "structuring->ring@h0": {
+     "objective": 19.4915,
+     "leakage_pct": 17.4014,
+     "honest_block_rate": 3.4335,
+     "honest_unpaid_rate": 0.3733,
+     "leakage_pct_by_family": {
+      "ring": 17.4014
+     }
+    },
+    "structuring->ring@h1": {
+     "objective": 19.0134,
+     "leakage_pct": 17.168,
+     "honest_block_rate": 3.1089,
+     "honest_unpaid_rate": 0.291,
+     "leakage_pct_by_family": {
+      "ring": 17.168
+     }
+    }
+   },
+   "directions": {
+    "ring->structuring": {
+     "objective": 14.1249,
+     "leakage_pct": 12.3611,
+     "honest_block_rate": 2.9333,
+     "honest_unpaid_rate": 0.2971
+    },
+    "structuring->ring": {
+     "objective": 19.2524,
+     "leakage_pct": 17.2847,
+     "honest_block_rate": 3.2712,
+     "honest_unpaid_rate": 0.3322
+    }
+   },
+   "lofo_score": 16.6887,
+   "worst_direction": 19.2524,
+   "lofo_leakage_pct": 14.8229,
+   "lofo_honest_block_rate": 3.1022,
+   "full_train": {
+    "objective": 17.1205,
+    "leakage_pct": 15.3181,
+    "honest_block_rate": 3.0114,
+    "honest_unpaid_rate": 0.2967,
+    "leakage_pct_by_family": {
+     "ring": 18.9963,
+     "structuring": 11.5388
+    }
+   }
+  },
+  "_note": "swarm_evolved / swarm_evolved_memory (champion g17-7) were evolved on ALL TRAIN seeds and both families, so their LOFO rows are in-sample for them and optimistic."
+ },
+ "candidates": [
+  {
+   "id": "C1-lam0",
+   "mechanism": "C1",
+   "hparams": {
+    "lam": 0.0
+   },
+   "folds": {
+    "ring->structuring@h0": {
+     "objective": 20.6533,
+     "leakage_pct": 16.7925,
+     "honest_block_rate": 6.7146,
+     "honest_unpaid_rate": 0.5035,
+     "leakage_pct_by_family": {
+      "structuring": 16.7925
+     }
+    },
+    "ring->structuring@h1": {
+     "objective": 27.5315,
+     "leakage_pct": 24.9744,
+     "honest_block_rate": 4.5427,
+     "honest_unpaid_rate": 0.2857,
+     "leakage_pct_by_family": {
+      "structuring": 24.9744
+     }
+    },
+    "structuring->ring@h0": {
+     "objective": 99.8205,
+     "leakage_pct": 99.5798,
+     "honest_block_rate": 0.4077,
+     "honest_unpaid_rate": 0.0368,
+     "leakage_pct_by_family": {
+      "ring": 99.5798
+     }
+    },
+    "structuring->ring@h1": {
+     "objective": 52.3171,
+     "leakage_pct": 51.9449,
+     "honest_block_rate": 0.6553,
+     "honest_unpaid_rate": 0.0446,
+     "leakage_pct_by_family": {
+      "ring": 51.9449
+     }
+    }
+   },
+   "directions": {
+    "ring->structuring": {
+     "objective": 24.0924,
+     "leakage_pct": 20.8834,
+     "honest_block_rate": 5.6287,
+     "honest_unpaid_rate": 0.3946
+    },
+    "structuring->ring": {
+     "objective": 76.0688,
+     "leakage_pct": 75.7623,
+     "honest_block_rate": 0.5315,
+     "honest_unpaid_rate": 0.0407
+    }
+   },
+   "lofo_score": 50.0806,
+   "worst_direction": 76.0688,
+   "lofo_leakage_pct": 48.3229,
+   "lofo_honest_block_rate": 3.0801,
+   "full_train": {
+    "objective": 19.1351,
+    "leakage_pct": 15.0326,
+    "honest_block_rate": 7.1324,
+    "honest_unpaid_rate": 0.5364,
+    "leakage_pct_by_family": {
+     "ring": 18.4329,
+     "structuring": 11.5388
+    }
+   },
+   "full_train_params": {
+    "vel_usd_lo": 888.7724921967185,
+    "vel_usd_width": 1327.961623909435,
+    "vel_n_lo": 6.714304685352013,
+    "vel_n_width": 5.655540602120065,
+    "graph_dens_lo": 0.36982895685818606,
+    "graph_dens_width": 0.20767720064798506,
+    "graph_min_workers": 4,
+    "graph_size_width": 1.067995740821781,
+    "graph_share_min": 5,
+    "drift_min_history": 7,
+    "drift_ratio_lo": 3.665020534445178,
+    "drift_ratio_width": 3.419086402468338,
+    "drift_rate_lo": 3.7294273821028465,
+    "drift_rate_width": 2.029567936196129,
+    "policy_cap_base_usd": 134.68457439882954,
+    "policy_cap_per_day_usd": 3.632430233938047,
+    "policy_cap_max_usd": 619.7728425684286,
+    "policy_window_mult": 3.051837286532633,
+    "w0_velocity": 1.0,
+    "w0_graph": 0.967403809252789,
+    "w0_drift": 0.944414380225988,
+    "w0_policy": 0.6893027922313135,
+    "step_up_threshold": 0.3275560084228206,
+    "hold_threshold": 0.55,
+    "eta": 0.013400154413135204,
+    "min_weight": 0.10108214680444114,
+    "l1_abstain": 1
+   },
+   "full_train_layer": null,
+   "d_full_train": 0.2767,
+   "fold_d": {
+    "ring->structuring@h0": 0.2886,
+    "ring->structuring@h1": 0.1818,
+    "structuring->ring@h0": 0.4616,
+    "structuring->ring@h1": 0.2601
+   },
+   "eligibility": {
+    "1_block_le_static_minus_0.75_both_directions": true,
+    "2_lofo_score_le_best_reference_minus_3": true,
+    "3_full_train_le_default_swarm_plus_3": true
+   },
+   "eligible": true,
+   "meets_block_only": true
+  },
+  {
+   "id": "C1-lam20",
+   "mechanism": "C1",
+   "hparams": {
+    "lam": 20.0
+   },
+   "folds": {
+    "ring->structuring@h0": {
+     "objective": 15.1547,
+     "leakage_pct": 11.6697,
+     "honest_block_rate": 6.0319,
+     "honest_unpaid_rate": 0.4691,
+     "leakage_pct_by_family": {
+      "structuring": 11.6697
+     }
+    },
+    "ring->structuring@h1": {
+     "objective": 17.4012,
+     "leakage_pct": 14.291,
+     "honest_block_rate": 5.5336,
+     "honest_unpaid_rate": 0.3434,
+     "leakage_pct_by_family": {
+      "structuring": 14.291
+     }
+    },
+    "structuring->ring@h0": {
+     "objective": 23.9548,
+     "leakage_pct": 21.4374,
+     "honest_block_rate": 4.3176,
+     "honest_unpaid_rate": 0.3586,
+     "leakage_pct_by_family": {
+      "ring": 21.4374
+     }
+    },
+    "structuring->ring@h1": {
+     "objective": 25.328,
+     "leakage_pct": 24.1091,
+     "honest_block_rate": 2.1809,
+     "honest_unpaid_rate": 0.1284,
+     "leakage_pct_by_family": {
+      "ring": 24.1091
+     }
+    }
+   },
+   "directions": {
+    "ring->structuring": {
+     "objective": 16.278,
+     "leakage_pct": 12.9804,
+     "honest_block_rate": 5.7828,
+     "honest_unpaid_rate": 0.4062
+    },
+    "structuring->ring": {
+     "objective": 24.6414,
+     "leakage_pct": 22.7733,
+     "honest_block_rate": 3.2492,
+     "honest_unpaid_rate": 0.2435
+    }
+   },
+   "lofo_score": 20.4597,
+   "worst_direction": 24.6414,
+   "lofo_leakage_pct": 17.8768,
+   "lofo_honest_block_rate": 4.516,
+   "full_train": {
+    "objective": 20.2916,
+    "leakage_pct": 16.9049,
+    "honest_block_rate": 5.9367,
+    "honest_unpaid_rate": 0.4184,
+    "leakage_pct_by_family": {
+     "ring": 20.6071,
+     "structuring": 13.1009
+    }
+   },
+   "full_train_params": {
+    "vel_usd_lo": 1000.0,
+    "vel_usd_width": 1000.0,
+    "vel_n_lo": 7.0,
+    "vel_n_width": 4.0,
+    "graph_dens_lo": 0.4,
+    "graph_dens_width": 0.2,
+    "graph_min_workers": 4,
+    "graph_size_width": 2.0,
+    "graph_share_min": 3,
+    "drift_min_history": 4,
+    "drift_ratio_lo": 3.0,
+    "drift_ratio_width": 3.0,
+    "drift_rate_lo": 3.5,
+    "drift_rate_width": 2.0,
+    "policy_cap_base_usd": 150.0,
+    "policy_cap_per_day_usd": 8.0,
+    "policy_cap_max_usd": 500.0,
+    "policy_window_mult": 3.0,
+    "w0_velocity": 1.0,
+    "w0_graph": 1.0,
+    "w0_drift": 1.0,
+    "w0_policy": 1.0,
+    "step_up_threshold": 0.3,
+    "hold_threshold": 0.6,
+    "eta": 0.02,
+    "min_weight": 0.05,
+    "l1_abstain": 0
+   },
+   "full_train_layer": null,
+   "d_full_train": 0.0,
+   "fold_d": {
+    "ring->structuring@h0": 0.0,
+    "ring->structuring@h1": 0.0,
+    "structuring->ring@h0": 0.0863,
+    "structuring->ring@h1": 0.1079
+   },
+   "eligibility": {
+    "1_block_le_static_minus_0.75_both_directions": true,
+    "2_lofo_score_le_best_reference_minus_3": true,
+    "3_full_train_le_default_swarm_plus_3": true
+   },
+   "eligible": true,
+   "meets_block_only": true
+  },
+  {
+   "id": "C1-lam80",
+   "mechanism": "C1",
+   "hparams": {
+    "lam": 80.0
+   },
+   "folds": {
+    "ring->structuring@h0": {
+     "objective": 15.1547,
+     "leakage_pct": 11.6697,
+     "honest_block_rate": 6.0319,
+     "honest_unpaid_rate": 0.4691,
+     "leakage_pct_by_family": {
+      "structuring": 11.6697
+     }
+    },
+    "ring->structuring@h1": {
+     "objective": 17.4012,
+     "leakage_pct": 14.291,
+     "honest_block_rate": 5.5336,
+     "honest_unpaid_rate": 0.3434,
+     "leakage_pct_by_family": {
+      "structuring": 14.291
+     }
+    },
+    "structuring->ring@h0": {
+     "objective": 21.8228,
+     "leakage_pct": 18.0185,
+     "honest_block_rate": 6.5575,
+     "honest_unpaid_rate": 0.5256,
+     "leakage_pct_by_family": {
+      "ring": 18.0185
+     }
+    },
+    "structuring->ring@h1": {
+     "objective": 22.1253,
+     "leakage_pct": 18.7399,
+     "honest_block_rate": 5.932,
+     "honest_unpaid_rate": 0.4194,
+     "leakage_pct_by_family": {
+      "ring": 18.7399
+     }
+    }
+   },
+   "directions": {
+    "ring->structuring": {
+     "objective": 16.278,
+     "leakage_pct": 12.9804,
+     "honest_block_rate": 5.7828,
+     "honest_unpaid_rate": 0.4062
+    },
+    "structuring->ring": {
+     "objective": 21.974,
+     "leakage_pct": 18.3792,
+     "honest_block_rate": 6.2447,
+     "honest_unpaid_rate": 0.4725
+    }
+   },
+   "lofo_score": 19.126,
+   "worst_direction": 21.974,
+   "lofo_leakage_pct": 15.6798,
+   "lofo_honest_block_rate": 6.0137,
+   "full_train": {
+    "objective": 20.2916,
+    "leakage_pct": 16.9049,
+    "honest_block_rate": 5.9367,
+    "honest_unpaid_rate": 0.4184,
+    "leakage_pct_by_family": {
+     "ring": 20.6071,
+     "structuring": 13.1009
+    }
+   },
+   "full_train_params": {
+    "vel_usd_lo": 1000.0,
+    "vel_usd_width": 1000.0,
+    "vel_n_lo": 7.0,
+    "vel_n_width": 4.0,
+    "graph_dens_lo": 0.4,
+    "graph_dens_width": 0.2,
+    "graph_min_workers": 4,
+    "graph_size_width": 2.0,
+    "graph_share_min": 3,
+    "drift_min_history": 4,
+    "drift_ratio_lo": 3.0,
+    "drift_ratio_width": 3.0,
+    "drift_rate_lo": 3.5,
+    "drift_rate_width": 2.0,
+    "policy_cap_base_usd": 150.0,
+    "policy_cap_per_day_usd": 8.0,
+    "policy_cap_max_usd": 500.0,
+    "policy_window_mult": 3.0,
+    "w0_velocity": 1.0,
+    "w0_graph": 1.0,
+    "w0_drift": 1.0,
+    "w0_policy": 1.0,
+    "step_up_threshold": 0.3,
+    "hold_threshold": 0.6,
+    "eta": 0.02,
+    "min_weight": 0.05,
+    "l1_abstain": 0
+   },
+   "full_train_layer": null,
+   "d_full_train": 0.0,
+   "fold_d": {
+    "ring->structuring@h0": 0.0,
+    "ring->structuring@h1": 0.0,
+    "structuring->ring@h0": 0.0,
+    "structuring->ring@h1": 0.0
+   },
+   "eligibility": {
+    "1_block_le_static_minus_0.75_both_directions": true,
+    "2_lofo_score_le_best_reference_minus_3": true,
+    "3_full_train_le_default_swarm_plus_3": true
+   },
+   "eligible": true,
+   "meets_block_only": true
+  },
+  {
+   "id": "C2-bh0.5-bs2",
+   "mechanism": "C2",
+   "hparams": {
+    "beta_h": 0.005,
+    "beta_s": 0.02
+   },
+   "folds": {
+    "ring->structuring@h0": {
+     "objective": 15.2714,
+     "leakage_pct": 11.6697,
+     "honest_block_rate": 6.2308,
+     "honest_unpaid_rate": 0.4863,
+     "leakage_pct_by_family": {
+      "structuring": 11.6697
+     }
+    },
+    "ring->structuring@h1": {
+     "objective": 17.5637,
+     "leakage_pct": 14.291,
+     "honest_block_rate": 5.8324,
+     "honest_unpaid_rate": 0.3565,
+     "leakage_pct_by_family": {
+      "structuring": 14.291
+     }
+    },
+    "structuring->ring@h0": {
+     "objective": 21.9358,
+     "leakage_pct": 18.0185,
+     "honest_block_rate": 6.7588,
+     "honest_unpaid_rate": 0.5379,
+     "leakage_pct_by_family": {
+      "ring": 18.0185
+     }
+    },
+    "structuring->ring@h1": {
+     "objective": 22.2316,
+     "leakage_pct": 18.6654,
+     "honest_block_rate": 6.2466,
+     "honest_unpaid_rate": 0.443,
+     "leakage_pct_by_family": {
+      "ring": 18.6654
+     }
+    }
+   },
+   "directions": {
+    "ring->structuring": {
+     "objective": 16.4175,
+     "leakage_pct": 12.9804,
+     "honest_block_rate": 6.0316,
+     "honest_unpaid_rate": 0.4214
+    },
+    "structuring->ring": {
+     "objective": 22.0837,
+     "leakage_pct": 18.342,
+     "honest_block_rate": 6.5027,
+     "honest_unpaid_rate": 0.4905
+    }
+   },
+   "lofo_score": 19.2506,
+   "worst_direction": 22.0837,
+   "lofo_leakage_pct": 15.6612,
+   "lofo_honest_block_rate": 6.2671,
+   "full_train": {
+    "objective": 20.4254,
+    "leakage_pct": 16.9049,
+    "honest_block_rate": 6.1763,
+    "honest_unpaid_rate": 0.4324,
+    "leakage_pct_by_family": {
+     "ring": 20.6071,
+     "structuring": 13.1009
+    }
+   },
+   "full_train_params": {
+    "vel_usd_lo": 1000.0,
+    "vel_usd_width": 1000.0,
+    "vel_n_lo": 7.0,
+    "vel_n_width": 4.0,
+    "graph_dens_lo": 0.4,
+    "graph_dens_width": 0.2,
+    "graph_min_workers": 4,
+    "graph_size_width": 2.0,
+    "graph_share_min": 3,
+    "drift_min_history": 4,
+    "drift_ratio_lo": 3.0,
+    "drift_ratio_width": 3.0,
+    "drift_rate_lo": 3.5,
+    "drift_rate_width": 2.0,
+    "policy_cap_base_usd": 150.0,
+    "policy_cap_per_day_usd": 8.0,
+    "policy_cap_max_usd": 500.0,
+    "policy_window_mult": 3.0,
+    "w0_velocity": 1.0,
+    "w0_graph": 1.0,
+    "w0_drift": 1.0,
+    "w0_policy": 1.0,
+    "step_up_threshold": 0.3,
+    "hold_threshold": 0.6,
+    "eta": 0.02,
+    "min_weight": 0.05,
+    "l1_abstain": 0
+   },
+   "full_train_layer": {
+    "stats": [
+     "window_usd",
+     "window_n",
+     "amount",
+     "amount_ratio",
+     "amount_over_cap",
+     "window_over_cap",
+     "rate_z",
+     "graph_cluster",
+     "sharing"
+    ],
+    "hold": [
+     1924.73,
+     9.0,
+     649.75,
+     6.0030362564743704,
+     1.3094400000000002,
+     1.2831533333333334,
+     4.389154177626487,
+     1.0,
+     2.0
+    ],
+    "step": [
+     1631.67,
+     8.0,
+     510.83,
+     4.69549954363547,
+     1.041869374445933,
+     1.08778,
+     3.817292994764535,
+     0.7777777777777777,
+     2.0
+    ],
+    "beta_h": 0.005,
+    "beta_s": 0.02,
+    "honest_union_rate_hold": 0.004957776481627063,
+    "honest_union_rate_step": 0.019957903278979536,
+    "n_honest_events": 78866
+   },
+   "fold_layers": {
+    "ring->structuring@h0": {
+     "honest_union_rate_hold": 0.004928045296075913,
+     "honest_union_rate_step": 0.019948098246349837,
+     "n_honest_events": 38149
+    },
+    "ring->structuring@h1": {
+     "honest_union_rate_hold": 0.00498563253677825,
+     "honest_union_rate_step": 0.019082938330427093,
+     "n_honest_events": 40717
+    },
+    "structuring->ring@h0": {
+     "honest_union_rate_hold": 0.004928045296075913,
+     "honest_union_rate_step": 0.019974311253243858,
+     "n_honest_events": 38149
+    },
+    "structuring->ring@h1": {
+     "honest_union_rate_hold": 0.00498563253677825,
+     "honest_union_rate_step": 0.019033818798045044,
+     "n_honest_events": 40717
+    }
+   },
+   "eligibility": {
+    "1_block_le_static_minus_0.75_both_directions": true,
+    "2_lofo_score_le_best_reference_minus_3": true,
+    "3_full_train_le_default_swarm_plus_3": true
+   },
+   "eligible": true,
+   "meets_block_only": true
+  },
+  {
+   "id": "C2-bh1-bs3",
+   "mechanism": "C2",
+   "hparams": {
+    "beta_h": 0.01,
+    "beta_s": 0.03
+   },
+   "folds": {
+    "ring->structuring@h0": {
+     "objective": 15.5071,
+     "leakage_pct": 11.6697,
+     "honest_block_rate": 6.6287,
+     "honest_unpaid_rate": 0.5231,
+     "leakage_pct_by_family": {
+      "structuring": 11.6697
+     }
+    },
+    "ring->structuring@h1": {
+     "objective": 17.7092,
+     "leakage_pct": 14.291,
+     "honest_block_rate": 6.0762,
+     "honest_unpaid_rate": 0.3801,
+     "leakage_pct_by_family": {
+      "structuring": 14.291
+     }
+    },
+    "structuring->ring@h0": {
+     "objective": 22.2964,
+     "leakage_pct": 18.1261,
+     "honest_block_rate": 7.196,
+     "honest_unpaid_rate": 0.5722,
+     "leakage_pct_by_family": {
+      "ring": 18.1261
+     }
+    },
+    "structuring->ring@h1": {
+     "objective": 22.3693,
+     "leakage_pct": 18.6654,
+     "honest_block_rate": 6.4851,
+     "honest_unpaid_rate": 0.4613,
+     "leakage_pct_by_family": {
+      "ring": 18.6654
+     }
+    }
+   },
+   "directions": {
+    "ring->structuring": {
+     "objective": 16.6081,
+     "leakage_pct": 12.9804,
+     "honest_block_rate": 6.3525,
+     "honest_unpaid_rate": 0.4516
+    },
+    "structuring->ring": {
+     "objective": 22.3329,
+     "leakage_pct": 18.3957,
+     "honest_block_rate": 6.8406,
+     "honest_unpaid_rate": 0.5168
+    }
+   },
+   "lofo_score": 19.4705,
+   "worst_direction": 22.3329,
+   "lofo_leakage_pct": 15.6881,
+   "lofo_honest_block_rate": 6.5966,
+   "full_train": {
+    "objective": 20.549,
+    "leakage_pct": 16.8529,
+    "honest_block_rate": 6.4819,
+    "honest_unpaid_rate": 0.4552,
+    "leakage_pct_by_family": {
+     "ring": 20.5045,
+     "structuring": 13.1009
+    }
+   },
+   "full_train_params": {
+    "vel_usd_lo": 1000.0,
+    "vel_usd_width": 1000.0,
+    "vel_n_lo": 7.0,
+    "vel_n_width": 4.0,
+    "graph_dens_lo": 0.4,
+    "graph_dens_width": 0.2,
+    "graph_min_workers": 4,
+    "graph_size_width": 2.0,
+    "graph_share_min": 3,
+    "drift_min_history": 4,
+    "drift_ratio_lo": 3.0,
+    "drift_ratio_width": 3.0,
+    "drift_rate_lo": 3.5,
+    "drift_rate_width": 2.0,
+    "policy_cap_base_usd": 150.0,
+    "policy_cap_per_day_usd": 8.0,
+    "policy_cap_max_usd": 500.0,
+    "policy_window_mult": 3.0,
+    "w0_velocity": 1.0,
+    "w0_graph": 1.0,
+    "w0_drift": 1.0,
+    "w0_policy": 1.0,
+    "step_up_threshold": 0.3,
+    "hold_threshold": 0.6,
+    "eta": 0.02,
+    "min_weight": 0.05,
+    "l1_abstain": 0
+   },
+   "full_train_layer": {
+    "stats": [
+     "window_usd",
+     "window_n",
+     "amount",
+     "amount_ratio",
+     "amount_over_cap",
+     "window_over_cap",
+     "rate_z",
+     "graph_cluster",
+     "sharing"
+    ],
+    "hold": [
+     1728.9199999999998,
+     9.0,
+     565.63,
+     5.097966014418126,
+     1.1445999999999998,
+     1.1526133333333333,
+     3.9877120859625146,
+     1.0,
+     2.0
+    ],
+    "step": [
+     1520.28,
+     8.0,
+     454.2,
+     4.238206932499349,
+     0.9297000000000001,
+     1.01352,
+     3.520703196016217,
+     0.6666666666666666,
+     2.0
+    ],
+    "beta_h": 0.01,
+    "beta_s": 0.03,
+    "honest_union_rate_hold": 0.00996627190424264,
+    "honest_union_rate_step": 0.02994953465371643,
+    "n_honest_events": 78866
+   },
+   "fold_layers": {
+    "ring->structuring@h0": {
+     "honest_union_rate_hold": 0.009987155626621929,
+     "honest_union_rate_step": 0.02993525387297177,
+     "n_honest_events": 38149
+    },
+    "ring->structuring@h1": {
+     "honest_union_rate_hold": 0.009946705307365473,
+     "honest_union_rate_step": 0.029938354986860524,
+     "n_honest_events": 40717
+    },
+    "structuring->ring@h0": {
+     "honest_union_rate_hold": 0.009987155626621929,
+     "honest_union_rate_step": 0.02990904086607775,
+     "n_honest_events": 38149
+    },
+    "structuring->ring@h1": {
+     "honest_union_rate_hold": 0.009946705307365473,
+     "honest_union_rate_step": 0.0299137952206695,
+     "n_honest_events": 40717
+    }
+   },
+   "eligibility": {
+    "1_block_le_static_minus_0.75_both_directions": true,
+    "2_lofo_score_le_best_reference_minus_3": true,
+    "3_full_train_le_default_swarm_plus_3": true
+   },
+   "eligible": true,
+   "meets_block_only": true
+  },
+  {
+   "id": "C2-bh1-bs5",
+   "mechanism": "C2",
+   "hparams": {
+    "beta_h": 0.01,
+    "beta_s": 0.05
+   },
+   "folds": {
+    "ring->structuring@h0": {
+     "objective": 16.1285,
+     "leakage_pct": 11.6697,
+     "honest_block_rate": 7.7879,
+     "honest_unpaid_rate": 0.5649,
+     "leakage_pct_by_family": {
+      "structuring": 11.6697
+     }
+    },
+    "ring->structuring@h1": {
+     "objective": 18.1627,
+     "leakage_pct": 14.291,
+     "honest_block_rate": 6.9255,
+     "honest_unpaid_rate": 0.4089,
+     "leakage_pct_by_family": {
+      "structuring": 14.291
+     }
+    },
+    "structuring->ring@h0": {
+     "objective": 22.8648,
+     "leakage_pct": 18.0843,
+     "honest_block_rate": 8.3233,
+     "honest_unpaid_rate": 0.6189,
+     "leakage_pct_by_family": {
+      "ring": 18.0843
+     }
+    },
+    "structuring->ring@h1": {
+     "objective": 22.8362,
+     "leakage_pct": 18.6368,
+     "honest_block_rate": 7.3763,
+     "honest_unpaid_rate": 0.5112,
+     "leakage_pct_by_family": {
+      "ring": 18.6368
+     }
+    }
+   },
+   "directions": {
+    "ring->structuring": {
+     "objective": 17.1456,
+     "leakage_pct": 12.9804,
+     "honest_block_rate": 7.3567,
+     "honest_unpaid_rate": 0.4869
+    },
+    "structuring->ring": {
+     "objective": 22.8505,
+     "leakage_pct": 18.3605,
+     "honest_block_rate": 7.8498,
+     "honest_unpaid_rate": 0.5651
+    }
+   },
+   "lofo_score": 19.998,
+   "worst_direction": 22.8505,
+   "lofo_leakage_pct": 15.6704,
+   "lofo_honest_block_rate": 7.6033,
+   "full_train": {
+    "objective": 20.8016,
+    "leakage_pct": 16.611,
+    "honest_block_rate": 7.3796,
+    "honest_unpaid_rate": 0.5008,
+    "leakage_pct_by_family": {
+     "ring": 20.5045,
+     "structuring": 12.6105
+    }
+   },
+   "full_train_params": {
+    "vel_usd_lo": 1000.0,
+    "vel_usd_width": 1000.0,
+    "vel_n_lo": 7.0,
+    "vel_n_width": 4.0,
+    "graph_dens_lo": 0.4,
+    "graph_dens_width": 0.2,
+    "graph_min_workers": 4,
+    "graph_size_width": 2.0,
+    "graph_share_min": 3,
+    "drift_min_history": 4,
+    "drift_ratio_lo": 3.0,
+    "drift_ratio_width": 3.0,
+    "drift_rate_lo": 3.5,
+    "drift_rate_width": 2.0,
+    "policy_cap_base_usd": 150.0,
+    "policy_cap_per_day_usd": 8.0,
+    "policy_cap_max_usd": 500.0,
+    "policy_window_mult": 3.0,
+    "w0_velocity": 1.0,
+    "w0_graph": 1.0,
+    "w0_drift": 1.0,
+    "w0_policy": 1.0,
+    "step_up_threshold": 0.3,
+    "hold_threshold": 0.6,
+    "eta": 0.02,
+    "min_weight": 0.05,
+    "l1_abstain": 0
+   },
+   "full_train_layer": {
+    "stats": [
+     "window_usd",
+     "window_n",
+     "amount",
+     "amount_ratio",
+     "amount_over_cap",
+     "window_over_cap",
+     "rate_z",
+     "graph_cluster",
+     "sharing"
+    ],
+    "hold": [
+     1728.9199999999998,
+     9.0,
+     565.63,
+     5.097966014418126,
+     1.1445999999999998,
+     1.1526133333333333,
+     3.9877120859625146,
+     1.0,
+     2.0
+    ],
+    "step": [
+     1388.92,
+     8.0,
+     394.5,
+     3.7628648233486945,
+     0.8094199999999999,
+     0.9259466666666667,
+     3.2217329155702297,
+     0.6041666666666666,
+     2.0
+    ],
+    "beta_h": 0.01,
+    "beta_s": 0.05,
+    "honest_union_rate_hold": 0.00996627190424264,
+    "honest_union_rate_step": 0.04989475819744884,
+    "n_honest_events": 78866
+   },
+   "fold_layers": {
+    "ring->structuring@h0": {
+     "honest_union_rate_hold": 0.009987155626621929,
+     "honest_union_rate_step": 0.04938530498833521,
+     "n_honest_events": 38149
+    },
+    "ring->structuring@h1": {
+     "honest_union_rate_hold": 0.009946705307365473,
+     "honest_union_rate_step": 0.04997912419873763,
+     "n_honest_events": 40717
+    },
+    "structuring->ring@h0": {
+     "honest_union_rate_hold": 0.009987155626621929,
+     "honest_union_rate_step": 0.04996199114000367,
+     "n_honest_events": 38149
+    },
+    "structuring->ring@h1": {
+     "honest_union_rate_hold": 0.009946705307365473,
+     "honest_union_rate_step": 0.04997912419873763,
+     "n_honest_events": 40717
+    }
+   },
+   "eligibility": {
+    "1_block_le_static_minus_0.75_both_directions": true,
+    "2_lofo_score_le_best_reference_minus_3": true,
+    "3_full_train_le_default_swarm_plus_3": true
+   },
+   "eligible": true,
+   "meets_block_only": true
+  },
+  {
+   "id": "C2-bh2-bs5",
+   "mechanism": "C2",
+   "hparams": {
+    "beta_h": 0.02,
+    "beta_s": 0.05
+   },
+   "folds": {
+    "ring->structuring@h0": {
+     "objective": 15.9414,
+     "leakage_pct": 11.4679,
+     "honest_block_rate": 7.7879,
+     "honest_unpaid_rate": 0.5796,
+     "leakage_pct_by_family": {
+      "structuring": 11.4679
+     }
+    },
+    "ring->structuring@h1": {
+     "objective": 18.1731,
+     "leakage_pct": 14.291,
+     "honest_block_rate": 6.9255,
+     "honest_unpaid_rate": 0.4194,
+     "leakage_pct_by_family": {
+      "structuring": 14.291
+     }
+    },
+    "structuring->ring@h0": {
+     "objective": 22.8728,
+     "leakage_pct": 18.0603,
+     "honest_block_rate": 8.3233,
+     "honest_unpaid_rate": 0.6508,
+     "leakage_pct_by_family": {
+      "ring": 18.0603
+     }
+    },
+    "structuring->ring@h1": {
+     "objective": 22.8519,
+     "leakage_pct": 18.6368,
+     "honest_block_rate": 7.3763,
+     "honest_unpaid_rate": 0.5269,
+     "leakage_pct_by_family": {
+      "ring": 18.6368
+     }
+    }
+   },
+   "directions": {
+    "ring->structuring": {
+     "objective": 17.0572,
+     "leakage_pct": 12.8795,
+     "honest_block_rate": 7.3567,
+     "honest_unpaid_rate": 0.4995
+    },
+    "structuring->ring": {
+     "objective": 22.8623,
+     "leakage_pct": 18.3486,
+     "honest_block_rate": 7.8498,
+     "honest_unpaid_rate": 0.5889
+    }
+   },
+   "lofo_score": 19.9597,
+   "worst_direction": 22.8623,
+   "lofo_leakage_pct": 15.6141,
+   "lofo_honest_block_rate": 7.6033,
+   "full_train": {
+    "objective": 20.8232,
+    "leakage_pct": 16.611,
+    "honest_block_rate": 7.3796,
+    "honest_unpaid_rate": 0.5224,
+    "leakage_pct_by_family": {
+     "ring": 20.5045,
+     "structuring": 12.6105
+    }
+   },
+   "full_train_params": {
+    "vel_usd_lo": 1000.0,
+    "vel_usd_width": 1000.0,
+    "vel_n_lo": 7.0,
+    "vel_n_width": 4.0,
+    "graph_dens_lo": 0.4,
+    "graph_dens_width": 0.2,
+    "graph_min_workers": 4,
+    "graph_size_width": 2.0,
+    "graph_share_min": 3,
+    "drift_min_history": 4,
+    "drift_ratio_lo": 3.0,
+    "drift_ratio_width": 3.0,
+    "drift_rate_lo": 3.5,
+    "drift_rate_width": 2.0,
+    "policy_cap_base_usd": 150.0,
+    "policy_cap_per_day_usd": 8.0,
+    "policy_cap_max_usd": 500.0,
+    "policy_window_mult": 3.0,
+    "w0_velocity": 1.0,
+    "w0_graph": 1.0,
+    "w0_drift": 1.0,
+    "w0_policy": 1.0,
+    "step_up_threshold": 0.3,
+    "hold_threshold": 0.6,
+    "eta": 0.02,
+    "min_weight": 0.05,
+    "l1_abstain": 0
+   },
+   "full_train_layer": {
+    "stats": [
+     "window_usd",
+     "window_n",
+     "amount",
+     "amount_ratio",
+     "amount_over_cap",
+     "window_over_cap",
+     "rate_z",
+     "graph_cluster",
+     "sharing"
+    ],
+    "hold": [
+     1631.67,
+     8.0,
+     510.83,
+     4.69549954363547,
+     1.041869374445933,
+     1.08778,
+     3.817292994764535,
+     0.7777777777777777,
+     2.0
+    ],
+    "step": [
+     1388.92,
+     8.0,
+     394.5,
+     3.7628648233486945,
+     0.8094199999999999,
+     0.9259466666666667,
+     3.2217329155702297,
+     0.6041666666666666,
+     2.0
+    ],
+    "beta_h": 0.02,
+    "beta_s": 0.05,
+    "honest_union_rate_hold": 0.019957903278979536,
+    "honest_union_rate_step": 0.04989475819744884,
+    "n_honest_events": 78866
+   },
+   "fold_layers": {
+    "ring->structuring@h0": {
+     "honest_union_rate_hold": 0.019948098246349837,
+     "honest_union_rate_step": 0.04938530498833521,
+     "n_honest_events": 38149
+    },
+    "ring->structuring@h1": {
+     "honest_union_rate_hold": 0.019082938330427093,
+     "honest_union_rate_step": 0.04997912419873763,
+     "n_honest_events": 40717
+    },
+    "structuring->ring@h0": {
+     "honest_union_rate_hold": 0.019974311253243858,
+     "honest_union_rate_step": 0.04996199114000367,
+     "n_honest_events": 38149
+    },
+    "structuring->ring@h1": {
+     "honest_union_rate_hold": 0.019033818798045044,
+     "honest_union_rate_step": 0.04997912419873763,
+     "n_honest_events": 40717
+    }
+   },
+   "eligibility": {
+    "1_block_le_static_minus_0.75_both_directions": true,
+    "2_lofo_score_le_best_reference_minus_3": true,
+    "3_full_train_le_default_swarm_plus_3": true
+   },
+   "eligible": true,
+   "meets_block_only": true
+  },
+  {
+   "id": "C2-bh2-bs8",
+   "mechanism": "C2",
+   "hparams": {
+    "beta_h": 0.02,
+    "beta_s": 0.08
+   },
+   "folds": {
+    "ring->structuring@h0": {
+     "objective": 17.3008,
+     "leakage_pct": 11.4679,
+     "honest_block_rate": 10.1727,
+     "honest_unpaid_rate": 0.7466,
+     "leakage_pct_by_family": {
+      "structuring": 11.4679
+     }
+    },
+    "ring->structuring@h1": {
+     "objective": 19.2439,
+     "leakage_pct": 14.291,
+     "honest_block_rate": 8.9046,
+     "honest_unpaid_rate": 0.5007,
+     "leakage_pct_by_family": {
+      "structuring": 14.291
+     }
+    },
+    "structuring->ring@h0": {
+     "objective": 24.1351,
+     "leakage_pct": 17.9767,
+     "honest_block_rate": 10.7891,
+     "honest_unpaid_rate": 0.7638,
+     "leakage_pct_by_family": {
+      "ring": 17.9767
+     }
+    },
+    "structuring->ring@h1": {
+     "objective": 23.9909,
+     "leakage_pct": 18.6368,
+     "honest_block_rate": 9.4183,
+     "honest_unpaid_rate": 0.6448,
+     "leakage_pct_by_family": {
+      "ring": 18.6368
+     }
+    }
+   },
+   "directions": {
+    "ring->structuring": {
+     "objective": 18.2723,
+     "leakage_pct": 12.8795,
+     "honest_block_rate": 9.5387,
+     "honest_unpaid_rate": 0.6237
+    },
+    "structuring->ring": {
+     "objective": 24.063,
+     "leakage_pct": 18.3068,
+     "honest_block_rate": 10.1037,
+     "honest_unpaid_rate": 0.7043
+    }
+   },
+   "lofo_score": 21.1677,
+   "worst_direction": 24.063,
+   "lofo_leakage_pct": 15.5931,
+   "lofo_honest_block_rate": 9.8212,
+   "full_train": {
+    "objective": 22.0749,
+    "leakage_pct": 16.5687,
+    "honest_block_rate": 9.7266,
+    "honest_unpaid_rate": 0.6429,
+    "leakage_pct_by_family": {
+     "ring": 20.4212,
+     "structuring": 12.6105
+    }
+   },
+   "full_train_params": {
+    "vel_usd_lo": 1000.0,
+    "vel_usd_width": 1000.0,
+    "vel_n_lo": 7.0,
+    "vel_n_width": 4.0,
+    "graph_dens_lo": 0.4,
+    "graph_dens_width": 0.2,
+    "graph_min_workers": 4,
+    "graph_size_width": 2.0,
+    "graph_share_min": 3,
+    "drift_min_history": 4,
+    "drift_ratio_lo": 3.0,
+    "drift_ratio_width": 3.0,
+    "drift_rate_lo": 3.5,
+    "drift_rate_width": 2.0,
+    "policy_cap_base_usd": 150.0,
+    "policy_cap_per_day_usd": 8.0,
+    "policy_cap_max_usd": 500.0,
+    "policy_window_mult": 3.0,
+    "w0_velocity": 1.0,
+    "w0_graph": 1.0,
+    "w0_drift": 1.0,
+    "w0_policy": 1.0,
+    "step_up_threshold": 0.3,
+    "hold_threshold": 0.6,
+    "eta": 0.02,
+    "min_weight": 0.05,
+    "l1_abstain": 0
+   },
+   "full_train_layer": {
+    "stats": [
+     "window_usd",
+     "window_n",
+     "amount",
+     "amount_ratio",
+     "amount_over_cap",
+     "window_over_cap",
+     "rate_z",
+     "graph_cluster",
+     "sharing"
+    ],
+    "hold": [
+     1631.67,
+     8.0,
+     510.83,
+     4.69549954363547,
+     1.041869374445933,
+     1.08778,
+     3.817292994764535,
+     0.7777777777777777,
+     2.0
+    ],
+    "step": [
+     1250.39,
+     7.0,
+     341.05,
+     3.307100895004534,
+     0.70608,
+     0.8335933333333334,
+     2.8706611415429193,
+     0.5,
+     2.0
+    ],
+    "beta_h": 0.02,
+    "beta_s": 0.08,
+    "honest_union_rate_hold": 0.019957903278979536,
+    "honest_union_rate_step": 0.07997109020363655,
+    "n_honest_events": 78866
+   },
+   "fold_layers": {
+    "ring->structuring@h0": {
+     "honest_union_rate_hold": 0.019948098246349837,
+     "honest_union_rate_step": 0.0799758840336575,
+     "n_honest_events": 38149
+    },
+    "ring->structuring@h1": {
+     "honest_union_rate_hold": 0.019082938330427093,
+     "honest_union_rate_step": 0.07994203895178918,
+     "n_honest_events": 40717
+    },
+    "structuring->ring@h0": {
+     "honest_union_rate_hold": 0.019974311253243858,
+     "honest_union_rate_step": 0.07992345801986946,
+     "n_honest_events": 38149
+    },
+    "structuring->ring@h1": {
+     "honest_union_rate_hold": 0.019033818798045044,
+     "honest_union_rate_step": 0.0799665987179802,
+     "n_honest_events": 40717
+    }
+   },
+   "eligibility": {
+    "1_block_le_static_minus_0.75_both_directions": false,
+    "2_lofo_score_le_best_reference_minus_3": true,
+    "3_full_train_le_default_swarm_plus_3": true
+   },
+   "eligible": false,
+   "meets_block_only": false
+  },
+  {
+   "id": "C3-lam80-bh0.5-bs2",
+   "mechanism": "C3",
+   "hparams": {
+    "beta_h": 0.005,
+    "beta_s": 0.02
+   },
+   "folds": {
+    "ring->structuring@h0": {
+     "objective": 15.2714,
+     "leakage_pct": 11.6697,
+     "honest_block_rate": 6.2308,
+     "honest_unpaid_rate": 0.4863,
+     "leakage_pct_by_family": {
+      "structuring": 11.6697
+     }
+    },
+    "ring->structuring@h1": {
+     "objective": 17.5637,
+     "leakage_pct": 14.291,
+     "honest_block_rate": 5.8324,
+     "honest_unpaid_rate": 0.3565,
+     "leakage_pct_by_family": {
+      "structuring": 14.291
+     }
+    },
+    "structuring->ring@h0": {
+     "objective": 21.9358,
+     "leakage_pct": 18.0185,
+     "honest_block_rate": 6.7588,
+     "honest_unpaid_rate": 0.5379,
+     "leakage_pct_by_family": {
+      "ring": 18.0185
+     }
+    },
+    "structuring->ring@h1": {
+     "objective": 22.2316,
+     "leakage_pct": 18.6654,
+     "honest_block_rate": 6.2466,
+     "honest_unpaid_rate": 0.443,
+     "leakage_pct_by_family": {
+      "ring": 18.6654
+     }
+    }
+   },
+   "directions": {
+    "ring->structuring": {
+     "objective": 16.4175,
+     "leakage_pct": 12.9804,
+     "honest_block_rate": 6.0316,
+     "honest_unpaid_rate": 0.4214
+    },
+    "structuring->ring": {
+     "objective": 22.0837,
+     "leakage_pct": 18.342,
+     "honest_block_rate": 6.5027,
+     "honest_unpaid_rate": 0.4905
+    }
+   },
+   "lofo_score": 19.2506,
+   "worst_direction": 22.0837,
+   "lofo_leakage_pct": 15.6612,
+   "lofo_honest_block_rate": 6.2671,
+   "full_train": {
+    "objective": 20.4254,
+    "leakage_pct": 16.9049,
+    "honest_block_rate": 6.1763,
+    "honest_unpaid_rate": 0.4324,
+    "leakage_pct_by_family": {
+     "ring": 20.6071,
+     "structuring": 13.1009
+    }
+   },
+   "full_train_params": {
+    "vel_usd_lo": 1000.0,
+    "vel_usd_width": 1000.0,
+    "vel_n_lo": 7.0,
+    "vel_n_width": 4.0,
+    "graph_dens_lo": 0.4,
+    "graph_dens_width": 0.2,
+    "graph_min_workers": 4,
+    "graph_size_width": 2.0,
+    "graph_share_min": 3,
+    "drift_min_history": 4,
+    "drift_ratio_lo": 3.0,
+    "drift_ratio_width": 3.0,
+    "drift_rate_lo": 3.5,
+    "drift_rate_width": 2.0,
+    "policy_cap_base_usd": 150.0,
+    "policy_cap_per_day_usd": 8.0,
+    "policy_cap_max_usd": 500.0,
+    "policy_window_mult": 3.0,
+    "w0_velocity": 1.0,
+    "w0_graph": 1.0,
+    "w0_drift": 1.0,
+    "w0_policy": 1.0,
+    "step_up_threshold": 0.3,
+    "hold_threshold": 0.6,
+    "eta": 0.02,
+    "min_weight": 0.05,
+    "l1_abstain": 0
+   },
+   "full_train_layer": {
+    "stats": [
+     "window_usd",
+     "window_n",
+     "amount",
+     "amount_ratio",
+     "amount_over_cap",
+     "window_over_cap",
+     "rate_z",
+     "graph_cluster",
+     "sharing"
+    ],
+    "hold": [
+     1924.73,
+     9.0,
+     649.75,
+     6.0030362564743704,
+     1.3094400000000002,
+     1.2831533333333334,
+     4.389154177626487,
+     1.0,
+     2.0
+    ],
+    "step": [
+     1631.67,
+     8.0,
+     510.83,
+     4.69549954363547,
+     1.041869374445933,
+     1.08778,
+     3.817292994764535,
+     0.7777777777777777,
+     2.0
+    ],
+    "beta_h": 0.005,
+    "beta_s": 0.02,
+    "honest_union_rate_hold": 0.004957776481627063,
+    "honest_union_rate_step": 0.019957903278979536,
+    "n_honest_events": 78866
+   },
+   "fold_layers": {
+    "ring->structuring@h0": {
+     "honest_union_rate_hold": 0.004928045296075913,
+     "honest_union_rate_step": 0.019948098246349837,
+     "n_honest_events": 38149
+    },
+    "ring->structuring@h1": {
+     "honest_union_rate_hold": 0.00498563253677825,
+     "honest_union_rate_step": 0.019082938330427093,
+     "n_honest_events": 40717
+    },
+    "structuring->ring@h0": {
+     "honest_union_rate_hold": 0.004928045296075913,
+     "honest_union_rate_step": 0.019974311253243858,
+     "n_honest_events": 38149
+    },
+    "structuring->ring@h1": {
+     "honest_union_rate_hold": 0.00498563253677825,
+     "honest_union_rate_step": 0.019033818798045044,
+     "n_honest_events": 40717
+    }
+   },
+   "eligibility": {
+    "1_block_le_static_minus_0.75_both_directions": true,
+    "2_lofo_score_le_best_reference_minus_3": true,
+    "3_full_train_le_default_swarm_plus_3": true
+   },
+   "eligible": true,
+   "meets_block_only": true
+  },
+  {
+   "id": "C3-lam80-bh1-bs3",
+   "mechanism": "C3",
+   "hparams": {
+    "beta_h": 0.01,
+    "beta_s": 0.03
+   },
+   "folds": {
+    "ring->structuring@h0": {
+     "objective": 15.5071,
+     "leakage_pct": 11.6697,
+     "honest_block_rate": 6.6287,
+     "honest_unpaid_rate": 0.5231,
+     "leakage_pct_by_family": {
+      "structuring": 11.6697
+     }
+    },
+    "ring->structuring@h1": {
+     "objective": 17.7092,
+     "leakage_pct": 14.291,
+     "honest_block_rate": 6.0762,
+     "honest_unpaid_rate": 0.3801,
+     "leakage_pct_by_family": {
+      "structuring": 14.291
+     }
+    },
+    "structuring->ring@h0": {
+     "objective": 22.2964,
+     "leakage_pct": 18.1261,
+     "honest_block_rate": 7.196,
+     "honest_unpaid_rate": 0.5722,
+     "leakage_pct_by_family": {
+      "ring": 18.1261
+     }
+    },
+    "structuring->ring@h1": {
+     "objective": 22.3693,
+     "leakage_pct": 18.6654,
+     "honest_block_rate": 6.4851,
+     "honest_unpaid_rate": 0.4613,
+     "leakage_pct_by_family": {
+      "ring": 18.6654
+     }
+    }
+   },
+   "directions": {
+    "ring->structuring": {
+     "objective": 16.6081,
+     "leakage_pct": 12.9804,
+     "honest_block_rate": 6.3525,
+     "honest_unpaid_rate": 0.4516
+    },
+    "structuring->ring": {
+     "objective": 22.3329,
+     "leakage_pct": 18.3957,
+     "honest_block_rate": 6.8406,
+     "honest_unpaid_rate": 0.5168
+    }
+   },
+   "lofo_score": 19.4705,
+   "worst_direction": 22.3329,
+   "lofo_leakage_pct": 15.6881,
+   "lofo_honest_block_rate": 6.5966,
+   "full_train": {
+    "objective": 20.549,
+    "leakage_pct": 16.8529,
+    "honest_block_rate": 6.4819,
+    "honest_unpaid_rate": 0.4552,
+    "leakage_pct_by_family": {
+     "ring": 20.5045,
+     "structuring": 13.1009
+    }
+   },
+   "full_train_params": {
+    "vel_usd_lo": 1000.0,
+    "vel_usd_width": 1000.0,
+    "vel_n_lo": 7.0,
+    "vel_n_width": 4.0,
+    "graph_dens_lo": 0.4,
+    "graph_dens_width": 0.2,
+    "graph_min_workers": 4,
+    "graph_size_width": 2.0,
+    "graph_share_min": 3,
+    "drift_min_history": 4,
+    "drift_ratio_lo": 3.0,
+    "drift_ratio_width": 3.0,
+    "drift_rate_lo": 3.5,
+    "drift_rate_width": 2.0,
+    "policy_cap_base_usd": 150.0,
+    "policy_cap_per_day_usd": 8.0,
+    "policy_cap_max_usd": 500.0,
+    "policy_window_mult": 3.0,
+    "w0_velocity": 1.0,
+    "w0_graph": 1.0,
+    "w0_drift": 1.0,
+    "w0_policy": 1.0,
+    "step_up_threshold": 0.3,
+    "hold_threshold": 0.6,
+    "eta": 0.02,
+    "min_weight": 0.05,
+    "l1_abstain": 0
+   },
+   "full_train_layer": {
+    "stats": [
+     "window_usd",
+     "window_n",
+     "amount",
+     "amount_ratio",
+     "amount_over_cap",
+     "window_over_cap",
+     "rate_z",
+     "graph_cluster",
+     "sharing"
+    ],
+    "hold": [
+     1728.9199999999998,
+     9.0,
+     565.63,
+     5.097966014418126,
+     1.1445999999999998,
+     1.1526133333333333,
+     3.9877120859625146,
+     1.0,
+     2.0
+    ],
+    "step": [
+     1520.28,
+     8.0,
+     454.2,
+     4.238206932499349,
+     0.9297000000000001,
+     1.01352,
+     3.520703196016217,
+     0.6666666666666666,
+     2.0
+    ],
+    "beta_h": 0.01,
+    "beta_s": 0.03,
+    "honest_union_rate_hold": 0.00996627190424264,
+    "honest_union_rate_step": 0.02994953465371643,
+    "n_honest_events": 78866
+   },
+   "fold_layers": {
+    "ring->structuring@h0": {
+     "honest_union_rate_hold": 0.009987155626621929,
+     "honest_union_rate_step": 0.02993525387297177,
+     "n_honest_events": 38149
+    },
+    "ring->structuring@h1": {
+     "honest_union_rate_hold": 0.009946705307365473,
+     "honest_union_rate_step": 0.029938354986860524,
+     "n_honest_events": 40717
+    },
+    "structuring->ring@h0": {
+     "honest_union_rate_hold": 0.009987155626621929,
+     "honest_union_rate_step": 0.02990904086607775,
+     "n_honest_events": 38149
+    },
+    "structuring->ring@h1": {
+     "honest_union_rate_hold": 0.009946705307365473,
+     "honest_union_rate_step": 0.0299137952206695,
+     "n_honest_events": 40717
+    }
+   },
+   "eligibility": {
+    "1_block_le_static_minus_0.75_both_directions": true,
+    "2_lofo_score_le_best_reference_minus_3": true,
+    "3_full_train_le_default_swarm_plus_3": true
+   },
+   "eligible": true,
+   "meets_block_only": true
+  },
+  {
+   "id": "C3-lam80-bh1-bs5",
+   "mechanism": "C3",
+   "hparams": {
+    "beta_h": 0.01,
+    "beta_s": 0.05
+   },
+   "folds": {
+    "ring->structuring@h0": {
+     "objective": 16.1285,
+     "leakage_pct": 11.6697,
+     "honest_block_rate": 7.7879,
+     "honest_unpaid_rate": 0.5649,
+     "leakage_pct_by_family": {
+      "structuring": 11.6697
+     }
+    },
+    "ring->structuring@h1": {
+     "objective": 18.1627,
+     "leakage_pct": 14.291,
+     "honest_block_rate": 6.9255,
+     "honest_unpaid_rate": 0.4089,
+     "leakage_pct_by_family": {
+      "structuring": 14.291
+     }
+    },
+    "structuring->ring@h0": {
+     "objective": 22.8648,
+     "leakage_pct": 18.0843,
+     "honest_block_rate": 8.3233,
+     "honest_unpaid_rate": 0.6189,
+     "leakage_pct_by_family": {
+      "ring": 18.0843
+     }
+    },
+    "structuring->ring@h1": {
+     "objective": 22.8362,
+     "leakage_pct": 18.6368,
+     "honest_block_rate": 7.3763,
+     "honest_unpaid_rate": 0.5112,
+     "leakage_pct_by_family": {
+      "ring": 18.6368
+     }
+    }
+   },
+   "directions": {
+    "ring->structuring": {
+     "objective": 17.1456,
+     "leakage_pct": 12.9804,
+     "honest_block_rate": 7.3567,
+     "honest_unpaid_rate": 0.4869
+    },
+    "structuring->ring": {
+     "objective": 22.8505,
+     "leakage_pct": 18.3605,
+     "honest_block_rate": 7.8498,
+     "honest_unpaid_rate": 0.5651
+    }
+   },
+   "lofo_score": 19.998,
+   "worst_direction": 22.8505,
+   "lofo_leakage_pct": 15.6704,
+   "lofo_honest_block_rate": 7.6033,
+   "full_train": {
+    "objective": 20.8016,
+    "leakage_pct": 16.611,
+    "honest_block_rate": 7.3796,
+    "honest_unpaid_rate": 0.5008,
+    "leakage_pct_by_family": {
+     "ring": 20.5045,
+     "structuring": 12.6105
+    }
+   },
+   "full_train_params": {
+    "vel_usd_lo": 1000.0,
+    "vel_usd_width": 1000.0,
+    "vel_n_lo": 7.0,
+    "vel_n_width": 4.0,
+    "graph_dens_lo": 0.4,
+    "graph_dens_width": 0.2,
+    "graph_min_workers": 4,
+    "graph_size_width": 2.0,
+    "graph_share_min": 3,
+    "drift_min_history": 4,
+    "drift_ratio_lo": 3.0,
+    "drift_ratio_width": 3.0,
+    "drift_rate_lo": 3.5,
+    "drift_rate_width": 2.0,
+    "policy_cap_base_usd": 150.0,
+    "policy_cap_per_day_usd": 8.0,
+    "policy_cap_max_usd": 500.0,
+    "policy_window_mult": 3.0,
+    "w0_velocity": 1.0,
+    "w0_graph": 1.0,
+    "w0_drift": 1.0,
+    "w0_policy": 1.0,
+    "step_up_threshold": 0.3,
+    "hold_threshold": 0.6,
+    "eta": 0.02,
+    "min_weight": 0.05,
+    "l1_abstain": 0
+   },
+   "full_train_layer": {
+    "stats": [
+     "window_usd",
+     "window_n",
+     "amount",
+     "amount_ratio",
+     "amount_over_cap",
+     "window_over_cap",
+     "rate_z",
+     "graph_cluster",
+     "sharing"
+    ],
+    "hold": [
+     1728.9199999999998,
+     9.0,
+     565.63,
+     5.097966014418126,
+     1.1445999999999998,
+     1.1526133333333333,
+     3.9877120859625146,
+     1.0,
+     2.0
+    ],
+    "step": [
+     1388.92,
+     8.0,
+     394.5,
+     3.7628648233486945,
+     0.8094199999999999,
+     0.9259466666666667,
+     3.2217329155702297,
+     0.6041666666666666,
+     2.0
+    ],
+    "beta_h": 0.01,
+    "beta_s": 0.05,
+    "honest_union_rate_hold": 0.00996627190424264,
+    "honest_union_rate_step": 0.04989475819744884,
+    "n_honest_events": 78866
+   },
+   "fold_layers": {
+    "ring->structuring@h0": {
+     "honest_union_rate_hold": 0.009987155626621929,
+     "honest_union_rate_step": 0.04938530498833521,
+     "n_honest_events": 38149
+    },
+    "ring->structuring@h1": {
+     "honest_union_rate_hold": 0.009946705307365473,
+     "honest_union_rate_step": 0.04997912419873763,
+     "n_honest_events": 40717
+    },
+    "structuring->ring@h0": {
+     "honest_union_rate_hold": 0.009987155626621929,
+     "honest_union_rate_step": 0.04996199114000367,
+     "n_honest_events": 38149
+    },
+    "structuring->ring@h1": {
+     "honest_union_rate_hold": 0.009946705307365473,
+     "honest_union_rate_step": 0.04997912419873763,
+     "n_honest_events": 40717
+    }
+   },
+   "eligibility": {
+    "1_block_le_static_minus_0.75_both_directions": true,
+    "2_lofo_score_le_best_reference_minus_3": true,
+    "3_full_train_le_default_swarm_plus_3": true
+   },
+   "eligible": true,
+   "meets_block_only": true
+  },
+  {
+   "id": "C3-lam80-bh2-bs5",
+   "mechanism": "C3",
+   "hparams": {
+    "beta_h": 0.02,
+    "beta_s": 0.05
+   },
+   "folds": {
+    "ring->structuring@h0": {
+     "objective": 15.9414,
+     "leakage_pct": 11.4679,
+     "honest_block_rate": 7.7879,
+     "honest_unpaid_rate": 0.5796,
+     "leakage_pct_by_family": {
+      "structuring": 11.4679
+     }
+    },
+    "ring->structuring@h1": {
+     "objective": 18.1731,
+     "leakage_pct": 14.291,
+     "honest_block_rate": 6.9255,
+     "honest_unpaid_rate": 0.4194,
+     "leakage_pct_by_family": {
+      "structuring": 14.291
+     }
+    },
+    "structuring->ring@h0": {
+     "objective": 22.8728,
+     "leakage_pct": 18.0603,
+     "honest_block_rate": 8.3233,
+     "honest_unpaid_rate": 0.6508,
+     "leakage_pct_by_family": {
+      "ring": 18.0603
+     }
+    },
+    "structuring->ring@h1": {
+     "objective": 22.8519,
+     "leakage_pct": 18.6368,
+     "honest_block_rate": 7.3763,
+     "honest_unpaid_rate": 0.5269,
+     "leakage_pct_by_family": {
+      "ring": 18.6368
+     }
+    }
+   },
+   "directions": {
+    "ring->structuring": {
+     "objective": 17.0572,
+     "leakage_pct": 12.8795,
+     "honest_block_rate": 7.3567,
+     "honest_unpaid_rate": 0.4995
+    },
+    "structuring->ring": {
+     "objective": 22.8623,
+     "leakage_pct": 18.3486,
+     "honest_block_rate": 7.8498,
+     "honest_unpaid_rate": 0.5889
+    }
+   },
+   "lofo_score": 19.9597,
+   "worst_direction": 22.8623,
+   "lofo_leakage_pct": 15.6141,
+   "lofo_honest_block_rate": 7.6033,
+   "full_train": {
+    "objective": 20.8232,
+    "leakage_pct": 16.611,
+    "honest_block_rate": 7.3796,
+    "honest_unpaid_rate": 0.5224,
+    "leakage_pct_by_family": {
+     "ring": 20.5045,
+     "structuring": 12.6105
+    }
+   },
+   "full_train_params": {
+    "vel_usd_lo": 1000.0,
+    "vel_usd_width": 1000.0,
+    "vel_n_lo": 7.0,
+    "vel_n_width": 4.0,
+    "graph_dens_lo": 0.4,
+    "graph_dens_width": 0.2,
+    "graph_min_workers": 4,
+    "graph_size_width": 2.0,
+    "graph_share_min": 3,
+    "drift_min_history": 4,
+    "drift_ratio_lo": 3.0,
+    "drift_ratio_width": 3.0,
+    "drift_rate_lo": 3.5,
+    "drift_rate_width": 2.0,
+    "policy_cap_base_usd": 150.0,
+    "policy_cap_per_day_usd": 8.0,
+    "policy_cap_max_usd": 500.0,
+    "policy_window_mult": 3.0,
+    "w0_velocity": 1.0,
+    "w0_graph": 1.0,
+    "w0_drift": 1.0,
+    "w0_policy": 1.0,
+    "step_up_threshold": 0.3,
+    "hold_threshold": 0.6,
+    "eta": 0.02,
+    "min_weight": 0.05,
+    "l1_abstain": 0
+   },
+   "full_train_layer": {
+    "stats": [
+     "window_usd",
+     "window_n",
+     "amount",
+     "amount_ratio",
+     "amount_over_cap",
+     "window_over_cap",
+     "rate_z",
+     "graph_cluster",
+     "sharing"
+    ],
+    "hold": [
+     1631.67,
+     8.0,
+     510.83,
+     4.69549954363547,
+     1.041869374445933,
+     1.08778,
+     3.817292994764535,
+     0.7777777777777777,
+     2.0
+    ],
+    "step": [
+     1388.92,
+     8.0,
+     394.5,
+     3.7628648233486945,
+     0.8094199999999999,
+     0.9259466666666667,
+     3.2217329155702297,
+     0.6041666666666666,
+     2.0
+    ],
+    "beta_h": 0.02,
+    "beta_s": 0.05,
+    "honest_union_rate_hold": 0.019957903278979536,
+    "honest_union_rate_step": 0.04989475819744884,
+    "n_honest_events": 78866
+   },
+   "fold_layers": {
+    "ring->structuring@h0": {
+     "honest_union_rate_hold": 0.019948098246349837,
+     "honest_union_rate_step": 0.04938530498833521,
+     "n_honest_events": 38149
+    },
+    "ring->structuring@h1": {
+     "honest_union_rate_hold": 0.019082938330427093,
+     "honest_union_rate_step": 0.04997912419873763,
+     "n_honest_events": 40717
+    },
+    "structuring->ring@h0": {
+     "honest_union_rate_hold": 0.019974311253243858,
+     "honest_union_rate_step": 0.04996199114000367,
+     "n_honest_events": 38149
+    },
+    "structuring->ring@h1": {
+     "honest_union_rate_hold": 0.019033818798045044,
+     "honest_union_rate_step": 0.04997912419873763,
+     "n_honest_events": 40717
+    }
+   },
+   "eligibility": {
+    "1_block_le_static_minus_0.75_both_directions": true,
+    "2_lofo_score_le_best_reference_minus_3": true,
+    "3_full_train_le_default_swarm_plus_3": true
+   },
+   "eligible": true,
+   "meets_block_only": true
+  },
+  {
+   "id": "C3-lam80-bh2-bs8",
+   "mechanism": "C3",
+   "hparams": {
+    "beta_h": 0.02,
+    "beta_s": 0.08
+   },
+   "folds": {
+    "ring->structuring@h0": {
+     "objective": 17.3008,
+     "leakage_pct": 11.4679,
+     "honest_block_rate": 10.1727,
+     "honest_unpaid_rate": 0.7466,
+     "leakage_pct_by_family": {
+      "structuring": 11.4679
+     }
+    },
+    "ring->structuring@h1": {
+     "objective": 19.2439,
+     "leakage_pct": 14.291,
+     "honest_block_rate": 8.9046,
+     "honest_unpaid_rate": 0.5007,
+     "leakage_pct_by_family": {
+      "structuring": 14.291
+     }
+    },
+    "structuring->ring@h0": {
+     "objective": 24.1351,
+     "leakage_pct": 17.9767,
+     "honest_block_rate": 10.7891,
+     "honest_unpaid_rate": 0.7638,
+     "leakage_pct_by_family": {
+      "ring": 17.9767
+     }
+    },
+    "structuring->ring@h1": {
+     "objective": 23.9909,
+     "leakage_pct": 18.6368,
+     "honest_block_rate": 9.4183,
+     "honest_unpaid_rate": 0.6448,
+     "leakage_pct_by_family": {
+      "ring": 18.6368
+     }
+    }
+   },
+   "directions": {
+    "ring->structuring": {
+     "objective": 18.2723,
+     "leakage_pct": 12.8795,
+     "honest_block_rate": 9.5387,
+     "honest_unpaid_rate": 0.6237
+    },
+    "structuring->ring": {
+     "objective": 24.063,
+     "leakage_pct": 18.3068,
+     "honest_block_rate": 10.1037,
+     "honest_unpaid_rate": 0.7043
+    }
+   },
+   "lofo_score": 21.1677,
+   "worst_direction": 24.063,
+   "lofo_leakage_pct": 15.5931,
+   "lofo_honest_block_rate": 9.8212,
+   "full_train": {
+    "objective": 22.0749,
+    "leakage_pct": 16.5687,
+    "honest_block_rate": 9.7266,
+    "honest_unpaid_rate": 0.6429,
+    "leakage_pct_by_family": {
+     "ring": 20.4212,
+     "structuring": 12.6105
+    }
+   },
+   "full_train_params": {
+    "vel_usd_lo": 1000.0,
+    "vel_usd_width": 1000.0,
+    "vel_n_lo": 7.0,
+    "vel_n_width": 4.0,
+    "graph_dens_lo": 0.4,
+    "graph_dens_width": 0.2,
+    "graph_min_workers": 4,
+    "graph_size_width": 2.0,
+    "graph_share_min": 3,
+    "drift_min_history": 4,
+    "drift_ratio_lo": 3.0,
+    "drift_ratio_width": 3.0,
+    "drift_rate_lo": 3.5,
+    "drift_rate_width": 2.0,
+    "policy_cap_base_usd": 150.0,
+    "policy_cap_per_day_usd": 8.0,
+    "policy_cap_max_usd": 500.0,
+    "policy_window_mult": 3.0,
+    "w0_velocity": 1.0,
+    "w0_graph": 1.0,
+    "w0_drift": 1.0,
+    "w0_policy": 1.0,
+    "step_up_threshold": 0.3,
+    "hold_threshold": 0.6,
+    "eta": 0.02,
+    "min_weight": 0.05,
+    "l1_abstain": 0
+   },
+   "full_train_layer": {
+    "stats": [
+     "window_usd",
+     "window_n",
+     "amount",
+     "amount_ratio",
+     "amount_over_cap",
+     "window_over_cap",
+     "rate_z",
+     "graph_cluster",
+     "sharing"
+    ],
+    "hold": [
+     1631.67,
+     8.0,
+     510.83,
+     4.69549954363547,
+     1.041869374445933,
+     1.08778,
+     3.817292994764535,
+     0.7777777777777777,
+     2.0
+    ],
+    "step": [
+     1250.39,
+     7.0,
+     341.05,
+     3.307100895004534,
+     0.70608,
+     0.8335933333333334,
+     2.8706611415429193,
+     0.5,
+     2.0
+    ],
+    "beta_h": 0.02,
+    "beta_s": 0.08,
+    "honest_union_rate_hold": 0.019957903278979536,
+    "honest_union_rate_step": 0.07997109020363655,
+    "n_honest_events": 78866
+   },
+   "fold_layers": {
+    "ring->structuring@h0": {
+     "honest_union_rate_hold": 0.019948098246349837,
+     "honest_union_rate_step": 0.0799758840336575,
+     "n_honest_events": 38149
+    },
+    "ring->structuring@h1": {
+     "honest_union_rate_hold": 0.019082938330427093,
+     "honest_union_rate_step": 0.07994203895178918,
+     "n_honest_events": 40717
+    },
+    "structuring->ring@h0": {
+     "honest_union_rate_hold": 0.019974311253243858,
+     "honest_union_rate_step": 0.07992345801986946,
+     "n_honest_events": 38149
+    },
+    "structuring->ring@h1": {
+     "honest_union_rate_hold": 0.019033818798045044,
+     "honest_union_rate_step": 0.0799665987179802,
+     "n_honest_events": 40717
+    }
+   },
+   "eligibility": {
+    "1_block_le_static_minus_0.75_both_directions": false,
+    "2_lofo_score_le_best_reference_minus_3": true,
+    "3_full_train_le_default_swarm_plus_3": true
+   },
+   "eligible": false,
+   "meets_block_only": false
+  }
+ ],
+ "c3_skipped": null,
+ "champion": {
+  "id": "C2-bh2-bs5",
+  "basis": "eligible",
+  "acceptable_set": [
+   "C1-lam20",
+   "C1-lam80",
+   "C2-bh0.5-bs2",
+   "C2-bh1-bs3",
+   "C2-bh1-bs5",
+   "C2-bh2-bs5",
+   "C3-lam80-bh0.5-bs2",
+   "C3-lam80-bh1-bs3",
+   "C3-lam80-bh1-bs5",
+   "C3-lam80-bh2-bs5"
+  ],
+  "strict_min_pick": "C1-lam80",
+  "lofo_score": 19.9597,
+  "full_train": {
+   "objective": 20.8232,
+   "leakage_pct": 16.611,
+   "honest_block_rate": 7.3796,
+   "honest_unpaid_rate": 0.5224,
+   "leakage_pct_by_family": {
+    "ring": 20.5045,
+    "structuring": 12.6105
+   }
+  }
+ },
+ "seconds": 201.6
+}

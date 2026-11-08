@@ -1,0 +1,37 @@
+{
+  "generated_at": "2026-11-08T03:44:37+00:00",
+  "git_rev": "f7fe7a5535a76087424a00a84d239fc98ae54a5e",
+  "llm": {
+    "gemini": {
+      "TEST_HELDOUT2": {
+        "model": "gemini-3.5-flash-lite",
+        "cache_hits": 83173,
+        "fallbacks": 0,
+        "fallback_share_pct": 0.0
+      }
+    }
+  },
+  "rows": [
+    {
+      "defender": "llm_judge_gemini",
+      "split": "TEST_HELDOUT2",
+      "objective": 56.774,
+      "n_episodes": 20,
+      "attack_usd": 255023.37,
+      "leaked_usd": 107245.35,
+      "leakage_pct": 42.053,
+      "leakage_pct_by_family": {
+        "h2": 42.053
+      },
+      "honest_n": 81786,
+      "honest_block_rate": 26.563,
+      "honest_unpaid_rate": 1.439,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 4.0,
+      "immunity_attempts": 4.393,
+      "never_contained_rate": 22.951,
+      "llm_calls": 0,
+      "extra": {}
+    }
+  ]
+}

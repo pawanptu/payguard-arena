@@ -243,7 +243,8 @@ All rows, sorted by objective:
 | always_release | 100.000 | 100.000 | 0.000 | 0.000 |
 | single_policy (best single, chosen on TRAIN) | 100.086 | 99.091 | 1.751 | 0.120 |
 | single_velocity | 100.851 | 100.000 | 1.501 | 0.100 |
-| llm_judge_gemini (added in a later run) | pending<!-- TODO-R2GEMINI --> | | | |
+| single_graph (best single on this split; not pre-registered) | 28.866 | 26.875 | 3.490 | 0.246 |
+| llm_judge_gemini (added in a later run, D-035) | 56.774 | 42.053 | 26.563 | 1.439 |
 
 The Sarvam judge replayed all 83,173 payouts from cache with 0 fallbacks.
 
@@ -356,7 +357,7 @@ The PayPal webhook (`POST /webhooks/paypal`) accepts nothing until `PAYPAL_WEBHO
 
 - **Self-evolving defenders:** the swarm's weights and thresholds are evolved by population search against attackers that mutate their parameters, with a champion-challenger gate. This is search, not an LLM.
 - **Learned calibration (round 2):** `swarm_r2` learns its anomaly cut-offs from honest TRAIN traffic only, under fixed friction budgets.
-- **LLM judges (baselines):** Sarvam `sarvam-105b-conversations` and Google `gemini-3.5-flash-lite` each decide payouts from a truth-free summary with structured output. They are baselines, not part of the swarm. Both scored worse than tuned static rules on the round-1 held-out family, and the Sarvam judge did on round 2 as well (<!-- TODO-R2GEMINI -->the Gemini round-2 row is pending).
+- **LLM judges (baselines):** Sarvam `sarvam-105b-conversations` and Google `gemini-3.5-flash-lite` each decide payouts from a truth-free summary with structured output. They are baselines, not part of the swarm. Both scored worse than tuned static rules on the round-1 held-out family, and both did on round 2 as well (Sarvam 68.45, Gemini 56.77 against 52.21 for static rules; the Gemini judge blocked 26.6% of honest payouts). The Gemini row was added in a second run after the verdict (D-035) and changes no other row.
 - The project was built with Claude Code (Anthropic models) for planning, coding and review.
 
 ## License

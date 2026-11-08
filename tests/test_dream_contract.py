@@ -10,12 +10,13 @@ from payguard.sim.attacks import GENERATORS, sample_params
 
 
 def test_seed_guard():
+    # Probe the allowed-range edges and gaps without naming any sealed TEST seed (scanner tests forbid those literals).
     for ok in (1000, 1019, 9000, 9999):
         assert_seed_allowed(ok)
-    for bad in (999, 1020, 2000, 3005, 4010, 5000, 5019, 10000):
+    for bad in (999, 1020, 1500, 8999, 10000):
         with pytest.raises(AssertionError):
             assert_seed_allowed(bad)
-    assert_seed_allowed(5000, allow_test=True)
+    assert_seed_allowed(1500, allow_test=True)
 
 
 def test_observe_keeps_only_is_attack():

@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import type { ResultRow } from "../types";
-import { evaluateTests, headlineFor, MARGIN } from "../verdict";
+import { caveatFor, evaluateTests, headlineFor, MARGIN } from "../verdict";
 import type { TestResult } from "../verdict";
 import { defenderLabel, num1, plural, SEP, signed1 } from "../format";
 import InfoTip from "./InfoTip";
@@ -62,6 +62,7 @@ function ProofStrip({ live }: { live: LiveState }) {
 function ResultCard({ r }: { r: TestResult }) {
   const { test, v } = r;
   const singleName = v.single.defender.replace(/^single_/, "");
+  const caveat = caveatFor(v);
   const titleId = `test-${test.split}`;
   return (
     <section className="test-card" aria-labelledby={titleId}>
@@ -92,17 +93,21 @@ function ResultCard({ r }: { r: TestResult }) {
           Attack leakage {num1(v.primary.leakage_pct)}% (static rules {num1(v.static.leakage_pct)}%)
         </p>
       </div>
-      <ul className="checks" aria-label={`${test.title}: checks`}>
-        <Check ok={v.passStatic}>
-          vs static rules: {signed1(v.mStatic)} (needs +{MARGIN.toFixed(1)})
-        </Check>
-        <Check ok={v.passSingle}>
-          vs best single ({singleName}): {signed1(v.mSingle)} (needs +{MARGIN.toFixed(1)})
-        </Check>
-        <Check ok={v.passHonest}>
-          Honest blocked {v.primary.honest_block_rate.toFixed(1)}% ≤ static {v.static.honest_block_rate.toFixed(1)}%
-        </Check>
-      </ul>
+      {/* One wrapper = the card's 5th subgrid row; a 6th child would land on top of the checks. */}
+      <div className="test-foot">
+        <ul className="checks" aria-label={`${test.title}: checks`}>
+          <Check ok={v.passStatic}>
+            vs static rules: {signed1(v.mStatic)} (needs +{MARGIN.toFixed(1)})
+          </Check>
+          <Check ok={v.passSingle}>
+            vs best single on TRAIN ({singleName}): {signed1(v.mSingle)} (needs +{MARGIN.toFixed(1)})
+          </Check>
+          <Check ok={v.passHonest}>
+            Honest blocked {v.primary.honest_block_rate.toFixed(1)}% ≤ static {v.static.honest_block_rate.toFixed(1)}%
+          </Check>
+        </ul>
+        {caveat && <p className="test-caveat">{caveat}</p>}
+      </div>
     </section>
   );
 }

@@ -49,7 +49,8 @@ const DEFENDER_LABELS: Record<string, string> = {
 export function defenderLabel(id: string): string {
   const known = DEFENDER_LABELS[id];
   if (known) return known;
-  if (id.startsWith("single_") && id.length > "single_".length) return `Best single: ${id.slice("single_".length)}`;
+  // "Single", not "Best single": a split can show the rule's TRAIN pick and its own best single (D-038).
+  if (id.startsWith("single_") && id.length > "single_".length) return `Single: ${id.slice("single_".length)}`;
   return id;
 }
 

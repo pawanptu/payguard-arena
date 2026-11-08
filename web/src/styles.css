@@ -392,6 +392,8 @@ table.results tbody tr.row-primary > * { background: var(--accent-soft); }
 table.results tbody tr.row-primary > td.best { background: var(--best-bg); }
 table.results tbody tr.row-primary > th { box-shadow: inset 3px 0 0 var(--accent); }
 .def { display: inline-flex; align-items: center; gap: var(--sp-2); }
+.test-foot { display: grid; align-content: start; gap: var(--sp-2); min-width: 0; }
+.test-caveat { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.45; }
 .def-note { display: inline-flex; align-items: center; gap: 2px; color: var(--muted); font-size: 12px; font-weight: 400; }
 .results-wrap { margin-top: 0; }
 

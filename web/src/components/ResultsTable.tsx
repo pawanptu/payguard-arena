@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import type { ResultRow, Split } from "../types";
 import { defenderLabel, num1, num2, ordinal, pct, SEP, SPLIT_LABEL, SPLIT_ORDER } from "../format";
-import { PRIMARY_DEFENDER, TESTS } from "../verdict";
+import { pickBestSingle, PRIMARY_DEFENDER, SINGLE_PREFIX, TESTS } from "../verdict";
 import InfoTip from "./InfoTip";
 import { InboxIcon, StarIcon } from "./Icons";
 import { CardHeader, EmptyState, Pill, Segmented, Switch } from "./ui";
@@ -38,6 +38,23 @@ const POST_HOC: Partial<Record<Split, string>> = { TEST_HELDOUT: "swarm_r2" };
 /** The defender pinned as "Primary" for a split: the one under test there, else the round-1 primary. */
 const primaryFor = (split: Split) => TESTS.find((t) => t.split === split)?.primary ?? PRIMARY_DEFENDER;
 
+interface Note {
+  text: string;
+  tip: string;
+  tipLabel: string;
+}
+
+/** A muted marker next to a defender name: why a row is not a clean test, or what a single_* row is (D-038). */
+function noteFor(r: ResultRow, ruleSingle?: ResultRow, splitBest?: ResultRow): Note | null {
+  if (POST_HOC[r.split] === r.defender)
+    return { text: "Post-hoc", tipLabel: "why this row is not a clean test", tip: "Designed after the round-1 result on this split was known." };
+  if (r === ruleSingle)
+    return { text: "Chosen on TRAIN", tipLabel: "which single the rule uses", tip: "The best single specialist on TRAIN. The pre-registered rule compares against this one." };
+  if (r === splitBest)
+    return { text: "Not pre-registered", tipLabel: "why this single is shown", tip: "The best single specialist on this split, shown for comparison. The rule's single was fixed on TRAIN before the test." };
+  return null;
+}
+
 export default function ResultsTable({ rows }: { rows: ResultRow[] }) {
   const available = useMemo(() => SPLIT_ORDER.filter((s) => rows.some((r) => r.split === s)), [rows]);
   const [picked, setPicked] = useState<Split | null>(null);
@@ -56,6 +73,9 @@ export default function ResultsTable({ rows }: { rows: ResultRow[] }) {
   const split: Split = picked && available.includes(picked) ? picked : available[0];
   const inSplit = rows.filter((r) => r.split === split);
   const primary = inSplit.find((r) => r.defender === primaryFor(split));
+  const singles = inSplit.filter((r) => r.defender.startsWith(SINGLE_PREFIX));
+  const ruleSingle = pickBestSingle(rows, singles);
+  const splitBest = singles.length ? singles.reduce((a, b) => (b.objective < a.objective ? b : a)) : undefined;
   const ordered = [
     ...(primary ? [primary] : []),
     ...inSplit.filter((r) => r !== primary).sort((a, b) => a.objective - b.objective),
@@ -105,19 +125,17 @@ export default function ResultsTable({ rows }: { rows: ResultRow[] }) {
           <tbody>
             {ordered.map((r) => {
               const isPrimary = r === primary;
-              const postHoc = POST_HOC[r.split] === r.defender;
+              const note = noteFor(r, ruleSingle, splitBest);
               return (
                 <tr key={`${r.split}|${r.defender}`} className={isPrimary ? "row-primary" : ""}>
                   <th scope="row" title={r.defender}>
                     <span className="def">
                       {defenderLabel(r.defender)}
                       {isPrimary && <Pill variant="headline">Primary</Pill>}
-                      {postHoc && (
+                      {note && (
                         <span className="def-note">
-                          Post-hoc
-                          <InfoTip label="why this row is not a clean test">
-                            Designed after the round-1 result on this split was known.
-                          </InfoTip>
+                          {note.text}
+                          <InfoTip label={note.tipLabel}>{note.tip}</InfoTip>
                         </span>
                       )}
                     </span>

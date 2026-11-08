@@ -256,11 +256,19 @@ def episode_doc(episode: tuple[str, int] = EPISODE) -> dict:
     return {"seed": seed, "split": split, "defender": PRIMARY, "events": events}
 
 
+def split_best_single(table: Rows, split: str) -> str | None:
+    """The single specialist with the lowest objective ON `split`. Report-only (D-038): the rule's single is the
+    one fixed on TRAIN (BEST_SINGLE), but a reader should see when another single comes close on the test itself."""
+    singles = {n: m for (n, s), m in table.items() if s == split and n.startswith("single_")}
+    return min(singles, key=lambda n: objective(singles[n])) if singles else None
+
+
 def build_replay(table: Rows, generated_at: str, episode: dict) -> dict:
     shown = set(r1.display_names(BEST_SINGLE)) | {PRIMARY}
+    extra = split_best_single(table, DECISIVE_SPLIT)  # shown on the decisive split only, next to BEST_SINGLE
     order = {s: i for i, s in enumerate(("TRAIN", "TEST_SEEN", "TEST_HELDOUT", DECISIVE_SPLIT))}
     rows = [rx.result_row(n, m, s) for (n, s), m in sorted(table.items(), key=lambda kv: order[kv[0][1]])
-            if n in shown]
+            if n in shown or (s == DECISIVE_SPLIT and n == extra)]
     lineage = json.loads(r1.LINEAGE_PATH.read_text(encoding="utf-8"))
     doc = rx.clean({"schema_version": 1, "simulated": True, "synthetic_fixture": False, "generated_at": generated_at,
                     "objective": rx.OBJECTIVE_TEXT, "results": rows, "evolution": rx.evolution_rows(lineage),

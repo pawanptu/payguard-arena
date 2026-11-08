@@ -152,6 +152,20 @@ def test_replay_builds_with_decisive_rows(sandbox, monkeypatch):
     json.dumps(doc, allow_nan=False)
 
 
+def test_replay_adds_the_decisive_splits_own_best_single(sandbox, monkeypatch):
+    """D-038: the single that is best ON the decisive split is shown there (report-only); other splits are unchanged."""
+    monkeypatch.setattr(fe2.r1, "LINEAGE_PATH", fe2.r1.ROOT / "eval" / "evolution" / "lineage.json")
+    singles = {("single_graph", DECISIVE): m(28.0), ("single_drift", DECISIVE): m(90.0),
+               (fe2.BEST_SINGLE, DECISIVE): m(100.0), ("single_graph", "TRAIN"): m(60.0)}
+    table = fe2.merge_rows(("round1", ROUND1), ("round2", {**ROUND2, **singles}))
+    assert fe2.split_best_single(table, DECISIVE) == "single_graph"
+    assert fe2.split_best_single(ROUND1, DECISIVE) is None
+    ep = {"seed": 1, "split": DECISIVE, "defender": fe2.PRIMARY, "events": []}
+    shown = {(r["defender"], r["split"]) for r in fe2.build_replay(table, "2026-11-08T00:00:00+00:00", ep)["results"]}
+    assert ("single_graph", DECISIVE) in shown and (fe2.BEST_SINGLE, DECISIVE) in shown
+    assert ("single_drift", DECISIVE) not in shown and ("single_graph", "TRAIN") not in shown
+
+
 class _FakeDefender:
     name = "fake"
 

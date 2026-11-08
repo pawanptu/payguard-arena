@@ -5,6 +5,7 @@
 //   met     = mStatic >= 3.0 && mSingle >= 3.0 && primary.honest_block_rate <= static.honest_block_rate
 // "single" is the best single specialist, chosen on TRAIN (lowest TRAIN objective among single_* defenders).
 import type { ResultRow, Split } from "./types";
+import { num1, signed1 } from "./format";
 
 export const MARGIN = 3.0;
 export const PRIMARY_DEFENDER = "swarm_evolved_memory";
@@ -54,6 +55,8 @@ export interface VerdictResult {
   m: number;
   /** The baseline with the lower objective (static wins ties). */
   baseline: ResultRow;
+  /** Report-only (D-038): the single_* row with the lowest objective ON this split. Not part of the rule. */
+  splitBest: ResultRow;
   passStatic: boolean;
   passSingle: boolean;
   passHonest: boolean;
@@ -80,11 +83,10 @@ export function computeVerdict(rows: ResultRow[], split: Split = DECISIVE_SPLIT,
   const held = rows.filter((r) => r.split === split);
   const primary = held.find((r) => r.defender === primaryName);
   const stat = held.find((r) => r.defender === STATIC_DEFENDER);
-  const single = pickBestSingle(
-    rows,
-    held.filter((r) => r.defender.startsWith(SINGLE_PREFIX)),
-  );
+  const singles = held.filter((r) => r.defender.startsWith(SINGLE_PREFIX));
+  const single = pickBestSingle(rows, singles);
   if (!primary || !stat || !single) return null;
+  const splitBest = singles.reduce((a, b) => (b.objective < a.objective ? b : a));
 
   const nums = [primary.objective, stat.objective, single.objective, primary.honest_block_rate, stat.honest_block_rate];
   if (!nums.every(Number.isFinite)) return null;
@@ -102,11 +104,29 @@ export function computeVerdict(rows: ResultRow[], split: Split = DECISIVE_SPLIT,
     mSingle,
     m: Math.min(mStatic, mSingle),
     baseline: stat.objective <= single.objective ? stat : single,
+    splitBest,
     passStatic,
     passSingle,
     passHonest,
     met: passStatic && passSingle && passHonest,
   };
+}
+
+/**
+ * One factual sentence for the result card when the pre-registered comparison hides something a reader should know
+ * about the singles on THIS split (D-038), or null when there is nothing to add. Never changes `met`.
+ * Example data, round 2: primary swarm_r2 26.30; rule single (TRAIN pick) single_policy 100.09;
+ * v.splitBest = single_graph 28.87, so the primary leads it by only 2.57 (< MARGIN).
+ * Round 1: v.splitBest === v.single on every split, so the card must stay unchanged there.
+ */
+export function caveatFor(v: VerdictResult): string | null {
+  const best = v.splitBest;
+  // Nothing is hidden when the TRAIN pick is also the strongest single here (ties included).
+  if (best.defender === v.single.defender || best.objective >= v.single.objective) return null;
+  const lead = best.objective - v.primary.objective; // positive = primary is better
+  const under = lead < MARGIN ? `, under +${MARGIN.toFixed(1)}` : "";
+  const name = best.defender.slice(SINGLE_PREFIX.length);
+  return `Best single on this split: ${name} ${num1(best.objective)} (lead ${signed1(lead)}${under}); the rule's single was fixed on TRAIN.`;
 }
 
 export interface TestResult {

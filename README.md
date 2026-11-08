@@ -260,7 +260,7 @@ The Sarvam judge replayed all 83,173 payouts from cache with 0 fallbacks.
 The benchmark never calls PayPal. The LIVE rail is separate (`payguard/rail/live_rail.py`): `scripts/live_run.py` sends a small sample of the payouts the swarm released as real sandbox Payouts batches, guarded by a per-payout cap, a session budget and a receiver allowlist, then waits for PayPal's signed webhooks.
 
 - First live run: 5 sandbox payouts of USD 1.00 each (test money), all batches SUCCESS, and 15 signature-verified webhooks received for them. They paid released events of the round-1 episode (TEST_HELDOUT seed 3000); the receipts are kept in `eval/live/round1_replay_live.json`.
-- <!-- TODO-R2LIVE: replace this bullet with the round-2 live run's numbers --> A second live run on the round-2 episode (TEST_HELDOUT2 seed 4000, the episode the dashboard shows) is pending.
+- Second live run (2026-11-08): 5 sandbox payouts of USD 1.00 each on the round-2 episode (TEST_HELDOUT2 seed 4000, the episode the dashboard shows), all batches and items SUCCESS, and 15 signature-verified webhooks received for them (processing, batch success and item succeeded for each batch). The paid events are 653, 736, 1515, 1823 and 2639: honest payouts the swarm released. The receipts are in `eval/replay_live.json`.
 - These rows show that the rail works end to end. They are not a fraud result and are not in the tables above.
 
 ### How to reproduce

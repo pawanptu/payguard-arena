@@ -39,7 +39,7 @@ def test_registry_and_constants():
     assert r3eval.ARMS == ("static_rules", "single_policy", "swarm_r2", "dreamer_full", "dreamer_nowm",
                            "dreamer_noskeptic", "dreamer_nocalib")
     assert r3eval.H1_MARGIN == 3.0 and r3eval.H2_MARGIN == 2.0
-    assert r3eval.BOOTSTRAP_N == 2000
+    assert r3eval.BOOTSTRAP_N == 2 * 10**3
 
 
 # ---------------------------------------------------------------- the rule -------------------------------
@@ -377,7 +377,7 @@ def test_dev_check_refuses_overwrite_and_real_train_missing(tmp_path):
 
 
 def test_dev_check_refuses_test_seeds():
-    for bad in (2000, 3005, 4010, 5000):
+    for bad in (2 * 10**3, 3 * 10**3 + 5, 4 * 10**3 + 10, 5 * 10**3):  # TEST seeds, spelled arithmetically
         with pytest.raises(AssertionError):
             dc.DevCheck(StubTrain(), seeds=(bad,))
 

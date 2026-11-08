@@ -158,7 +158,8 @@ def test_folds_are_out_of_family_and_out_of_seed():
 
 
 def test_only_train_seeds_and_families_can_be_built():
-    for seed in (999, 1020, 2000, 3000, 4000, 4019):
+    # the guard is a TRAIN allow-list; sealed round-2 seeds are deliberately not named here (a scanner test checks)
+    for seed in (999, 1020, 2000, 3000, 9000):
         with pytest.raises(ValueError):
             get_episode(fam_spec(seed, ("ring",)))
     with pytest.raises(ValueError):

@@ -1,0 +1,1045 @@
+{
+  "generated_at": "2026-11-08T00:44:03+00:00",
+  "git_rev": "121c8ba834864b64bee2272db91bba1aa7228634",
+  "simulated": true,
+  "champion": {
+    "id": "g17-7",
+    "sha256": "0fefe00f54942385c6a9a6a86e5ccaa14264665713c7bf9bf2e77c4ebb4dfe82"
+  },
+  "objective": "leakage_pct + 0.5*honest_block_rate + 1.0*honest_unpaid_rate (lower is better)",
+  "splits": {
+    "TRAIN": {
+      "seeds": [
+        1000,
+        1019
+      ],
+      "families": [
+        "ring",
+        "structuring"
+      ]
+    },
+    "TEST_SEEN": {
+      "seeds": [
+        2000,
+        2019
+      ],
+      "families": [
+        "ring",
+        "structuring"
+      ]
+    },
+    "TEST_HELDOUT": {
+      "seeds": [
+        3000,
+        3019
+      ],
+      "families": [
+        "sleeper"
+      ]
+    }
+  },
+  "go_no_go": {
+    "criterion": "D-022: on TEST_HELDOUT, swarm_evolved_memory objective >= 3.0 below both static_rules and single_policy (best single specialist on TRAIN), honest block <= static_rules'",
+    "primary": "swarm_evolved_memory",
+    "best_single_on_train": "single_policy",
+    "checks": {
+      "TEST_SEEN": {
+        "split": "TEST_SEEN",
+        "candidate": "swarm_evolved_memory",
+        "objective": 17.142,
+        "static_rules": 65.639,
+        "single_policy": 70.371,
+        "margin_vs_static": 48.496,
+        "margin_vs_best_single": 53.229,
+        "honest_block_rate": 3.085,
+        "static_honest_block_rate": 9.849,
+        "pass": true
+      },
+      "TEST_HELDOUT": {
+        "split": "TEST_HELDOUT",
+        "candidate": "swarm_evolved_memory",
+        "objective": 80.557,
+        "static_rules": 28.539,
+        "single_policy": 64.153,
+        "margin_vs_static": -52.019,
+        "margin_vs_best_single": -16.404,
+        "honest_block_rate": 2.835,
+        "static_honest_block_rate": 9.595,
+        "pass": false
+      }
+    },
+    "verdict": "NO-GO",
+    "secondary_pass_not_decisive": {
+      "swarm_frozen": {
+        "TEST_SEEN": true,
+        "TEST_HELDOUT": false
+      },
+      "swarm_l1": {
+        "TEST_SEEN": true,
+        "TEST_HELDOUT": false
+      },
+      "swarm_evolved": {
+        "TEST_SEEN": true,
+        "TEST_HELDOUT": false
+      },
+      "swarm_memory": {
+        "TEST_SEEN": true,
+        "TEST_HELDOUT": false
+      }
+    }
+  },
+  "llm": {
+    "sarvam": {
+      "TRAIN": {
+        "model": "sarvam-105b-conversations",
+        "cache_hits": 83935,
+        "fallbacks": 0,
+        "fallback_share_pct": 0.0
+      },
+      "TEST_SEEN": {
+        "model": "sarvam-105b-conversations",
+        "cache_hits": 85067,
+        "fallbacks": 0,
+        "fallback_share_pct": 0.0
+      },
+      "TEST_HELDOUT": {
+        "model": "sarvam-105b-conversations",
+        "cache_hits": 80282,
+        "fallbacks": 0,
+        "fallback_share_pct": 0.0
+      }
+    },
+    "gemini": {
+      "TRAIN": {
+        "model": "gemini-3.5-flash-lite",
+        "cache_hits": 83930,
+        "fallbacks": 5,
+        "fallback_share_pct": 0.006
+      },
+      "TEST_SEEN": {
+        "model": "gemini-3.5-flash-lite",
+        "cache_hits": 85061,
+        "fallbacks": 6,
+        "fallback_share_pct": 0.007
+      },
+      "TEST_HELDOUT": {
+        "model": "gemini-3.5-flash-lite",
+        "cache_hits": 80277,
+        "fallbacks": 5,
+        "fallback_share_pct": 0.006
+      }
+    }
+  },
+  "rows": [
+    {
+      "defender": "always_release",
+      "split": "TRAIN",
+      "objective": 100.0,
+      "n_episodes": 20,
+      "attack_usd": 730309.96,
+      "leaked_usd": 730309.96,
+      "leakage_pct": 100.0,
+      "leakage_pct_by_family": {
+        "ring": 100.0,
+        "structuring": 100.0
+      },
+      "honest_n": 78866,
+      "honest_block_rate": 0.0,
+      "honest_unpaid_rate": 0.0,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 0.0,
+      "immunity_attempts": 79.203,
+      "never_contained_rate": 100.0,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "always_hold",
+      "split": "TRAIN",
+      "objective": 70.713,
+      "n_episodes": 20,
+      "attack_usd": 730309.96,
+      "leaked_usd": 78133.52,
+      "leakage_pct": 10.699,
+      "leakage_pct_by_family": {
+        "ring": 9.881,
+        "structuring": 11.539
+      },
+      "honest_n": 78866,
+      "honest_block_rate": 100.0,
+      "honest_unpaid_rate": 10.014,
+      "honest_median_ttp_h": 24.0,
+      "honest_p95_ttp_h": 24.0,
+      "immunity_attempts": 0.0,
+      "never_contained_rate": 0.0,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "static_rules",
+      "split": "TRAIN",
+      "objective": 55.398,
+      "n_episodes": 20,
+      "attack_usd": 730309.96,
+      "leaked_usd": 361386.24,
+      "leakage_pct": 49.484,
+      "leakage_pct_by_family": {
+        "ring": 86.414,
+        "structuring": 11.539
+      },
+      "honest_n": 78866,
+      "honest_block_rate": 9.833,
+      "honest_unpaid_rate": 0.998,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 24.0,
+      "immunity_attempts": 59.922,
+      "never_contained_rate": 40.625,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "single_velocity",
+      "split": "TRAIN",
+      "objective": 76.866,
+      "n_episodes": 20,
+      "attack_usd": 730309.96,
+      "leaked_usd": 554554.73,
+      "leakage_pct": 75.934,
+      "leakage_pct_by_family": {
+        "ring": 100.0,
+        "structuring": 51.207
+      },
+      "honest_n": 78866,
+      "honest_block_rate": 1.646,
+      "honest_unpaid_rate": 0.109,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 0.0,
+      "immunity_attempts": 70.469,
+      "never_contained_rate": 64.062,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "single_graph",
+      "split": "TRAIN",
+      "objective": 61.191,
+      "n_episodes": 20,
+      "attack_usd": 730309.96,
+      "leaked_usd": 433060.29,
+      "leakage_pct": 59.298,
+      "leakage_pct_by_family": {
+        "ring": 20.833,
+        "structuring": 98.82
+      },
+      "honest_n": 78866,
+      "honest_block_rate": 3.328,
+      "honest_unpaid_rate": 0.228,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 0.0,
+      "immunity_attempts": 17.062,
+      "never_contained_rate": 54.688,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "single_drift",
+      "split": "TRAIN",
+      "objective": 96.048,
+      "n_episodes": 20,
+      "attack_usd": 730309.96,
+      "leaked_usd": 697138.62,
+      "leakage_pct": 95.458,
+      "leakage_pct_by_family": {
+        "ring": 98.761,
+        "structuring": 92.064
+      },
+      "honest_n": 78866,
+      "honest_block_rate": 1.023,
+      "honest_unpaid_rate": 0.079,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 0.0,
+      "immunity_attempts": 76.703,
+      "never_contained_rate": 87.5,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "single_policy",
+      "split": "TRAIN",
+      "objective": 57.979,
+      "n_episodes": 20,
+      "attack_usd": 730309.96,
+      "leaked_usd": 415628.13,
+      "leakage_pct": 56.911,
+      "leakage_pct_by_family": {
+        "ring": 99.429,
+        "structuring": 13.225
+      },
+      "honest_n": 78866,
+      "honest_block_rate": 1.869,
+      "honest_unpaid_rate": 0.133,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 0.0,
+      "immunity_attempts": 67.266,
+      "never_contained_rate": 45.312,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "swarm_frozen",
+      "split": "TRAIN",
+      "objective": 20.36,
+      "n_episodes": 20,
+      "attack_usd": 730309.96,
+      "leaked_usd": 123903.6,
+      "leakage_pct": 16.966,
+      "leakage_pct_by_family": {
+        "ring": 20.607,
+        "structuring": 13.225
+      },
+      "honest_n": 78866,
+      "honest_block_rate": 5.951,
+      "honest_unpaid_rate": 0.418,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 4.0,
+      "immunity_attempts": 5.297,
+      "never_contained_rate": 0.0,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "swarm_l1",
+      "split": "TRAIN",
+      "objective": 20.292,
+      "n_episodes": 20,
+      "attack_usd": 730309.96,
+      "leaked_usd": 123457.99,
+      "leakage_pct": 16.905,
+      "leakage_pct_by_family": {
+        "ring": 20.607,
+        "structuring": 13.101
+      },
+      "honest_n": 78866,
+      "honest_block_rate": 5.937,
+      "honest_unpaid_rate": 0.418,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 4.0,
+      "immunity_attempts": 5.312,
+      "never_contained_rate": 0.0,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "swarm_evolved",
+      "split": "TRAIN",
+      "objective": 18.327,
+      "n_episodes": 20,
+      "attack_usd": 730309.96,
+      "leaked_usd": 120806.99,
+      "leakage_pct": 16.542,
+      "leakage_pct_by_family": {
+        "ring": 21.411,
+        "structuring": 11.539
+      },
+      "honest_n": 78866,
+      "honest_block_rate": 2.985,
+      "honest_unpaid_rate": 0.293,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 0.0,
+      "immunity_attempts": 7.672,
+      "never_contained_rate": 4.688,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "swarm_memory",
+      "split": "TRAIN",
+      "objective": 18.139,
+      "n_episodes": 20,
+      "attack_usd": 730309.96,
+      "leaked_usd": 107522.45,
+      "leakage_pct": 14.723,
+      "leakage_pct_by_family": {
+        "ring": 17.09,
+        "structuring": 12.29
+      },
+      "honest_n": 78866,
+      "honest_block_rate": 5.989,
+      "honest_unpaid_rate": 0.422,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 4.0,
+      "immunity_attempts": 4.688,
+      "never_contained_rate": 0.0,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "swarm_evolved_memory",
+      "split": "TRAIN",
+      "objective": 17.121,
+      "n_episodes": 20,
+      "attack_usd": 730309.96,
+      "leaked_usd": 111869.67,
+      "leakage_pct": 15.318,
+      "leakage_pct_by_family": {
+        "ring": 18.996,
+        "structuring": 11.539
+      },
+      "honest_n": 78866,
+      "honest_block_rate": 3.011,
+      "honest_unpaid_rate": 0.297,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 0.0,
+      "immunity_attempts": 6.359,
+      "never_contained_rate": 0.0,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "llm_judge_sarvam",
+      "split": "TRAIN",
+      "objective": 97.722,
+      "n_episodes": 20,
+      "attack_usd": 730309.96,
+      "leaked_usd": 665500.21,
+      "leakage_pct": 91.126,
+      "leakage_pct_by_family": {
+        "ring": 99.197,
+        "structuring": 82.833
+      },
+      "honest_n": 78866,
+      "honest_block_rate": 11.829,
+      "honest_unpaid_rate": 0.682,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 4.0,
+      "immunity_attempts": 73.906,
+      "never_contained_rate": 81.25,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "llm_judge_gemini",
+      "split": "TRAIN",
+      "objective": 73.734,
+      "n_episodes": 20,
+      "attack_usd": 730309.96,
+      "leaked_usd": 431293.0,
+      "leakage_pct": 59.056,
+      "leakage_pct_by_family": {
+        "ring": 93.692,
+        "structuring": 23.469
+      },
+      "honest_n": 78866,
+      "honest_block_rate": 26.739,
+      "honest_unpaid_rate": 1.309,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 4.0,
+      "immunity_attempts": 60.562,
+      "never_contained_rate": 40.625,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "always_release",
+      "split": "TEST_SEEN",
+      "objective": 100.0,
+      "n_episodes": 20,
+      "attack_usd": 724102.24,
+      "leaked_usd": 724102.24,
+      "leakage_pct": 100.0,
+      "leakage_pct_by_family": {
+        "ring": 100.0,
+        "structuring": 100.0
+      },
+      "honest_n": 79243,
+      "honest_block_rate": 0.0,
+      "honest_unpaid_rate": 0.0,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 0.0,
+      "immunity_attempts": 109.887,
+      "never_contained_rate": 100.0,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "always_hold",
+      "split": "TEST_SEEN",
+      "objective": 70.04,
+      "n_episodes": 20,
+      "attack_usd": 724102.24,
+      "leaked_usd": 73354.49,
+      "leakage_pct": 10.13,
+      "leakage_pct_by_family": {
+        "ring": 9.865,
+        "structuring": 10.634
+      },
+      "honest_n": 79243,
+      "honest_block_rate": 100.0,
+      "honest_unpaid_rate": 9.91,
+      "honest_median_ttp_h": 24.0,
+      "honest_p95_ttp_h": 24.0,
+      "immunity_attempts": 0.0,
+      "never_contained_rate": 0.0,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "static_rules",
+      "split": "TEST_SEEN",
+      "objective": 65.639,
+      "n_episodes": 20,
+      "attack_usd": 724102.24,
+      "leaked_usd": 433234.31,
+      "leakage_pct": 59.831,
+      "leakage_pct_by_family": {
+        "ring": 85.773,
+        "structuring": 10.634
+      },
+      "honest_n": 79243,
+      "honest_block_rate": 9.849,
+      "honest_unpaid_rate": 0.883,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 24.0,
+      "immunity_attempts": 83.566,
+      "never_contained_rate": 37.736,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "single_velocity",
+      "split": "TEST_SEEN",
+      "objective": 83.343,
+      "n_episodes": 20,
+      "attack_usd": 724102.24,
+      "leaked_usd": 596335.12,
+      "leakage_pct": 82.355,
+      "leakage_pct_by_family": {
+        "ring": 99.899,
+        "structuring": 49.084
+      },
+      "honest_n": 79243,
+      "honest_block_rate": 1.736,
+      "honest_unpaid_rate": 0.12,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 0.0,
+      "immunity_attempts": 102.038,
+      "never_contained_rate": 71.698,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "single_graph",
+      "split": "TEST_SEEN",
+      "objective": 49.054,
+      "n_episodes": 20,
+      "attack_usd": 724102.24,
+      "leaked_usd": 342154.75,
+      "leakage_pct": 47.252,
+      "leakage_pct_by_family": {
+        "ring": 19.735,
+        "structuring": 99.437
+      },
+      "honest_n": 79243,
+      "honest_block_rate": 3.193,
+      "honest_unpaid_rate": 0.206,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 0.0,
+      "immunity_attempts": 17.528,
+      "never_contained_rate": 49.057,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "single_drift",
+      "split": "TEST_SEEN",
+      "objective": 98.028,
+      "n_episodes": 20,
+      "attack_usd": 724102.24,
+      "leaked_usd": 705899.39,
+      "leakage_pct": 97.486,
+      "leakage_pct_by_family": {
+        "ring": 98.844,
+        "structuring": 94.912
+      },
+      "honest_n": 79243,
+      "honest_block_rate": 0.988,
+      "honest_unpaid_rate": 0.048,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 0.0,
+      "immunity_attempts": 107.66,
+      "never_contained_rate": 92.453,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "single_policy",
+      "split": "TEST_SEEN",
+      "objective": 70.371,
+      "n_episodes": 20,
+      "attack_usd": 724102.24,
+      "leaked_usd": 501740.61,
+      "leakage_pct": 69.291,
+      "leakage_pct_by_family": {
+        "ring": 99.321,
+        "structuring": 12.342
+      },
+      "honest_n": 79243,
+      "honest_block_rate": 1.871,
+      "honest_unpaid_rate": 0.144,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 0.0,
+      "immunity_attempts": 99.698,
+      "never_contained_rate": 50.943,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "swarm_frozen",
+      "split": "TEST_SEEN",
+      "objective": 20.459,
+      "n_episodes": 20,
+      "attack_usd": 724102.24,
+      "leaked_usd": 124242.64,
+      "leakage_pct": 17.158,
+      "leakage_pct_by_family": {
+        "ring": 19.601,
+        "structuring": 12.525
+      },
+      "honest_n": 79243,
+      "honest_block_rate": 5.836,
+      "honest_unpaid_rate": 0.382,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 4.0,
+      "immunity_attempts": 7.491,
+      "never_contained_rate": 0.0,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "swarm_l1",
+      "split": "TEST_SEEN",
+      "objective": 20.451,
+      "n_episodes": 20,
+      "attack_usd": 724102.24,
+      "leaked_usd": 124242.64,
+      "leakage_pct": 17.158,
+      "leakage_pct_by_family": {
+        "ring": 19.601,
+        "structuring": 12.525
+      },
+      "honest_n": 79243,
+      "honest_block_rate": 5.825,
+      "honest_unpaid_rate": 0.38,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 4.0,
+      "immunity_attempts": 7.491,
+      "never_contained_rate": 0.0,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "swarm_evolved",
+      "split": "TEST_SEEN",
+      "objective": 18.28,
+      "n_episodes": 20,
+      "attack_usd": 724102.24,
+      "leaked_usd": 119514.62,
+      "leakage_pct": 16.505,
+      "leakage_pct_by_family": {
+        "ring": 19.601,
+        "structuring": 10.634
+      },
+      "honest_n": 79243,
+      "honest_block_rate": 3.003,
+      "honest_unpaid_rate": 0.273,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 0.0,
+      "immunity_attempts": 10.642,
+      "never_contained_rate": 3.774,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "swarm_memory",
+      "split": "TEST_SEEN",
+      "objective": 18.493,
+      "n_episodes": 20,
+      "attack_usd": 724102.24,
+      "leaked_usd": 109575.61,
+      "leakage_pct": 15.133,
+      "leakage_pct_by_family": {
+        "ring": 16.689,
+        "structuring": 12.182
+      },
+      "honest_n": 79243,
+      "honest_block_rate": 5.946,
+      "honest_unpaid_rate": 0.387,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 4.0,
+      "immunity_attempts": 6.566,
+      "never_contained_rate": 0.0,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "swarm_evolved_memory",
+      "split": "TEST_SEEN",
+      "objective": 17.142,
+      "n_episodes": 20,
+      "attack_usd": 724102.24,
+      "leaked_usd": 110946.3,
+      "leakage_pct": 15.322,
+      "leakage_pct_by_family": {
+        "ring": 17.794,
+        "structuring": 10.634
+      },
+      "honest_n": 79243,
+      "honest_block_rate": 3.085,
+      "honest_unpaid_rate": 0.278,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 0.0,
+      "immunity_attempts": 8.415,
+      "never_contained_rate": 0.0,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "llm_judge_sarvam",
+      "split": "TEST_SEEN",
+      "objective": 98.149,
+      "n_episodes": 20,
+      "attack_usd": 724102.24,
+      "leaked_usd": 660275.28,
+      "leakage_pct": 91.185,
+      "leakage_pct_by_family": {
+        "ring": 98.469,
+        "structuring": 77.373
+      },
+      "honest_n": 79243,
+      "honest_block_rate": 12.426,
+      "honest_unpaid_rate": 0.751,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 4.0,
+      "immunity_attempts": 104.83,
+      "never_contained_rate": 86.792,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "llm_judge_gemini",
+      "split": "TEST_SEEN",
+      "objective": 83.478,
+      "n_episodes": 20,
+      "attack_usd": 724102.24,
+      "leaked_usd": 497104.87,
+      "leakage_pct": 68.651,
+      "leakage_pct_by_family": {
+        "ring": 93.101,
+        "structuring": 22.284
+      },
+      "honest_n": 79243,
+      "honest_block_rate": 26.978,
+      "honest_unpaid_rate": 1.338,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 4.0,
+      "immunity_attempts": 85.774,
+      "never_contained_rate": 41.509,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "always_release",
+      "split": "TEST_HELDOUT",
+      "objective": 100.0,
+      "n_episodes": 20,
+      "attack_usd": 204966.68,
+      "leaked_usd": 204966.68,
+      "leakage_pct": 100.0,
+      "leakage_pct_by_family": {
+        "sleeper": 100.0
+      },
+      "honest_n": 79635,
+      "honest_block_rate": 0.0,
+      "honest_unpaid_rate": 0.0,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 0.0,
+      "immunity_attempts": 9.377,
+      "never_contained_rate": 100.0,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "always_hold",
+      "split": "TEST_HELDOUT",
+      "objective": 71.453,
+      "n_episodes": 20,
+      "attack_usd": 204966.68,
+      "leaked_usd": 23597.33,
+      "leakage_pct": 11.513,
+      "leakage_pct_by_family": {
+        "sleeper": 11.513
+      },
+      "honest_n": 79635,
+      "honest_block_rate": 100.0,
+      "honest_unpaid_rate": 9.94,
+      "honest_median_ttp_h": 24.0,
+      "honest_p95_ttp_h": 24.0,
+      "immunity_attempts": 0.0,
+      "never_contained_rate": 0.0,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "static_rules",
+      "split": "TEST_HELDOUT",
+      "objective": 28.539,
+      "n_episodes": 20,
+      "attack_usd": 204966.68,
+      "leaked_usd": 46697.33,
+      "leakage_pct": 22.783,
+      "leakage_pct_by_family": {
+        "sleeper": 22.783
+      },
+      "honest_n": 79635,
+      "honest_block_rate": 9.595,
+      "honest_unpaid_rate": 0.958,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 24.0,
+      "immunity_attempts": 1.638,
+      "never_contained_rate": 15.942,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "single_velocity",
+      "split": "TEST_HELDOUT",
+      "objective": 95.232,
+      "n_episodes": 20,
+      "attack_usd": 204966.68,
+      "leaked_usd": 193144.97,
+      "leakage_pct": 94.232,
+      "leakage_pct_by_family": {
+        "sleeper": 94.232
+      },
+      "honest_n": 79635,
+      "honest_block_rate": 1.796,
+      "honest_unpaid_rate": 0.102,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 0.0,
+      "immunity_attempts": 8.87,
+      "never_contained_rate": 94.203,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "single_graph",
+      "split": "TEST_HELDOUT",
+      "objective": 101.711,
+      "n_episodes": 20,
+      "attack_usd": 204966.68,
+      "leaked_usd": 204769.73,
+      "leakage_pct": 99.904,
+      "leakage_pct_by_family": {
+        "sleeper": 99.904
+      },
+      "honest_n": 79635,
+      "honest_block_rate": 3.149,
+      "honest_unpaid_rate": 0.232,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 0.0,
+      "immunity_attempts": 9.362,
+      "never_contained_rate": 100.0,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "single_drift",
+      "split": "TEST_HELDOUT",
+      "objective": 73.251,
+      "n_episodes": 20,
+      "attack_usd": 204966.68,
+      "leaked_usd": 149038.03,
+      "leakage_pct": 72.713,
+      "leakage_pct_by_family": {
+        "sleeper": 72.713
+      },
+      "honest_n": 79635,
+      "honest_block_rate": 0.959,
+      "honest_unpaid_rate": 0.058,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 0.0,
+      "immunity_attempts": 6.159,
+      "never_contained_rate": 71.014,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "single_policy",
+      "split": "TEST_HELDOUT",
+      "objective": 64.153,
+      "n_episodes": 20,
+      "attack_usd": 204966.68,
+      "leaked_usd": 129181.94,
+      "leakage_pct": 63.026,
+      "leakage_pct_by_family": {
+        "sleeper": 63.026
+      },
+      "honest_n": 79635,
+      "honest_block_rate": 1.989,
+      "honest_unpaid_rate": 0.133,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 0.0,
+      "immunity_attempts": 5.246,
+      "never_contained_rate": 57.971,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "swarm_frozen",
+      "split": "TEST_HELDOUT",
+      "objective": 55.107,
+      "n_episodes": 20,
+      "attack_usd": 204966.68,
+      "leaked_usd": 106122.24,
+      "leakage_pct": 51.775,
+      "leakage_pct_by_family": {
+        "sleeper": 51.775
+      },
+      "honest_n": 79635,
+      "honest_block_rate": 5.878,
+      "honest_unpaid_rate": 0.393,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 4.0,
+      "immunity_attempts": 3.913,
+      "never_contained_rate": 43.478,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "swarm_l1",
+      "split": "TEST_HELDOUT",
+      "objective": 55.097,
+      "n_episodes": 20,
+      "attack_usd": 204966.68,
+      "leaked_usd": 106122.24,
+      "leakage_pct": 51.775,
+      "leakage_pct_by_family": {
+        "sleeper": 51.775
+      },
+      "honest_n": 79635,
+      "honest_block_rate": 5.858,
+      "honest_unpaid_rate": 0.393,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 4.0,
+      "immunity_attempts": 3.913,
+      "never_contained_rate": 43.478,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "swarm_evolved",
+      "split": "TEST_HELDOUT",
+      "objective": 80.232,
+      "n_episodes": 20,
+      "attack_usd": 204966.68,
+      "leaked_usd": 160991.78,
+      "leakage_pct": 78.545,
+      "leakage_pct_by_family": {
+        "sleeper": 78.545
+      },
+      "honest_n": 79635,
+      "honest_block_rate": 2.834,
+      "honest_unpaid_rate": 0.27,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 0.0,
+      "immunity_attempts": 7.304,
+      "never_contained_rate": 84.058,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "swarm_memory",
+      "split": "TEST_HELDOUT",
+      "objective": 60.017,
+      "n_episodes": 20,
+      "attack_usd": 204966.68,
+      "leaked_usd": 116196.48,
+      "leakage_pct": 56.69,
+      "leakage_pct_by_family": {
+        "sleeper": 56.69
+      },
+      "honest_n": 79635,
+      "honest_block_rate": 5.866,
+      "honest_unpaid_rate": 0.394,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 4.0,
+      "immunity_attempts": 4.043,
+      "never_contained_rate": 50.725,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "swarm_evolved_memory",
+      "split": "TEST_HELDOUT",
+      "objective": 80.557,
+      "n_episodes": 20,
+      "attack_usd": 204966.68,
+      "leaked_usd": 161656.46,
+      "leakage_pct": 78.87,
+      "leakage_pct_by_family": {
+        "sleeper": 78.87
+      },
+      "honest_n": 79635,
+      "honest_block_rate": 2.835,
+      "honest_unpaid_rate": 0.27,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 0.0,
+      "immunity_attempts": 7.275,
+      "never_contained_rate": 84.058,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "llm_judge_sarvam",
+      "split": "TEST_HELDOUT",
+      "objective": 102.605,
+      "n_episodes": 20,
+      "attack_usd": 204966.68,
+      "leaked_usd": 197291.91,
+      "leakage_pct": 96.256,
+      "leakage_pct_by_family": {
+        "sleeper": 96.256
+      },
+      "honest_n": 79635,
+      "honest_block_rate": 11.443,
+      "honest_unpaid_rate": 0.628,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 4.0,
+      "immunity_attempts": 8.899,
+      "never_contained_rate": 92.754,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "llm_judge_gemini",
+      "split": "TEST_HELDOUT",
+      "objective": 65.202,
+      "n_episodes": 20,
+      "attack_usd": 204966.68,
+      "leaked_usd": 103395.59,
+      "leakage_pct": 50.445,
+      "leakage_pct_by_family": {
+        "sleeper": 50.445
+      },
+      "honest_n": 79635,
+      "honest_block_rate": 26.757,
+      "honest_unpaid_rate": 1.379,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 4.0,
+      "immunity_attempts": 2.188,
+      "never_contained_rate": 27.536,
+      "llm_calls": 0,
+      "extra": {}
+    }
+  ]
+}

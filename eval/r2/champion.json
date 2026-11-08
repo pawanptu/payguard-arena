@@ -1,0 +1,79 @@
+{
+ "fit": "all TRAIN (seeds 1000-1019, ring + structuring), GA seed 0, same procedure as the LOFO folds",
+ "hparams": {
+  "beta_h": 0.02,
+  "beta_s": 0.05
+ },
+ "id": "swarm_r2",
+ "layer": {
+  "beta_h": 0.02,
+  "beta_s": 0.05,
+  "hold": [
+   1631.67,
+   8.0,
+   510.83,
+   4.69549954363547,
+   1.041869374445933,
+   1.08778,
+   3.817292994764535,
+   0.7777777777777777,
+   2.0
+  ],
+  "honest_union_rate_hold": 0.019957903278979536,
+  "honest_union_rate_step": 0.04989475819744884,
+  "n_honest_events": 78866,
+  "stats": [
+   "window_usd",
+   "window_n",
+   "amount",
+   "amount_ratio",
+   "amount_over_cap",
+   "window_over_cap",
+   "rate_z",
+   "graph_cluster",
+   "sharing"
+  ],
+  "step": [
+   1388.92,
+   8.0,
+   394.5,
+   3.7628648233486945,
+   0.8094199999999999,
+   0.9259466666666667,
+   3.2217329155702297,
+   0.6041666666666666,
+   2.0
+  ]
+ },
+ "mechanism": "C2",
+ "params": {
+  "drift_min_history": 4,
+  "drift_rate_lo": 3.5,
+  "drift_rate_width": 2.0,
+  "drift_ratio_lo": 3.0,
+  "drift_ratio_width": 3.0,
+  "eta": 0.02,
+  "graph_dens_lo": 0.4,
+  "graph_dens_width": 0.2,
+  "graph_min_workers": 4,
+  "graph_share_min": 3,
+  "graph_size_width": 2.0,
+  "hold_threshold": 0.6,
+  "l1_abstain": 0,
+  "min_weight": 0.05,
+  "policy_cap_base_usd": 150.0,
+  "policy_cap_max_usd": 500.0,
+  "policy_cap_per_day_usd": 8.0,
+  "policy_window_mult": 3.0,
+  "step_up_threshold": 0.3,
+  "vel_n_lo": 7.0,
+  "vel_n_width": 4.0,
+  "vel_usd_lo": 1000.0,
+  "vel_usd_width": 1000.0,
+  "w0_drift": 1.0,
+  "w0_graph": 1.0,
+  "w0_policy": 1.0,
+  "w0_velocity": 1.0
+ },
+ "selected_candidate": "C2-bh2-bs5"
+}

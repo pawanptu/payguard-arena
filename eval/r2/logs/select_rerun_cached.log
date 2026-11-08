@@ -1,0 +1,25 @@
+== references (same LOFO episodes)
+  ref static_rules           LOFO   54.47  block  9.82  full-TRAIN  55.40
+  ref single_policy          LOFO   57.19  block  1.86  full-TRAIN  57.98
+  ref swarm_l1               LOFO   19.13  block  6.01  full-TRAIN  20.29
+  ref swarm_evolved          LOFO   17.38  block  3.07  full-TRAIN  18.33
+  ref swarm_evolved_memory   LOFO   16.69  block  3.10  full-TRAIN  17.12
+== C1 prior-anchored evolution
+  C1-lam0      LOFO   50.08 worst   76.07 block  3.08 full-TRAIN  19.14 eligible=True
+  C1-lam20     LOFO   20.46 worst   24.64 block  4.52 full-TRAIN  20.29 eligible=True
+  C1-lam80     LOFO   19.13 worst   21.97 block  6.01 full-TRAIN  20.29 eligible=True
+== C2 honest-calibrated anomaly union layer on the default swarm
+  C2-bh0.5-bs2     LOFO   19.25 worst   22.08 block  6.27 full-TRAIN  20.43 eligible=True
+  C2-bh1-bs3       LOFO   19.47 worst   22.33 block  6.60 full-TRAIN  20.55 eligible=True
+  C2-bh1-bs5       LOFO   20.00 worst   22.85 block  7.60 full-TRAIN  20.80 eligible=True
+  C2-bh2-bs5       LOFO   19.96 worst   22.86 block  7.60 full-TRAIN  20.82 eligible=True
+  C2-bh2-bs8       LOFO   21.17 worst   24.06 block  9.82 full-TRAIN  22.07 eligible=False
+== C3 stack: C1 lam=80 + C2 layer
+  C3-lam80-bh0.5-bs2     LOFO   19.25 worst   22.08 block  6.27 full-TRAIN  20.43 eligible=True
+  C3-lam80-bh1-bs3       LOFO   19.47 worst   22.33 block  6.60 full-TRAIN  20.55 eligible=True
+  C3-lam80-bh1-bs5       LOFO   20.00 worst   22.85 block  7.60 full-TRAIN  20.80 eligible=True
+  C3-lam80-bh2-bs5       LOFO   19.96 worst   22.86 block  7.60 full-TRAIN  20.82 eligible=True
+  C3-lam80-bh2-bs8       LOFO   21.17 worst   24.06 block  9.82 full-TRAIN  22.07 eligible=False
+== champion: C2-bh2-bs5  [eligible]
+champion.json sha256 fe38d6c8408c21ebdf485045c7b746b1ad9b9261a8aee1d90c4967b3b502a17e
+done in 3.4 min

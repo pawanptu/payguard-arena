@@ -25,6 +25,8 @@ export interface TestSpec {
   decisive: boolean;
   /** Defender under test; defaults to PRIMARY_DEFENDER. */
   primary?: string;
+  /** Splits whose result was already known while this primary was designed: its scores there are not clean tests. */
+  seenWhileBuilding?: Split[];
 }
 export const TESTS: TestSpec[] = [
   { split: "TEST_SEEN", title: "Known attack families, new seeds", short: "known attacks", pillLabel: "Secondary check", decisive: false },
@@ -36,8 +38,11 @@ export const TESTS: TestSpec[] = [
     pillLabel: "Pre-registered test",
     decisive: true,
     primary: "swarm_r2",
+    seenWhileBuilding: ["TEST_HELDOUT"],
   },
 ];
+
+export const SWARM_PREFIX = "swarm_";
 
 /** "a" / "a and b" / "a, b and c". */
 const joinList = (items: string[]) =>
@@ -113,13 +118,13 @@ export function computeVerdict(rows: ResultRow[], split: Split = DECISIVE_SPLIT,
 }
 
 /**
- * One factual sentence for the result card when the pre-registered comparison hides something a reader should know
- * about the singles on THIS split (D-038), or null when there is nothing to add. Never changes `met`.
+ * Caveat (a): one factual sentence for the result card when the pre-registered comparison hides something a reader
+ * should know about the singles on THIS split (D-038), or null when there is nothing to add. Never changes `met`.
  * Example data, round 2: primary swarm_r2 26.30; rule single (TRAIN pick) single_policy 100.09;
  * v.splitBest = single_graph 28.87, so the primary leads it by only 2.57 (< MARGIN).
  * Round 1: v.splitBest === v.single on every split, so the card must stay unchanged there.
  */
-export function caveatFor(v: VerdictResult): string | null {
+export function singleCaveat(v: VerdictResult): string | null {
   const best = v.splitBest;
   // Nothing is hidden when the TRAIN pick is also the strongest single here (ties included).
   if (best.defender === v.single.defender || best.objective >= v.single.objective) return null;
@@ -127,6 +132,53 @@ export function caveatFor(v: VerdictResult): string | null {
   const under = lead < MARGIN ? `, under +${MARGIN.toFixed(1)}` : "";
   const name = best.defender.slice(SINGLE_PREFIX.length);
   return `Best single on this split: ${name} ${num1(best.objective)} (lead ${signed1(lead)}${under}); the rule's single was fixed on TRAIN.`;
+}
+
+/**
+ * Caveat (b), D-039: do OTHER swarm_* defenders on this split also pass the same rule (same static row, same
+ * TRAIN-picked single, same honest-block check)? If so, the card's GO is mostly about the swarm design, not this
+ * primary. Return one sentence, or null when there is nothing to add. Never changes `met`.
+ * Data, round 2 (TEST_HELDOUT2): swarm_r2 26.30 (primary); other swarms 28.19-30.13, all pass vs static 52.21.
+ * Round 1 (TEST_HELDOUT): every swarm scores >= 55.10 vs static 28.54, so none pass.
+ * TEST_SEEN is a secondary check (test.decisive === false).
+ */
+export function otherSwarmsCaveat(rows: ResultRow[], test: TestSpec, v: VerdictResult): string | null {
+  // Only a passed, pre-registered card can overstate what its primary adds.
+  if (!test.decisive || !v.met) return null;
+  const others = rows.filter(
+    (r) => r.split === test.split && r.defender.startsWith(SWARM_PREFIX) && r.defender !== v.primary.defender,
+  );
+  const passing = others.filter((r) => computeVerdict(rows, test.split, r.defender)?.met).map((r) => r.objective);
+  if (passing.length === 0) return null;
+  const range = passing.length === 1 ? num1(passing[0]) : `${num1(Math.min(...passing))}-${num1(Math.max(...passing))}`;
+  const who = passing.length === others.length ? `All ${others.length} other swarms` : `${passing.length} of ${others.length} other swarms`;
+  return `${who} also pass this rule (${range}), so the result mostly reflects the swarm design.`;
+}
+
+/**
+ * Caveat (c), D-039: the same primary on the OTHER decisive splits. If it does not meet the rule there, say so,
+ * and flag the result as not clean when that split was known while the primary was built (TestSpec.seenWhileBuilding).
+ * Round 2: swarm_r2 on TEST_HELDOUT 45.10 vs static 28.54 (not met, known while built). Round 1: swarm_evolved_memory
+ * on TEST_HELDOUT2 28.85 meets the rule, so its card gets nothing.
+ */
+export function otherFamilyCaveat(rows: ResultRow[], test: TestSpec, v: VerdictResult): string | null {
+  // Secondary cards would only repeat the decisive card next to them.
+  if (!test.decisive) return null;
+  for (const other of TESTS) {
+    if (!other.decisive || other.split === test.split) continue;
+    const ov = computeVerdict(rows, other.split, v.primary.defender);
+    if (!ov || ov.met) continue;
+    const known = test.seenWhileBuilding?.includes(other.split) ? " (known while it was built, so not a clean test)" : "";
+    return `The same defender on the ${other.title.toLowerCase()}: ${num1(ov.primary.objective)} vs static rules ${num1(ov.static.objective)}, not met${known}.`;
+  }
+  return null;
+}
+
+/** All caveat lines for one result card, in order (a), (b), (c); empty when there is nothing to add. */
+export function caveatsFor(rows: ResultRow[], r: TestResult): string[] {
+  return [singleCaveat(r.v), otherSwarmsCaveat(rows, r.test, r.v), otherFamilyCaveat(rows, r.test, r.v)].filter(
+    (c): c is string => c !== null,
+  );
 }
 
 export interface TestResult {

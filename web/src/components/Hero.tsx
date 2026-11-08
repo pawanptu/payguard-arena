@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import type { ResultRow } from "../types";
-import { caveatFor, evaluateTests, headlineFor, MARGIN } from "../verdict";
+import { caveatsFor, evaluateTests, headlineFor, MARGIN } from "../verdict";
 import type { TestResult } from "../verdict";
 import { defenderLabel, num1, plural, SEP, signed1 } from "../format";
 import InfoTip from "./InfoTip";
@@ -59,10 +59,10 @@ function ProofStrip({ live }: { live: LiveState }) {
   );
 }
 
-function ResultCard({ r }: { r: TestResult }) {
+function ResultCard({ r, rows }: { r: TestResult; rows: ResultRow[] }) {
   const { test, v } = r;
   const singleName = v.single.defender.replace(/^single_/, "");
-  const caveat = caveatFor(v);
+  const caveats = caveatsFor(rows, r);
   const titleId = `test-${test.split}`;
   return (
     <section className="test-card" aria-labelledby={titleId}>
@@ -106,7 +106,15 @@ function ResultCard({ r }: { r: TestResult }) {
             Honest blocked {v.primary.honest_block_rate.toFixed(1)}% ≤ static {v.static.honest_block_rate.toFixed(1)}%
           </Check>
         </ul>
-        {caveat && <p className="test-caveat">{caveat}</p>}
+        {caveats.length > 0 && (
+          <ul className="test-caveats" aria-label={`${test.title}: caveats`}>
+            {caveats.map((c) => (
+              <li key={c} className="test-caveat">
+                {c}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </section>
   );
@@ -138,7 +146,7 @@ export default function Hero({ results, live }: { results: ResultRow[]; live: Li
 
       <div className="test-cards">
         {tests.map((t) => (
-          <ResultCard key={t.test.split} r={t} />
+          <ResultCard key={t.test.split} r={t} rows={results} />
         ))}
       </div>
 

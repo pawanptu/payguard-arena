@@ -129,6 +129,7 @@ Everything here is a simulated replay on synthetic data. The parameters are desi
 - **Read round 2 with these caveats, from the same table.**
   - On that split the Graph specialist alone (`single_graph`) scored 28.87, only 2.57 behind `swarm_r2`, which is under the 3.0 margin. The rule compares against the single chosen on TRAIN, as pre-registered.
   - Every round-1 swarm also clears the rule there, so the result mostly shows that the swarm design handles a shared-channel family that static rules miss. The round-2 changes add about 2-4 points.
+  - `swarm_r2` still loses on the round-1 sleeper family (45.10 vs 28.54 for static rules; not a clean test, since that failure was known while designing it).
   - Round 1 still failed; its numbers stand.
 
 ### Objective and pass rule
@@ -295,9 +296,9 @@ The round-1 table is stored in `eval/final/results.json` and the round-2 table i
 | `scripts/smoke_paypal_payouts.py` | Day-0 gate: one real sandbox payout batch |
 | `scripts/smoke_sarvam.py` | Day-0 gate: schema-valid JSON from the LLM defender |
 | `payguard/sim/` | Deterministic payout simulator, attack generators, features, runner, metrics |
-| `payguard/protocol.py` | Seed splits (TRAIN / TEST_SEEN / TEST_HELDOUT) and episode construction |
+| `payguard/protocol.py` | Seed splits (TRAIN / TEST_SEEN / TEST_HELDOUT) and episode construction (round 2's TEST_HELDOUT2 lives in `payguard/heldout2/`) |
 | `payguard/baselines/` | Trivial bounds and the static-rules baseline (a) |
-| `scripts/run_baselines.py` | Prints the baseline table on all three splits |
+| `scripts/run_baselines.py` | Prints the baseline table on the three round-1 splits |
 | `scripts/tune_static.py` | One-time TRAIN-only tuning of the static baseline (`eval/static_rules_tuning.json`) |
 | `scripts/freeze.py` | Freezes / verifies the benchmark files (`eval/FROZEN.json`) |
 | `payguard/swarm/` | Four specialist defenders, the reputation-weighted coordinator (L1), single-specialist baselines |

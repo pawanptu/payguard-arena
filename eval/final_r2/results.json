@@ -1,0 +1,440 @@
+{
+  "generated_at": "2026-11-08T02:33:10+00:00",
+  "git_rev": "03e2da417be66aaf4c46240659ec08be84db97e7",
+  "simulated": true,
+  "defender_freeze": {
+    "eval/r2/champion.json": "fe38d6c8408c21ebdf485045c7b746b1ad9b9261a8aee1d90c4967b3b502a17e",
+    "payguard/robust/__init__.py": "af94555c37ccac7b5da95cbfa71c45065b9ac29852fa6c3aaf4bd6e89d57a0f9",
+    "payguard/robust/anchored.py": "cae932083722b29e8ce0bfa737216cc4a31989cdab06a808553b42009799bc6c",
+    "payguard/robust/folds.py": "44716be9ed670fd87a9c5bcb0d24041fb194912c52cd95ed84a9aad0c06d258b",
+    "payguard/robust/layer.py": "8f9b5928d7564c0d0965aeafa5a372a1379f619711e9d73d060a2078e0f424f7",
+    "payguard/robust/r2.py": "ef58f3d7907a8abdae527589349b0563b608612b3922f73ba3ba61f51934eff5",
+    "payguard/swarm/__init__.py": "76538402ad25142d023508446943742e38537c2387049775d940a9502c47bb7a",
+    "payguard/swarm/coordinator.py": "85fb50b22d2029e701e8aa04b2f551853dd511e4646d3344eb1389c5acd9f7d7",
+    "payguard/swarm/defenders.py": "a84c08f0645f8edcac2925df0b2d79383c1a751c538e8a6d96e9f9f23637f143",
+    "payguard/swarm/memory.py": "32ba876f93f2e4e31814ade8ee72b9ea173ddc9de955ebcb051c6b42e8c01021",
+    "payguard/swarm/objective.py": "9686d68e8dc12f0e471b62f73d994fd21edeaa75ce5b9568c616542646321a58",
+    "payguard/swarm/params.py": "4ce9cf7142f9e358d5b944beeb9e3804b43238f032cf2ba2b03fff9ad223ba70",
+    "payguard/swarm/single.py": "1473c9569703a22998d9c1a9e886f4b7addd59f8146f50a7fd6813bade81fdc5"
+  },
+  "objective": "leakage_pct + 0.5*honest_block_rate + 1.0*honest_unpaid_rate (lower is better)",
+  "pre_registration": [
+    "D-034",
+    "D-035"
+  ],
+  "splits": {
+    "TEST_HELDOUT2": {
+      "seeds": [
+        4000,
+        4019
+      ],
+      "families": [
+        "h2"
+      ]
+    }
+  },
+  "report_only": {
+    "TRAIN": "reported, not decisive",
+    "TEST_SEEN": "reported, not decisive",
+    "TEST_HELDOUT": "the round-1 failure on this split was known while swarm_r2 was designed (D-033)"
+  },
+  "go_no_go": {
+    "criterion": "D-022 via D-034: on TEST_HELDOUT2, swarm_r2 objective >= 3.0 below both static_rules and single_policy (best single specialist on TRAIN), honest block <= static_rules'",
+    "primary": "swarm_r2",
+    "best_single_on_train": "single_policy",
+    "checks": {
+      "TEST_HELDOUT2": {
+        "split": "TEST_HELDOUT2",
+        "candidate": "swarm_r2",
+        "objective": 26.298,
+        "static_rules": 52.206,
+        "single_policy": 100.086,
+        "margin_vs_static": 25.908,
+        "margin_vs_best_single": 73.788,
+        "honest_block_rate": 7.385,
+        "static_honest_block_rate": 9.745,
+        "pass": true
+      }
+    },
+    "verdict": "GO",
+    "secondary_pass_not_decisive": {
+      "swarm_frozen": true,
+      "swarm_l1": true,
+      "swarm_evolved": true,
+      "swarm_memory": true,
+      "swarm_evolved_memory": true
+    },
+    "amendment": "D-035: llm_judge_gemini is added later by --gemini-row and cannot change this verdict"
+  },
+  "llm": {
+    "sarvam": {
+      "TEST_HELDOUT2": {
+        "model": "sarvam-105b-conversations",
+        "cache_hits": 83173,
+        "fallbacks": 0,
+        "fallback_share_pct": 0.0
+      }
+    }
+  },
+  "rows": [
+    {
+      "defender": "always_release",
+      "split": "TEST_HELDOUT2",
+      "objective": 100.0,
+      "n_episodes": 20,
+      "attack_usd": 255023.37,
+      "leaked_usd": 255023.37,
+      "leakage_pct": 100.0,
+      "leakage_pct_by_family": {
+        "h2": 100.0
+      },
+      "honest_n": 81786,
+      "honest_block_rate": 0.0,
+      "honest_unpaid_rate": 0.0,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 0.0,
+      "immunity_attempts": 22.738,
+      "never_contained_rate": 100.0,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "always_hold",
+      "split": "TEST_HELDOUT2",
+      "objective": 69.139,
+      "n_episodes": 20,
+      "attack_usd": 255023.37,
+      "leaked_usd": 23033.07,
+      "leakage_pct": 9.032,
+      "leakage_pct_by_family": {
+        "h2": 9.032
+      },
+      "honest_n": 81786,
+      "honest_block_rate": 100.0,
+      "honest_unpaid_rate": 10.107,
+      "honest_median_ttp_h": 24.0,
+      "honest_p95_ttp_h": 24.0,
+      "immunity_attempts": 0.0,
+      "never_contained_rate": 0.0,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "static_rules",
+      "split": "TEST_HELDOUT2",
+      "objective": 52.206,
+      "n_episodes": 20,
+      "attack_usd": 255023.37,
+      "leaked_usd": 118201.09,
+      "leakage_pct": 46.349,
+      "leakage_pct_by_family": {
+        "h2": 46.349
+      },
+      "honest_n": 81786,
+      "honest_block_rate": 9.745,
+      "honest_unpaid_rate": 0.984,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 24.0,
+      "immunity_attempts": 11.328,
+      "never_contained_rate": 50.82,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "single_velocity",
+      "split": "TEST_HELDOUT2",
+      "objective": 100.851,
+      "n_episodes": 20,
+      "attack_usd": 255023.37,
+      "leaked_usd": 255023.37,
+      "leakage_pct": 100.0,
+      "leakage_pct_by_family": {
+        "h2": 100.0
+      },
+      "honest_n": 81786,
+      "honest_block_rate": 1.501,
+      "honest_unpaid_rate": 0.1,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 0.0,
+      "immunity_attempts": 22.738,
+      "never_contained_rate": 100.0,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "single_graph",
+      "split": "TEST_HELDOUT2",
+      "objective": 28.866,
+      "n_episodes": 20,
+      "attack_usd": 255023.37,
+      "leaked_usd": 68538.8,
+      "leakage_pct": 26.875,
+      "leakage_pct_by_family": {
+        "h2": 26.875
+      },
+      "honest_n": 81786,
+      "honest_block_rate": 3.49,
+      "honest_unpaid_rate": 0.246,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 0.0,
+      "immunity_attempts": 3.426,
+      "never_contained_rate": 6.557,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "single_drift",
+      "split": "TEST_HELDOUT2",
+      "objective": 95.386,
+      "n_episodes": 20,
+      "attack_usd": 255023.37,
+      "leaked_usd": 241751.54,
+      "leakage_pct": 94.796,
+      "leakage_pct_by_family": {
+        "h2": 94.796
+      },
+      "honest_n": 81786,
+      "honest_block_rate": 1.026,
+      "honest_unpaid_rate": 0.077,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 0.0,
+      "immunity_attempts": 21.918,
+      "never_contained_rate": 100.0,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "single_policy",
+      "split": "TEST_HELDOUT2",
+      "objective": 100.086,
+      "n_episodes": 20,
+      "attack_usd": 255023.37,
+      "leaked_usd": 252705.44,
+      "leakage_pct": 99.091,
+      "leakage_pct_by_family": {
+        "h2": 99.091
+      },
+      "honest_n": 81786,
+      "honest_block_rate": 1.751,
+      "honest_unpaid_rate": 0.12,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 0.0,
+      "immunity_attempts": 22.475,
+      "never_contained_rate": 98.361,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "swarm_frozen",
+      "split": "TEST_HELDOUT2",
+      "objective": 29.7,
+      "n_episodes": 20,
+      "attack_usd": 255023.37,
+      "leaked_usd": 67084.13,
+      "leakage_pct": 26.305,
+      "leakage_pct_by_family": {
+        "h2": 26.305
+      },
+      "honest_n": 81786,
+      "honest_block_rate": 5.961,
+      "honest_unpaid_rate": 0.414,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 4.0,
+      "immunity_attempts": 3.311,
+      "never_contained_rate": 6.557,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "swarm_l1",
+      "split": "TEST_HELDOUT2",
+      "objective": 29.061,
+      "n_episodes": 20,
+      "attack_usd": 255023.37,
+      "leaked_usd": 65463.15,
+      "leakage_pct": 25.669,
+      "leakage_pct_by_family": {
+        "h2": 25.669
+      },
+      "honest_n": 81786,
+      "honest_block_rate": 5.952,
+      "honest_unpaid_rate": 0.416,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 4.0,
+      "immunity_attempts": 3.279,
+      "never_contained_rate": 6.557,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "swarm_evolved",
+      "split": "TEST_HELDOUT2",
+      "objective": 30.127,
+      "n_episodes": 20,
+      "attack_usd": 255023.37,
+      "leaked_usd": 72134.31,
+      "leakage_pct": 28.285,
+      "leakage_pct_by_family": {
+        "h2": 28.285
+      },
+      "honest_n": 81786,
+      "honest_block_rate": 3.084,
+      "honest_unpaid_rate": 0.3,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 0.0,
+      "immunity_attempts": 3.59,
+      "never_contained_rate": 6.557,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "swarm_memory",
+      "split": "TEST_HELDOUT2",
+      "objective": 28.19,
+      "n_episodes": 20,
+      "attack_usd": 255023.37,
+      "leaked_usd": 63244.78,
+      "leakage_pct": 24.8,
+      "leakage_pct_by_family": {
+        "h2": 24.8
+      },
+      "honest_n": 81786,
+      "honest_block_rate": 5.947,
+      "honest_unpaid_rate": 0.417,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 4.0,
+      "immunity_attempts": 3.197,
+      "never_contained_rate": 6.557,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "swarm_evolved_memory",
+      "split": "TEST_HELDOUT2",
+      "objective": 28.849,
+      "n_episodes": 20,
+      "attack_usd": 255023.37,
+      "leaked_usd": 68874.81,
+      "leakage_pct": 27.007,
+      "leakage_pct_by_family": {
+        "h2": 27.007
+      },
+      "honest_n": 81786,
+      "honest_block_rate": 3.085,
+      "honest_unpaid_rate": 0.3,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 0.0,
+      "immunity_attempts": 3.639,
+      "never_contained_rate": 6.557,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "swarm_r2",
+      "split": "TEST_HELDOUT2",
+      "objective": 26.298,
+      "n_episodes": 20,
+      "attack_usd": 255023.37,
+      "leaked_usd": 56321.31,
+      "leakage_pct": 22.085,
+      "leakage_pct_by_family": {
+        "h2": 22.085
+      },
+      "honest_n": 81786,
+      "honest_block_rate": 7.385,
+      "honest_unpaid_rate": 0.521,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 4.0,
+      "immunity_attempts": 3.098,
+      "never_contained_rate": 6.557,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "llm_judge_sarvam",
+      "split": "TEST_HELDOUT2",
+      "objective": 68.449,
+      "n_episodes": 20,
+      "attack_usd": 255023.37,
+      "leaked_usd": 157748.3,
+      "leakage_pct": 61.856,
+      "leakage_pct_by_family": {
+        "h2": 61.856
+      },
+      "honest_n": 81786,
+      "honest_block_rate": 11.705,
+      "honest_unpaid_rate": 0.74,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 4.0,
+      "immunity_attempts": 5.115,
+      "never_contained_rate": 19.672,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "swarm_r2",
+      "split": "TRAIN",
+      "objective": 20.823,
+      "n_episodes": 20,
+      "attack_usd": 730309.96,
+      "leaked_usd": 121311.7,
+      "leakage_pct": 16.611,
+      "leakage_pct_by_family": {
+        "ring": 20.505,
+        "structuring": 12.61
+      },
+      "honest_n": 78866,
+      "honest_block_rate": 7.38,
+      "honest_unpaid_rate": 0.522,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 4.0,
+      "immunity_attempts": 5.25,
+      "never_contained_rate": 0.0,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "swarm_r2",
+      "split": "TEST_SEEN",
+      "objective": 21.049,
+      "n_episodes": 20,
+      "attack_usd": 724102.24,
+      "leaked_usd": 122170.71,
+      "leakage_pct": 16.872,
+      "leakage_pct_by_family": {
+        "ring": 19.456,
+        "structuring": 11.972
+      },
+      "honest_n": 79243,
+      "honest_block_rate": 7.365,
+      "honest_unpaid_rate": 0.495,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 4.0,
+      "immunity_attempts": 7.453,
+      "never_contained_rate": 0.0,
+      "llm_calls": 0,
+      "extra": {}
+    },
+    {
+      "defender": "swarm_r2",
+      "split": "TEST_HELDOUT",
+      "objective": 45.101,
+      "n_episodes": 20,
+      "attack_usd": 204966.68,
+      "leaked_usd": 83954.36,
+      "leakage_pct": 40.96,
+      "leakage_pct_by_family": {
+        "sleeper": 40.96
+      },
+      "honest_n": 79635,
+      "honest_block_rate": 7.277,
+      "honest_unpaid_rate": 0.502,
+      "honest_median_ttp_h": 0.0,
+      "honest_p95_ttp_h": 4.0,
+      "immunity_attempts": 2.913,
+      "never_contained_rate": 33.333,
+      "llm_calls": 0,
+      "extra": {}
+    }
+  ]
+}

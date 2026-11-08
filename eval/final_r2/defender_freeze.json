@@ -1,0 +1,19 @@
+{
+  "files": {
+    "eval/r2/champion.json": "fe38d6c8408c21ebdf485045c7b746b1ad9b9261a8aee1d90c4967b3b502a17e",
+    "payguard/robust/__init__.py": "af94555c37ccac7b5da95cbfa71c45065b9ac29852fa6c3aaf4bd6e89d57a0f9",
+    "payguard/robust/anchored.py": "cae932083722b29e8ce0bfa737216cc4a31989cdab06a808553b42009799bc6c",
+    "payguard/robust/folds.py": "44716be9ed670fd87a9c5bcb0d24041fb194912c52cd95ed84a9aad0c06d258b",
+    "payguard/robust/layer.py": "8f9b5928d7564c0d0965aeafa5a372a1379f619711e9d73d060a2078e0f424f7",
+    "payguard/robust/r2.py": "ef58f3d7907a8abdae527589349b0563b608612b3922f73ba3ba61f51934eff5",
+    "payguard/swarm/__init__.py": "76538402ad25142d023508446943742e38537c2387049775d940a9502c47bb7a",
+    "payguard/swarm/coordinator.py": "85fb50b22d2029e701e8aa04b2f551853dd511e4646d3344eb1389c5acd9f7d7",
+    "payguard/swarm/defenders.py": "a84c08f0645f8edcac2925df0b2d79383c1a751c538e8a6d96e9f9f23637f143",
+    "payguard/swarm/memory.py": "32ba876f93f2e4e31814ade8ee72b9ea173ddc9de955ebcb051c6b42e8c01021",
+    "payguard/swarm/objective.py": "9686d68e8dc12f0e471b62f73d994fd21edeaa75ce5b9568c616542646321a58",
+    "payguard/swarm/params.py": "4ce9cf7142f9e358d5b944beeb9e3804b43238f032cf2ba2b03fff9ad223ba70",
+    "payguard/swarm/single.py": "1473c9569703a22998d9c1a9e886f4b7addd59f8146f50a7fd6813bade81fdc5"
+  },
+  "frozen_at": "2026-11-08T02:29:21+00:00",
+  "git_rev": "6519a9eb6bf22f0b04587caa6c69ffc6354f2711"
+}

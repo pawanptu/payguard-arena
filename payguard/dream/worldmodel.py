@@ -58,7 +58,8 @@ STAT_NAMES = ("log_workers", "log_events_per_worker", "log_median_amount", "amou
               "log_gap_median", "log_gap_q25", "short_gap_share", "age_days", "first_day", "span_days", "count_cv")
 N_STATS = len(STAT_NAMES)
 DEFAULT_DAYS = 14
-DEFAULT_N_SIMS = 250             # reference-table rows per family (400 and 800 recovered no better, 2x the cold cost)
+DEFAULT_N_SIMS = 1000            # reference-table rows per family. K2 (D-043): 250 rows left a Monte Carlo spread of 0.057 of a
+                                 # field range between re-simulated tables on 20 TRAIN obs; 500 -> 0.037, 1000 -> 0.025 (~1/sqrt n)
 DEFAULT_HONEST_REQUESTERS = 60   # SimConfig.n_requesters: popular requesters structuring picks from
 _SIM_WORKERS, _SIM_REQ = 10_000, 100   # id offsets for simulated campaigns (never collide with anything we compute)
 

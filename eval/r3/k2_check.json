@@ -1,0 +1,79 @@
+{
+ "TRAIN_1000-1019": {
+  "per_rng": [
+   {
+    "structuring": {
+     "mass": 0.547,
+     "ess": 7596.2
+    },
+    "ring": {
+     "mass": 0.453,
+     "ess": 6167.1
+    }
+   },
+   {
+    "structuring": {
+     "mass": 0.547,
+     "ess": 7370.3
+    },
+    "ring": {
+     "mass": 0.453,
+     "ess": 6111.2
+    }
+   },
+   {
+    "structuring": {
+     "mass": 0.547,
+     "ess": 7496.8
+    },
+    "ring": {
+     "mass": 0.453,
+     "ess": 6123.6
+    }
+   }
+  ],
+  "c1_ess>=20": true,
+  "c2_mass_0.2-0.8": true,
+  "c3_max_mean_spread": 0.0253,
+  "c3_ok": true
+ },
+ "TRAIN_A_1000-1009": {
+  "per_rng": [
+   {
+    "structuring": {
+     "mass": 0.567,
+     "ess": 3727.0
+    },
+    "ring": {
+     "mass": 0.433,
+     "ess": 2713.5
+    }
+   },
+   {
+    "structuring": {
+     "mass": 0.567,
+     "ess": 3593.6
+    },
+    "ring": {
+     "mass": 0.433,
+     "ess": 2700.0
+    }
+   },
+   {
+    "structuring": {
+     "mass": 0.567,
+     "ess": 3624.5
+    },
+    "ring": {
+     "mass": 0.433,
+     "ess": 2694.4
+    }
+   }
+  ],
+  "c1_ess>=20": true,
+  "c2_mass_0.2-0.8": true,
+  "c3_max_mean_spread": 0.0285,
+  "c3_ok": true
+ },
+ "K2": "PASS"
+}

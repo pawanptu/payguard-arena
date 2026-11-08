@@ -1,74 +1,131 @@
+import { useMemo, useState } from "react";
 import type { ResultRow, Split } from "../types";
-import { num1, num2, pct, splitLabel } from "../format";
+import { defenderLabel, num1, num2, ordinal, pct, SEP, SPLIT_LABEL, SPLIT_ORDER } from "../format";
+import { PRIMARY_DEFENDER } from "../verdict";
+import InfoTip from "./InfoTip";
+import { InboxIcon, StarIcon } from "./Icons";
+import { CardHeader, EmptyState, Pill, Segmented, Switch } from "./ui";
 
 type Key = Exclude<keyof ResultRow, "defender" | "split">;
 
-const COLS: { key: Key; label: string; fmt: (n: number) => string }[] = [
-  { key: "objective", label: "Objective", fmt: num2 },
-  { key: "leakage_pct", label: "Leakage", fmt: pct },
-  { key: "honest_block_rate", label: "Honest blocked", fmt: pct },
-  { key: "honest_unpaid_rate", label: "Honest unpaid", fmt: pct },
-  { key: "honest_median_ttp_h", label: "Median time to pay (h)", fmt: num1 },
-  { key: "immunity_attempts", label: "Attacks paid before contained", fmt: num1 },
-  { key: "never_contained_rate", label: "Never contained", fmt: pct },
+interface Col {
+  key: Key;
+  label: string;
+  tip: string;
+  fmt: (n: number) => string;
+}
+
+const MAIN_COLS: Col[] = [
+  { key: "objective", label: "Objective", tip: "Leakage + 0.5 × honest blocked + honest unpaid. Lower is better.", fmt: num2 },
+  { key: "leakage_pct", label: "Leakage %", tip: "Share of attack value paid out.", fmt: pct },
+  { key: "honest_block_rate", label: "Honest blocked %", tip: "Honest workers put on HOLD.", fmt: pct },
+  { key: "honest_unpaid_rate", label: "Honest unpaid %", tip: "Honest workers never paid.", fmt: pct },
+];
+const MORE_COLS: Col[] = [
+  { key: "honest_median_ttp_h", label: "Median time to pay (h)", tip: "Hours until an honest worker is paid.", fmt: num1 },
+  {
+    key: "immunity_attempts",
+    label: "Attack payouts before containment",
+    tip: "Attack payouts that slipped through before the pattern was caught.",
+    fmt: num1,
+  },
+  { key: "never_contained_rate", label: "Never contained %", tip: "Attack rings never stopped.", fmt: pct },
 ];
 
-const SPLIT_ORDER: Split[] = ["TRAIN", "TEST_SEEN", "TEST_HELDOUT"];
+export default function ResultsTable({ rows }: { rows: ResultRow[] }) {
+  const available = useMemo(() => SPLIT_ORDER.filter((s) => rows.some((r) => r.split === s)), [rows]);
+  const [picked, setPicked] = useState<Split | null>(null);
+  const [more, setMore] = useState(false);
 
-export default function ResultsTable({ rows, objective }: { rows: ResultRow[]; objective: string }) {
-  const splits = SPLIT_ORDER.filter((s) => rows.some((r) => r.split === s));
-  // Lowest value per (split, column) is the best for every column here.
-  const best = new Map<string, number>();
-  for (const s of splits) {
-    const inSplit = rows.filter((r) => r.split === s);
-    if (inSplit.length < 2) continue;
-    for (const c of COLS) best.set(`${s}|${c.key}`, Math.min(...inSplit.map((r) => r[c.key])));
+  if (rows.length === 0) {
+    return (
+      <section id="results" className="card" aria-labelledby="res-h">
+        <CardHeader id="res-h" title="Results" />
+        <EmptyState icon={<InboxIcon size={22} />} title="No results" cause="This replay has no result rows." />
+      </section>
+    );
   }
-  const isBest = (r: ResultRow, k: Key) => best.get(`${r.split}|${k}`) === r[k];
+
+  const split: Split = picked && available.includes(picked) ? picked : available[0];
+  const inSplit = rows.filter((r) => r.split === split);
+  const primary = inSplit.find((r) => r.defender === PRIMARY_DEFENDER);
+  const ordered = [
+    ...(primary ? [primary] : []),
+    ...inSplit.filter((r) => r !== primary).sort((a, b) => a.objective - b.objective),
+  ];
+  // Only the Objective column is marked, on its minimum value(s) within the split.
+  const bestObjective = inSplit.length > 1 ? Math.min(...inSplit.map((r) => r.objective)) : null;
+  const rank = primary ? inSplit.filter((r) => r.objective < primary.objective).length + 1 : null;
+  const subtitle =
+    `${SPLIT_LABEL[split]}${SEP}${ordered.length} defenders` +
+    (primary && rank ? `${SEP}${defenderLabel(primary.defender)} ranks ${ordinal(rank)}` : "");
+  const cols = more ? [...MAIN_COLS, ...MORE_COLS] : MAIN_COLS;
 
   return (
-    <section className="card" aria-labelledby="res-h">
-      <h2 id="res-h">Results by defender and split</h2>
-      <p className="muted small">
-        Objective = <code>{objective}</code>. Lower is better in every column; the best value in each split is
-        marked <span className="best-key">best</span> and shaded.
-      </p>
-      {rows.length === 0 ? (
-        <p className="muted">This replay has no results.</p>
-      ) : (
-        <div className="table-wrap" tabIndex={0} role="region" aria-label="Results table, scrolls sideways on narrow screens">
-          <table>
-            <caption className="visually-hidden">Defender results per split</caption>
-            <thead>
-              <tr>
-                <th scope="col">Defender</th>
-                <th scope="col">Split</th>
-                {COLS.map((c) => (
-                  <th scope="col" className="num" key={c.key}>{c.label}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {splits.flatMap((s) =>
-                rows
-                  .filter((r) => r.split === s)
-                  .map((r) => (
-                    <tr key={`${s}|${r.defender}`} className={isBest(r, "objective") ? "row-best" : ""}>
-                      <th scope="row"><code>{r.defender}</code></th>
-                      <td>{splitLabel(r.split)}</td>
-                      {COLS.map((c) => (
-                        <td key={c.key} className={`num ${isBest(r, c.key) ? "best" : ""}`}>
-                          {c.fmt(r[c.key])}
-                          {isBest(r, c.key) && <span className="best-tag"> best</span>}
-                        </td>
-                      ))}
-                    </tr>
-                  )),
-              )}
-            </tbody>
-          </table>
-        </div>
-      )}
+    <section id="results" className="card" aria-labelledby="res-h">
+      <CardHeader
+        id="res-h"
+        title="Results"
+        subtitle={subtitle}
+        actions={
+          <>
+            <Segmented
+              label="Data split"
+              options={available.map((s) => ({ value: s, label: SPLIT_LABEL[s] }))}
+              value={split}
+              onChange={setPicked}
+            />
+            <Switch checked={more} onChange={setMore} label="More metrics" />
+          </>
+        }
+      />
+      <div className="table-wrap results-wrap" tabIndex={0} role="region" aria-label={`Results table, ${SPLIT_LABEL[split]} split`}>
+        <table className="results">
+          <caption className="visually-hidden">Defender results, {SPLIT_LABEL[split]} split. Lower is better.</caption>
+          <thead>
+            <tr>
+              <th scope="col">Defender</th>
+              {cols.map((c) => (
+                <th scope="col" className="num" key={c.key}>
+                  <span className="th-in">
+                    {c.label}
+                    <InfoTip label={c.label}>{c.tip}</InfoTip>
+                  </span>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {ordered.map((r) => {
+              const isPrimary = r === primary;
+              return (
+                <tr key={`${r.split}|${r.defender}`} className={isPrimary ? "row-primary" : ""}>
+                  <th scope="row" title={r.defender}>
+                    <span className="def">
+                      {defenderLabel(r.defender)}
+                      {isPrimary && <Pill variant="headline">Primary</Pill>}
+                    </span>
+                  </th>
+                  {cols.map((c) => {
+                    const isBest = c.key === "objective" && bestObjective !== null && r.objective === bestObjective;
+                    return (
+                      <td key={c.key} className={`num${isBest ? " best" : ""}`}>
+                        {isBest && (
+                          <>
+                            <StarIcon size={12} />
+                            <span className="visually-hidden">best </span>
+                          </>
+                        )}
+                        {c.fmt(r[c.key])}
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </section>
   );
 }

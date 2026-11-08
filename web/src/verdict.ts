@@ -27,8 +27,20 @@ export interface TestSpec {
 }
 export const TESTS: TestSpec[] = [
   { split: "TEST_SEEN", title: "Known attack families, new seeds", short: "known attacks", pillLabel: "Secondary check", decisive: false },
-  { split: "TEST_HELDOUT", title: "Never-seen attack family", short: "a never-seen attack family", pillLabel: "Pre-registered test", decisive: true },
+  { split: "TEST_HELDOUT", title: "Never-seen attack family (round 1)", short: "a never-seen attack family", pillLabel: "Pre-registered test", decisive: true },
+  {
+    split: "TEST_HELDOUT2",
+    title: "Second sealed attack family (round 2)",
+    short: "a second never-seen family",
+    pillLabel: "Pre-registered test",
+    decisive: true,
+    primary: "swarm_r2",
+  },
 ];
+
+/** "a" / "a and b" / "a, b and c". */
+const joinList = (items: string[]) =>
+  items.length <= 2 ? items.join(" and ") : `${items.slice(0, -1).join(", ")} and ${items[items.length - 1]}`;
 
 export interface VerdictResult {
   primary: ResultRow;
@@ -117,6 +129,6 @@ export function headlineFor(results: TestResult[]): string {
   const met = results.filter((r) => r.v.met).map((r) => r.test.short);
   const unmet = results.filter((r) => !r.v.met).map((r) => r.test.short);
   if (met.length === 0) return "Did not beat the baselines on this benchmark.";
-  if (unmet.length === 0) return `Beat the baselines on ${met.join(" and ")}.`;
-  return `Beat the baselines on ${met.join(" and ")}; did not on ${unmet.join(" and ")}.`;
+  if (unmet.length === 0) return `Beat the baselines on ${joinList(met)}.`;
+  return `Beat the baselines on ${joinList(met)}; did not on ${joinList(unmet)}.`;
 }

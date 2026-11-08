@@ -42,6 +42,7 @@ const DEFENDER_LABELS: Record<string, string> = {
   swarm_evolved: "Swarm, evolved",
   swarm_memory: "Swarm + memory",
   swarm_evolved_memory: "Swarm, evolved + memory",
+  swarm_r2: "Swarm, robust (round 2)",
 };
 
 /** Human label for a raw defender id; unknown ids are shown as given. */

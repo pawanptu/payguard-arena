@@ -1,7 +1,7 @@
 import { memo, useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import type { EpisodeEvent, EpisodeMeta, Split } from "../types";
-import { days1, daysTotal, num1, SEP, usd } from "../format";
+import { days1, daysTotal, defenderLabel, num1, SEP, usd } from "../format";
 import { AlertIcon, InboxIcon, PauseIcon, PlayIcon, RestartIcon, ShieldIcon } from "./Icons";
 import { CardHeader, EmptyState, Pill, Segmented, Switch, VerdictPill } from "./ui";
 
@@ -13,7 +13,7 @@ const SPEEDS = [
 const TICK_MS = 100;
 const VISIBLE_ROWS = 60;
 
-const SPLIT_PREFIX: Record<string, string> = { TRAIN: "Train", TEST_SEEN: "Seen-family", TEST_HELDOUT: "Held-out", TEST_HELDOUT2: "New-family" };
+const SPLIT_PREFIX: Record<string, string> = { TRAIN: "Train", TEST_SEEN: "Seen-family", TEST_HELDOUT: "Held-out", TEST_HELDOUT2: "Round-2 held-out" };
 
 /** Index of the first event with t > clock (events are sorted by time). */
 function countUpTo(events: EpisodeEvent[], clock: number): number {
@@ -27,16 +27,16 @@ function countUpTo(events: EpisodeEvent[], clock: number): number {
   return lo;
 }
 
-/** U2: first sleeper attack, else first attack, else the start. */
+/** U2: the replay opens paused at the first attack of any family (undefined: start of the episode). */
 function startEvent(events: EpisodeEvent[]): EpisodeEvent | undefined {
-  return events.find((e) => e.is_attack && e.family === "sleeper") ?? events.find((e) => e.is_attack);
+  return events.find((e) => e.is_attack);
 }
 
 function subtitle(events: EpisodeEvent[], episode: EpisodeMeta): string {
   const families = new Set(events.filter((e) => e.is_attack).map((e) => e.family));
   const prefix = SPLIT_PREFIX[episode.split as Split] ?? episode.split;
   const head = families.size === 1 ? `${prefix} ${[...families][0]} family` : `${prefix} episode`;
-  return `${head}${SEP}seed ${episode.seed}${SEP}${episode.n_events.toLocaleString("en-US")} payouts`;
+  return `${head}${SEP}seed ${episode.seed}${SEP}${defenderLabel(episode.defender)}${SEP}${episode.n_events.toLocaleString("en-US")} payouts`;
 }
 
 interface RowProps {
@@ -174,7 +174,7 @@ export default function DecisionFeed({ events, episode }: Props) {
           {finished ? <RestartIcon size={18} /> : playing ? <PauseIcon size={18} /> : <PlayIcon size={18} />}
         </button>
         {pristine && !playing && (
-          <span className="chip-caption">{reveal && start ? `First ${start.family} attack${SEP}press Play` : `Paused${SEP}press Play`}</span>
+          <span className="chip-caption">{reveal && start ? `First attack${SEP}press Play` : `Paused${SEP}press Play`}</span>
         )}
         <Segmented label="Playback speed" options={SPEEDS} value={speed} onChange={setSpeed} />
       </div>

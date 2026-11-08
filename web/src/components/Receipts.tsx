@@ -1,56 +1,120 @@
+import { useEffect, useRef, useState } from "react";
 import type { Payout } from "../types";
-import { usd } from "../format";
+import { plural, shortId, shortTime, usd } from "../format";
+import { CheckIcon, CopyIcon, InboxIcon } from "./Icons";
+import { CardHeader, EmptyState, LivePill, Pill, SimPill } from "./ui";
 
-function ModeBadge({ mode }: { mode: Payout["mode"] }) {
-  return mode === "live" ? (
-    <span className="badge badge-live">LIVE (PayPal sandbox)</span>
-  ) : (
-    <span className="badge badge-sim">SIM (no PayPal call)</span>
+function PayoutTable({
+  rows,
+  verified,
+  onCopy,
+  caption,
+}: {
+  rows: Payout[];
+  verified: Set<string> | null;
+  onCopy: (id: string) => void;
+  caption: string;
+}) {
+  return (
+    <div className="table-wrap" tabIndex={0} role="region" aria-label={caption}>
+      <table className="stack-table" role="table">
+        <caption className="visually-hidden">{caption}</caption>
+        <thead role="rowgroup">
+          <tr role="row">
+            <th role="columnheader" scope="col">Mode</th>
+            <th role="columnheader" scope="col" className="num">Amount</th>
+            <th role="columnheader" scope="col">Status</th>
+            <th role="columnheader" scope="col">Payout batch</th>
+            <th role="columnheader" scope="col">Created</th>
+            <th role="columnheader" scope="col">Webhook</th>
+          </tr>
+        </thead>
+        <tbody role="rowgroup">
+          {rows.map((p) => (
+            <tr role="row" key={`${p.sender_batch_id}|${p.event_id}`}>
+              <td role="cell" data-label="Mode">{p.mode === "live" ? <LivePill /> : <SimPill />}</td>
+              <td role="cell" data-label="Amount" className="num">{usd(p.amount_usd)}</td>
+              <td role="cell" data-label="Status"><Pill variant="chip">{p.item_status}</Pill></td>
+              <td role="cell" data-label="Payout batch">
+                <span className="batch">
+                  <code title={`Payout batch ${p.payout_batch_id}. Sender batch ${p.sender_batch_id}. Event #${p.event_id}.`}>
+                    {shortId(p.payout_batch_id)}
+                  </code>
+                  <button
+                    type="button"
+                    className="icon-btn icon-btn-sm"
+                    aria-label={`Copy payout batch id ${shortId(p.payout_batch_id)}`}
+                    onClick={() => onCopy(p.payout_batch_id)}
+                  >
+                    <CopyIcon size={14} />
+                  </button>
+                </span>
+              </td>
+              <td role="cell" data-label="Created">{shortTime(p.created_at)}</td>
+              <td role="cell" data-label="Webhook">
+                {verified?.has(p.payout_batch_id) ? (
+                  <Pill variant="verified">
+                    <CheckIcon size={12} />
+                    Verified
+                  </Pill>
+                ) : (
+                  <span className="muted">-</span>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 
-export default function Receipts({ payouts }: { payouts: Payout[] }) {
+export default function Receipts({ payouts, verified }: { payouts: Payout[]; verified: Set<string> | null }) {
+  const [showSim, setShowSim] = useState(false);
+  const [msg, setMsg] = useState("");
+  const timer = useRef<number | undefined>(undefined);
+  useEffect(() => () => window.clearTimeout(timer.current), []);
+
+  const live = payouts.filter((p) => p.mode === "live");
+  const sim = payouts.filter((p) => p.mode !== "live");
+
+  const copy = async (id: string) => {
+    let text = "Copy failed";
+    try {
+      await navigator.clipboard.writeText(id);
+      text = "Copied";
+    } catch {
+      /* clipboard unavailable (insecure context or denied) */
+    }
+    setMsg(text);
+    window.clearTimeout(timer.current);
+    timer.current = window.setTimeout(() => setMsg(""), 2000);
+  };
+
   return (
     <section className="card" aria-labelledby="rec-h">
-      <h2 id="rec-h">PayPal receipts</h2>
-      <p className="muted small">
-        SIM rows are simulated payouts. LIVE rows are real payouts made through the PayPal <strong>sandbox</strong>{" "}
-        (test money only).
-      </p>
+      <CardHeader id="rec-h" title="Receipts" />
+      <p className="visually-hidden" role="status" aria-live="polite">{msg}</p>
+      {msg && <span className="toast" aria-hidden="true">{msg}</span>}
+
       {payouts.length === 0 ? (
-        <p className="muted">No payouts recorded in this replay.</p>
+        <EmptyState icon={<InboxIcon size={22} />} title="No sandbox payouts yet" cause="Live receipts appear here after a payout run." />
       ) : (
-        <div className="table-wrap" tabIndex={0} role="region" aria-label="Payout receipts, scrolls sideways on narrow screens">
-          <table>
-            <caption className="visually-hidden">Payout receipts</caption>
-            <thead>
-              <tr>
-                <th scope="col">Mode</th>
-                <th scope="col">Event</th>
-                <th scope="col" className="num">Amount</th>
-                <th scope="col">Sender batch</th>
-                <th scope="col">Payout batch</th>
-                <th scope="col">Batch status</th>
-                <th scope="col">Item status</th>
-                <th scope="col">Created</th>
-              </tr>
-            </thead>
-            <tbody>
-              {payouts.map((p) => (
-                <tr key={`${p.sender_batch_id}|${p.event_id}`}>
-                  <td><ModeBadge mode={p.mode} /></td>
-                  <td>#{p.event_id}</td>
-                  <td className="num">{usd(p.amount_usd)}</td>
-                  <td><code>{p.sender_batch_id}</code></td>
-                  <td><code>{p.payout_batch_id}</code></td>
-                  <td>{p.batch_status}</td>
-                  <td>{p.item_status}</td>
-                  <td>{p.created_at}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <>
+          {live.length > 0 ? (
+            <PayoutTable rows={live} verified={verified} onCopy={copy} caption="Live PayPal sandbox payouts" />
+          ) : (
+            <p className="muted">No live payouts in this replay.</p>
+          )}
+          {sim.length > 0 && (
+            <div className="sim-block">
+              <button type="button" className="btn" aria-expanded={showSim} onClick={() => setShowSim((s) => !s)}>
+                {showSim ? "Hide" : "Show"} {plural(sim.length, "simulated payout")}
+              </button>
+              {showSim && <PayoutTable rows={sim} verified={verified} onCopy={copy} caption="Simulated payouts" />}
+            </div>
+          )}
+        </>
       )}
     </section>
   );

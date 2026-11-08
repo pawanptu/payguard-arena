@@ -1,5 +1,5 @@
 // Mirrors the replay contract (schema_version 1). See payguard/api/replay.py.
-export type Split = "TRAIN" | "TEST_SEEN" | "TEST_HELDOUT";
+export type Split = "TRAIN" | "TEST_SEEN" | "TEST_HELDOUT" | "TEST_HELDOUT2";
 export type VerdictName = "RELEASE" | "STEP_UP" | "HOLD";
 
 export interface ResultRow {

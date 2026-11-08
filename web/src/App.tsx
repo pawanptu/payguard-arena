@@ -1,82 +1,111 @@
-import { useCallback, useEffect, useState } from "react";
-import { fetchAllEvents, fetchPayouts, fetchSummary } from "./api";
-import type { EpisodeEvent, Payout, Summary } from "./types";
+import { useMemo } from "react";
+import type { ReactNode } from "react";
+import { fetchAllEvents, fetchPayouts, fetchSummary, fetchWebhooks } from "./api";
+import { useAsync } from "./hooks";
+import type { AsyncState } from "./hooks";
+import TopBlock from "./components/TopBlock";
+import Hero from "./components/Hero";
+import type { LiveState } from "./components/Hero";
 import DecisionFeed from "./components/DecisionFeed";
 import EvolutionChart from "./components/EvolutionChart";
 import ResultsTable from "./components/ResultsTable";
 import Receipts from "./components/Receipts";
 import WebhookLog from "./components/WebhookLog";
-import ModeToggle from "./components/ModeToggle";
-import ThemeToggle from "./components/ThemeToggle";
+import { ChartSkeleton, FeedSkeleton, HeroSkeleton, TableSkeleton } from "./components/Skeletons";
+import { ErrorCard } from "./components/ui";
 
-interface Data {
-  summary: Summary;
-  events: EpisodeEvent[];
-  payouts: Payout[];
+/** Skeleton while the first load runs, a per-section error card on failure, otherwise the content. */
+function Async<T>({
+  state,
+  what,
+  skeleton,
+  children,
+}: {
+  state: AsyncState<T>;
+  what: string;
+  skeleton: ReactNode;
+  children: (data: T) => ReactNode;
+}) {
+  if (state.status === "loading" || (state.status === "ready" && state.data === null)) return <>{skeleton}</>;
+  if (state.status === "error") return <ErrorCard what={what} message={state.error} onRetry={() => void state.reload()} />;
+  return <>{children(state.data as T)}</>;
 }
 
 export default function App() {
-  const [data, setData] = useState<Data | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const summary = useAsync(fetchSummary);
+  const events = useAsync(fetchAllEvents);
+  const payouts = useAsync(fetchPayouts);
+  const webhooks = useAsync(fetchWebhooks);
 
-  const load = useCallback(() => {
-    setError(null);
-    Promise.all([fetchSummary(), fetchAllEvents(), fetchPayouts()])
-      .then(([summary, events, p]) => setData({ summary, events, payouts: p.payouts }))
-      .catch((e: unknown) => setError(e instanceof Error ? e.message : String(e)));
-  }, []);
+  // Batch ids that have a signature-verified webhook (null until webhooks are available).
+  const verifiedIds = useMemo(() => {
+    if (!webhooks.data) return null;
+    const ids = new Set<string>();
+    for (const w of webhooks.data.events) if (w.payout_batch_id) ids.add(w.payout_batch_id);
+    return ids;
+  }, [webhooks.data]);
 
-  useEffect(load, [load]);
+  const live: LiveState = useMemo(() => {
+    if (!payouts.data) return payouts.status === "error" ? "error" : "loading";
+    const liveIds = new Set(payouts.data.payouts.filter((p) => p.mode === "live").map((p) => p.payout_batch_id));
+    const k = webhooks.data
+      ? webhooks.data.events.filter((w) => w.payout_batch_id && liveIds.has(w.payout_batch_id)).length
+      : null;
+    return { n: payouts.data.payouts.filter((p) => p.mode === "live").length, k };
+  }, [payouts.data, payouts.status, webhooks.data]);
 
   return (
     <>
       <a className="skip" href="#main">Skip to content</a>
-      <div className="sim-banner" role="status">
-        <strong>SIMULATED replay - synthetic data.</strong>
-        <span className="banner-more"> Nothing here is real-world fraud data. Only sampled payouts touch the PayPal sandbox.</span>
-        {data?.summary.synthetic_fixture && <span className="badge badge-sample">sample data</span>}
-      </div>
-      <header className="top">
-        <div>
-          <h1>PayGuard Arena</h1>
-          <p className="sub">
-            Defenders decide RELEASE / HOLD / STEP_UP on instant gig payouts while attackers mutate.
-          </p>
-        </div>
-        <div className="top-controls">
-          <ModeToggle />
-          <ThemeToggle />
-        </div>
-      </header>
-      <main id="main">
-        {error && (
-          <div className="card error" role="alert">
-            <p>Could not load the replay: {error}</p>
-            <button type="button" className="btn" onClick={load}>Retry</button>
+      <TopBlock summary={summary.data} />
+      <main id="main" className="container">
+        <section id="overview" aria-label="Overview">
+          <Async state={summary} what="the overview" skeleton={<HeroSkeleton />}>
+            {(s) => <Hero results={s.results} live={live} />}
+          </Async>
+        </section>
+
+        <div className="grid">
+          <div id="replay" className="col-7">
+            <Async state={events} what="the replay" skeleton={<FeedSkeleton />}>
+              {(ev) =>
+                summary.data ? (
+                  <DecisionFeed events={ev} episode={summary.data.episode} />
+                ) : summary.status === "error" ? (
+                  <ErrorCard what="the replay" message={summary.error} onRetry={() => void summary.reload()} />
+                ) : (
+                  <FeedSkeleton />
+                )
+              }
+            </Async>
           </div>
-        )}
-        {!data && !error && <p className="muted" role="status">Loading replay...</p>}
-        {data && (
-          <>
-            <p className="meta muted">
-              Replay generated {data.summary.generated_at} - schema v{data.summary.schema_version}
-              {data.summary.synthetic_fixture && " - synthetic sample fixture"}
-            </p>
-            <div className="grid2">
-              <DecisionFeed events={data.events} episode={data.summary.episode} />
-              <EvolutionChart rows={data.summary.evolution} synthetic={data.summary.synthetic_fixture} />
-            </div>
-            <ResultsTable rows={data.summary.results} objective={data.summary.objective} />
-            <div className="grid-rec">
-              <Receipts payouts={data.payouts} />
-              <WebhookLog />
-            </div>
-          </>
-        )}
+          <div className="col-5">
+            <Async state={summary} what="the evolution chart" skeleton={<ChartSkeleton />}>
+              {(s) => <EvolutionChart rows={s.evolution} />}
+            </Async>
+          </div>
+        </div>
+
+        <div className="grid">
+          <div className="col-12">
+            <Async state={summary} what="the results" skeleton={<TableSkeleton what="results" />}>
+              {(s) => <ResultsTable rows={s.results} />}
+            </Async>
+          </div>
+        </div>
+
+        <div id="paypal" className="grid">
+          <div className="col-7">
+            <Async state={payouts} what="the receipts" skeleton={<TableSkeleton what="receipts" rows={4} />}>
+              {(p) => <Receipts payouts={p.payouts} verified={verifiedIds} />}
+            </Async>
+          </div>
+          <div className="col-5">
+            <WebhookLog state={webhooks} />
+          </div>
+        </div>
       </main>
-      <footer className="foot muted">
-        PayGuard Arena - PayPal AI Hackathon. Ground truth labels are shown in Replay only.
-      </footer>
+      <footer className="foot">PayGuard Arena · PayPal AI Hackathon 2026</footer>
     </>
   );
 }

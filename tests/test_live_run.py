@@ -331,3 +331,115 @@ def test_output_json_is_plain_replay_json(replay_file, tmp_path):
     data = json.loads(out.read_text(encoding="utf-8"))
     assert data["schema_version"] == 1 and "verified_webhooks" in data
     assert not list(tmp_path.glob("*.tmp"))
+
+
+# ---- reattach: carry receipts onto a rebuilt replay, never pay again --------------------------------
+def live_output(replay_file, tmp_path) -> Path:
+    """A finished fake live run on the fixture (2 new payouts, PB1 and PB2, each with a webhook)."""
+    factory, _ = render(lambda r, n: httpx.Response(200, json={
+        "configured": True, "events": [webhook_event(1, "PB1"), webhook_event(2, "PB2")]}))
+    code, out = run(["--send", "--count", "2"], replay_file, tmp_path, http_factory=factory)
+    assert code == 0
+    return out
+
+
+def rebuilt(replay_file, tmp_path, edit=lambda d: None) -> Path:
+    """The fixture 'rebuilt' after the live run: one extra result row, no live payouts or webhooks."""
+    d = json.loads(replay_file.read_text(encoding="utf-8"))
+    d["results"].append({**d["results"][0], "defender": "single_late"})
+    d["payouts"] = [p for p in d["payouts"] if p["mode"] != "live"]
+    d["verified_webhooks"] = []
+    edit(d)
+    p = tmp_path / "rebuilt.json"
+    p.write_text(json.dumps(d), encoding="utf-8")
+    return p
+
+
+def reattach(new_path, out):
+    def boom():
+        raise AssertionError("--reattach must not touch PayPal or Render")
+    return live_run.main(["--replay", str(new_path), "--out", str(out), "--reattach"],
+                         rail_factory=boom, http_factory=boom)
+
+
+def test_reattach_carries_the_receipts_onto_a_rebuilt_replay_and_sends_nothing(replay_file, tmp_path, capsys):
+    out = live_output(replay_file, tmp_path)
+    old = load_replay(out)
+    capsys.readouterr()
+    assert reattach(rebuilt(replay_file, tmp_path), out) == 0
+    result = load_replay(out)
+    assert any(r.defender == "single_late" for r in result.results)  # the rebuilt rows won
+    assert [p for p in result.payouts if p.mode == "live"] == [p for p in old.payouts if p.mode == "live"]
+    assert result.verified_webhooks == old.verified_webhooks
+    assert "Nothing was sent" in capsys.readouterr().out
+
+
+def test_reattach_twice_changes_nothing(replay_file, tmp_path):
+    out = live_output(replay_file, tmp_path)
+    new_path = rebuilt(replay_file, tmp_path)
+    assert reattach(new_path, out) == 0
+    first = out.read_text(encoding="utf-8")
+    assert reattach(new_path, out) == 0
+    assert out.read_text(encoding="utf-8") == first
+
+
+@pytest.mark.parametrize("field", ["seed", "split", "defender"])
+def test_reattach_refuses_a_replay_of_another_episode(replay_file, tmp_path, capsys, field):
+    out = live_output(replay_file, tmp_path)
+    before = out.read_text(encoding="utf-8")
+    other = (lambda v: v + 1) if field == "seed" else (lambda v: v + "_other")
+    new_path = rebuilt(replay_file, tmp_path, lambda d: d["episode"].__setitem__(field, other(d["episode"][field])))
+    assert reattach(new_path, out) == 2
+    assert "cannot reattach" in capsys.readouterr().err
+    assert out.read_text(encoding="utf-8") == before  # untouched
+
+
+@pytest.mark.parametrize("change", ["held", "missing"])
+def test_reattach_refuses_when_a_paid_event_is_not_released_and_paid_in_the_rebuild(replay_file, tmp_path,
+                                                                                    capsys, change):
+    out = live_output(replay_file, tmp_path)
+    paid = [p.event_id for p in load_replay(out).payouts if p.mode == "live"][-1]
+
+    def edit(d):
+        events = d["episode"]["events"]
+        if change == "missing":
+            d["episode"]["events"] = [e for e in events if e["id"] != paid]
+        else:
+            for e in events:
+                if e["id"] == paid:
+                    e.update(verdict="HOLD", paid=False, paid_at=None)
+
+    before = out.read_text(encoding="utf-8")
+    assert reattach(rebuilt(replay_file, tmp_path, edit), out) == 2
+    err = capsys.readouterr().err
+    assert "cannot reattach" in err and str(paid) in err
+    assert out.read_text(encoding="utf-8") == before
+
+
+def test_reattach_without_an_earlier_output_or_with_send_is_refused(replay_file, tmp_path, capsys):
+    assert reattach(replay_file, tmp_path / "nope.json") == 2
+    assert "nothing to reattach" in capsys.readouterr().err
+    with pytest.raises(SystemExit) as exc:
+        live_run.main(["--replay", str(replay_file), "--out", str(tmp_path / "o.json"), "--reattach", "--send"])
+    assert exc.value.code == 2
+
+
+def test_reattach_refuses_a_paid_event_that_became_another_payout(replay_file, tmp_path, capsys):
+    out = live_output(replay_file, tmp_path)
+    paid = [p.event_id for p in load_replay(out).payouts if p.mode == "live"][0]
+
+    def edit(d):
+        for e in d["episode"]["events"]:
+            if e["id"] == paid:
+                e["amount"] += 1.0  # same id, still RELEASE + paid, but not the payout the receipt was for
+
+    assert reattach(rebuilt(replay_file, tmp_path, edit), out) == 2
+    assert f"event {paid} has another worker, amount or time" in capsys.readouterr().err
+
+
+def test_reattach_from_a_file_without_live_payouts_is_refused(replay_file, tmp_path, capsys):
+    empty = rebuilt(replay_file, tmp_path)  # no live payouts at all
+    out = tmp_path / "empty_out.json"
+    out.write_text(empty.read_text(encoding="utf-8"), encoding="utf-8")
+    assert reattach(empty, out) == 2
+    assert "no live payouts" in capsys.readouterr().err

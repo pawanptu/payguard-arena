@@ -2,6 +2,8 @@
 
     python -m scripts.live_run                    dry run: prints the plan, touches nothing
     python -m scripts.live_run --send             really send (sandbox money, small sample)
+    python -m scripts.live_run --reattach         after --replay was rebuilt: carry the receipts already in
+                                                  --out onto it (sends nothing, needs no credentials)
 
 With --send the script
   1. loads the replay and picks `--count` events (`select_live_events`),
@@ -253,6 +255,74 @@ def build_out_replay(replay: Replay, receipts: list[PayoutReceipt], webhooks: li
     return data
 
 
+# ---- reattach: the replay was rebuilt after the live run ------------------------------------------
+def reattach_problems(new: Replay, old: Replay) -> list[str]:
+    """Why the live receipts in `old` must NOT be carried onto `new`; an empty list means it is safe.
+
+    `old` is an earlier --out: the replay a live run was built on, plus its live payouts and webhooks.
+    `new` is meant to be the same run's replay rebuilt later (for example with an extra result row), so
+    its episode is recomputed and its payouts start empty. A receipt only means something next to the
+    episode event it paid, so this decides what "the same run" is. Name the offending event id in each
+    message; `reattach` joins them into the error.
+    """
+    problems = []
+    for key in ("seed", "split", "defender"):
+        was, now = getattr(old.episode, key), getattr(new.episode, key)
+        if was != now:
+            problems.append(f"episode {key} is {now!r} in the rebuild, {was!r} in the live file")
+    live = [p for p in old.payouts if p.mode == "live"]
+    if not live:
+        problems.append("the live file has no live payouts (wrong --out?)")
+    if problems:
+        return problems  # another episode: per-event checks would only add noise
+    was_events = {e.id: e for e in old.episode.events}
+    now_events = {e.id: e for e in new.episode.events}
+    for p in live:
+        now, was = now_events.get(p.event_id), was_events.get(p.event_id)
+        if now is None:
+            problems.append(f"event {p.event_id} is not in the rebuilt episode")
+        elif now.verdict != "RELEASE" or not now.paid:
+            problems.append(f"event {p.event_id} is {now.verdict} (paid={now.paid}) in the rebuild, "
+                            "not RELEASE + paid")
+        elif was is not None and (was.worker_id, was.amount, was.t) != (now.worker_id, now.amount, now.t):
+            # same id, different payout: the rebuild is not the deterministic replay the receipt was paid on
+            problems.append(f"event {p.event_id} has another worker, amount or time in the rebuild")
+    return problems
+
+
+def reattach(new: Replay, old: Replay) -> dict:
+    """`new` plus the live payouts and verified webhooks recorded in `old`. Pays nothing.
+
+    Idempotent: receipts and webhooks `new` already has are not added twice.
+    """
+    problems = reattach_problems(new, old)
+    if problems:
+        raise ReplayError("cannot reattach the live receipts: " + "; ".join(problems))
+    data, src = new.model_dump(mode="json"), old.model_dump(mode="json")
+    have = {p["event_id"] for p in data["payouts"] if p["mode"] == "live"}
+    data["payouts"] += [p for p in src["payouts"] if p["mode"] == "live" and p["event_id"] not in have]
+    known = {w["event_id"] for w in data["verified_webhooks"]}
+    data["verified_webhooks"] += [w for w in src["verified_webhooks"] if w["event_id"] not in known]
+    parse_replay(data, "reattached replay")
+    return data
+
+
+def reattach_main(replay: Replay, replay_path: Path, out: Path) -> int:
+    if not out.is_file():
+        print(f"ERROR nothing to reattach: {out} does not exist (run --send first)", file=sys.stderr)
+        return EXIT_USAGE
+    try:
+        data = reattach(replay, load_replay(out))
+    except ReplayError as exc:  # `out` is left exactly as it was
+        print(f"ERROR {exc}", file=sys.stderr)
+        return EXIT_USAGE
+    write_json_atomic(out, data)
+    n = sum(p["mode"] == "live" for p in data["payouts"])
+    print(f"Reattached {n} live payout(s) and {len(data['verified_webhooks'])} verified webhook(s) "
+          f"onto {replay_path}; wrote {out}. Nothing was sent.")
+    return EXIT_OK
+
+
 def write_json_atomic(path: Path, data: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp = path.with_name(path.name + ".tmp")
@@ -287,6 +357,8 @@ def build_parser() -> argparse.ArgumentParser:
     ap.add_argument("--poll-seconds", type=float, default=120, help="how long to poll PayPal for batch status")
     ap.add_argument("--wait-webhooks", type=float, default=180, help="how long to wait for verified webhooks")
     ap.add_argument("--send", action="store_true", help="really send (default is a dry run)")
+    ap.add_argument("--reattach", action="store_true",
+                    help="carry the live receipts already in --out onto a rebuilt --replay; sends nothing")
     return ap
 
 
@@ -297,6 +369,8 @@ def main(argv: list[str] | None = None, *, rail_factory: Callable[[], object] | 
     """`rail_factory`, `receiver`, `http_factory`, `sleep` and `clock` exist so tests can inject fakes."""
     ap = build_parser()
     args = ap.parse_args(argv)
+    if args.reattach and args.send:
+        ap.error("--reattach never sends; drop --send")
     if not 1 <= args.count <= MAX_COUNT:
         ap.error(f"--count must be between 1 and {MAX_COUNT} (got {args.count})")
     try:
@@ -320,8 +394,10 @@ def main(argv: list[str] | None = None, *, rail_factory: Callable[[], object] | 
     except ReplayError as exc:
         print(f"ERROR {exc}", file=sys.stderr)
         return EXIT_USAGE
+    if args.reattach:
+        return reattach_main(replay, args.replay, args.out)
 
-    already_live = {p.event_id for p in replay.payouts if p.mode == "live"}
+    already_live ={p.event_id for p in replay.payouts if p.mode == "live"}
     events = select_live_events(replay.episode, args.count, exclude_ids=already_live)
     if not events:
         print("ERROR no eligible events (need RELEASE + paid events without a live payout)", file=sys.stderr)

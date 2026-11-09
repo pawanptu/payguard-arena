@@ -4,6 +4,12 @@ import { fetchRounds } from "../api";
 import { useAsync, useMediaQuery } from "../hooks";
 import type { Hypothesis, PairedMargin, RoundInfo, RoundRow, RoundTone } from "../types";
 import { defenderLabel, num1, num2, pct, SEP, SPLIT_LABEL, signed1 } from "../format";
+
+/** Friendly split names; the round-3 sealed split is not in the replay contract's Split type. */
+function splitName(split: string): string {
+  if (split.endsWith("3")) return "New family (round 3)";
+  return SPLIT_LABEL[split as Split] ?? split;
+}
 import InfoTip from "../components/InfoTip";
 import { CheckIcon, CrossIcon, InboxIcon, WarnIcon } from "../components/Icons";
 import { EmptyState, ErrorCard, Pill, SimPill, Skeleton } from "../components/ui";
@@ -121,7 +127,7 @@ function RoundCard({ r }: { r: RoundInfo }) {
         <span>{r.verdict}</span>
       </p>
       <p className="round-meta">
-        {r.split && <>{SPLIT_LABEL[r.split as Split] ?? r.split}{SEP}</>}
+        {r.split && <>{splitName(r.split)}{SEP}</>}
         {r.family && <>family {r.family}{SEP}</>}
         {r.decision_ref && <>decision {r.decision_ref}</>}
       </p>
@@ -327,7 +333,7 @@ function DreamerPanel({ r }: { r: RoundInfo }) {
       <h2 id="dreamer-h">Round 3: the dreamer panel</h2>
       <p className="page-sub">
         One full dreamer against three ablations, the swarm from round 2 and two baselines
-        {r.split && <>{SEP}{r.split}</>}
+        {r.split && <>{SEP}{splitName(r.split)}</>}
         {r.family && <>{SEP}family {r.family}</>}.
       </p>
 
@@ -411,7 +417,7 @@ function DreamerPanel({ r }: { r: RoundInfo }) {
                 <tbody>
                   {spent.map((s) => (
                     <tr key={s.split}>
-                      <th scope="row">{SPLIT_LABEL[s.split as Split] ?? s.split}</th>
+                      <th scope="row">{splitName(s.split)}</th>
                       <td className="num">{num2(s.objective)}</td>
                     </tr>
                   ))}

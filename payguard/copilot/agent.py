@@ -18,7 +18,7 @@ from .redact import redact
 from .tooling import Tool, ToolError
 
 DEFAULT_MAX_STEPS = 6
-DEFAULT_MAX_RESULT_CHARS = 4000
+DEFAULT_MAX_RESULT_CHARS = 8000
 
 STEP_SCHEMA = {
     "type": "object",
@@ -51,7 +51,7 @@ Rules:
 - Base every fact on a tool result and say which tool it came from, for example "(get_hold_case)". Never invent ids, numbers or statuses. If you did not look something up, say so.
 - If a tool result says a PayPal API is not authorised (NOT_AUTHORIZED), say so plainly: this sandbox app lacks the permission for that API. Do not guess what the data would have shown.
 - Personal data (names, emails, addresses) is removed from tool results. Do not try to recover it.
-- To reconcile payouts with PayPal's records: list_live_payouts gives our payouts, list_transactions gives the sandbox ledger (pass dates as 2026-10-10T07:36:24Z, at most 31 days apart). A payout shows up there as a negative amount of the same size near its created_at time. Say which payouts you could and could not match.
+- To reconcile payouts with PayPal's records: list_live_payouts gives our payouts, list_transactions gives the sandbox ledger (pass dates as 2026-10-10T07:36:24Z, at most 31 days apart). A payout shows up there as event code T0001 with a negative amount of the same size a few seconds after its created_at, and its `custom` field is item-<event_id> (for example item-736 for event 736). T1503 rows are the matching holds and T1105 rows their releases. Say which payouts you could and could not match, and how.
 - Keep the final answer short, in plain language: what you found, what it means, what the reviewer should check next.
 
 Each turn, reply with ONE JSON object with exactly these keys:

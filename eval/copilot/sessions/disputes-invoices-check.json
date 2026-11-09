@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "id": "disputes-invoices-check",
+  "order": 3,
+  "title": "Any open disputes or unpaid invoices?",
+  "recorded_at": "2026-11-09T08:55:35+00:00",
+  "environment": "paypal-sandbox",
+  "llm": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite"
+  },
+  "toolkit": {
+    "package": "paypal-agent-toolkit",
+    "version": "1.11.0",
+    "read_only": true,
+    "enabled_tools": [
+      "get_order_details",
+      "list_invoices",
+      "get_invoice",
+      "list_disputes",
+      "get_dispute",
+      "list_transactions"
+    ]
+  },
+  "redaction": "Emails, names, addresses, phone numbers and payer ids are removed; ids, statuses, amounts and dates are kept.",
+  "turns": [
+    {
+      "role": "user",
+      "text": "Do we have any open disputes or unpaid invoices on our PayPal sandbox account right now?"
+    },
+    {
+      "role": "tool_call",
+      "step": 1,
+      "tool": "list_disputes",
+      "source": "paypal-agent-toolkit",
+      "args": {
+        "dispute_state": "OPEN_INQUIRIES"
+      }
+    },
+    {
+      "role": "tool_result",
+      "step": 1,
+      "tool": "list_disputes",
+      "ok": true,
+      "ms": 1116,
+      "data": {
+        "items": []
+      }
+    },
+    {
+      "role": "tool_call",
+      "step": 2,
+      "tool": "list_invoices",
+      "source": "paypal-agent-toolkit",
+      "args": {
+        "page": 1,
+        "page_size": 50
+      }
+    },
+    {
+      "role": "tool_result",
+      "step": 2,
+      "tool": "list_invoices",
+      "ok": true,
+      "ms": 516,
+      "data": {
+        "total_pages": 0,
+        "total_items": 0
+      }
+    },
+    {
+      "role": "assistant",
+      "text": "According to the PayPal sandbox data (list_disputes and list_invoices), we have no open disputes and no invoices at all right now."
+    }
+  ]
+}

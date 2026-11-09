@@ -303,23 +303,38 @@ def prepare_transaction_args(args: dict, now: datetime | None = None) -> dict:
     return out
 
 
-_TX_INFO_KEEP = ("transaction_id", "paypal_reference_id", "transaction_event_code", "transaction_initiation_date",
-                 "transaction_updated_date", "transaction_amount", "fee_amount", "transaction_status",
-                 "transaction_subject", "transaction_note", "invoice_id", "custom_field")
+def _money(m: Any) -> str | None:
+    if isinstance(m, dict) and "value" in m:
+        return f"{m['value']} {m.get('currency_code', '')}".strip()
+    return None
 
 
 def compact_transactions(data: Any) -> Any:
-    """Keep the evidence from a Transaction Search reply (id, event code, date, amount, fee, status), drop the rest.
+    """One short row per Transaction Search record, so a whole reply fits the model's observation budget.
 
-    34 full records overflow the model's observation budget; this keeps enough to reconcile payouts by amount and time.
-    Personal-data keys are removed later by redact().
+    Keeps what reconciliation needs: id, the PayPal reference id, event code, date, amount, fee, status and our
+    `custom_field` (a payout item we send carries `item-<event_id>` there). Drops everything else, including the
+    payer/shipping blocks. A full reply of 34 records was ~14k characters and got truncated before the payout rows,
+    so the model could not match them; these rows are ~160 characters each. Personal-data keys are removed later
+    by redact().
     """
     if not isinstance(data, dict) or not isinstance(data.get("transaction_details"), list):
         return data
     rows = []
     for d in data["transaction_details"]:
         info = d.get("transaction_info", {}) if isinstance(d, dict) else {}
-        rows.append({k: info[k] for k in _TX_INFO_KEEP if k in info})
+        row = {
+            "id": info.get("transaction_id"),
+            "ref": info.get("paypal_reference_id"),
+            "code": info.get("transaction_event_code"),
+            "date": info.get("transaction_initiation_date"),
+            "amount": _money(info.get("transaction_amount")),
+            "fee": _money(info.get("fee_amount")),
+            "status": info.get("transaction_status"),
+            "custom": info.get("custom_field"),
+            "invoice": info.get("invoice_id"),
+        }
+        rows.append({k: v for k, v in row.items() if v is not None})
     head = {k: data[k] for k in ("start_date", "end_date", "page", "total_items", "total_pages", "message",
                                  "found") if k in data}
     return {**head, "returned": len(rows), "transactions": rows}

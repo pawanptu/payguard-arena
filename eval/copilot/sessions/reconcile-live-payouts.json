@@ -1,0 +1,412 @@
+{
+  "schema_version": 1,
+  "id": "reconcile-live-payouts",
+  "order": 1,
+  "title": "Reconcile our live sandbox payouts with PayPal's transaction ledger",
+  "recorded_at": "2026-11-09T08:54:37+00:00",
+  "environment": "paypal-sandbox",
+  "llm": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite"
+  },
+  "toolkit": {
+    "package": "paypal-agent-toolkit",
+    "version": "1.11.0",
+    "read_only": true,
+    "enabled_tools": [
+      "get_order_details",
+      "list_invoices",
+      "get_invoice",
+      "list_disputes",
+      "get_dispute",
+      "list_transactions"
+    ]
+  },
+  "redaction": "Emails, names, addresses, phone numbers and payer ids are removed; ids, statuses, amounts and dates are kept.",
+  "turns": [
+    {
+      "role": "user",
+      "text": "Reconcile our live sandbox payouts with PayPal's transaction ledger. Which payouts can you match, and is anything missing?"
+    },
+    {
+      "role": "tool_call",
+      "step": 1,
+      "tool": "list_live_payouts",
+      "source": "payguard-console",
+      "args": {}
+    },
+    {
+      "role": "tool_result",
+      "step": 1,
+      "tool": "list_live_payouts",
+      "ok": true,
+      "ms": 48,
+      "data": {
+        "note": "Real PayPal sandbox payouts sent earlier by this project.",
+        "payouts": [
+          {
+            "event_id": 1823,
+            "payout_batch_id": "U2UPGB9BXLFRY",
+            "batch_status": "SUCCESS",
+            "amount": 1.0,
+            "currency": "USD",
+            "created_at": "2026-11-08T02:58:53.894292Z"
+          },
+          {
+            "event_id": 736,
+            "payout_batch_id": "34VMJ8WBCCWEG",
+            "batch_status": "SUCCESS",
+            "amount": 1.0,
+            "currency": "USD",
+            "created_at": "2026-11-08T02:58:54.405995Z"
+          },
+          {
+            "event_id": 1515,
+            "payout_batch_id": "VF4K3THWREGYN",
+            "batch_status": "SUCCESS",
+            "amount": 1.0,
+            "currency": "USD",
+            "created_at": "2026-11-08T02:58:55.329381Z"
+          },
+          {
+            "event_id": 2639,
+            "payout_batch_id": "6TDTG7ADTRP88",
+            "batch_status": "SUCCESS",
+            "amount": 1.0,
+            "currency": "USD",
+            "created_at": "2026-11-08T02:58:56.424996Z"
+          },
+          {
+            "event_id": 653,
+            "payout_batch_id": "8ZLZZ83P7YWPQ",
+            "batch_status": "SUCCESS",
+            "amount": 1.0,
+            "currency": "USD",
+            "created_at": "2026-11-08T02:58:57.538678Z"
+          }
+        ],
+        "suggested_transaction_window": {
+          "start_date": "2026-11-07T02:58:53Z",
+          "end_date": "2026-11-09T02:58:57Z"
+        }
+      }
+    },
+    {
+      "role": "tool_call",
+      "step": 2,
+      "tool": "list_transactions",
+      "source": "paypal-agent-toolkit",
+      "args": {
+        "start_date": "2026-11-07T02:58:53Z",
+        "end_date": "2026-11-09T02:58:57Z"
+      }
+    },
+    {
+      "role": "tool_result",
+      "step": 2,
+      "tool": "list_transactions",
+      "ok": true,
+      "ms": 2376,
+      "data": {
+        "start_date": "2026-11-07T02:58:53Z",
+        "end_date": "2026-11-09T02:58:57Z",
+        "page": 1,
+        "total_items": 33,
+        "total_pages": 1,
+        "returned": 33,
+        "transactions": [
+          {
+            "id": "38V80440V42638337",
+            "code": "T1503",
+            "date": "2026-11-07T16:35:02Z",
+            "amount": "-1.25 USD",
+            "status": "S"
+          },
+          {
+            "id": "65N87661XN522102P",
+            "ref": "38V80440V42638337",
+            "code": "T0001",
+            "date": "2026-11-07T16:35:11Z",
+            "amount": "-1.00 USD",
+            "fee": "-0.25 USD",
+            "status": "S",
+            "custom": "pg-b35d416e7afe463ea38f9270-1"
+          },
+          {
+            "id": "8EY4252730379204Y",
+            "ref": "38V80440V42638337",
+            "code": "T1105",
+            "date": "2026-11-07T16:35:11Z",
+            "amount": "1.25 USD",
+            "status": "S",
+            "custom": "pg-b35d416e7afe463ea38f9270-1"
+          },
+          {
+            "id": "147939162S6445214",
+            "code": "T1503",
+            "date": "2026-11-08T02:25:43Z",
+            "amount": "-1.25 USD",
+            "status": "S"
+          },
+          {
+            "id": "2CU05971S00229057",
+            "code": "T1503",
+            "date": "2026-11-08T02:25:43Z",
+            "amount": "-1.25 USD",
+            "status": "S"
+          },
+          {
+            "id": "8PV12288552463845",
+            "code": "T1503",
+            "date": "2026-11-08T02:25:44Z",
+            "amount": "-1.25 USD",
+            "status": "S"
+          },
+          {
+            "id": "5PB59837JD320410F",
+            "code": "T1503",
+            "date": "2026-11-08T02:25:44Z",
+            "amount": "-1.25 USD",
+            "status": "S"
+          },
+          {
+            "id": "5FJ45520RA254544C",
+            "code": "T1503",
+            "date": "2026-11-08T02:25:44Z",
+            "amount": "-1.25 USD",
+            "status": "S"
+          },
+          {
+            "id": "2WG26734FC767600W",
+            "ref": "2CU05971S00229057",
+            "code": "T0001",
+            "date": "2026-11-08T02:25:52Z",
+            "amount": "-1.00 USD",
+            "fee": "-0.25 USD",
+            "status": "S",
+            "custom": "item-1330"
+          },
+          {
+            "id": "62818135MF104420M",
+            "ref": "2CU05971S00229057",
+            "code": "T1105",
+            "date": "2026-11-08T02:25:52Z",
+            "amount": "1.25 USD",
+            "status": "S",
+            "custom": "item-1330"
+          },
+          {
+            "id": "9SE881952C990992U",
+            "ref": "147939162S6445214",
+            "code": "T0001",
+            "date": "2026-11-08T02:25:52Z",
+            "amount": "-1.00 USD",
+            "fee": "-0.25 USD",
+            "status": "S",
+            "custom": "item-124"
+          },
+          {
+            "id": "7W660929VU554393V",
+            "ref": "147939162S6445214",
+            "code": "T1105",
+            "date": "2026-11-08T02:25:52Z",
+            "amount": "1.25 USD",
+            "status": "S",
+            "custom": "item-124"
+          },
+          {
+            "id": "1VH89634FK275415C",
+            "ref": "8PV12288552463845",
+            "code": "T0001",
+            "date": "2026-11-08T02:25:52Z",
+            "amount": "-1.00 USD",
+            "fee": "-0.25 USD",
+            "status": "S",
+            "custom": "item-2549"
+          },
+          {
+            "id": "4RW205217S552051J",
+            "ref": "8PV12288552463845",
+            "code": "T1105",
+            "date": "2026-11-08T02:25:52Z",
+            "amount": "1.25 USD",
+            "status": "S",
+            "custom": "item-2549"
+          },
+          {
+            "id": "20N873625E1781207",
+            "ref": "5FJ45520RA254544C",
+            "code": "T0001",
+            "date": "2026-11-08T02:25:52Z",
+            "amount": "-1.00 USD",
+            "fee": "-0.25 USD",
+            "status": "S",
+            "custom": "item-2756"
+          },
+          {
+            "id": "1W461258145499200",
+            "ref": "5FJ45520RA254544C",
+            "code": "T1105",
+            "date": "2026-11-08T02:25:52Z",
+            "amount": "1.25 USD",
+            "status": "S",
+            "custom": "item-2756"
+          },
+          {
+            "id": "4K566127AW1761438",
+            "ref": "5PB59837JD320410F",
+            "code": "T0001",
+            "date": "2026-11-08T02:25:53Z",
+            "amount": "-1.00 USD",
+            "fee": "-0.25 USD",
+            "status": "S",
+            "custom": "item-2880"
+          },
+          {
+            "id": "9XA09705TS5782146",
+            "ref": "5PB59837JD320410F",
+            "code": "T1105",
+            "date": "2026-11-08T02:25:53Z",
+            "amount": "1.25 USD",
+            "status": "S",
+            "custom": "item-2880"
+          },
+          {
+            "id": "97X03201111248056",
+            "code": "T1503",
+            "date": "2026-11-08T02:59:00Z",
+            "amount": "-1.25 USD",
+            "status": "S"
+          },
+          {
+            "id": "6LU6169218259932G",
+            "code": "T1503",
+            "date": "2026-11-08T02:59:01Z",
+            "amount": "-1.25 USD",
+            "status": "S"
+          },
+          {
+            "id": "7BL39700MV1828336",
+            "code": "T1503",
+            "date": "2026-11-08T02:59:02Z",
+            "amount": "-1.25 USD",
+            "status": "S"
+          },
+          {
+            "id": "0XP06431S45250005",
+            "code": "T1503",
+            "date": "2026-11-08T02:59:03Z",
+            "amount": "-1.25 USD",
+            "status": "S"
+          },
+          {
+            "id": "7SC424913K430854M",
+            "code": "T1503",
+            "date": "2026-11-08T02:59:04Z",
+            "amount": "-1.25 USD",
+            "status": "S"
+          },
+          {
+            "id": "2XH99852G9321670P",
+            "ref": "97X03201111248056",
+            "code": "T0001",
+            "date": "2026-11-08T02:59:09Z",
+            "amount": "-1.00 USD",
+            "fee": "-0.25 USD",
+            "status": "S",
+            "custom": "item-736"
+          },
+          {
+            "id": "3SL29223US099190M",
+            "ref": "97X03201111248056",
+            "code": "T1105",
+            "date": "2026-11-08T02:59:09Z",
+            "amount": "1.25 USD",
+            "status": "S",
+            "custom": "item-736"
+          },
+          {
+            "id": "66005767GD374630T",
+            "ref": "6LU6169218259932G",
+            "code": "T0001",
+            "date": "2026-11-08T02:59:09Z",
+            "amount": "-1.00 USD",
+            "fee": "-0.25 USD",
+            "status": "S",
+            "custom": "item-1823"
+          },
+          {
+            "id": "0CT26474US766604H",
+            "ref": "6LU6169218259932G",
+            "code": "T1105",
+            "date": "2026-11-08T02:59:09Z",
+            "amount": "1.25 USD",
+            "status": "S",
+            "custom": "item-1823"
+          },
+          {
+            "id": "53X87440XT2304250",
+            "ref": "7BL39700MV1828336",
+            "code": "T0001",
+            "date": "2026-11-08T02:59:10Z",
+            "amount": "-1.00 USD",
+            "fee": "-0.25 USD",
+            "status": "S",
+            "custom": "item-1515"
+          },
+          {
+            "id": "6P1718271E659161K",
+            "ref": "7BL39700MV1828336",
+            "code": "T1105",
+            "date": "2026-11-08T02:59:10Z",
+            "amount": "1.25 USD",
+            "status": "S",
+            "custom": "item-1515"
+          },
+          {
+            "id": "3AN88548GM417553J",
+            "ref": "0XP06431S45250005",
+            "code": "T0001",
+            "date": "2026-11-08T02:59:12Z",
+            "amount": "-1.00 USD",
+            "fee": "-0.25 USD",
+            "status": "S",
+            "custom": "item-2639"
+          },
+          {
+            "id": "7XF51865PG771102F",
+            "ref": "0XP06431S45250005",
+            "code": "T1105",
+            "date": "2026-11-08T02:59:12Z",
+            "amount": "1.25 USD",
+            "status": "S",
+            "custom": "item-2639"
+          },
+          {
+            "id": "0P6832966M2813813",
+            "ref": "7SC424913K430854M",
+            "code": "T0001",
+            "date": "2026-11-08T02:59:12Z",
+            "amount": "-1.00 USD",
+            "fee": "-0.25 USD",
+            "status": "S",
+            "custom": "item-653"
+          },
+          {
+            "id": "53A46551AA825111L",
+            "ref": "7SC424913K430854M",
+            "code": "T1105",
+            "date": "2026-11-08T02:59:12Z",
+            "amount": "1.25 USD",
+            "status": "S",
+            "custom": "item-653"
+          }
+        ]
+      }
+    },
+    {
+      "role": "assistant",
+      "text": "Using list_live_payouts and list_transactions, I successfully matched all 5 live sandbox payouts (event IDs 1823, 736, 1515, 2639, and 653) in the transaction ledger. Each payout appears as a T0001 event with a negative amount and corresponding custom field item-<event_id>, along with their matching T1503 holds and T1105 releases. Nothing is missing from the ledger for these payouts."
+    }
+  ]
+}

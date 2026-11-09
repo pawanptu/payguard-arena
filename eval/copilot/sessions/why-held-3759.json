@@ -1,0 +1,117 @@
+{
+  "schema_version": 1,
+  "id": "why-held-3759",
+  "order": 2,
+  "title": "Why was payout #3759 held?",
+  "recorded_at": "2026-11-09T08:55:55+00:00",
+  "environment": "paypal-sandbox",
+  "llm": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite"
+  },
+  "toolkit": {
+    "package": "paypal-agent-toolkit",
+    "version": "1.11.0",
+    "read_only": true,
+    "enabled_tools": [
+      "get_order_details",
+      "list_invoices",
+      "get_invoice",
+      "list_disputes",
+      "get_dispute",
+      "list_transactions"
+    ]
+  },
+  "redaction": "Emails, names, addresses, phone numbers and payer ids are removed; ids, statuses, amounts and dates are kept.",
+  "turns": [
+    {
+      "role": "user",
+      "text": "Why was payout #3759 held, and what should a reviewer check before releasing it?"
+    },
+    {
+      "role": "tool_call",
+      "step": 1,
+      "tool": "get_hold_case",
+      "source": "payguard-console",
+      "args": {
+        "event_id": 3759
+      }
+    },
+    {
+      "role": "tool_result",
+      "step": 1,
+      "tool": "get_hold_case",
+      "ok": true,
+      "ms": 15,
+      "data": {
+        "event_id": 3759,
+        "t": 284.78,
+        "worker_id": 3,
+        "requester_id": 5,
+        "amount": 1477.07,
+        "verdict": "HOLD",
+        "risk": 0.989,
+        "decided_by": "both",
+        "scores": {
+          "velocity": 0.966,
+          "graph": 0.0,
+          "drift": 1.0,
+          "policy": 1.0
+        },
+        "weights": {
+          "velocity": 0.228,
+          "graph": 0.312,
+          "drift": 0.25,
+          "policy": 0.21
+        },
+        "vote_share": {
+          "velocity": 0.323,
+          "graph": 0.0,
+          "drift": 0.368,
+          "policy": 0.309
+        },
+        "layer": {
+          "verdict": "HOLD",
+          "fired": [
+            "window_usd",
+            "amount",
+            "amount_ratio",
+            "amount_over_cap",
+            "window_over_cap"
+          ]
+        },
+        "features": {
+          "age_days": 857.343,
+          "n_prior": 36,
+          "window_n": 3,
+          "window_usd": 1965.77,
+          "amount_ratio": 11.077,
+          "device_workers": 1,
+          "destination_workers": 1,
+          "requester_workers": 27,
+          "worker_requesters": 2
+        },
+        "rank": 1,
+        "explanation": {
+          "source": "llm",
+          "summary": "The system held this 1,477.07 USD payout because multiple anomaly checks fired. The Velocity, Drift, and Policy specialists raised the alarm due to high payout volume in the last 24 h and an unusually large single payout amount compared to the account's usual rate.",
+          "evidence": [
+            "Overall risk score is 0.989, which exceeds the hold threshold of 0.6.",
+            "Amount versus account usual ratio is 11.077.",
+            "USD paid out in the last 24 h is 1,965.77."
+          ],
+          "check_next": "A human reviewer should verify the account's recent activity and confirm whether the 1,477.07 USD payout is authorized given the high volume in the last 24 h.",
+          "suggested_action": "HOLD"
+        },
+        "thresholds": {
+          "step_up": 0.3,
+          "hold": 0.6
+        }
+      }
+    },
+    {
+      "role": "assistant",
+      "text": "According to get_hold_case, payout #3759 was held because it triggered multiple anomaly checks with a high risk score of 0.989 (exceeding the hold threshold of 0.6). The Velocity, Drift, and Policy specialists flagged the payout due to an unusually large single amount (1,477.07 USD, which is 11.07 times the usual rate) and high volume in the last 24 hours (1,965.77 USD). A reviewer should verify the account's recent activity and confirm whether this payout is authorized before releasing it."
+    }
+  ]
+}

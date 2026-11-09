@@ -226,7 +226,7 @@ def test_real_toolkit_list_transactions_workarounds_none_param_and_dates():
     assert "None" not in http.get_urls[0]
     assert q["end_date"] == "2026-11-09T07:36:24Z"         # workaround 2: explicit UTC, last 30 days
     assert q["start_date"] == "2026-10-10T07:36:24Z"
-    assert out["transactions"][0]["transaction_amount"] == {"currency_code": "USD", "value": "-1.00"}
+    assert out["transactions"][0]["amount"] == "-1.00 USD"
     assert "payer_info" not in json.dumps(out)             # compacted before it can reach the model
     assert http.token_calls == 1
 
@@ -236,7 +236,7 @@ def test_real_toolkit_search_by_id_still_works_and_sends_the_id():
     http = FakeHTTP({"/v1/reporting/transactions": (200, {"transaction_details": [tx]})})
     out = real_dispatcher(http).call("list_transactions", {"transaction_id": "5TY05013RG002845M"})
     assert query(http.get_urls[0])["transaction_id"] == "5TY05013RG002845M"
-    assert out["found"] is True and out["transactions"][0]["transaction_id"] == "5TY05013RG002845M"
+    assert out["found"] is True and out["transactions"][0]["id"] == "5TY05013RG002845M"
 
 
 def test_real_toolkit_token_is_cached_across_calls():
@@ -301,6 +301,10 @@ def test_compact_transactions_keeps_evidence_drops_personal_blocks():
                                      "payer_info": {"email_address": "a@b.c"}, "shipping_info": {}}],
             "total_items": 1, "account_number": "ACC", "links": []}
     out = tt.compact_transactions(data)
-    assert out == {"total_items": 1, "returned": 1,
-                   "transactions": [{"transaction_id": "T1", "transaction_amount": {"value": "-1.00"}}]}
+    assert out == {"total_items": 1, "returned": 1, "transactions": [{"id": "T1", "amount": "-1.00"}]}
+    row = tt.compact_transactions({"transaction_details": [{"transaction_info": {
+        "transaction_id": "T2", "transaction_event_code": "T0001", "custom_field": "item-736",
+        "transaction_amount": {"value": "-1.00", "currency_code": "USD"},
+        "fee_amount": {"value": "-0.25", "currency_code": "USD"}, "transaction_note": "long text"}}]})["transactions"][0]
+    assert row == {"id": "T2", "code": "T0001", "amount": "-1.00 USD", "fee": "-0.25 USD", "custom": "item-736"}
     assert tt.compact_transactions({"items": []}) == {"items": []}

@@ -1,0 +1,364 @@
+{
+  "rule": "eval/r3/SELECTION_RULE.md sections 2-3",
+  "split": "TRAIN_B (leave-one-family-out)",
+  "seeds": [
+    1010,
+    1011,
+    1012,
+    1013,
+    1014,
+    1015,
+    1016,
+    1017,
+    1018,
+    1019
+  ],
+  "families": [
+    "ring",
+    "structuring"
+  ],
+  "grid": {
+    "c1": {
+      "config": {
+        "n_dreams": 32,
+        "share_posterior": 0.5,
+        "share_uncertain": 0.25,
+        "share_recombined": 0.25,
+        "tau": 1.0,
+        "sigma": 1.0,
+        "lambda0": 0.3,
+        "ema_beta": 0.5,
+        "n_bins": 4,
+        "use_wm": true,
+        "use_skeptic": true,
+        "use_calibration": true,
+        "families": [
+          "ring",
+          "structuring"
+        ]
+      },
+      "lofo": 28.737,
+      "folds": [
+        {
+          "held_out": "ring",
+          "train_families": [
+            "structuring"
+          ],
+          "evo_seed": 0,
+          "objective": 37.184,
+          "leakage_pct": 36.656,
+          "honest_block_rate": 0.894,
+          "honest_unpaid_rate": 0.081,
+          "params_sha256": "6ef18fddf415405dbeab5efe0ea2ed7b7a3140d303f509baba421a2cc412688f"
+        },
+        {
+          "held_out": "structuring",
+          "train_families": [
+            "ring"
+          ],
+          "evo_seed": 0,
+          "objective": 20.291,
+          "leakage_pct": 18.153,
+          "honest_block_rate": 3.539,
+          "honest_unpaid_rate": 0.368,
+          "params_sha256": "56f29086fb502c5b3a5c9b8c19dd717826bce9940ff088d675887a6fa3154004"
+        }
+      ]
+    },
+    "c2": {
+      "config": {
+        "n_dreams": 32,
+        "share_posterior": 0.5,
+        "share_uncertain": 0.25,
+        "share_recombined": 0.25,
+        "tau": 1.0,
+        "sigma": 1.0,
+        "lambda0": 0.6,
+        "ema_beta": 0.5,
+        "n_bins": 4,
+        "use_wm": true,
+        "use_skeptic": true,
+        "use_calibration": true,
+        "families": [
+          "ring",
+          "structuring"
+        ]
+      },
+      "lofo": 33.611,
+      "folds": [
+        {
+          "held_out": "ring",
+          "train_families": [
+            "structuring"
+          ],
+          "evo_seed": 0,
+          "objective": 37.184,
+          "leakage_pct": 36.656,
+          "honest_block_rate": 0.894,
+          "honest_unpaid_rate": 0.081,
+          "params_sha256": "6ef18fddf415405dbeab5efe0ea2ed7b7a3140d303f509baba421a2cc412688f"
+        },
+        {
+          "held_out": "structuring",
+          "train_families": [
+            "ring"
+          ],
+          "evo_seed": 0,
+          "objective": 30.038,
+          "leakage_pct": 28.313,
+          "honest_block_rate": 2.827,
+          "honest_unpaid_rate": 0.312,
+          "params_sha256": "9200234ff982f3ec67714ffd56545c6a6888ea160170661b87107e7578d59f18"
+        }
+      ]
+    },
+    "c3": {
+      "config": {
+        "n_dreams": 32,
+        "share_posterior": 0.34,
+        "share_uncertain": 0.33,
+        "share_recombined": 0.33,
+        "tau": 1.0,
+        "sigma": 1.0,
+        "lambda0": 0.3,
+        "ema_beta": 0.5,
+        "n_bins": 4,
+        "use_wm": true,
+        "use_skeptic": true,
+        "use_calibration": true,
+        "families": [
+          "ring",
+          "structuring"
+        ]
+      },
+      "lofo": 37.89,
+      "folds": [
+        {
+          "held_out": "ring",
+          "train_families": [
+            "structuring"
+          ],
+          "evo_seed": 0,
+          "objective": 37.184,
+          "leakage_pct": 36.656,
+          "honest_block_rate": 0.894,
+          "honest_unpaid_rate": 0.081,
+          "params_sha256": "6ef18fddf415405dbeab5efe0ea2ed7b7a3140d303f509baba421a2cc412688f"
+        },
+        {
+          "held_out": "structuring",
+          "train_families": [
+            "ring"
+          ],
+          "evo_seed": 0,
+          "objective": 38.597,
+          "leakage_pct": 36.448,
+          "honest_block_rate": 3.591,
+          "honest_unpaid_rate": 0.354,
+          "params_sha256": "1d847d94799db400c5d6e195bd043e85cad2bc5dacd70f5b73896e0c772e5042"
+        }
+      ]
+    },
+    "c4": {
+      "config": {
+        "n_dreams": 32,
+        "share_posterior": 0.34,
+        "share_uncertain": 0.33,
+        "share_recombined": 0.33,
+        "tau": 1.0,
+        "sigma": 1.0,
+        "lambda0": 0.6,
+        "ema_beta": 0.5,
+        "n_bins": 4,
+        "use_wm": true,
+        "use_skeptic": true,
+        "use_calibration": true,
+        "families": [
+          "ring",
+          "structuring"
+        ]
+      },
+      "lofo": 43.573,
+      "folds": [
+        {
+          "held_out": "ring",
+          "train_families": [
+            "structuring"
+          ],
+          "evo_seed": 0,
+          "objective": 37.184,
+          "leakage_pct": 36.656,
+          "honest_block_rate": 0.894,
+          "honest_unpaid_rate": 0.081,
+          "params_sha256": "6ef18fddf415405dbeab5efe0ea2ed7b7a3140d303f509baba421a2cc412688f"
+        },
+        {
+          "held_out": "structuring",
+          "train_families": [
+            "ring"
+          ],
+          "evo_seed": 0,
+          "objective": 49.963,
+          "leakage_pct": 47.771,
+          "honest_block_rate": 3.637,
+          "honest_unpaid_rate": 0.373,
+          "params_sha256": "279ca46a60d4b0524ca011ade31493bbb007e334ed6c8a8a18ae8544c27cd013"
+        }
+      ]
+    }
+  },
+  "winner": "c1",
+  "winner_config": {
+    "n_dreams": 32,
+    "share_posterior": 0.5,
+    "share_uncertain": 0.25,
+    "share_recombined": 0.25,
+    "tau": 1.0,
+    "sigma": 1.0,
+    "lambda0": 0.3,
+    "ema_beta": 0.5,
+    "n_bins": 4,
+    "use_wm": true,
+    "use_skeptic": true,
+    "use_calibration": true,
+    "families": [
+      "ring",
+      "structuring"
+    ]
+  },
+  "k1": {
+    "evo_seeds": [
+      0,
+      1
+    ],
+    "winner_mean_lofo": 29.446,
+    "twin_mean_lofo": 44.0,
+    "margin": 14.554,
+    "required_margin": 1.0,
+    "pass": true,
+    "winner": {
+      "0": {
+        "lofo": 28.737,
+        "folds": [
+          {
+            "held_out": "ring",
+            "train_families": [
+              "structuring"
+            ],
+            "evo_seed": 0,
+            "objective": 37.184,
+            "leakage_pct": 36.656,
+            "honest_block_rate": 0.894,
+            "honest_unpaid_rate": 0.081,
+            "params_sha256": "6ef18fddf415405dbeab5efe0ea2ed7b7a3140d303f509baba421a2cc412688f"
+          },
+          {
+            "held_out": "structuring",
+            "train_families": [
+              "ring"
+            ],
+            "evo_seed": 0,
+            "objective": 20.291,
+            "leakage_pct": 18.153,
+            "honest_block_rate": 3.539,
+            "honest_unpaid_rate": 0.368,
+            "params_sha256": "56f29086fb502c5b3a5c9b8c19dd717826bce9940ff088d675887a6fa3154004"
+          }
+        ]
+      },
+      "1": {
+        "lofo": 30.154,
+        "folds": [
+          {
+            "held_out": "ring",
+            "train_families": [
+              "structuring"
+            ],
+            "evo_seed": 1,
+            "objective": 34.268,
+            "leakage_pct": 33.767,
+            "honest_block_rate": 0.82,
+            "honest_unpaid_rate": 0.091,
+            "params_sha256": "b3bf237d043b24ccf84772ddc9e3d90e50f49cfadc6f68ae3ccf6e78b5b23330"
+          },
+          {
+            "held_out": "structuring",
+            "train_families": [
+              "ring"
+            ],
+            "evo_seed": 1,
+            "objective": 26.039,
+            "leakage_pct": 23.997,
+            "honest_block_rate": 3.406,
+            "honest_unpaid_rate": 0.339,
+            "params_sha256": "00e984e78b7469de833de70533e1ee85f1361148dc4fae3a8680f04ecb07d904"
+          }
+        ]
+      }
+    },
+    "twin_nowm": {
+      "0": {
+        "lofo": 53.79,
+        "folds": [
+          {
+            "held_out": "ring",
+            "train_families": [
+              "structuring"
+            ],
+            "evo_seed": 0,
+            "objective": 37.184,
+            "leakage_pct": 36.656,
+            "honest_block_rate": 0.894,
+            "honest_unpaid_rate": 0.081,
+            "params_sha256": "6ef18fddf415405dbeab5efe0ea2ed7b7a3140d303f509baba421a2cc412688f"
+          },
+          {
+            "held_out": "structuring",
+            "train_families": [
+              "ring"
+            ],
+            "evo_seed": 0,
+            "objective": 70.396,
+            "leakage_pct": 68.328,
+            "honest_block_rate": 3.463,
+            "honest_unpaid_rate": 0.336,
+            "params_sha256": "c69b82a1407dde71e4bf0de03ddf87f83ae658f65275e4e28c5aa13b60bba8a2"
+          }
+        ]
+      },
+      "1": {
+        "lofo": 34.209,
+        "folds": [
+          {
+            "held_out": "ring",
+            "train_families": [
+              "structuring"
+            ],
+            "evo_seed": 1,
+            "objective": 42.379,
+            "leakage_pct": 41.983,
+            "honest_block_rate": 0.656,
+            "honest_unpaid_rate": 0.069,
+            "params_sha256": "b6dee952537bf2cda8331123c862f084e40de89e6d326f2659eb388c1334b0ab"
+          },
+          {
+            "held_out": "structuring",
+            "train_families": [
+              "ring"
+            ],
+            "evo_seed": 1,
+            "objective": 26.039,
+            "leakage_pct": 23.997,
+            "honest_block_rate": 3.406,
+            "honest_unpaid_rate": 0.339,
+            "params_sha256": "00e984e78b7469de833de70533e1ee85f1361148dc4fae3a8680f04ecb07d904"
+          }
+        ]
+      }
+    }
+  },
+  "train_calls": 14,
+  "folds_resumed_from_checkpoint": 0,
+  "verdict": "K1 passed: proceed to the freeze",
+  "seconds": 35861.6
+}

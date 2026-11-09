@@ -1,0 +1,6834 @@
+{
+ "families": [
+  "ring",
+  "structuring"
+ ],
+ "evo_seed": 0,
+ "workers": 14,
+ "evolve_config": {
+  "seed": 0,
+  "pop": 28,
+  "gens": 22,
+  "elites": 3,
+  "tournament_k": 3,
+  "pool_size": 3,
+  "fresh_attackers": 1,
+  "attacker_seeds": 2,
+  "arena_episodes": 3,
+  "fitness_seeds": [
+   1000,
+   1001,
+   1002,
+   1003,
+   1004,
+   1005,
+   1006,
+   1007,
+   1008,
+   1009
+  ],
+  "gate_seeds": [
+   1010,
+   1011,
+   1012,
+   1013,
+   1014,
+   1015,
+   1016,
+   1017,
+   1018,
+   1019
+  ],
+  "mut_start": 0.25,
+  "mut_end": 0.05,
+  "atk_mut_start": 0.25,
+  "atk_mut_end": 0.1,
+  "budget_min": 1000000000.0,
+  "families": [
+   "ring",
+   "structuring"
+  ],
+  "name": "full"
+ },
+ "dream_config": {
+  "n_dreams": 32,
+  "share_posterior": 0.5,
+  "share_uncertain": 0.25,
+  "share_recombined": 0.25,
+  "tau": 1.0,
+  "sigma": 1.0,
+  "lambda0": 0.3,
+  "ema_beta": 0.5,
+  "n_bins": 4,
+  "use_wm": true,
+  "use_skeptic": false,
+  "use_calibration": true,
+  "families": [
+   "ring",
+   "structuring"
+  ]
+ },
+ "champion": {
+  "id": "g20-15",
+  "params": {
+   "vel_usd_lo": 1038.252,
+   "vel_usd_width": 1528.522,
+   "vel_n_lo": 9.887,
+   "vel_n_width": 1.209,
+   "graph_dens_lo": 0.406,
+   "graph_dens_width": 0.072,
+   "graph_min_workers": 4,
+   "graph_size_width": 3.372,
+   "graph_share_min": 3,
+   "drift_min_history": 6,
+   "drift_ratio_lo": 4.359,
+   "drift_ratio_width": 4.261,
+   "drift_rate_lo": 3.678,
+   "drift_rate_width": 1.844,
+   "policy_cap_base_usd": 143.96,
+   "policy_cap_per_day_usd": 2.874,
+   "policy_cap_max_usd": 679.739,
+   "policy_window_mult": 3.285,
+   "w0_velocity": 0.94,
+   "w0_graph": 1.0,
+   "w0_drift": 0.632,
+   "w0_policy": 0.793,
+   "step_up_threshold": 0.481,
+   "hold_threshold": 0.55,
+   "eta": 0.027,
+   "min_weight": 0.036,
+   "l1_abstain": 0
+  },
+  "generation": 20,
+  "objective_a": 16.772,
+  "objective_b": 18.596
+ },
+ "calibration_gap_ema": [
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.554,
+  0.554,
+  0.554,
+  0.554,
+  0.554,
+  0.554,
+  0.554,
+  0.521,
+  0.521,
+  0.521,
+  0.521,
+  0.521,
+  0.521,
+  0.521,
+  0.521,
+  0.554,
+  0.554
+ ],
+ "lineage": [
+  {
+   "generation": 0,
+   "champion_id": "default",
+   "champion_gate": {
+    "objective": 19.957,
+    "leakage_pct": 16.371,
+    "honest_block_rate": 6.262,
+    "honest_unpaid_rate": 0.454
+   },
+   "challenger": {
+    "id": "g0-14",
+    "params": {
+     "vel_usd_lo": 1000.0,
+     "vel_usd_width": 559.312,
+     "vel_n_lo": 7.0,
+     "vel_n_width": 4.0,
+     "graph_dens_lo": 0.4,
+     "graph_dens_width": 0.2,
+     "graph_min_workers": 4,
+     "graph_size_width": 1.0,
+     "graph_share_min": 3,
+     "drift_min_history": 4,
+     "drift_ratio_lo": 3.073,
+     "drift_ratio_width": 3.0,
+     "drift_rate_lo": 3.392,
+     "drift_rate_width": 2.0,
+     "policy_cap_base_usd": 150.0,
+     "policy_cap_per_day_usd": 8.0,
+     "policy_cap_max_usd": 480.47,
+     "policy_window_mult": 3.0,
+     "w0_velocity": 1.0,
+     "w0_graph": 1.0,
+     "w0_drift": 1.0,
+     "w0_policy": 1.0,
+     "step_up_threshold": 0.3,
+     "hold_threshold": 0.621,
+     "eta": 0.02,
+     "min_weight": 0.05,
+     "l1_abstain": 0
+    },
+    "objective_a": 17.449,
+    "objective_b": 20.429,
+    "gate": {
+     "objective": 20.429,
+     "leakage_pct": 15.634,
+     "honest_block_rate": 8.342,
+     "honest_unpaid_rate": 0.624
+    }
+   },
+   "promoted": false,
+   "rolled_back": false,
+   "rollback": null,
+   "champion_id_after": "default",
+   "attackers_scored_against": "default",
+   "strongest_attacker": {
+    "ring": {
+     "family": "ring",
+     "params": {
+      "ring_size": 30,
+      "n_requesters": 2,
+      "rate_per_day": 0.938,
+      "amount_median": 98.006,
+      "amount_sigma": 0.421,
+      "account_age_days": 63.995,
+      "start_day": 0.0
+     },
+     "leaked_usd": 11174.03,
+     "attack_usd": 86084.85,
+     "leakage_pct": 12.98
+    },
+    "structuring": {
+     "family": "structuring",
+     "params": {
+      "n_accounts": 4,
+      "eps": 11.556,
+      "k": 6,
+      "burst_window_hours": 8.157,
+      "n_bursts": 2,
+      "account_age_days": 16.847,
+      "start_day": 3.662
+     },
+     "leaked_usd": 5864.93,
+     "attack_usd": 46895.9,
+     "leakage_pct": 12.506
+    }
+   },
+   "strongest_attacker_family": "ring",
+   "attacker_pools": {
+    "ring": [
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 2,
+       "rate_per_day": 0.938,
+       "amount_median": 98.006,
+       "amount_sigma": 0.421,
+       "account_age_days": 63.995,
+       "start_day": 0.0
+      },
+      "leaked_usd": 11174.03,
+      "attack_usd": 86084.85,
+      "leakage_pct": 12.98
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 1,
+       "rate_per_day": 0.783,
+       "amount_median": 84.116,
+       "amount_sigma": 0.358,
+       "account_age_days": 110.74,
+       "start_day": 1.635
+      },
+      "leaked_usd": 5608.24,
+      "attack_usd": 51459.99,
+      "leakage_pct": 10.898
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 21,
+       "n_requesters": 4,
+       "rate_per_day": 1.108,
+       "amount_median": 36.6,
+       "amount_sigma": 0.65,
+       "account_age_days": 436.563,
+       "start_day": 1.903
+      },
+      "leaked_usd": 5082.4,
+      "attack_usd": 24860.54,
+      "leakage_pct": 20.444
+     }
+    ],
+    "structuring": [
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 11.556,
+       "k": 6,
+       "burst_window_hours": 8.157,
+       "n_bursts": 2,
+       "account_age_days": 16.847,
+       "start_day": 3.662
+      },
+      "leaked_usd": 5864.93,
+      "attack_usd": 46895.9,
+      "leakage_pct": 12.506
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 21.929,
+       "k": 5,
+       "burst_window_hours": 8.129,
+       "n_bursts": 1,
+       "account_age_days": 14.028,
+       "start_day": 3.417
+      },
+      "leaked_usd": 3343.95,
+      "attack_usd": 19115.9,
+      "leakage_pct": 17.493
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 2,
+       "eps": 30.04,
+       "k": 5,
+       "burst_window_hours": 1.0,
+       "n_bursts": 2,
+       "account_age_days": 28.447,
+       "start_day": 6.0
+      },
+      "leaked_usd": 2822.11,
+      "attack_usd": 18791.47,
+      "leakage_pct": 15.018
+     }
+    ]
+   },
+   "champion_weights": {
+    "velocity": 0.074,
+    "graph": 0.766,
+    "drift": 0.096,
+    "policy": 0.064
+   },
+   "fitness_best": 17.05,
+   "fitness_mean": 30.4,
+   "dream": {
+    "g": 0,
+    "lam": 0.3,
+    "lam_next": 0.3,
+    "gap_ema": 0.0,
+    "n_dreams": 32,
+    "mean_weight": 1.0,
+    "min_weight": 1.0,
+    "share_counts": {
+     "posterior": 24,
+     "uncertain": 0,
+     "recombined": 8
+    },
+    "n_observations": 10,
+    "fit_seconds": 0.835,
+    "arm": {
+     "use_wm": true,
+     "use_skeptic": false,
+     "use_calibration": true
+    },
+    "real_fitness": [
+     17.088,
+     17.108,
+     19.691,
+     17.264,
+     19.407,
+     18.061,
+     17.289,
+     17.485,
+     17.299,
+     17.268,
+     18.008,
+     18.161,
+     17.05,
+     17.803,
+     17.449,
+     73.197,
+     34.671,
+     37.109,
+     46.355,
+     50.656,
+     39.897,
+     61.305,
+     20.59,
+     53.345,
+     23.985,
+     28.241,
+     57.536,
+     57.881
+    ],
+    "blended_fitness": [
+     18.937,
+     19.004,
+     21.481,
+     19.113,
+     21.561,
+     19.953,
+     19.11,
+     19.387,
+     19.115,
+     19.044,
+     19.742,
+     20.216,
+     18.891,
+     19.582,
+     18.848,
+     77.186,
+     37.732,
+     40.73,
+     50.505,
+     54.832,
+     43.141,
+     66.171,
+     23.011,
+     57.972,
+     27.485,
+     30.891,
+     59.101,
+     62.831
+    ],
+    "dream_fitness": [
+     23.253,
+     23.426,
+     25.659,
+     23.427,
+     26.587,
+     24.366,
+     23.358,
+     23.825,
+     23.354,
+     23.189,
+     23.786,
+     25.009,
+     23.187,
+     23.733,
+     22.112,
+     86.492,
+     44.875,
+     49.177,
+     60.187,
+     64.578,
+     50.709,
+     77.525,
+     28.66,
+     68.768,
+     35.652,
+     37.075,
+     62.754,
+     74.381
+    ]
+   }
+  },
+  {
+   "generation": 1,
+   "champion_id": "default",
+   "champion_gate": {
+    "objective": 20.053,
+    "leakage_pct": 16.465,
+    "honest_block_rate": 6.28,
+    "honest_unpaid_rate": 0.448
+   },
+   "challenger": {
+    "id": "g0-12",
+    "params": {
+     "vel_usd_lo": 1000.0,
+     "vel_usd_width": 1000.0,
+     "vel_n_lo": 7.921,
+     "vel_n_width": 4.0,
+     "graph_dens_lo": 0.4,
+     "graph_dens_width": 0.2,
+     "graph_min_workers": 4,
+     "graph_size_width": 2.0,
+     "graph_share_min": 3,
+     "drift_min_history": 4,
+     "drift_ratio_lo": 3.0,
+     "drift_ratio_width": 3.0,
+     "drift_rate_lo": 3.5,
+     "drift_rate_width": 2.0,
+     "policy_cap_base_usd": 150.0,
+     "policy_cap_per_day_usd": 8.0,
+     "policy_cap_max_usd": 500.0,
+     "policy_window_mult": 3.0,
+     "w0_velocity": 1.0,
+     "w0_graph": 1.0,
+     "w0_drift": 1.0,
+     "w0_policy": 1.0,
+     "step_up_threshold": 0.3,
+     "hold_threshold": 0.581,
+     "eta": 0.02,
+     "min_weight": 0.077,
+     "l1_abstain": 0
+    },
+    "objective_a": 17.807,
+    "objective_b": 20.003,
+    "gate": {
+     "objective": 20.003,
+     "leakage_pct": 16.449,
+     "honest_block_rate": 6.199,
+     "honest_unpaid_rate": 0.454
+    }
+   },
+   "promoted": false,
+   "rolled_back": false,
+   "rollback": null,
+   "champion_id_after": "default",
+   "attackers_scored_against": "default",
+   "strongest_attacker": {
+    "ring": {
+     "family": "ring",
+     "params": {
+      "ring_size": 30,
+      "n_requesters": 1,
+      "rate_per_day": 1.273,
+      "amount_median": 102.082,
+      "amount_sigma": 0.3,
+      "account_age_days": 60.0,
+      "start_day": 0.015
+     },
+     "leaked_usd": 10829.48,
+     "attack_usd": 113774.86,
+     "leakage_pct": 9.518
+    },
+    "structuring": {
+     "family": "structuring",
+     "params": {
+      "n_accounts": 4,
+      "eps": 11.556,
+      "k": 6,
+      "burst_window_hours": 8.157,
+      "n_bursts": 2,
+      "account_age_days": 16.847,
+      "start_day": 3.662
+     },
+     "leaked_usd": 4394.6,
+     "attack_usd": 46894.61,
+     "leakage_pct": 9.371
+    }
+   },
+   "strongest_attacker_family": "ring",
+   "attacker_pools": {
+    "ring": [
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 1,
+       "rate_per_day": 1.273,
+       "amount_median": 102.082,
+       "amount_sigma": 0.3,
+       "account_age_days": 60.0,
+       "start_day": 0.015
+      },
+      "leaked_usd": 10829.48,
+      "attack_usd": 113774.86,
+      "leakage_pct": 9.518
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 2,
+       "rate_per_day": 0.938,
+       "amount_median": 98.006,
+       "amount_sigma": 0.421,
+       "account_age_days": 63.995,
+       "start_day": 0.0
+      },
+      "leaked_usd": 9913.41,
+      "attack_usd": 82648.16,
+      "leakage_pct": 11.995
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 25,
+       "n_requesters": 3,
+       "rate_per_day": 0.464,
+       "amount_median": 117.038,
+       "amount_sigma": 0.482,
+       "account_age_days": 241.457,
+       "start_day": 1.777
+      },
+      "leaked_usd": 8350.8,
+      "attack_usd": 39632.66,
+      "leakage_pct": 21.07
+     }
+    ],
+    "structuring": [
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 11.556,
+       "k": 6,
+       "burst_window_hours": 8.157,
+       "n_bursts": 2,
+       "account_age_days": 16.847,
+       "start_day": 3.662
+      },
+      "leaked_usd": 4394.6,
+      "attack_usd": 46894.61,
+      "leakage_pct": 9.371
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 2,
+       "eps": 30.04,
+       "k": 5,
+       "burst_window_hours": 1.0,
+       "n_bursts": 2,
+       "account_age_days": 28.447,
+       "start_day": 6.0
+      },
+      "leaked_usd": 3292.37,
+      "attack_usd": 18802.51,
+      "leakage_pct": 17.51
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 3.301,
+       "k": 6,
+       "burst_window_hours": 6.358,
+       "n_bursts": 2,
+       "account_age_days": 10.828,
+       "start_day": 6.0
+      },
+      "leaked_usd": 2980.27,
+      "attack_usd": 47687.04,
+      "leakage_pct": 6.25
+     }
+    ]
+   },
+   "champion_weights": {
+    "velocity": 0.24,
+    "graph": 0.287,
+    "drift": 0.228,
+    "policy": 0.245
+   },
+   "fitness_best": 17.807,
+   "fitness_mean": 22.316,
+   "dream": {
+    "g": 1,
+    "lam": 0.3,
+    "lam_next": 0.3,
+    "gap_ema": 0.0,
+    "n_dreams": 32,
+    "mean_weight": 1.0,
+    "min_weight": 1.0,
+    "share_counts": {
+     "posterior": 24,
+     "uncertain": 0,
+     "recombined": 8
+    },
+    "n_observations": 13,
+    "fit_seconds": 0.986,
+    "arm": {
+     "use_wm": true,
+     "use_skeptic": false,
+     "use_calibration": true
+    },
+    "real_fitness": [
+     18.503,
+     17.807,
+     17.851,
+     18.898,
+     18.47,
+     18.144,
+     19.152,
+     23.679,
+     21.604,
+     19.926,
+     42.806,
+     26.7,
+     26.504,
+     23.234,
+     20.907,
+     21.046,
+     19.619,
+     19.125,
+     19.21,
+     18.256,
+     19.982,
+     18.236,
+     24.699,
+     23.09,
+     19.694,
+     45.374,
+     20.184,
+     22.153
+    ],
+    "blended_fitness": [
+     19.085,
+     18.812,
+     19.073,
+     20.191,
+     19.162,
+     19.337,
+     19.63,
+     24.073,
+     22.588,
+     20.377,
+     42.404,
+     27.867,
+     26.653,
+     24.725,
+     21.387,
+     21.448,
+     20.625,
+     20.165,
+     20.63,
+     19.088,
+     20.519,
+     19.535,
+     25.197,
+     24.298,
+     21.174,
+     46.697,
+     20.394,
+     22.782
+    ],
+    "dream_fitness": [
+     20.444,
+     21.158,
+     21.922,
+     23.207,
+     20.776,
+     22.12,
+     20.743,
+     24.992,
+     24.885,
+     21.43,
+     41.467,
+     30.588,
+     27.0,
+     28.202,
+     22.508,
+     22.386,
+     22.971,
+     22.592,
+     23.944,
+     21.028,
+     21.774,
+     22.566,
+     26.36,
+     27.116,
+     24.629,
+     49.785,
+     20.883,
+     24.251
+    ]
+   }
+  },
+  {
+   "generation": 2,
+   "champion_id": "default",
+   "champion_gate": {
+    "objective": 19.723,
+    "leakage_pct": 16.09,
+    "honest_block_rate": 6.325,
+    "honest_unpaid_rate": 0.471
+   },
+   "challenger": {
+    "id": "g2-13",
+    "params": {
+     "vel_usd_lo": 905.618,
+     "vel_usd_width": 1496.606,
+     "vel_n_lo": 7.209,
+     "vel_n_width": 1.69,
+     "graph_dens_lo": 0.42,
+     "graph_dens_width": 0.228,
+     "graph_min_workers": 4,
+     "graph_size_width": 1.0,
+     "graph_share_min": 3,
+     "drift_min_history": 4,
+     "drift_ratio_lo": 4.748,
+     "drift_ratio_width": 1.91,
+     "drift_rate_lo": 3.5,
+     "drift_rate_width": 2.0,
+     "policy_cap_base_usd": 150.0,
+     "policy_cap_per_day_usd": 4.19,
+     "policy_cap_max_usd": 480.47,
+     "policy_window_mult": 3.0,
+     "w0_velocity": 1.0,
+     "w0_graph": 1.0,
+     "w0_drift": 1.0,
+     "w0_policy": 1.0,
+     "step_up_threshold": 0.3,
+     "hold_threshold": 0.621,
+     "eta": 0.005,
+     "min_weight": 0.031,
+     "l1_abstain": 0
+    },
+    "objective_a": 17.173,
+    "objective_b": 20.433,
+    "gate": {
+     "objective": 20.433,
+     "leakage_pct": 16.154,
+     "honest_block_rate": 7.429,
+     "honest_unpaid_rate": 0.565
+    }
+   },
+   "promoted": false,
+   "rolled_back": false,
+   "rollback": null,
+   "champion_id_after": "default",
+   "attackers_scored_against": "default",
+   "strongest_attacker": {
+    "ring": {
+     "family": "ring",
+     "params": {
+      "ring_size": 30,
+      "n_requesters": 1,
+      "rate_per_day": 1.273,
+      "amount_median": 102.082,
+      "amount_sigma": 0.3,
+      "account_age_days": 60.0,
+      "start_day": 0.015
+     },
+     "leaked_usd": 11505.29,
+     "attack_usd": 108262.96,
+     "leakage_pct": 10.627
+    },
+    "structuring": {
+     "family": "structuring",
+     "params": {
+      "n_accounts": 4,
+      "eps": 11.556,
+      "k": 6,
+      "burst_window_hours": 8.157,
+      "n_bursts": 2,
+      "account_age_days": 16.847,
+      "start_day": 3.662
+     },
+     "leaked_usd": 5373.94,
+     "attack_usd": 46885.21,
+     "leakage_pct": 11.462
+    }
+   },
+   "strongest_attacker_family": "ring",
+   "attacker_pools": {
+    "ring": [
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 1,
+       "rate_per_day": 1.273,
+       "amount_median": 102.082,
+       "amount_sigma": 0.3,
+       "account_age_days": 60.0,
+       "start_day": 0.015
+      },
+      "leaked_usd": 11505.29,
+      "attack_usd": 108262.96,
+      "leakage_pct": 10.627
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 24,
+       "n_requesters": 4,
+       "rate_per_day": 0.526,
+       "amount_median": 120.0,
+       "amount_sigma": 0.566,
+       "account_age_days": 244.539,
+       "start_day": 2.033
+      },
+      "leaked_usd": 11208.15,
+      "attack_usd": 45232.52,
+      "leakage_pct": 24.779
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 2,
+       "rate_per_day": 1.184,
+       "amount_median": 110.534,
+       "amount_sigma": 0.3,
+       "account_age_days": 106.11,
+       "start_day": 1.397
+      },
+      "leaked_usd": 11129.59,
+      "attack_usd": 102585.16,
+      "leakage_pct": 10.849
+     }
+    ],
+    "structuring": [
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 11.556,
+       "k": 6,
+       "burst_window_hours": 8.157,
+       "n_bursts": 2,
+       "account_age_days": 16.847,
+       "start_day": 3.662
+      },
+      "leaked_usd": 5373.94,
+      "attack_usd": 46885.21,
+      "leakage_pct": 11.462
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 3.301,
+       "k": 6,
+       "burst_window_hours": 6.358,
+       "n_bursts": 2,
+       "account_age_days": 10.828,
+       "start_day": 6.0
+      },
+      "leaked_usd": 4474.07,
+      "attack_usd": 47677.68,
+      "leakage_pct": 9.384
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 17.335,
+       "k": 6,
+       "burst_window_hours": 5.169,
+       "n_bursts": 1,
+       "account_age_days": 2.752,
+       "start_day": 6.0
+      },
+      "leaked_usd": 2414.02,
+      "attack_usd": 23160.55,
+      "leakage_pct": 10.423
+     }
+    ]
+   },
+   "champion_weights": {
+    "velocity": 0.05,
+    "graph": 0.849,
+    "drift": 0.05,
+    "policy": 0.05
+   },
+   "fitness_best": 17.078,
+   "fitness_mean": 20.235,
+   "dream": {
+    "g": 2,
+    "lam": 0.3,
+    "lam_next": 0.3,
+    "gap_ema": 0.0,
+    "n_dreams": 32,
+    "mean_weight": 1.0,
+    "min_weight": 1.0,
+    "share_counts": {
+     "posterior": 24,
+     "uncertain": 0,
+     "recombined": 8
+    },
+    "n_observations": 16,
+    "fit_seconds": 1.204,
+    "arm": {
+     "use_wm": true,
+     "use_skeptic": false,
+     "use_calibration": true
+    },
+    "real_fitness": [
+     17.22,
+     17.305,
+     17.791,
+     17.162,
+     24.691,
+     24.92,
+     22.517,
+     20.251,
+     18.097,
+     18.185,
+     22.068,
+     25.679,
+     17.82,
+     20.308,
+     19.51,
+     18.189,
+     17.173,
+     21.319,
+     27.213,
+     22.507,
+     25.838,
+     17.154,
+     20.421,
+     18.527,
+     18.969,
+     17.853,
+     17.078,
+     20.814
+    ],
+    "blended_fitness": [
+     18.32,
+     18.455,
+     18.291,
+     17.62,
+     24.742,
+     25.694,
+     22.204,
+     20.89,
+     18.832,
+     19.438,
+     23.176,
+     25.688,
+     18.18,
+     20.756,
+     20.422,
+     18.745,
+     17.409,
+     22.074,
+     27.961,
+     22.98,
+     29.176,
+     18.313,
+     21.126,
+     19.41,
+     19.174,
+     19.111,
+     17.554,
+     23.458
+    ],
+    "dream_fitness": [
+     20.886,
+     21.136,
+     19.459,
+     18.688,
+     24.861,
+     27.501,
+     21.473,
+     22.379,
+     20.547,
+     22.362,
+     25.762,
+     25.707,
+     19.019,
+     21.802,
+     22.549,
+     20.041,
+     17.961,
+     23.836,
+     29.705,
+     24.083,
+     36.963,
+     21.019,
+     22.772,
+     21.471,
+     19.651,
+     22.048,
+     18.665,
+     29.628
+    ]
+   }
+  },
+  {
+   "generation": 3,
+   "champion_id": "default",
+   "champion_gate": {
+    "objective": 19.234,
+    "leakage_pct": 15.592,
+    "honest_block_rate": 6.343,
+    "honest_unpaid_rate": 0.471
+   },
+   "challenger": {
+    "id": "g3-21",
+    "params": {
+     "vel_usd_lo": 1000.0,
+     "vel_usd_width": 1915.243,
+     "vel_n_lo": 7.0,
+     "vel_n_width": 4.208,
+     "graph_dens_lo": 0.4,
+     "graph_dens_width": 0.2,
+     "graph_min_workers": 4,
+     "graph_size_width": 2.71,
+     "graph_share_min": 3,
+     "drift_min_history": 4,
+     "drift_ratio_lo": 3.813,
+     "drift_ratio_width": 5.859,
+     "drift_rate_lo": 3.619,
+     "drift_rate_width": 2.679,
+     "policy_cap_base_usd": 150.0,
+     "policy_cap_per_day_usd": 1.285,
+     "policy_cap_max_usd": 509.021,
+     "policy_window_mult": 3.0,
+     "w0_velocity": 1.0,
+     "w0_graph": 0.911,
+     "w0_drift": 0.671,
+     "w0_policy": 0.396,
+     "step_up_threshold": 0.3,
+     "hold_threshold": 0.6,
+     "eta": 0.01,
+     "min_weight": 0.07,
+     "l1_abstain": 0
+    },
+    "objective_a": 15.782,
+    "objective_b": 18.871,
+    "gate": {
+     "objective": 18.871,
+     "leakage_pct": 15.363,
+     "honest_block_rate": 6.139,
+     "honest_unpaid_rate": 0.439
+    }
+   },
+   "promoted": false,
+   "rolled_back": false,
+   "rollback": null,
+   "champion_id_after": "default",
+   "attackers_scored_against": "default",
+   "strongest_attacker": {
+    "ring": {
+     "family": "ring",
+     "params": {
+      "ring_size": 29,
+      "n_requesters": 1,
+      "rate_per_day": 1.495,
+      "amount_median": 120.0,
+      "amount_sigma": 0.373,
+      "account_age_days": 60.0,
+      "start_day": 1.522
+     },
+     "leaked_usd": 13111.82,
+     "attack_usd": 135619.09,
+     "leakage_pct": 9.668
+    },
+    "structuring": {
+     "family": "structuring",
+     "params": {
+      "n_accounts": 3,
+      "eps": 7.835,
+      "k": 6,
+      "burst_window_hours": 11.277,
+      "n_bursts": 3,
+      "account_age_days": 15.926,
+      "start_day": 4.953
+     },
+     "leaked_usd": 5905.0,
+     "attack_usd": 53146.34,
+     "leakage_pct": 11.111
+    }
+   },
+   "strongest_attacker_family": "ring",
+   "attacker_pools": {
+    "ring": [
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 29,
+       "n_requesters": 1,
+       "rate_per_day": 1.495,
+       "amount_median": 120.0,
+       "amount_sigma": 0.373,
+       "account_age_days": 60.0,
+       "start_day": 1.522
+      },
+      "leaked_usd": 13111.82,
+      "attack_usd": 135619.09,
+      "leakage_pct": 9.668
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 2,
+       "rate_per_day": 1.184,
+       "amount_median": 110.534,
+       "amount_sigma": 0.3,
+       "account_age_days": 106.11,
+       "start_day": 1.397
+      },
+      "leaked_usd": 12022.9,
+      "attack_usd": 102248.91,
+      "leakage_pct": 11.758
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 1,
+       "rate_per_day": 1.308,
+       "amount_median": 116.545,
+       "amount_sigma": 0.3,
+       "account_age_days": 60.0,
+       "start_day": 0.635
+      },
+      "leaked_usd": 11569.4,
+      "attack_usd": 128138.02,
+      "leakage_pct": 9.029
+     }
+    ],
+    "structuring": [
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 3,
+       "eps": 7.835,
+       "k": 6,
+       "burst_window_hours": 11.277,
+       "n_bursts": 3,
+       "account_age_days": 15.926,
+       "start_day": 4.953
+      },
+      "leaked_usd": 5905.0,
+      "attack_usd": 53146.34,
+      "leakage_pct": 11.111
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 11.556,
+       "k": 6,
+       "burst_window_hours": 8.157,
+       "n_bursts": 2,
+       "account_age_days": 16.847,
+       "start_day": 3.662
+      },
+      "leaked_usd": 4883.67,
+      "attack_usd": 46885.23,
+      "leakage_pct": 10.416
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 3,
+       "eps": 1.0,
+       "k": 6,
+       "burst_window_hours": 1.007,
+       "n_bursts": 1,
+       "account_age_days": 10.22,
+       "start_day": 5.519
+      },
+      "leaked_usd": 4484.47,
+      "attack_usd": 17958.2,
+      "leakage_pct": 24.972
+     }
+    ]
+   },
+   "champion_weights": {
+    "velocity": 0.05,
+    "graph": 0.85,
+    "drift": 0.05,
+    "policy": 0.05
+   },
+   "fitness_best": 15.782,
+   "fitness_mean": 18.435,
+   "dream": {
+    "g": 3,
+    "lam": 0.3,
+    "lam_next": 0.3,
+    "gap_ema": 0.0,
+    "n_dreams": 32,
+    "mean_weight": 1.0,
+    "min_weight": 1.0,
+    "share_counts": {
+     "posterior": 24,
+     "uncertain": 0,
+     "recombined": 8
+    },
+    "n_observations": 19,
+    "fit_seconds": 1.333,
+    "arm": {
+     "use_wm": true,
+     "use_skeptic": false,
+     "use_calibration": true
+    },
+    "real_fitness": [
+     16.362,
+     16.181,
+     16.249,
+     16.421,
+     17.093,
+     28.085,
+     19.526,
+     16.123,
+     22.552,
+     17.695,
+     16.549,
+     19.076,
+     20.707,
+     19.631,
+     19.302,
+     17.127,
+     19.697,
+     18.171,
+     22.133,
+     17.01,
+     16.738,
+     20.67,
+     16.4,
+     17.14,
+     18.442,
+     15.782,
+     17.631,
+     17.69
+    ],
+    "blended_fitness": [
+     16.479,
+     16.83,
+     16.869,
+     17.389,
+     17.417,
+     28.928,
+     19.533,
+     17.051,
+     23.019,
+     18.133,
+     16.998,
+     19.467,
+     21.369,
+     19.719,
+     19.645,
+     18.53,
+     20.132,
+     19.38,
+     23.347,
+     18.663,
+     17.801,
+     21.799,
+     17.473,
+     17.915,
+     19.108,
+     16.44,
+     18.467,
+     19.444
+    ],
+    "dream_fitness": [
+     16.751,
+     18.346,
+     18.318,
+     19.649,
+     18.174,
+     30.894,
+     19.548,
+     19.214,
+     24.107,
+     19.154,
+     18.046,
+     20.379,
+     22.913,
+     19.923,
+     20.446,
+     21.806,
+     21.149,
+     22.2,
+     26.179,
+     22.518,
+     20.28,
+     24.435,
+     19.978,
+     19.723,
+     20.662,
+     17.974,
+     20.418,
+     23.534
+    ]
+   }
+  },
+  {
+   "generation": 4,
+   "champion_id": "default",
+   "champion_gate": {
+    "objective": 18.235,
+    "leakage_pct": 14.56,
+    "honest_block_rate": 6.403,
+    "honest_unpaid_rate": 0.474
+   },
+   "challenger": {
+    "id": "g4-10",
+    "params": {
+     "vel_usd_lo": 905.618,
+     "vel_usd_width": 1915.243,
+     "vel_n_lo": 7.122,
+     "vel_n_width": 1.69,
+     "graph_dens_lo": 0.4,
+     "graph_dens_width": 0.228,
+     "graph_min_workers": 4,
+     "graph_size_width": 2.71,
+     "graph_share_min": 3,
+     "drift_min_history": 4,
+     "drift_ratio_lo": 4.748,
+     "drift_ratio_width": 5.859,
+     "drift_rate_lo": 3.5,
+     "drift_rate_width": 2.0,
+     "policy_cap_base_usd": 150.0,
+     "policy_cap_per_day_usd": 1.285,
+     "policy_cap_max_usd": 480.47,
+     "policy_window_mult": 3.0,
+     "w0_velocity": 1.0,
+     "w0_graph": 1.0,
+     "w0_drift": 0.671,
+     "w0_policy": 0.396,
+     "step_up_threshold": 0.481,
+     "hold_threshold": 0.628,
+     "eta": 0.005,
+     "min_weight": 0.01,
+     "l1_abstain": 0
+    },
+    "objective_a": 15.036,
+    "objective_b": 18.088,
+    "gate": {
+     "objective": 18.088,
+     "leakage_pct": 15.785,
+     "honest_block_rate": 3.905,
+     "honest_unpaid_rate": 0.351
+    }
+   },
+   "promoted": false,
+   "rolled_back": false,
+   "rollback": null,
+   "champion_id_after": "default",
+   "attackers_scored_against": "default",
+   "strongest_attacker": {
+    "ring": {
+     "family": "ring",
+     "params": {
+      "ring_size": 29,
+      "n_requesters": 1,
+      "rate_per_day": 1.491,
+      "amount_median": 120.0,
+      "amount_sigma": 0.405,
+      "account_age_days": 60.0,
+      "start_day": 0.532
+     },
+     "leaked_usd": 20084.18,
+     "attack_usd": 157848.6,
+     "leakage_pct": 12.724
+    },
+    "structuring": {
+     "family": "structuring",
+     "params": {
+      "n_accounts": 4,
+      "eps": 23.53,
+      "k": 6,
+      "burst_window_hours": 7.115,
+      "n_bursts": 2,
+      "account_age_days": 30.016,
+      "start_day": 0.327
+     },
+     "leaked_usd": 6194.09,
+     "attack_usd": 45742.99,
+     "leakage_pct": 13.541
+    }
+   },
+   "strongest_attacker_family": "ring",
+   "attacker_pools": {
+    "ring": [
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 29,
+       "n_requesters": 1,
+       "rate_per_day": 1.491,
+       "amount_median": 120.0,
+       "amount_sigma": 0.405,
+       "account_age_days": 60.0,
+       "start_day": 0.532
+      },
+      "leaked_usd": 20084.18,
+      "attack_usd": 157848.6,
+      "leakage_pct": 12.724
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 1,
+       "rate_per_day": 1.308,
+       "amount_median": 116.545,
+       "amount_sigma": 0.3,
+       "account_age_days": 60.0,
+       "start_day": 0.635
+      },
+      "leaked_usd": 16733.99,
+      "attack_usd": 134302.56,
+      "leakage_pct": 12.46
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 29,
+       "n_requesters": 1,
+       "rate_per_day": 1.495,
+       "amount_median": 120.0,
+       "amount_sigma": 0.373,
+       "account_age_days": 60.0,
+       "start_day": 1.522
+      },
+      "leaked_usd": 14634.25,
+      "attack_usd": 139054.06,
+      "leakage_pct": 10.524
+     }
+    ],
+    "structuring": [
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 23.53,
+       "k": 6,
+       "burst_window_hours": 7.115,
+       "n_bursts": 2,
+       "account_age_days": 30.016,
+       "start_day": 0.327
+      },
+      "leaked_usd": 6194.09,
+      "attack_usd": 45742.99,
+      "leakage_pct": 13.541
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 3,
+       "eps": 7.835,
+       "k": 6,
+       "burst_window_hours": 11.277,
+       "n_bursts": 3,
+       "account_age_days": 15.926,
+       "start_day": 4.953
+      },
+      "leaked_usd": 4429.24,
+      "attack_usd": 53156.55,
+      "leakage_pct": 8.332
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 11.556,
+       "k": 6,
+       "burst_window_hours": 8.157,
+       "n_bursts": 2,
+       "account_age_days": 16.847,
+       "start_day": 3.662
+      },
+      "leaked_usd": 2930.23,
+      "attack_usd": 46892.56,
+      "leakage_pct": 6.249
+     }
+    ]
+   },
+   "champion_weights": {
+    "velocity": 0.052,
+    "graph": 0.844,
+    "drift": 0.05,
+    "policy": 0.054
+   },
+   "fitness_best": 15.036,
+   "fitness_mean": 18.276,
+   "dream": {
+    "g": 4,
+    "lam": 0.3,
+    "lam_next": 0.3,
+    "gap_ema": 0.0,
+    "n_dreams": 32,
+    "mean_weight": 1.0,
+    "min_weight": 1.0,
+    "share_counts": {
+     "posterior": 24,
+     "uncertain": 0,
+     "recombined": 8
+    },
+    "n_observations": 20,
+    "fit_seconds": 1.748,
+    "arm": {
+     "use_wm": true,
+     "use_skeptic": false,
+     "use_calibration": true
+    },
+    "real_fitness": [
+     15.461,
+     16.008,
+     15.963,
+     16.226,
+     15.774,
+     16.468,
+     15.822,
+     22.343,
+     23.611,
+     27.778,
+     18.047,
+     16.134,
+     17.217,
+     15.614,
+     15.036,
+     19.313,
+     21.638,
+     15.874,
+     16.304,
+     17.447,
+     17.561,
+     17.005,
+     18.113,
+     16.114,
+     28.081,
+     17.159,
+     22.537,
+     17.07
+    ],
+    "blended_fitness": [
+     15.976,
+     16.439,
+     16.455,
+     16.701,
+     16.213,
+     17.121,
+     16.284,
+     23.293,
+     24.342,
+     28.433,
+     18.572,
+     17.249,
+     18.219,
+     16.042,
+     15.927,
+     20.01,
+     21.98,
+     16.384,
+     16.66,
+     17.833,
+     17.987,
+     17.784,
+     18.273,
+     16.615,
+     28.615,
+     17.706,
+     22.738,
+     17.622
+    ],
+    "dream_fitness": [
+     17.177,
+     17.446,
+     17.603,
+     17.808,
+     17.237,
+     18.644,
+     17.363,
+     25.507,
+     26.05,
+     29.961,
+     19.796,
+     19.849,
+     20.555,
+     17.041,
+     18.008,
+     21.635,
+     22.78,
+     17.576,
+     17.49,
+     18.733,
+     18.98,
+     19.602,
+     18.647,
+     17.785,
+     29.861,
+     18.982,
+     23.209,
+     18.911
+    ]
+   }
+  },
+  {
+   "generation": 5,
+   "champion_id": "default",
+   "champion_gate": {
+    "objective": 18.662,
+    "leakage_pct": 15.041,
+    "honest_block_rate": 6.331,
+    "honest_unpaid_rate": 0.456
+   },
+   "challenger": {
+    "id": "g5-18",
+    "params": {
+     "vel_usd_lo": 1500.0,
+     "vel_usd_width": 2000.0,
+     "vel_n_lo": 7.0,
+     "vel_n_width": 1.0,
+     "graph_dens_lo": 0.4,
+     "graph_dens_width": 0.152,
+     "graph_min_workers": 4,
+     "graph_size_width": 2.71,
+     "graph_share_min": 3,
+     "drift_min_history": 5,
+     "drift_ratio_lo": 2.953,
+     "drift_ratio_width": 5.859,
+     "drift_rate_lo": 4.634,
+     "drift_rate_width": 2.292,
+     "policy_cap_base_usd": 177.845,
+     "policy_cap_per_day_usd": 1.285,
+     "policy_cap_max_usd": 922.257,
+     "policy_window_mult": 3.897,
+     "w0_velocity": 1.0,
+     "w0_graph": 1.0,
+     "w0_drift": 0.703,
+     "w0_policy": 0.977,
+     "step_up_threshold": 0.32,
+     "hold_threshold": 0.58,
+     "eta": 0.01,
+     "min_weight": 0.041,
+     "l1_abstain": 0
+    },
+    "objective_a": 15.86,
+    "objective_b": 17.76,
+    "gate": {
+     "objective": 17.76,
+     "leakage_pct": 14.42,
+     "honest_block_rate": 5.779,
+     "honest_unpaid_rate": 0.45
+    }
+   },
+   "promoted": true,
+   "rolled_back": false,
+   "rollback": null,
+   "champion_id_after": "g5-18",
+   "attackers_scored_against": "default",
+   "strongest_attacker": {
+    "ring": {
+     "family": "ring",
+     "params": {
+      "ring_size": 29,
+      "n_requesters": 1,
+      "rate_per_day": 1.491,
+      "amount_median": 120.0,
+      "amount_sigma": 0.405,
+      "account_age_days": 60.0,
+      "start_day": 0.532
+     },
+     "leaked_usd": 16447.68,
+     "attack_usd": 153801.49,
+     "leakage_pct": 10.694
+    },
+    "structuring": {
+     "family": "structuring",
+     "params": {
+      "n_accounts": 4,
+      "eps": 9.145,
+      "k": 6,
+      "burst_window_hours": 10.556,
+      "n_bursts": 3,
+      "account_age_days": 10.87,
+      "start_day": 4.449
+     },
+     "leaked_usd": 6882.6,
+     "attack_usd": 70692.11,
+     "leakage_pct": 9.736
+    }
+   },
+   "strongest_attacker_family": "ring",
+   "attacker_pools": {
+    "ring": [
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 29,
+       "n_requesters": 1,
+       "rate_per_day": 1.491,
+       "amount_median": 120.0,
+       "amount_sigma": 0.405,
+       "account_age_days": 60.0,
+       "start_day": 0.532
+      },
+      "leaked_usd": 16447.68,
+      "attack_usd": 153801.49,
+      "leakage_pct": 10.694
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 29,
+       "n_requesters": 1,
+       "rate_per_day": 1.495,
+       "amount_median": 120.0,
+       "amount_sigma": 0.373,
+       "account_age_days": 60.0,
+       "start_day": 1.522
+      },
+      "leaked_usd": 15937.6,
+      "attack_usd": 144116.5,
+      "leakage_pct": 11.059
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 2,
+       "rate_per_day": 1.202,
+       "amount_median": 120.0,
+       "amount_sigma": 0.3,
+       "account_age_days": 60.0,
+       "start_day": 0.678
+      },
+      "leaked_usd": 15606.34,
+      "attack_usd": 123032.28,
+      "leakage_pct": 12.685
+     }
+    ],
+    "structuring": [
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 9.145,
+       "k": 6,
+       "burst_window_hours": 10.556,
+       "n_bursts": 3,
+       "account_age_days": 10.87,
+       "start_day": 4.449
+      },
+      "leaked_usd": 6882.6,
+      "attack_usd": 70692.11,
+      "leakage_pct": 9.736
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 3,
+       "eps": 7.835,
+       "k": 6,
+       "burst_window_hours": 11.277,
+       "n_bursts": 3,
+       "account_age_days": 15.926,
+       "start_day": 4.953
+      },
+      "leaked_usd": 6400.65,
+      "attack_usd": 53157.7,
+      "leakage_pct": 12.041
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 11.556,
+       "k": 6,
+       "burst_window_hours": 8.157,
+       "n_bursts": 2,
+       "account_age_days": 16.847,
+       "start_day": 3.662
+      },
+      "leaked_usd": 5864.93,
+      "attack_usd": 46895.9,
+      "leakage_pct": 12.506
+     }
+    ]
+   },
+   "champion_weights": {
+    "velocity": 0.05,
+    "graph": 0.849,
+    "drift": 0.05,
+    "policy": 0.05
+   },
+   "fitness_best": 15.86,
+   "fitness_mean": 18.533,
+   "dream": {
+    "g": 5,
+    "lam": 0.3,
+    "lam_next": 0.193,
+    "gap_ema": 0.554,
+    "n_dreams": 32,
+    "mean_weight": 1.0,
+    "min_weight": 1.0,
+    "share_counts": {
+     "posterior": 24,
+     "uncertain": 0,
+     "recombined": 8
+    },
+    "n_observations": 20,
+    "fit_seconds": 1.263,
+    "arm": {
+     "use_wm": true,
+     "use_skeptic": false,
+     "use_calibration": true
+    },
+    "predicted_gain": 2.011,
+    "realized_gain": 0.902,
+    "gap": 1.108,
+    "real_fitness": [
+     15.963,
+     16.294,
+     16.386,
+     16.814,
+     17.717,
+     22.412,
+     16.528,
+     17.414,
+     23.359,
+     18.059,
+     16.833,
+     24.497,
+     16.238,
+     16.656,
+     17.06,
+     16.238,
+     17.149,
+     15.998,
+     17.345,
+     29.305,
+     21.675,
+     24.051,
+     15.86,
+     20.459,
+     16.755,
+     17.273,
+     17.691,
+     16.902
+    ],
+    "blended_fitness": [
+     16.211,
+     16.553,
+     16.78,
+     17.369,
+     18.563,
+     22.287,
+     16.801,
+     18.095,
+     24.117,
+     18.717,
+     17.108,
+     24.481,
+     16.564,
+     17.219,
+     17.382,
+     16.473,
+     17.439,
+     16.354,
+     17.631,
+     29.909,
+     21.87,
+     24.474,
+     16.099,
+     21.702,
+     17.391,
+     17.641,
+     18.035,
+     17.229
+    ],
+    "dream_fitness": [
+     16.79,
+     17.155,
+     17.7,
+     18.666,
+     20.538,
+     21.995,
+     17.438,
+     19.684,
+     25.888,
+     20.255,
+     17.749,
+     24.444,
+     17.325,
+     18.532,
+     18.133,
+     17.021,
+     18.116,
+     17.186,
+     18.301,
+     31.319,
+     22.324,
+     25.463,
+     16.655,
+     24.602,
+     18.875,
+     18.5,
+     18.838,
+     17.989
+    ]
+   }
+  },
+  {
+   "generation": 6,
+   "champion_id": "g5-18",
+   "champion_gate": {
+    "objective": 17.648,
+    "leakage_pct": 14.403,
+    "honest_block_rate": 5.6,
+    "honest_unpaid_rate": 0.444
+   },
+   "challenger": {
+    "id": "g6-12",
+    "params": {
+     "vel_usd_lo": 905.618,
+     "vel_usd_width": 1915.243,
+     "vel_n_lo": 8.765,
+     "vel_n_width": 1.602,
+     "graph_dens_lo": 0.4,
+     "graph_dens_width": 0.228,
+     "graph_min_workers": 3,
+     "graph_size_width": 2.71,
+     "graph_share_min": 4,
+     "drift_min_history": 3,
+     "drift_ratio_lo": 4.748,
+     "drift_ratio_width": 3.269,
+     "drift_rate_lo": 3.619,
+     "drift_rate_width": 3.086,
+     "policy_cap_base_usd": 150.0,
+     "policy_cap_per_day_usd": 1.285,
+     "policy_cap_max_usd": 473.675,
+     "policy_window_mult": 3.285,
+     "w0_velocity": 1.0,
+     "w0_graph": 1.0,
+     "w0_drift": 0.671,
+     "w0_policy": 1.0,
+     "step_up_threshold": 0.481,
+     "hold_threshold": 0.658,
+     "eta": 0.005,
+     "min_weight": 0.01,
+     "l1_abstain": 0
+    },
+    "objective_a": 14.971,
+    "objective_b": 17.862,
+    "gate": {
+     "objective": 17.862,
+     "leakage_pct": 15.279,
+     "honest_block_rate": 4.41,
+     "honest_unpaid_rate": 0.378
+    }
+   },
+   "promoted": false,
+   "rolled_back": false,
+   "rollback": null,
+   "champion_id_after": "g5-18",
+   "attackers_scored_against": "g5-18",
+   "strongest_attacker": {
+    "ring": {
+     "family": "ring",
+     "params": {
+      "ring_size": 29,
+      "n_requesters": 1,
+      "rate_per_day": 1.491,
+      "amount_median": 120.0,
+      "amount_sigma": 0.405,
+      "account_age_days": 60.0,
+      "start_day": 0.532
+     },
+     "leaked_usd": 16965.16,
+     "attack_usd": 151490.83,
+     "leakage_pct": 11.199
+    },
+    "structuring": {
+     "family": "structuring",
+     "params": {
+      "n_accounts": 4,
+      "eps": 9.145,
+      "k": 6,
+      "burst_window_hours": 10.556,
+      "n_bursts": 3,
+      "account_age_days": 10.87,
+      "start_day": 4.449
+     },
+     "leaked_usd": 8839.29,
+     "attack_usd": 70706.71,
+     "leakage_pct": 12.501
+    }
+   },
+   "strongest_attacker_family": "ring",
+   "attacker_pools": {
+    "ring": [
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 29,
+       "n_requesters": 1,
+       "rate_per_day": 1.491,
+       "amount_median": 120.0,
+       "amount_sigma": 0.405,
+       "account_age_days": 60.0,
+       "start_day": 0.532
+      },
+      "leaked_usd": 16965.16,
+      "attack_usd": 151490.83,
+      "leakage_pct": 11.199
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 28,
+       "n_requesters": 1,
+       "rate_per_day": 1.5,
+       "amount_median": 120.0,
+       "amount_sigma": 0.409,
+       "account_age_days": 112.139,
+       "start_day": 0.623
+      },
+      "leaked_usd": 16137.38,
+      "attack_usd": 146031.02,
+      "leakage_pct": 11.051
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 1,
+       "rate_per_day": 1.426,
+       "amount_median": 120.0,
+       "amount_sigma": 0.336,
+       "account_age_days": 109.601,
+       "start_day": 2.48
+      },
+      "leaked_usd": 14473.16,
+      "attack_usd": 124413.91,
+      "leakage_pct": 11.633
+     }
+    ],
+    "structuring": [
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 9.145,
+       "k": 6,
+       "burst_window_hours": 10.556,
+       "n_bursts": 3,
+       "account_age_days": 10.87,
+       "start_day": 4.449
+      },
+      "leaked_usd": 8839.29,
+      "attack_usd": 70706.71,
+      "leakage_pct": 12.501
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 3,
+       "eps": 7.835,
+       "k": 6,
+       "burst_window_hours": 11.277,
+       "n_bursts": 3,
+       "account_age_days": 15.926,
+       "start_day": 4.953
+      },
+      "leaked_usd": 5416.7,
+      "attack_usd": 53162.69,
+      "leakage_pct": 10.189
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 1.0,
+       "k": 5,
+       "burst_window_hours": 9.439,
+       "n_bursts": 2,
+       "account_age_days": 0.929,
+       "start_day": 4.255
+      },
+      "leaked_usd": 4990.28,
+      "attack_usd": 39912.14,
+      "leakage_pct": 12.503
+     }
+    ]
+   },
+   "champion_weights": {
+    "velocity": 0.041,
+    "graph": 0.876,
+    "drift": 0.041,
+    "policy": 0.041
+   },
+   "fitness_best": 14.971,
+   "fitness_mean": 17.847,
+   "dream": {
+    "g": 6,
+    "lam": 0.193,
+    "lam_next": 0.193,
+    "gap_ema": 0.554,
+    "n_dreams": 32,
+    "mean_weight": 1.0,
+    "min_weight": 1.0,
+    "share_counts": {
+     "posterior": 24,
+     "uncertain": 0,
+     "recombined": 8
+    },
+    "n_observations": 20,
+    "fit_seconds": 1.224,
+    "arm": {
+     "use_wm": true,
+     "use_skeptic": false,
+     "use_calibration": true
+    },
+    "real_fitness": [
+     15.379,
+     15.33,
+     15.573,
+     21.357,
+     18.067,
+     17.218,
+     17.304,
+     15.072,
+     16.045,
+     22.193,
+     20.344,
+     18.766,
+     20.805,
+     16.265,
+     18.047,
+     14.971,
+     15.449,
+     16.442,
+     16.616,
+     25.414,
+     21.858,
+     16.151,
+     16.671,
+     16.999,
+     15.296,
+     15.87,
+     24.082,
+     16.12
+    ],
+    "blended_fitness": [
+     15.586,
+     15.577,
+     15.623,
+     21.085,
+     18.148,
+     17.391,
+     17.543,
+     15.241,
+     16.261,
+     22.366,
+     20.243,
+     18.881,
+     20.75,
+     16.341,
+     17.997,
+     14.942,
+     15.55,
+     16.466,
+     16.576,
+     26.222,
+     22.084,
+     16.334,
+     16.937,
+     17.214,
+     15.461,
+     16.077,
+     23.15,
+     16.202
+    ],
+    "dream_fitness": [
+     16.451,
+     16.61,
+     15.833,
+     19.948,
+     18.486,
+     18.113,
+     18.541,
+     15.946,
+     17.161,
+     23.086,
+     19.819,
+     19.361,
+     20.516,
+     16.66,
+     17.786,
+     14.82,
+     15.971,
+     16.568,
+     16.408,
+     29.599,
+     23.027,
+     17.1,
+     18.048,
+     18.108,
+     16.149,
+     16.94,
+     19.254,
+     16.545
+    ]
+   }
+  },
+  {
+   "generation": 7,
+   "champion_id": "g5-18",
+   "champion_gate": {
+    "objective": 18.047,
+    "leakage_pct": 14.772,
+    "honest_block_rate": 5.648,
+    "honest_unpaid_rate": 0.451
+   },
+   "challenger": {
+    "id": "g6-12",
+    "params": {
+     "vel_usd_lo": 905.618,
+     "vel_usd_width": 1915.243,
+     "vel_n_lo": 8.765,
+     "vel_n_width": 1.602,
+     "graph_dens_lo": 0.4,
+     "graph_dens_width": 0.228,
+     "graph_min_workers": 3,
+     "graph_size_width": 2.71,
+     "graph_share_min": 4,
+     "drift_min_history": 3,
+     "drift_ratio_lo": 4.748,
+     "drift_ratio_width": 3.269,
+     "drift_rate_lo": 3.619,
+     "drift_rate_width": 3.086,
+     "policy_cap_base_usd": 150.0,
+     "policy_cap_per_day_usd": 1.285,
+     "policy_cap_max_usd": 473.675,
+     "policy_window_mult": 3.285,
+     "w0_velocity": 1.0,
+     "w0_graph": 1.0,
+     "w0_drift": 0.671,
+     "w0_policy": 1.0,
+     "step_up_threshold": 0.481,
+     "hold_threshold": 0.658,
+     "eta": 0.005,
+     "min_weight": 0.01,
+     "l1_abstain": 0
+    },
+    "objective_a": 14.08,
+    "objective_b": 18.363,
+    "gate": {
+     "objective": 18.363,
+     "leakage_pct": 15.735,
+     "honest_block_rate": 4.474,
+     "honest_unpaid_rate": 0.391
+    }
+   },
+   "promoted": false,
+   "rolled_back": false,
+   "rollback": null,
+   "champion_id_after": "g5-18",
+   "attackers_scored_against": "g5-18",
+   "strongest_attacker": {
+    "ring": {
+     "family": "ring",
+     "params": {
+      "ring_size": 29,
+      "n_requesters": 1,
+      "rate_per_day": 1.491,
+      "amount_median": 120.0,
+      "amount_sigma": 0.405,
+      "account_age_days": 60.0,
+      "start_day": 0.532
+     },
+     "leaked_usd": 18011.54,
+     "attack_usd": 144902.3,
+     "leakage_pct": 12.43
+    },
+    "structuring": {
+     "family": "structuring",
+     "params": {
+      "n_accounts": 4,
+      "eps": 9.145,
+      "k": 6,
+      "burst_window_hours": 10.556,
+      "n_bursts": 3,
+      "account_age_days": 10.87,
+      "start_day": 4.449
+     },
+     "leaked_usd": 6872.91,
+     "attack_usd": 70682.35,
+     "leakage_pct": 9.724
+    }
+   },
+   "strongest_attacker_family": "ring",
+   "attacker_pools": {
+    "ring": [
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 29,
+       "n_requesters": 1,
+       "rate_per_day": 1.491,
+       "amount_median": 120.0,
+       "amount_sigma": 0.405,
+       "account_age_days": 60.0,
+       "start_day": 0.532
+      },
+      "leaked_usd": 18011.54,
+      "attack_usd": 144902.3,
+      "leakage_pct": 12.43
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 2,
+       "rate_per_day": 1.258,
+       "amount_median": 116.32,
+       "amount_sigma": 0.392,
+       "account_age_days": 60.0,
+       "start_day": 0.646
+      },
+      "leaked_usd": 15598.16,
+      "attack_usd": 127904.08,
+      "leakage_pct": 12.195
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 28,
+       "n_requesters": 1,
+       "rate_per_day": 1.5,
+       "amount_median": 120.0,
+       "amount_sigma": 0.409,
+       "account_age_days": 112.139,
+       "start_day": 0.623
+      },
+      "leaked_usd": 13935.63,
+      "attack_usd": 139855.4,
+      "leakage_pct": 9.964
+     }
+    ],
+    "structuring": [
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 9.145,
+       "k": 6,
+       "burst_window_hours": 10.556,
+       "n_bursts": 3,
+       "account_age_days": 10.87,
+       "start_day": 4.449
+      },
+      "leaked_usd": 6872.91,
+      "attack_usd": 70682.35,
+      "leakage_pct": 9.724
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 14.022,
+       "k": 6,
+       "burst_window_hours": 10.675,
+       "n_bursts": 3,
+       "account_age_days": 0.292,
+       "start_day": 2.937
+      },
+      "leaked_usd": 6319.49,
+      "attack_usd": 69980.02,
+      "leakage_pct": 9.03
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 3,
+       "eps": 7.835,
+       "k": 6,
+       "burst_window_hours": 11.277,
+       "n_bursts": 3,
+       "account_age_days": 15.926,
+       "start_day": 4.953
+      },
+      "leaked_usd": 4924.7,
+      "attack_usd": 53147.86,
+      "leakage_pct": 9.266
+     }
+    ]
+   },
+   "champion_weights": {
+    "velocity": 0.041,
+    "graph": 0.876,
+    "drift": 0.041,
+    "policy": 0.041
+   },
+   "fitness_best": 14.08,
+   "fitness_mean": 16.718,
+   "dream": {
+    "g": 7,
+    "lam": 0.193,
+    "lam_next": 0.193,
+    "gap_ema": 0.554,
+    "n_dreams": 32,
+    "mean_weight": 1.0,
+    "min_weight": 1.0,
+    "share_counts": {
+     "posterior": 24,
+     "uncertain": 0,
+     "recombined": 8
+    },
+    "n_observations": 20,
+    "fit_seconds": 1.125,
+    "arm": {
+     "use_wm": true,
+     "use_skeptic": false,
+     "use_calibration": true
+    },
+    "real_fitness": [
+     14.08,
+     14.261,
+     14.43,
+     14.541,
+     16.38,
+     18.827,
+     22.69,
+     15.537,
+     14.98,
+     16.441,
+     19.363,
+     18.463,
+     14.937,
+     14.609,
+     18.535,
+     14.968,
+     15.156,
+     15.952,
+     20.109,
+     14.511,
+     17.624,
+     14.903,
+     14.538,
+     14.321,
+     18.041,
+     22.005,
+     15.033,
+     22.859
+    ],
+    "blended_fitness": [
+     14.053,
+     14.198,
+     14.358,
+     14.487,
+     16.386,
+     18.599,
+     22.691,
+     15.327,
+     14.91,
+     16.408,
+     18.644,
+     18.184,
+     14.939,
+     14.508,
+     18.703,
+     14.887,
+     15.09,
+     15.813,
+     20.169,
+     14.433,
+     17.531,
+     14.662,
+     14.418,
+     14.246,
+     17.833,
+     22.245,
+     14.92,
+     22.945
+    ],
+    "dream_fitness": [
+     13.937,
+     13.936,
+     14.056,
+     14.261,
+     16.412,
+     17.649,
+     22.694,
+     14.448,
+     14.617,
+     16.267,
+     15.638,
+     17.016,
+     14.944,
+     14.085,
+     19.41,
+     14.549,
+     14.811,
+     15.233,
+     20.42,
+     14.11,
+     17.141,
+     13.657,
+     13.917,
+     13.932,
+     16.964,
+     23.25,
+     14.446,
+     23.307
+    ]
+   }
+  },
+  {
+   "generation": 8,
+   "champion_id": "g5-18",
+   "champion_gate": {
+    "objective": 17.929,
+    "leakage_pct": 14.661,
+    "honest_block_rate": 5.667,
+    "honest_unpaid_rate": 0.434
+   },
+   "challenger": {
+    "id": "g8-9",
+    "params": {
+     "vel_usd_lo": 1153.405,
+     "vel_usd_width": 1915.243,
+     "vel_n_lo": 9.037,
+     "vel_n_width": 1.0,
+     "graph_dens_lo": 0.4,
+     "graph_dens_width": 0.228,
+     "graph_min_workers": 4,
+     "graph_size_width": 2.911,
+     "graph_share_min": 3,
+     "drift_min_history": 6,
+     "drift_ratio_lo": 4.124,
+     "drift_ratio_width": 5.859,
+     "drift_rate_lo": 3.619,
+     "drift_rate_width": 1.844,
+     "policy_cap_base_usd": 145.783,
+     "policy_cap_per_day_usd": 2.52,
+     "policy_cap_max_usd": 585.57,
+     "policy_window_mult": 3.285,
+     "w0_velocity": 1.0,
+     "w0_graph": 1.0,
+     "w0_drift": 0.671,
+     "w0_policy": 0.844,
+     "step_up_threshold": 0.481,
+     "hold_threshold": 0.55,
+     "eta": 0.081,
+     "min_weight": 0.152,
+     "l1_abstain": 1
+    },
+    "objective_a": 14.33,
+    "objective_b": 17.49,
+    "gate": {
+     "objective": 17.49,
+     "leakage_pct": 16.255,
+     "honest_block_rate": 2.076,
+     "honest_unpaid_rate": 0.197
+    }
+   },
+   "promoted": false,
+   "rolled_back": false,
+   "rollback": null,
+   "champion_id_after": "g5-18",
+   "attackers_scored_against": "g5-18",
+   "strongest_attacker": {
+    "ring": {
+     "family": "ring",
+     "params": {
+      "ring_size": 29,
+      "n_requesters": 1,
+      "rate_per_day": 1.491,
+      "amount_median": 120.0,
+      "amount_sigma": 0.405,
+      "account_age_days": 60.0,
+      "start_day": 0.532
+     },
+     "leaked_usd": 14393.5,
+     "attack_usd": 154364.04,
+     "leakage_pct": 9.324
+    },
+    "structuring": {
+     "family": "structuring",
+     "params": {
+      "n_accounts": 4,
+      "eps": 9.145,
+      "k": 6,
+      "burst_window_hours": 10.556,
+      "n_bursts": 3,
+      "account_age_days": 10.87,
+      "start_day": 4.449
+     },
+     "leaked_usd": 8339.09,
+     "attack_usd": 70674.74,
+     "leakage_pct": 11.799
+    }
+   },
+   "strongest_attacker_family": "ring",
+   "attacker_pools": {
+    "ring": [
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 29,
+       "n_requesters": 1,
+       "rate_per_day": 1.491,
+       "amount_median": 120.0,
+       "amount_sigma": 0.405,
+       "account_age_days": 60.0,
+       "start_day": 0.532
+      },
+      "leaked_usd": 14393.5,
+      "attack_usd": 154364.04,
+      "leakage_pct": 9.324
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 28,
+       "n_requesters": 2,
+       "rate_per_day": 1.333,
+       "amount_median": 96.556,
+       "amount_sigma": 0.357,
+       "account_age_days": 60.0,
+       "start_day": 0.0
+      },
+      "leaked_usd": 13690.28,
+      "attack_usd": 108205.26,
+      "leakage_pct": 12.652
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 29,
+       "n_requesters": 1,
+       "rate_per_day": 1.5,
+       "amount_median": 111.858,
+       "amount_sigma": 0.323,
+       "account_age_days": 60.0,
+       "start_day": 0.0
+      },
+      "leaked_usd": 12788.05,
+      "attack_usd": 145315.43,
+      "leakage_pct": 8.8
+     }
+    ],
+    "structuring": [
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 9.145,
+       "k": 6,
+       "burst_window_hours": 10.556,
+       "n_bursts": 3,
+       "account_age_days": 10.87,
+       "start_day": 4.449
+      },
+      "leaked_usd": 8339.09,
+      "attack_usd": 70674.74,
+      "leakage_pct": 11.799
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 21.271,
+       "k": 6,
+       "burst_window_hours": 10.156,
+       "n_bursts": 3,
+       "account_age_days": 11.639,
+       "start_day": 4.767
+      },
+      "leaked_usd": 7659.88,
+      "attack_usd": 68928.64,
+      "leakage_pct": 11.113
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 3,
+       "eps": 7.835,
+       "k": 6,
+       "burst_window_hours": 11.277,
+       "n_bursts": 3,
+       "account_age_days": 15.926,
+       "start_day": 4.953
+      },
+      "leaked_usd": 5905.0,
+      "attack_usd": 53146.34,
+      "leakage_pct": 11.111
+     }
+    ]
+   },
+   "champion_weights": {
+    "velocity": 0.042,
+    "graph": 0.875,
+    "drift": 0.042,
+    "policy": 0.042
+   },
+   "fitness_best": 14.33,
+   "fitness_mean": 16.534,
+   "dream": {
+    "g": 8,
+    "lam": 0.193,
+    "lam_next": 0.193,
+    "gap_ema": 0.554,
+    "n_dreams": 32,
+    "mean_weight": 1.0,
+    "min_weight": 1.0,
+    "share_counts": {
+     "posterior": 24,
+     "uncertain": 0,
+     "recombined": 8
+    },
+    "n_observations": 20,
+    "fit_seconds": 1.105,
+    "arm": {
+     "use_wm": true,
+     "use_skeptic": false,
+     "use_calibration": true
+    },
+    "real_fitness": [
+     14.82,
+     15.116,
+     15.165,
+     15.338,
+     15.505,
+     15.911,
+     15.607,
+     15.367,
+     18.454,
+     15.456,
+     15.864,
+     17.296,
+     20.562,
+     14.33,
+     15.613,
+     14.996,
+     18.434,
+     16.289,
+     19.242,
+     18.898,
+     19.696,
+     15.383,
+     15.439,
+     15.643,
+     22.242,
+     14.9,
+     15.951,
+     15.434
+    ],
+    "blended_fitness": [
+     14.717,
+     14.969,
+     14.985,
+     15.246,
+     15.326,
+     15.49,
+     15.547,
+     15.274,
+     18.306,
+     15.385,
+     15.74,
+     16.957,
+     20.667,
+     14.12,
+     15.333,
+     14.829,
+     18.169,
+     15.849,
+     19.032,
+     18.754,
+     19.457,
+     15.21,
+     15.278,
+     15.52,
+     22.101,
+     14.697,
+     15.814,
+     15.156
+    ],
+    "dream_fitness": [
+     14.286,
+     14.353,
+     14.235,
+     14.858,
+     14.582,
+     13.727,
+     15.299,
+     14.885,
+     17.69,
+     15.091,
+     15.223,
+     15.539,
+     21.108,
+     13.243,
+     14.165,
+     14.128,
+     17.059,
+     14.007,
+     18.156,
+     18.15,
+     18.457,
+     14.49,
+     14.602,
+     15.008,
+     21.511,
+     13.848,
+     15.24,
+     13.992
+    ]
+   }
+  },
+  {
+   "generation": 9,
+   "champion_id": "g5-18",
+   "champion_gate": {
+    "objective": 17.615,
+    "leakage_pct": 14.314,
+    "honest_block_rate": 5.698,
+    "honest_unpaid_rate": 0.452
+   },
+   "challenger": {
+    "id": "g8-9",
+    "params": {
+     "vel_usd_lo": 1153.405,
+     "vel_usd_width": 1915.243,
+     "vel_n_lo": 9.037,
+     "vel_n_width": 1.0,
+     "graph_dens_lo": 0.4,
+     "graph_dens_width": 0.228,
+     "graph_min_workers": 4,
+     "graph_size_width": 2.911,
+     "graph_share_min": 3,
+     "drift_min_history": 6,
+     "drift_ratio_lo": 4.124,
+     "drift_ratio_width": 5.859,
+     "drift_rate_lo": 3.619,
+     "drift_rate_width": 1.844,
+     "policy_cap_base_usd": 145.783,
+     "policy_cap_per_day_usd": 2.52,
+     "policy_cap_max_usd": 585.57,
+     "policy_window_mult": 3.285,
+     "w0_velocity": 1.0,
+     "w0_graph": 1.0,
+     "w0_drift": 0.671,
+     "w0_policy": 0.844,
+     "step_up_threshold": 0.481,
+     "hold_threshold": 0.55,
+     "eta": 0.081,
+     "min_weight": 0.152,
+     "l1_abstain": 1
+    },
+    "objective_a": 14.265,
+    "objective_b": 17.249,
+    "gate": {
+     "objective": 17.249,
+     "leakage_pct": 16.008,
+     "honest_block_rate": 2.063,
+     "honest_unpaid_rate": 0.209
+    }
+   },
+   "promoted": false,
+   "rolled_back": false,
+   "rollback": null,
+   "champion_id_after": "g5-18",
+   "attackers_scored_against": "g5-18",
+   "strongest_attacker": {
+    "ring": {
+     "family": "ring",
+     "params": {
+      "ring_size": 29,
+      "n_requesters": 1,
+      "rate_per_day": 1.491,
+      "amount_median": 120.0,
+      "amount_sigma": 0.405,
+      "account_age_days": 60.0,
+      "start_day": 0.532
+     },
+     "leaked_usd": 20296.84,
+     "attack_usd": 157848.6,
+     "leakage_pct": 12.858
+    },
+    "structuring": {
+     "family": "structuring",
+     "params": {
+      "n_accounts": 4,
+      "eps": 21.271,
+      "k": 6,
+      "burst_window_hours": 10.156,
+      "n_bursts": 3,
+      "account_age_days": 11.639,
+      "start_day": 4.767
+     },
+     "leaked_usd": 11494.75,
+     "attack_usd": 68947.99,
+     "leakage_pct": 16.672
+    }
+   },
+   "strongest_attacker_family": "ring",
+   "attacker_pools": {
+    "ring": [
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 29,
+       "n_requesters": 1,
+       "rate_per_day": 1.491,
+       "amount_median": 120.0,
+       "amount_sigma": 0.405,
+       "account_age_days": 60.0,
+       "start_day": 0.532
+      },
+      "leaked_usd": 20296.84,
+      "attack_usd": 157848.6,
+      "leakage_pct": 12.858
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 29,
+       "n_requesters": 1,
+       "rate_per_day": 1.472,
+       "amount_median": 120.0,
+       "amount_sigma": 0.453,
+       "account_age_days": 60.0,
+       "start_day": 0.635
+      },
+      "leaked_usd": 18822.46,
+      "attack_usd": 160994.8,
+      "leakage_pct": 11.691
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 28,
+       "n_requesters": 3,
+       "rate_per_day": 1.247,
+       "amount_median": 120.0,
+       "amount_sigma": 0.371,
+       "account_age_days": 60.0,
+       "start_day": 0.408
+      },
+      "leaked_usd": 17144.03,
+      "attack_usd": 130282.89,
+      "leakage_pct": 13.159
+     }
+    ],
+    "structuring": [
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 21.271,
+       "k": 6,
+       "burst_window_hours": 10.156,
+       "n_bursts": 3,
+       "account_age_days": 11.639,
+       "start_day": 4.767
+      },
+      "leaked_usd": 11494.75,
+      "attack_usd": 68947.99,
+      "leakage_pct": 16.672
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 22.991,
+       "k": 6,
+       "burst_window_hours": 10.245,
+       "n_bursts": 3,
+       "account_age_days": 19.621,
+       "start_day": 3.776
+      },
+      "leaked_usd": 9536.88,
+      "attack_usd": 68700.19,
+      "leakage_pct": 13.882
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 9.145,
+       "k": 6,
+       "burst_window_hours": 10.556,
+       "n_bursts": 3,
+       "account_age_days": 10.87,
+       "start_day": 4.449
+      },
+      "leaked_usd": 7372.09,
+      "attack_usd": 70694.09,
+      "leakage_pct": 10.428
+     }
+    ]
+   },
+   "champion_weights": {
+    "velocity": 0.043,
+    "graph": 0.846,
+    "drift": 0.042,
+    "policy": 0.07
+   },
+   "fitness_best": 14.151,
+   "fitness_mean": 16.064,
+   "dream": {
+    "g": 9,
+    "lam": 0.193,
+    "lam_next": 0.193,
+    "gap_ema": 0.554,
+    "n_dreams": 32,
+    "mean_weight": 1.0,
+    "min_weight": 1.0,
+    "share_counts": {
+     "posterior": 24,
+     "uncertain": 0,
+     "recombined": 8
+    },
+    "n_observations": 20,
+    "fit_seconds": 1.085,
+    "arm": {
+     "use_wm": true,
+     "use_skeptic": false,
+     "use_calibration": true
+    },
+    "real_fitness": [
+     14.265,
+     15.062,
+     14.643,
+     14.904,
+     14.614,
+     15.579,
+     14.151,
+     15.903,
+     19.006,
+     14.833,
+     15.536,
+     17.342,
+     16.405,
+     15.404,
+     15.29,
+     16.742,
+     20.06,
+     16.571,
+     14.954,
+     16.848,
+     16.834,
+     22.89,
+     14.237,
+     14.992,
+     16.119,
+     15.917,
+     15.519,
+     15.173
+    ],
+    "blended_fitness": [
+     14.101,
+     14.721,
+     14.609,
+     14.966,
+     14.449,
+     15.183,
+     14.132,
+     15.644,
+     19.184,
+     14.693,
+     15.699,
+     17.324,
+     15.893,
+     15.091,
+     15.359,
+     16.717,
+     20.152,
+     16.53,
+     14.692,
+     16.775,
+     16.446,
+     21.23,
+     14.209,
+     14.731,
+     16.186,
+     16.191,
+     15.303,
+     15.069
+    ],
+    "dream_fitness": [
+     13.416,
+     13.297,
+     14.47,
+     15.224,
+     13.759,
+     13.528,
+     14.052,
+     14.56,
+     19.924,
+     14.106,
+     16.38,
+     17.251,
+     13.753,
+     13.78,
+     15.648,
+     16.61,
+     20.537,
+     16.36,
+     13.596,
+     16.47,
+     14.826,
+     14.291,
+     14.095,
+     13.638,
+     16.467,
+     17.336,
+     14.4,
+     14.635
+    ]
+   }
+  },
+  {
+   "generation": 10,
+   "champion_id": "g5-18",
+   "champion_gate": {
+    "objective": 18.29,
+    "leakage_pct": 15.078,
+    "honest_block_rate": 5.568,
+    "honest_unpaid_rate": 0.428
+   },
+   "challenger": {
+    "id": "g8-9",
+    "params": {
+     "vel_usd_lo": 1153.405,
+     "vel_usd_width": 1915.243,
+     "vel_n_lo": 9.037,
+     "vel_n_width": 1.0,
+     "graph_dens_lo": 0.4,
+     "graph_dens_width": 0.228,
+     "graph_min_workers": 4,
+     "graph_size_width": 2.911,
+     "graph_share_min": 3,
+     "drift_min_history": 6,
+     "drift_ratio_lo": 4.124,
+     "drift_ratio_width": 5.859,
+     "drift_rate_lo": 3.619,
+     "drift_rate_width": 1.844,
+     "policy_cap_base_usd": 145.783,
+     "policy_cap_per_day_usd": 2.52,
+     "policy_cap_max_usd": 585.57,
+     "policy_window_mult": 3.285,
+     "w0_velocity": 1.0,
+     "w0_graph": 1.0,
+     "w0_drift": 0.671,
+     "w0_policy": 0.844,
+     "step_up_threshold": 0.481,
+     "hold_threshold": 0.55,
+     "eta": 0.081,
+     "min_weight": 0.152,
+     "l1_abstain": 1
+    },
+    "objective_a": 13.679,
+    "objective_b": 17.995,
+    "gate": {
+     "objective": 17.995,
+     "leakage_pct": 16.787,
+     "honest_block_rate": 2.027,
+     "honest_unpaid_rate": 0.194
+    }
+   },
+   "promoted": false,
+   "rolled_back": false,
+   "rollback": null,
+   "champion_id_after": "g5-18",
+   "attackers_scored_against": "g5-18",
+   "strongest_attacker": {
+    "ring": {
+     "family": "ring",
+     "params": {
+      "ring_size": 30,
+      "n_requesters": 2,
+      "rate_per_day": 1.5,
+      "amount_median": 120.0,
+      "amount_sigma": 0.469,
+      "account_age_days": 62.978,
+      "start_day": 0.0
+     },
+     "leaked_usd": 20099.85,
+     "attack_usd": 174113.57,
+     "leakage_pct": 11.544
+    },
+    "structuring": {
+     "family": "structuring",
+     "params": {
+      "n_accounts": 4,
+      "eps": 22.011,
+      "k": 6,
+      "burst_window_hours": 9.928,
+      "n_bursts": 3,
+      "account_age_days": 6.211,
+      "start_day": 5.217
+     },
+     "leaked_usd": 9085.1,
+     "attack_usd": 68839.46,
+     "leakage_pct": 13.197
+    }
+   },
+   "strongest_attacker_family": "ring",
+   "attacker_pools": {
+    "ring": [
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 2,
+       "rate_per_day": 1.5,
+       "amount_median": 120.0,
+       "amount_sigma": 0.469,
+       "account_age_days": 62.978,
+       "start_day": 0.0
+      },
+      "leaked_usd": 20099.85,
+      "attack_usd": 174113.57,
+      "leakage_pct": 11.544
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 29,
+       "n_requesters": 1,
+       "rate_per_day": 1.491,
+       "amount_median": 120.0,
+       "amount_sigma": 0.405,
+       "account_age_days": 60.0,
+       "start_day": 0.532
+      },
+      "leaked_usd": 16447.68,
+      "attack_usd": 153801.49,
+      "leakage_pct": 10.694
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 28,
+       "n_requesters": 3,
+       "rate_per_day": 1.405,
+       "amount_median": 120.0,
+       "amount_sigma": 0.348,
+       "account_age_days": 60.0,
+       "start_day": 0.931
+      },
+      "leaked_usd": 16408.09,
+      "attack_usd": 129902.2,
+      "leakage_pct": 12.631
+     }
+    ],
+    "structuring": [
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 22.011,
+       "k": 6,
+       "burst_window_hours": 9.928,
+       "n_bursts": 3,
+       "account_age_days": 6.211,
+       "start_day": 5.217
+      },
+      "leaked_usd": 9085.1,
+      "attack_usd": 68839.46,
+      "leakage_pct": 13.197
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 21.271,
+       "k": 6,
+       "burst_window_hours": 10.156,
+       "n_bursts": 3,
+       "account_age_days": 11.639,
+       "start_day": 4.767
+      },
+      "leaked_usd": 8137.73,
+      "attack_usd": 68946.02,
+      "leakage_pct": 11.803
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 22.626,
+       "k": 6,
+       "burst_window_hours": 11.656,
+       "n_bursts": 3,
+       "account_age_days": 14.738,
+       "start_day": 3.049
+      },
+      "leaked_usd": 8123.49,
+      "attack_usd": 68750.82,
+      "leakage_pct": 11.816
+     }
+    ]
+   },
+   "champion_weights": {
+    "velocity": 0.042,
+    "graph": 0.875,
+    "drift": 0.041,
+    "policy": 0.042
+   },
+   "fitness_best": 13.674,
+   "fitness_mean": 15.366,
+   "dream": {
+    "g": 10,
+    "lam": 0.193,
+    "lam_next": 0.193,
+    "gap_ema": 0.554,
+    "n_dreams": 32,
+    "mean_weight": 1.0,
+    "min_weight": 1.0,
+    "share_counts": {
+     "posterior": 24,
+     "uncertain": 0,
+     "recombined": 8
+    },
+    "n_observations": 20,
+    "fit_seconds": 1.11,
+    "arm": {
+     "use_wm": true,
+     "use_skeptic": false,
+     "use_calibration": true
+    },
+    "real_fitness": [
+     13.679,
+     13.674,
+     13.682,
+     14.458,
+     14.13,
+     16.632,
+     17.721,
+     13.785,
+     17.558,
+     14.021,
+     16.186,
+     15.235,
+     14.649,
+     15.603,
+     16.048,
+     14.625,
+     15.732,
+     16.017,
+     14.548,
+     15.164,
+     14.215,
+     14.148,
+     16.361,
+     15.308,
+     22.266,
+     13.827,
+     16.684,
+     14.304
+    ],
+    "blended_fitness": [
+     13.266,
+     13.383,
+     13.403,
+     14.241,
+     13.762,
+     15.943,
+     16.665,
+     13.448,
+     17.386,
+     13.689,
+     15.51,
+     15.07,
+     14.131,
+     14.818,
+     15.622,
+     14.174,
+     15.743,
+     15.23,
+     13.909,
+     14.522,
+     13.895,
+     13.659,
+     15.982,
+     14.677,
+     21.714,
+     13.412,
+     16.074,
+     14.112
+    ],
+    "dream_fitness": [
+     11.539,
+     12.169,
+     12.233,
+     13.334,
+     12.222,
+     13.061,
+     12.249,
+     12.041,
+     16.668,
+     12.3,
+     12.684,
+     14.381,
+     11.967,
+     11.54,
+     13.84,
+     12.288,
+     15.79,
+     11.94,
+     11.236,
+     11.835,
+     12.561,
+     11.617,
+     14.396,
+     12.039,
+     19.41,
+     11.681,
+     13.524,
+     13.312
+    ]
+   }
+  },
+  {
+   "generation": 11,
+   "champion_id": "g5-18",
+   "champion_gate": {
+    "objective": 18.186,
+    "leakage_pct": 14.918,
+    "honest_block_rate": 5.643,
+    "honest_unpaid_rate": 0.446
+   },
+   "challenger": {
+    "id": "g8-9",
+    "params": {
+     "vel_usd_lo": 1153.405,
+     "vel_usd_width": 1915.243,
+     "vel_n_lo": 9.037,
+     "vel_n_width": 1.0,
+     "graph_dens_lo": 0.4,
+     "graph_dens_width": 0.228,
+     "graph_min_workers": 4,
+     "graph_size_width": 2.911,
+     "graph_share_min": 3,
+     "drift_min_history": 6,
+     "drift_ratio_lo": 4.124,
+     "drift_ratio_width": 5.859,
+     "drift_rate_lo": 3.619,
+     "drift_rate_width": 1.844,
+     "policy_cap_base_usd": 145.783,
+     "policy_cap_per_day_usd": 2.52,
+     "policy_cap_max_usd": 585.57,
+     "policy_window_mult": 3.285,
+     "w0_velocity": 1.0,
+     "w0_graph": 1.0,
+     "w0_drift": 0.671,
+     "w0_policy": 0.844,
+     "step_up_threshold": 0.481,
+     "hold_threshold": 0.55,
+     "eta": 0.081,
+     "min_weight": 0.152,
+     "l1_abstain": 1
+    },
+    "objective_a": 14.545,
+    "objective_b": 17.712,
+    "gate": {
+     "objective": 17.712,
+     "leakage_pct": 16.516,
+     "honest_block_rate": 2.007,
+     "honest_unpaid_rate": 0.193
+    }
+   },
+   "promoted": false,
+   "rolled_back": false,
+   "rollback": null,
+   "champion_id_after": "g5-18",
+   "attackers_scored_against": "g5-18",
+   "strongest_attacker": {
+    "ring": {
+     "family": "ring",
+     "params": {
+      "ring_size": 30,
+      "n_requesters": 3,
+      "rate_per_day": 1.5,
+      "amount_median": 120.0,
+      "amount_sigma": 0.505,
+      "account_age_days": 60.0,
+      "start_day": 0.0
+     },
+     "leaked_usd": 19525.42,
+     "attack_usd": 171094.98,
+     "leakage_pct": 11.412
+    },
+    "structuring": {
+     "family": "structuring",
+     "params": {
+      "n_accounts": 3,
+      "eps": 8.996,
+      "k": 6,
+      "burst_window_hours": 10.408,
+      "n_bursts": 3,
+      "account_age_days": 7.408,
+      "start_day": 4.343
+     },
+     "leaked_usd": 9816.35,
+     "attack_usd": 53037.31,
+     "leakage_pct": 18.508
+    }
+   },
+   "strongest_attacker_family": "ring",
+   "attacker_pools": {
+    "ring": [
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 3,
+       "rate_per_day": 1.5,
+       "amount_median": 120.0,
+       "amount_sigma": 0.505,
+       "account_age_days": 60.0,
+       "start_day": 0.0
+      },
+      "leaked_usd": 19525.42,
+      "attack_usd": 171094.98,
+      "leakage_pct": 11.412
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 2,
+       "rate_per_day": 1.5,
+       "amount_median": 120.0,
+       "amount_sigma": 0.469,
+       "account_age_days": 62.978,
+       "start_day": 0.0
+      },
+      "leaked_usd": 18299.12,
+      "attack_usd": 168262.15,
+      "leakage_pct": 10.875
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 29,
+       "n_requesters": 1,
+       "rate_per_day": 1.491,
+       "amount_median": 120.0,
+       "amount_sigma": 0.405,
+       "account_age_days": 60.0,
+       "start_day": 0.532
+      },
+      "leaked_usd": 16965.16,
+      "attack_usd": 151490.83,
+      "leakage_pct": 11.199
+     }
+    ],
+    "structuring": [
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 3,
+       "eps": 8.996,
+       "k": 6,
+       "burst_window_hours": 10.408,
+       "n_bursts": 3,
+       "account_age_days": 7.408,
+       "start_day": 4.343
+      },
+      "leaked_usd": 9816.35,
+      "attack_usd": 53037.31,
+      "leakage_pct": 18.508
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 21.271,
+       "k": 6,
+       "burst_window_hours": 10.156,
+       "n_bursts": 3,
+       "account_age_days": 11.639,
+       "start_day": 4.767
+      },
+      "leaked_usd": 8142.54,
+      "attack_usd": 68960.58,
+      "leakage_pct": 11.807
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 28.183,
+       "k": 6,
+       "burst_window_hours": 12.0,
+       "n_bursts": 3,
+       "account_age_days": 15.123,
+       "start_day": 3.165
+      },
+      "leaked_usd": 7560.24,
+      "attack_usd": 67965.18,
+      "leakage_pct": 11.124
+     }
+    ]
+   },
+   "champion_weights": {
+    "velocity": 0.041,
+    "graph": 0.876,
+    "drift": 0.041,
+    "policy": 0.041
+   },
+   "fitness_best": 14.468,
+   "fitness_mean": 16.147,
+   "dream": {
+    "g": 11,
+    "lam": 0.193,
+    "lam_next": 0.193,
+    "gap_ema": 0.554,
+    "n_dreams": 32,
+    "mean_weight": 1.0,
+    "min_weight": 1.0,
+    "share_counts": {
+     "posterior": 24,
+     "uncertain": 0,
+     "recombined": 8
+    },
+    "n_observations": 20,
+    "fit_seconds": 1.072,
+    "arm": {
+     "use_wm": true,
+     "use_skeptic": false,
+     "use_calibration": true
+    },
+    "real_fitness": [
+     14.545,
+     14.468,
+     14.671,
+     15.534,
+     16.417,
+     17.421,
+     14.599,
+     15.327,
+     15.864,
+     18.486,
+     15.441,
+     14.58,
+     17.693,
+     17.446,
+     21.23,
+     20.793,
+     15.211,
+     15.29,
+     15.651,
+     14.96,
+     16.759,
+     15.031,
+     15.186,
+     15.154,
+     16.433,
+     16.55,
+     15.416,
+     15.972
+    ],
+    "blended_fitness": [
+     14.042,
+     14.099,
+     14.254,
+     15.164,
+     15.524,
+     16.362,
+     14.132,
+     15.1,
+     15.175,
+     18.009,
+     15.188,
+     14.189,
+     17.382,
+     17.291,
+     19.456,
+     20.687,
+     14.6,
+     14.888,
+     14.9,
+     14.587,
+     15.892,
+     14.682,
+     14.473,
+     14.908,
+     15.945,
+     15.777,
+     14.798,
+     15.391
+    ],
+    "dream_fitness": [
+     11.938,
+     12.558,
+     12.511,
+     13.616,
+     11.793,
+     11.933,
+     12.177,
+     14.154,
+     12.295,
+     16.014,
+     14.129,
+     12.555,
+     16.081,
+     16.64,
+     12.038,
+     20.244,
+     12.047,
+     13.208,
+     11.761,
+     13.027,
+     12.265,
+     13.222,
+     11.493,
+     13.878,
+     13.907,
+     12.545,
+     12.217,
+     12.963
+    ]
+   }
+  },
+  {
+   "generation": 12,
+   "champion_id": "g5-18",
+   "champion_gate": {
+    "objective": 16.612,
+    "leakage_pct": 13.327,
+    "honest_block_rate": 5.652,
+    "honest_unpaid_rate": 0.459
+   },
+   "challenger": {
+    "id": "g12-20",
+    "params": {
+     "vel_usd_lo": 1215.0,
+     "vel_usd_width": 1915.243,
+     "vel_n_lo": 9.275,
+     "vel_n_width": 1.0,
+     "graph_dens_lo": 0.406,
+     "graph_dens_width": 0.096,
+     "graph_min_workers": 4,
+     "graph_size_width": 2.911,
+     "graph_share_min": 3,
+     "drift_min_history": 5,
+     "drift_ratio_lo": 4.359,
+     "drift_ratio_width": 3.868,
+     "drift_rate_lo": 3.678,
+     "drift_rate_width": 1.844,
+     "policy_cap_base_usd": 143.96,
+     "policy_cap_per_day_usd": 4.477,
+     "policy_cap_max_usd": 585.57,
+     "policy_window_mult": 3.285,
+     "w0_velocity": 1.0,
+     "w0_graph": 1.0,
+     "w0_drift": 0.676,
+     "w0_policy": 0.844,
+     "step_up_threshold": 0.481,
+     "hold_threshold": 0.55,
+     "eta": 0.005,
+     "min_weight": 0.027,
+     "l1_abstain": 0
+    },
+    "objective_a": 14.002,
+    "objective_b": 15.836,
+    "gate": {
+     "objective": 15.836,
+     "leakage_pct": 14.043,
+     "honest_block_rate": 2.996,
+     "honest_unpaid_rate": 0.295
+    }
+   },
+   "promoted": true,
+   "rolled_back": false,
+   "rollback": null,
+   "champion_id_after": "g12-20",
+   "attackers_scored_against": "g5-18",
+   "strongest_attacker": {
+    "ring": {
+     "family": "ring",
+     "params": {
+      "ring_size": 30,
+      "n_requesters": 3,
+      "rate_per_day": 1.5,
+      "amount_median": 120.0,
+      "amount_sigma": 0.505,
+      "account_age_days": 60.0,
+      "start_day": 0.0
+     },
+     "leaked_usd": 24111.13,
+     "attack_usd": 175636.79,
+     "leakage_pct": 13.728
+    },
+    "structuring": {
+     "family": "structuring",
+     "params": {
+      "n_accounts": 4,
+      "eps": 28.183,
+      "k": 6,
+      "burst_window_hours": 12.0,
+      "n_bursts": 3,
+      "account_age_days": 15.123,
+      "start_day": 3.165
+     },
+     "leaked_usd": 9903.14,
+     "attack_usd": 67940.81,
+     "leakage_pct": 14.576
+    }
+   },
+   "strongest_attacker_family": "ring",
+   "attacker_pools": {
+    "ring": [
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 3,
+       "rate_per_day": 1.5,
+       "amount_median": 120.0,
+       "amount_sigma": 0.505,
+       "account_age_days": 60.0,
+       "start_day": 0.0
+      },
+      "leaked_usd": 24111.13,
+      "attack_usd": 175636.79,
+      "leakage_pct": 13.728
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 2,
+       "rate_per_day": 1.5,
+       "amount_median": 120.0,
+       "amount_sigma": 0.469,
+       "account_age_days": 62.978,
+       "start_day": 0.0
+      },
+      "leaked_usd": 21674.39,
+      "attack_usd": 172628.08,
+      "leakage_pct": 12.556
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 1,
+       "rate_per_day": 1.5,
+       "amount_median": 120.0,
+       "amount_sigma": 0.483,
+       "account_age_days": 87.797,
+       "start_day": 0.0
+      },
+      "leaked_usd": 19317.86,
+      "attack_usd": 169645.26,
+      "leakage_pct": 11.387
+     }
+    ],
+    "structuring": [
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 28.183,
+       "k": 6,
+       "burst_window_hours": 12.0,
+       "n_bursts": 3,
+       "account_age_days": 15.123,
+       "start_day": 3.165
+      },
+      "leaked_usd": 9903.14,
+      "attack_usd": 67940.81,
+      "leakage_pct": 14.576
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 21.271,
+       "k": 6,
+       "burst_window_hours": 10.156,
+       "n_bursts": 3,
+       "account_age_days": 11.639,
+       "start_day": 4.767
+      },
+      "leaked_usd": 8615.38,
+      "attack_usd": 68936.33,
+      "leakage_pct": 12.498
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 11.884,
+       "k": 5,
+       "burst_window_hours": 12.0,
+       "n_bursts": 3,
+       "account_age_days": 11.609,
+       "start_day": 3.44
+      },
+      "leaked_usd": 5376.46,
+      "attack_usd": 58568.42,
+      "leakage_pct": 9.18
+     }
+    ]
+   },
+   "champion_weights": {
+    "velocity": 0.041,
+    "graph": 0.876,
+    "drift": 0.041,
+    "policy": 0.041
+   },
+   "fitness_best": 14.002,
+   "fitness_mean": 15.27,
+   "dream": {
+    "g": 12,
+    "lam": 0.193,
+    "lam_next": 0.197,
+    "gap_ema": 0.521,
+    "n_dreams": 32,
+    "mean_weight": 1.0,
+    "min_weight": 1.0,
+    "share_counts": {
+     "posterior": 24,
+     "uncertain": 0,
+     "recombined": 8
+    },
+    "n_observations": 20,
+    "fit_seconds": 1.093,
+    "arm": {
+     "use_wm": true,
+     "use_skeptic": false,
+     "use_calibration": true
+    },
+    "predicted_gain": 1.265,
+    "realized_gain": 0.777,
+    "gap": 0.488,
+    "real_fitness": [
+     14.21,
+     14.164,
+     14.268,
+     14.902,
+     14.258,
+     14.354,
+     16.221,
+     14.39,
+     15.261,
+     14.081,
+     14.943,
+     16.851,
+     14.524,
+     14.346,
+     16.631,
+     15.725,
+     15.578,
+     18.8,
+     15.0,
+     14.431,
+     17.985,
+     15.078,
+     14.226,
+     15.534,
+     14.002,
+     14.606,
+     17.671,
+     15.531
+    ],
+    "blended_fitness": [
+     13.869,
+     13.946,
+     13.963,
+     14.762,
+     13.998,
+     14.008,
+     15.613,
+     14.23,
+     14.961,
+     13.899,
+     14.815,
+     16.134,
+     14.126,
+     14.12,
+     16.657,
+     15.353,
+     15.145,
+     18.808,
+     14.95,
+     14.205,
+     17.717,
+     14.608,
+     14.039,
+     14.914,
+     13.792,
+     14.165,
+     17.372,
+     14.917
+    ],
+    "dream_fitness": [
+     12.441,
+     13.033,
+     12.687,
+     14.179,
+     12.91,
+     12.563,
+     13.072,
+     13.562,
+     13.708,
+     13.14,
+     14.28,
+     13.133,
+     12.461,
+     13.173,
+     16.766,
+     13.802,
+     13.335,
+     18.839,
+     14.741,
+     13.26,
+     16.597,
+     12.64,
+     13.259,
+     12.324,
+     12.914,
+     12.319,
+     16.122,
+     12.348
+    ]
+   }
+  },
+  {
+   "generation": 13,
+   "champion_id": "g12-20",
+   "champion_gate": {
+    "objective": 16.799,
+    "leakage_pct": 15.05,
+    "honest_block_rate": 2.942,
+    "honest_unpaid_rate": 0.278
+   },
+   "challenger": {
+    "id": "g13-1",
+    "params": {
+     "vel_usd_lo": 1163.979,
+     "vel_usd_width": 1887.862,
+     "vel_n_lo": 10.0,
+     "vel_n_width": 1.619,
+     "graph_dens_lo": 0.406,
+     "graph_dens_width": 0.096,
+     "graph_min_workers": 4,
+     "graph_size_width": 3.372,
+     "graph_share_min": 3,
+     "drift_min_history": 5,
+     "drift_ratio_lo": 4.447,
+     "drift_ratio_width": 3.868,
+     "drift_rate_lo": 3.678,
+     "drift_rate_width": 1.844,
+     "policy_cap_base_usd": 92.375,
+     "policy_cap_per_day_usd": 6.739,
+     "policy_cap_max_usd": 631.845,
+     "policy_window_mult": 3.285,
+     "w0_velocity": 0.953,
+     "w0_graph": 1.0,
+     "w0_drift": 0.676,
+     "w0_policy": 0.844,
+     "step_up_threshold": 0.481,
+     "hold_threshold": 0.55,
+     "eta": 0.005,
+     "min_weight": 0.036,
+     "l1_abstain": 1
+    },
+    "objective_a": 14.098,
+    "objective_b": 16.778,
+    "gate": {
+     "objective": 16.778,
+     "leakage_pct": 15.142,
+     "honest_block_rate": 2.733,
+     "honest_unpaid_rate": 0.269
+    }
+   },
+   "promoted": false,
+   "rolled_back": false,
+   "rollback": null,
+   "champion_id_after": "g12-20",
+   "attackers_scored_against": "g12-20",
+   "strongest_attacker": {
+    "ring": {
+     "family": "ring",
+     "params": {
+      "ring_size": 30,
+      "n_requesters": 3,
+      "rate_per_day": 1.5,
+      "amount_median": 120.0,
+      "amount_sigma": 0.505,
+      "account_age_days": 60.0,
+      "start_day": 0.0
+     },
+     "leaked_usd": 22027.71,
+     "attack_usd": 167990.68,
+     "leakage_pct": 13.113
+    },
+    "structuring": {
+     "family": "structuring",
+     "params": {
+      "n_accounts": 4,
+      "eps": 21.271,
+      "k": 6,
+      "burst_window_hours": 10.156,
+      "n_bursts": 3,
+      "account_age_days": 11.639,
+      "start_day": 4.767
+     },
+     "leaked_usd": 7659.88,
+     "attack_usd": 68928.64,
+     "leakage_pct": 11.113
+    }
+   },
+   "strongest_attacker_family": "ring",
+   "attacker_pools": {
+    "ring": [
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 3,
+       "rate_per_day": 1.5,
+       "amount_median": 120.0,
+       "amount_sigma": 0.505,
+       "account_age_days": 60.0,
+       "start_day": 0.0
+      },
+      "leaked_usd": 22027.71,
+      "attack_usd": 167990.68,
+      "leakage_pct": 13.113
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 2,
+       "rate_per_day": 1.5,
+       "amount_median": 120.0,
+       "amount_sigma": 0.469,
+       "account_age_days": 62.978,
+       "start_day": 0.0
+      },
+      "leaked_usd": 19471.15,
+      "attack_usd": 165145.0,
+      "leakage_pct": 11.79
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 2,
+       "rate_per_day": 1.5,
+       "amount_median": 120.0,
+       "amount_sigma": 0.367,
+       "account_age_days": 60.0,
+       "start_day": 0.0
+      },
+      "leaked_usd": 18543.53,
+      "attack_usd": 158270.17,
+      "leakage_pct": 11.716
+     }
+    ],
+    "structuring": [
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 21.271,
+       "k": 6,
+       "burst_window_hours": 10.156,
+       "n_bursts": 3,
+       "account_age_days": 11.639,
+       "start_day": 4.767
+      },
+      "leaked_usd": 7659.88,
+      "attack_usd": 68928.64,
+      "leakage_pct": 11.113
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 11.884,
+       "k": 5,
+       "burst_window_hours": 12.0,
+       "n_bursts": 3,
+       "account_age_days": 11.609,
+       "start_day": 3.44
+      },
+      "leaked_usd": 6346.22,
+      "attack_usd": 58572.7,
+      "leakage_pct": 10.835
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 28.183,
+       "k": 6,
+       "burst_window_hours": 12.0,
+       "n_bursts": 3,
+       "account_age_days": 15.123,
+       "start_day": 3.165
+      },
+      "leaked_usd": 4717.44,
+      "attack_usd": 67933.26,
+      "leakage_pct": 6.944
+     }
+    ]
+   },
+   "champion_weights": {
+    "velocity": 0.072,
+    "graph": 0.814,
+    "drift": 0.045,
+    "policy": 0.069
+   },
+   "fitness_best": 14.073,
+   "fitness_mean": 15.509,
+   "dream": {
+    "g": 13,
+    "lam": 0.197,
+    "lam_next": 0.197,
+    "gap_ema": 0.521,
+    "n_dreams": 32,
+    "mean_weight": 1.0,
+    "min_weight": 1.0,
+    "share_counts": {
+     "posterior": 24,
+     "uncertain": 0,
+     "recombined": 8
+    },
+    "n_observations": 20,
+    "fit_seconds": 1.113,
+    "arm": {
+     "use_wm": true,
+     "use_skeptic": false,
+     "use_calibration": true
+    },
+    "real_fitness": [
+     14.158,
+     14.304,
+     14.073,
+     19.964,
+     14.098,
+     14.264,
+     14.429,
+     14.687,
+     14.948,
+     14.433,
+     16.737,
+     15.191,
+     14.453,
+     20.516,
+     15.386,
+     19.955,
+     14.258,
+     14.269,
+     15.141,
+     15.119,
+     16.891,
+     16.235,
+     15.303,
+     15.016,
+     14.687,
+     15.891,
+     15.312,
+     14.527
+    ],
+    "blended_fitness": [
+     13.891,
+     13.919,
+     13.876,
+     19.86,
+     13.824,
+     13.991,
+     14.043,
+     14.443,
+     14.507,
+     14.218,
+     16.626,
+     14.639,
+     14.068,
+     20.535,
+     15.16,
+     19.881,
+     14.012,
+     14.006,
+     14.684,
+     14.619,
+     15.97,
+     16.28,
+     14.757,
+     14.454,
+     14.211,
+     15.164,
+     14.933,
+     14.255
+    ],
+    "dream_fitness": [
+     12.804,
+     12.349,
+     13.073,
+     19.435,
+     12.71,
+     12.879,
+     12.471,
+     13.452,
+     12.71,
+     13.339,
+     16.172,
+     12.392,
+     12.498,
+     20.613,
+     14.239,
+     19.58,
+     13.013,
+     12.937,
+     12.823,
+     12.584,
+     12.221,
+     16.462,
+     12.535,
+     12.164,
+     12.272,
+     12.206,
+     13.389,
+     13.149
+    ]
+   }
+  },
+  {
+   "generation": 14,
+   "champion_id": "g12-20",
+   "champion_gate": {
+    "objective": 16.95,
+    "leakage_pct": 15.158,
+    "honest_block_rate": 2.996,
+    "honest_unpaid_rate": 0.294
+   },
+   "challenger": {
+    "id": "g13-1",
+    "params": {
+     "vel_usd_lo": 1163.979,
+     "vel_usd_width": 1887.862,
+     "vel_n_lo": 10.0,
+     "vel_n_width": 1.619,
+     "graph_dens_lo": 0.406,
+     "graph_dens_width": 0.096,
+     "graph_min_workers": 4,
+     "graph_size_width": 3.372,
+     "graph_share_min": 3,
+     "drift_min_history": 5,
+     "drift_ratio_lo": 4.447,
+     "drift_ratio_width": 3.868,
+     "drift_rate_lo": 3.678,
+     "drift_rate_width": 1.844,
+     "policy_cap_base_usd": 92.375,
+     "policy_cap_per_day_usd": 6.739,
+     "policy_cap_max_usd": 631.845,
+     "policy_window_mult": 3.285,
+     "w0_velocity": 0.953,
+     "w0_graph": 1.0,
+     "w0_drift": 0.676,
+     "w0_policy": 0.844,
+     "step_up_threshold": 0.481,
+     "hold_threshold": 0.55,
+     "eta": 0.005,
+     "min_weight": 0.036,
+     "l1_abstain": 1
+    },
+    "objective_a": 15.45,
+    "objective_b": 16.906,
+    "gate": {
+     "objective": 16.906,
+     "leakage_pct": 15.252,
+     "honest_block_rate": 2.76,
+     "honest_unpaid_rate": 0.274
+    }
+   },
+   "promoted": false,
+   "rolled_back": false,
+   "rollback": null,
+   "champion_id_after": "g12-20",
+   "attackers_scored_against": "g12-20",
+   "strongest_attacker": {
+    "ring": {
+     "family": "ring",
+     "params": {
+      "ring_size": 30,
+      "n_requesters": 3,
+      "rate_per_day": 1.5,
+      "amount_median": 120.0,
+      "amount_sigma": 0.505,
+      "account_age_days": 60.0,
+      "start_day": 0.0
+     },
+     "leaked_usd": 20246.35,
+     "attack_usd": 176175.36,
+     "leakage_pct": 11.492
+    },
+    "structuring": {
+     "family": "structuring",
+     "params": {
+      "n_accounts": 4,
+      "eps": 21.271,
+      "k": 6,
+      "burst_window_hours": 10.156,
+      "n_bursts": 3,
+      "account_age_days": 11.639,
+      "start_day": 4.767
+     },
+     "leaked_usd": 11494.75,
+     "attack_usd": 68947.99,
+     "leakage_pct": 16.672
+    }
+   },
+   "strongest_attacker_family": "ring",
+   "attacker_pools": {
+    "ring": [
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 3,
+       "rate_per_day": 1.5,
+       "amount_median": 120.0,
+       "amount_sigma": 0.505,
+       "account_age_days": 60.0,
+       "start_day": 0.0
+      },
+      "leaked_usd": 20246.35,
+      "attack_usd": 176175.36,
+      "leakage_pct": 11.492
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 3,
+       "rate_per_day": 1.153,
+       "amount_median": 120.0,
+       "amount_sigma": 0.594,
+       "account_age_days": 60.0,
+       "start_day": 0.0
+      },
+      "leaked_usd": 20018.71,
+      "attack_usd": 143486.44,
+      "leakage_pct": 13.952
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 2,
+       "rate_per_day": 1.5,
+       "amount_median": 120.0,
+       "amount_sigma": 0.469,
+       "account_age_days": 62.978,
+       "start_day": 0.0
+      },
+      "leaked_usd": 18419.64,
+      "attack_usd": 173145.99,
+      "leakage_pct": 10.638
+     }
+    ],
+    "structuring": [
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 21.271,
+       "k": 6,
+       "burst_window_hours": 10.156,
+       "n_bursts": 3,
+       "account_age_days": 11.639,
+       "start_day": 4.767
+      },
+      "leaked_usd": 11494.75,
+      "attack_usd": 68947.99,
+      "leakage_pct": 16.672
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 28.183,
+       "k": 6,
+       "burst_window_hours": 12.0,
+       "n_bursts": 3,
+       "account_age_days": 15.123,
+       "start_day": 3.165
+      },
+      "leaked_usd": 6603.19,
+      "attack_usd": 67952.59,
+      "leakage_pct": 9.717
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 11.884,
+       "k": 5,
+       "burst_window_hours": 12.0,
+       "n_bursts": 3,
+       "account_age_days": 11.609,
+       "start_day": 3.44
+      },
+      "leaked_usd": 6353.04,
+      "attack_usd": 58572.09,
+      "leakage_pct": 10.847
+     }
+    ]
+   },
+   "champion_weights": {
+    "velocity": 0.081,
+    "graph": 0.787,
+    "drift": 0.052,
+    "policy": 0.08
+   },
+   "fitness_best": 15.45,
+   "fitness_mean": 16.496,
+   "dream": {
+    "g": 14,
+    "lam": 0.197,
+    "lam_next": 0.197,
+    "gap_ema": 0.521,
+    "n_dreams": 32,
+    "mean_weight": 1.0,
+    "min_weight": 1.0,
+    "share_counts": {
+     "posterior": 24,
+     "uncertain": 0,
+     "recombined": 8
+    },
+    "n_observations": 20,
+    "fit_seconds": 1.218,
+    "arm": {
+     "use_wm": true,
+     "use_skeptic": false,
+     "use_calibration": true
+    },
+    "real_fitness": [
+     15.45,
+     15.541,
+     15.519,
+     16.601,
+     17.326,
+     15.935,
+     16.734,
+     15.472,
+     16.767,
+     16.666,
+     16.742,
+     15.798,
+     15.739,
+     16.031,
+     15.864,
+     17.725,
+     16.797,
+     18.483,
+     16.099,
+     16.054,
+     17.033,
+     15.885,
+     16.419,
+     20.352,
+     16.099,
+     16.568,
+     16.46,
+     15.739
+    ],
+    "blended_fitness": [
+     14.803,
+     14.954,
+     14.873,
+     15.847,
+     16.342,
+     15.425,
+     15.924,
+     14.83,
+     16.122,
+     15.747,
+     16.238,
+     15.051,
+     14.987,
+     15.323,
+     15.375,
+     16.689,
+     15.935,
+     18.173,
+     15.593,
+     15.453,
+     16.071,
+     15.174,
+     15.712,
+     19.774,
+     15.636,
+     15.855,
+     15.836,
+     15.106
+    ],
+    "dream_fitness": [
+     12.171,
+     12.566,
+     12.245,
+     12.776,
+     12.335,
+     13.35,
+     12.625,
+     12.214,
+     13.499,
+     12.004,
+     14.19,
+     12.009,
+     11.927,
+     12.441,
+     13.385,
+     12.47,
+     12.426,
+     16.913,
+     13.531,
+     13.008,
+     12.154,
+     12.282,
+     12.835,
+     17.422,
+     13.753,
+     12.953,
+     13.297,
+     12.529
+    ]
+   }
+  },
+  {
+   "generation": 15,
+   "champion_id": "g12-20",
+   "champion_gate": {
+    "objective": 17.471,
+    "leakage_pct": 15.67,
+    "honest_block_rate": 3.01,
+    "honest_unpaid_rate": 0.296
+   },
+   "challenger": {
+    "id": "g13-1",
+    "params": {
+     "vel_usd_lo": 1163.979,
+     "vel_usd_width": 1887.862,
+     "vel_n_lo": 10.0,
+     "vel_n_width": 1.619,
+     "graph_dens_lo": 0.406,
+     "graph_dens_width": 0.096,
+     "graph_min_workers": 4,
+     "graph_size_width": 3.372,
+     "graph_share_min": 3,
+     "drift_min_history": 5,
+     "drift_ratio_lo": 4.447,
+     "drift_ratio_width": 3.868,
+     "drift_rate_lo": 3.678,
+     "drift_rate_width": 1.844,
+     "policy_cap_base_usd": 92.375,
+     "policy_cap_per_day_usd": 6.739,
+     "policy_cap_max_usd": 631.845,
+     "policy_window_mult": 3.285,
+     "w0_velocity": 0.953,
+     "w0_graph": 1.0,
+     "w0_drift": 0.676,
+     "w0_policy": 0.844,
+     "step_up_threshold": 0.481,
+     "hold_threshold": 0.55,
+     "eta": 0.005,
+     "min_weight": 0.036,
+     "l1_abstain": 1
+    },
+    "objective_a": 15.016,
+    "objective_b": 17.433,
+    "gate": {
+     "objective": 17.433,
+     "leakage_pct": 15.778,
+     "honest_block_rate": 2.744,
+     "honest_unpaid_rate": 0.283
+    }
+   },
+   "promoted": false,
+   "rolled_back": false,
+   "rollback": null,
+   "champion_id_after": "g12-20",
+   "attackers_scored_against": "g12-20",
+   "strongest_attacker": {
+    "ring": {
+     "family": "ring",
+     "params": {
+      "ring_size": 30,
+      "n_requesters": 4,
+      "rate_per_day": 1.181,
+      "amount_median": 106.564,
+      "amount_sigma": 0.598,
+      "account_age_days": 60.0,
+      "start_day": 0.0
+     },
+     "leaked_usd": 22812.35,
+     "attack_usd": 129730.74,
+     "leakage_pct": 17.584
+    },
+    "structuring": {
+     "family": "structuring",
+     "params": {
+      "n_accounts": 4,
+      "eps": 34.954,
+      "k": 5,
+      "burst_window_hours": 12.0,
+      "n_bursts": 3,
+      "account_age_days": 13.007,
+      "start_day": 3.541
+     },
+     "leaked_usd": 8838.1,
+     "attack_usd": 55797.05,
+     "leakage_pct": 15.84
+    }
+   },
+   "strongest_attacker_family": "ring",
+   "attacker_pools": {
+    "ring": [
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 4,
+       "rate_per_day": 1.181,
+       "amount_median": 106.564,
+       "amount_sigma": 0.598,
+       "account_age_days": 60.0,
+       "start_day": 0.0
+      },
+      "leaked_usd": 22812.35,
+      "attack_usd": 129730.74,
+      "leakage_pct": 17.584
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 3,
+       "rate_per_day": 1.5,
+       "amount_median": 120.0,
+       "amount_sigma": 0.505,
+       "account_age_days": 60.0,
+       "start_day": 0.0
+      },
+      "leaked_usd": 22570.08,
+      "attack_usd": 176927.74,
+      "leakage_pct": 12.757
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 2,
+       "rate_per_day": 1.5,
+       "amount_median": 120.0,
+       "amount_sigma": 0.469,
+       "account_age_days": 62.978,
+       "start_day": 0.0
+      },
+      "leaked_usd": 20349.02,
+      "attack_usd": 174113.57,
+      "leakage_pct": 11.687
+     }
+    ],
+    "structuring": [
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 34.954,
+       "k": 5,
+       "burst_window_hours": 12.0,
+       "n_bursts": 3,
+       "account_age_days": 13.007,
+       "start_day": 3.541
+      },
+      "leaked_usd": 8838.1,
+      "attack_usd": 55797.05,
+      "leakage_pct": 15.84
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 11.884,
+       "k": 5,
+       "burst_window_hours": 12.0,
+       "n_bursts": 3,
+       "account_age_days": 11.609,
+       "start_day": 3.44
+      },
+      "leaked_usd": 8298.83,
+      "attack_usd": 58565.42,
+      "leakage_pct": 14.17
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 21.271,
+       "k": 6,
+       "burst_window_hours": 10.156,
+       "n_bursts": 3,
+       "account_age_days": 11.639,
+       "start_day": 4.767
+      },
+      "leaked_usd": 8137.73,
+      "attack_usd": 68946.02,
+      "leakage_pct": 11.803
+     }
+    ]
+   },
+   "champion_weights": {
+    "velocity": 0.087,
+    "graph": 0.774,
+    "drift": 0.055,
+    "policy": 0.084
+   },
+   "fitness_best": 15.016,
+   "fitness_mean": 16.356,
+   "dream": {
+    "g": 15,
+    "lam": 0.197,
+    "lam_next": 0.197,
+    "gap_ema": 0.521,
+    "n_dreams": 32,
+    "mean_weight": 1.0,
+    "min_weight": 1.0,
+    "share_counts": {
+     "posterior": 24,
+     "uncertain": 0,
+     "recombined": 8
+    },
+    "n_observations": 20,
+    "fit_seconds": 1.151,
+    "arm": {
+     "use_wm": true,
+     "use_skeptic": false,
+     "use_calibration": true
+    },
+    "real_fitness": [
+     15.016,
+     15.04,
+     15.095,
+     15.397,
+     15.841,
+     15.388,
+     16.257,
+     15.341,
+     16.098,
+     17.426,
+     16.24,
+     15.89,
+     16.475,
+     15.733,
+     16.957,
+     16.969,
+     17.836,
+     17.797,
+     19.609,
+     16.23,
+     15.577,
+     15.403,
+     17.444,
+     16.838,
+     15.672,
+     15.332,
+     16.67,
+     18.402
+    ],
+    "blended_fitness": [
+     14.566,
+     14.594,
+     14.642,
+     15.021,
+     15.314,
+     14.918,
+     15.693,
+     14.838,
+     15.73,
+     16.899,
+     15.832,
+     15.589,
+     15.83,
+     15.202,
+     16.2,
+     16.561,
+     17.707,
+     16.816,
+     18.234,
+     15.539,
+     14.968,
+     14.831,
+     16.529,
+     16.113,
+     15.405,
+     14.811,
+     15.973,
+     17.949
+    ],
+    "dream_fitness": [
+     12.732,
+     12.778,
+     12.798,
+     13.49,
+     13.172,
+     13.006,
+     13.395,
+     12.79,
+     14.235,
+     14.755,
+     14.173,
+     14.364,
+     13.204,
+     13.045,
+     13.12,
+     14.9,
+     17.181,
+     12.821,
+     12.636,
+     12.726,
+     12.489,
+     12.503,
+     12.805,
+     13.164,
+     14.319,
+     12.692,
+     13.136,
+     16.103
+    ]
+   }
+  },
+  {
+   "generation": 16,
+   "champion_id": "g12-20",
+   "champion_gate": {
+    "objective": 17.091,
+    "leakage_pct": 15.358,
+    "honest_block_rate": 2.956,
+    "honest_unpaid_rate": 0.255
+   },
+   "challenger": {
+    "id": "g16-16",
+    "params": {
+     "vel_usd_lo": 1320.944,
+     "vel_usd_width": 1915.243,
+     "vel_n_lo": 10.0,
+     "vel_n_width": 1.829,
+     "graph_dens_lo": 0.406,
+     "graph_dens_width": 0.096,
+     "graph_min_workers": 5,
+     "graph_size_width": 1.425,
+     "graph_share_min": 5,
+     "drift_min_history": 5,
+     "drift_ratio_lo": 4.056,
+     "drift_ratio_width": 4.798,
+     "drift_rate_lo": 3.678,
+     "drift_rate_width": 1.548,
+     "policy_cap_base_usd": 143.96,
+     "policy_cap_per_day_usd": 5.277,
+     "policy_cap_max_usd": 617.708,
+     "policy_window_mult": 3.898,
+     "w0_velocity": 0.952,
+     "w0_graph": 1.0,
+     "w0_drift": 0.733,
+     "w0_policy": 0.844,
+     "step_up_threshold": 0.492,
+     "hold_threshold": 0.596,
+     "eta": 0.061,
+     "min_weight": 0.102,
+     "l1_abstain": 0
+    },
+    "objective_a": 14.974,
+    "objective_b": 17.002,
+    "gate": {
+     "objective": 17.002,
+     "leakage_pct": 15.403,
+     "honest_block_rate": 2.731,
+     "honest_unpaid_rate": 0.233
+    }
+   },
+   "promoted": false,
+   "rolled_back": false,
+   "rollback": null,
+   "champion_id_after": "g12-20",
+   "attackers_scored_against": "g12-20",
+   "strongest_attacker": {
+    "ring": {
+     "family": "ring",
+     "params": {
+      "ring_size": 30,
+      "n_requesters": 3,
+      "rate_per_day": 1.483,
+      "amount_median": 120.0,
+      "amount_sigma": 0.464,
+      "account_age_days": 195.725,
+      "start_day": 0.0
+     },
+     "leaked_usd": 22206.5,
+     "attack_usd": 169062.0,
+     "leakage_pct": 13.135
+    },
+    "structuring": {
+     "family": "structuring",
+     "params": {
+      "n_accounts": 4,
+      "eps": 11.884,
+      "k": 5,
+      "burst_window_hours": 12.0,
+      "n_bursts": 3,
+      "account_age_days": 11.609,
+      "start_day": 3.44
+     },
+     "leaked_usd": 9767.68,
+     "attack_usd": 58580.63,
+     "leakage_pct": 16.674
+    }
+   },
+   "strongest_attacker_family": "ring",
+   "attacker_pools": {
+    "ring": [
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 3,
+       "rate_per_day": 1.483,
+       "amount_median": 120.0,
+       "amount_sigma": 0.464,
+       "account_age_days": 195.725,
+       "start_day": 0.0
+      },
+      "leaked_usd": 22206.5,
+      "attack_usd": 169062.0,
+      "leakage_pct": 13.135
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 4,
+       "rate_per_day": 1.181,
+       "amount_median": 106.564,
+       "amount_sigma": 0.598,
+       "account_age_days": 60.0,
+       "start_day": 0.0
+      },
+      "leaked_usd": 19966.73,
+      "attack_usd": 129740.01,
+      "leakage_pct": 15.39
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 3,
+       "rate_per_day": 1.5,
+       "amount_median": 120.0,
+       "amount_sigma": 0.505,
+       "account_age_days": 60.0,
+       "start_day": 0.0
+      },
+      "leaked_usd": 19741.68,
+      "attack_usd": 171094.98,
+      "leakage_pct": 11.538
+     }
+    ],
+    "structuring": [
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 11.884,
+       "k": 5,
+       "burst_window_hours": 12.0,
+       "n_bursts": 3,
+       "account_age_days": 11.609,
+       "start_day": 3.44
+      },
+      "leaked_usd": 9767.68,
+      "attack_usd": 58580.63,
+      "leakage_pct": 16.674
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 21.271,
+       "k": 6,
+       "burst_window_hours": 10.156,
+       "n_bursts": 3,
+       "account_age_days": 11.639,
+       "start_day": 4.767
+      },
+      "leaked_usd": 8142.54,
+      "attack_usd": 68960.58,
+      "leakage_pct": 11.807
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 41.784,
+       "k": 5,
+       "burst_window_hours": 9.857,
+       "n_bursts": 2,
+       "account_age_days": 11.534,
+       "start_day": 3.215
+      },
+      "leaked_usd": 7795.39,
+      "attack_usd": 36659.22,
+      "leakage_pct": 21.265
+     }
+    ]
+   },
+   "champion_weights": {
+    "velocity": 0.089,
+    "graph": 0.764,
+    "drift": 0.061,
+    "policy": 0.085
+   },
+   "fitness_best": 14.974,
+   "fitness_mean": 15.874,
+   "dream": {
+    "g": 16,
+    "lam": 0.197,
+    "lam_next": 0.197,
+    "gap_ema": 0.521,
+    "n_dreams": 32,
+    "mean_weight": 1.0,
+    "min_weight": 1.0,
+    "share_counts": {
+     "posterior": 24,
+     "uncertain": 0,
+     "recombined": 8
+    },
+    "n_observations": 20,
+    "fit_seconds": 1.356,
+    "arm": {
+     "use_wm": true,
+     "use_skeptic": false,
+     "use_calibration": true
+    },
+    "real_fitness": [
+     14.994,
+     15.021,
+     15.035,
+     15.561,
+     15.193,
+     17.19,
+     16.297,
+     19.031,
+     17.061,
+     15.371,
+     16.56,
+     15.521,
+     16.232,
+     15.562,
+     15.447,
+     15.859,
+     15.731,
+     16.085,
+     15.543,
+     14.974,
+     16.194,
+     16.373,
+     15.02,
+     15.012,
+     15.66,
+     17.289,
+     15.349,
+     15.313
+    ],
+    "blended_fitness": [
+     14.61,
+     14.64,
+     14.651,
+     15.398,
+     14.789,
+     16.422,
+     15.792,
+     18.212,
+     16.28,
+     15.09,
+     16.261,
+     15.36,
+     15.58,
+     15.064,
+     14.984,
+     15.621,
+     15.243,
+     15.617,
+     15.058,
+     14.598,
+     15.635,
+     15.894,
+     14.657,
+     14.629,
+     15.365,
+     16.779,
+     14.98,
+     15.014
+    ],
+    "dream_fitness": [
+     13.048,
+     13.091,
+     13.09,
+     14.732,
+     13.141,
+     13.298,
+     13.736,
+     14.876,
+     13.098,
+     13.945,
+     15.044,
+     14.707,
+     12.925,
+     13.037,
+     13.1,
+     14.654,
+     13.259,
+     13.709,
+     13.084,
+     13.07,
+     13.361,
+     13.946,
+     13.177,
+     13.069,
+     14.163,
+     14.701,
+     13.481,
+     13.796
+    ]
+   }
+  },
+  {
+   "generation": 17,
+   "champion_id": "g12-20",
+   "champion_gate": {
+    "objective": 17.878,
+    "leakage_pct": 16.119,
+    "honest_block_rate": 2.96,
+    "honest_unpaid_rate": 0.279
+   },
+   "challenger": {
+    "id": "g13-1",
+    "params": {
+     "vel_usd_lo": 1163.979,
+     "vel_usd_width": 1887.862,
+     "vel_n_lo": 10.0,
+     "vel_n_width": 1.619,
+     "graph_dens_lo": 0.406,
+     "graph_dens_width": 0.096,
+     "graph_min_workers": 4,
+     "graph_size_width": 3.372,
+     "graph_share_min": 3,
+     "drift_min_history": 5,
+     "drift_ratio_lo": 4.447,
+     "drift_ratio_width": 3.868,
+     "drift_rate_lo": 3.678,
+     "drift_rate_width": 1.844,
+     "policy_cap_base_usd": 92.375,
+     "policy_cap_per_day_usd": 6.739,
+     "policy_cap_max_usd": 631.845,
+     "policy_window_mult": 3.285,
+     "w0_velocity": 0.953,
+     "w0_graph": 1.0,
+     "w0_drift": 0.676,
+     "w0_policy": 0.844,
+     "step_up_threshold": 0.481,
+     "hold_threshold": 0.55,
+     "eta": 0.005,
+     "min_weight": 0.036,
+     "l1_abstain": 1
+    },
+    "objective_a": 15.395,
+    "objective_b": 17.836,
+    "gate": {
+     "objective": 17.836,
+     "leakage_pct": 16.213,
+     "honest_block_rate": 2.718,
+     "honest_unpaid_rate": 0.264
+    }
+   },
+   "promoted": false,
+   "rolled_back": false,
+   "rollback": null,
+   "champion_id_after": "g12-20",
+   "attackers_scored_against": "g12-20",
+   "strongest_attacker": {
+    "ring": {
+     "family": "ring",
+     "params": {
+      "ring_size": 30,
+      "n_requesters": 3,
+      "rate_per_day": 1.5,
+      "amount_median": 120.0,
+      "amount_sigma": 0.505,
+      "account_age_days": 60.0,
+      "start_day": 0.0
+     },
+     "leaked_usd": 24361.49,
+     "attack_usd": 175636.79,
+     "leakage_pct": 13.87
+    },
+    "structuring": {
+     "family": "structuring",
+     "params": {
+      "n_accounts": 4,
+      "eps": 21.271,
+      "k": 6,
+      "burst_window_hours": 10.156,
+      "n_bursts": 3,
+      "account_age_days": 11.639,
+      "start_day": 4.767
+     },
+     "leaked_usd": 8615.38,
+     "attack_usd": 68936.33,
+     "leakage_pct": 12.498
+    }
+   },
+   "strongest_attacker_family": "ring",
+   "attacker_pools": {
+    "ring": [
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 3,
+       "rate_per_day": 1.5,
+       "amount_median": 120.0,
+       "amount_sigma": 0.505,
+       "account_age_days": 60.0,
+       "start_day": 0.0
+      },
+      "leaked_usd": 24361.49,
+      "attack_usd": 175636.79,
+      "leakage_pct": 13.87
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 4,
+       "rate_per_day": 1.181,
+       "amount_median": 106.564,
+       "amount_sigma": 0.598,
+       "account_age_days": 60.0,
+       "start_day": 0.0
+      },
+      "leaked_usd": 22524.23,
+      "attack_usd": 129277.05,
+      "leakage_pct": 17.423
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 3,
+       "rate_per_day": 1.445,
+       "amount_median": 120.0,
+       "amount_sigma": 0.567,
+       "account_age_days": 60.0,
+       "start_day": 0.0
+      },
+      "leaked_usd": 21738.88,
+      "attack_usd": 168729.3,
+      "leakage_pct": 12.884
+     }
+    ],
+    "structuring": [
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 21.271,
+       "k": 6,
+       "burst_window_hours": 10.156,
+       "n_bursts": 3,
+       "account_age_days": 11.639,
+       "start_day": 4.767
+      },
+      "leaked_usd": 8615.38,
+      "attack_usd": 68936.33,
+      "leakage_pct": 12.498
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 3.595,
+       "k": 5,
+       "burst_window_hours": 7.03,
+       "n_bursts": 3,
+       "account_age_days": 12.191,
+       "start_day": 4.578
+      },
+      "leaked_usd": 5948.95,
+      "attack_usd": 59563.13,
+      "leakage_pct": 9.988
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 11.884,
+       "k": 5,
+       "burst_window_hours": 12.0,
+       "n_bursts": 3,
+       "account_age_days": 11.609,
+       "start_day": 3.44
+      },
+      "leaked_usd": 5376.46,
+      "attack_usd": 58568.42,
+      "leakage_pct": 9.18
+     }
+    ]
+   },
+   "champion_weights": {
+    "velocity": 0.103,
+    "graph": 0.732,
+    "drift": 0.064,
+    "policy": 0.1
+   },
+   "fitness_best": 15.382,
+   "fitness_mean": 16.778,
+   "dream": {
+    "g": 17,
+    "lam": 0.197,
+    "lam_next": 0.197,
+    "gap_ema": 0.521,
+    "n_dreams": 32,
+    "mean_weight": 1.0,
+    "min_weight": 1.0,
+    "share_counts": {
+     "posterior": 24,
+     "uncertain": 0,
+     "recombined": 8
+    },
+    "n_observations": 20,
+    "fit_seconds": 1.727,
+    "arm": {
+     "use_wm": true,
+     "use_skeptic": false,
+     "use_calibration": true
+    },
+    "real_fitness": [
+     15.412,
+     15.395,
+     15.4,
+     15.47,
+     15.545,
+     20.073,
+     16.748,
+     20.481,
+     15.635,
+     18.996,
+     18.459,
+     15.382,
+     15.618,
+     16.807,
+     16.421,
+     17.851,
+     16.214,
+     15.65,
+     16.025,
+     15.711,
+     18.909,
+     15.448,
+     16.837,
+     16.226,
+     16.81,
+     16.106,
+     19.739,
+     16.43
+    ],
+    "blended_fitness": [
+     14.96,
+     14.94,
+     14.947,
+     15.019,
+     15.079,
+     19.923,
+     16.443,
+     20.155,
+     15.144,
+     17.831,
+     17.628,
+     14.977,
+     15.167,
+     16.392,
+     15.728,
+     17.663,
+     15.693,
+     15.144,
+     15.589,
+     15.255,
+     18.096,
+     15.005,
+     16.086,
+     15.638,
+     16.09,
+     15.519,
+     19.432,
+     15.734
+    ],
+    "dream_fitness": [
+     13.12,
+     13.086,
+     13.104,
+     13.185,
+     13.182,
+     19.314,
+     15.205,
+     18.825,
+     13.145,
+     13.092,
+     14.247,
+     13.327,
+     13.33,
+     14.705,
+     12.91,
+     16.896,
+     13.575,
+     13.081,
+     13.816,
+     13.4,
+     14.786,
+     13.203,
+     13.028,
+     13.243,
+     13.155,
+     13.131,
+     18.183,
+     12.899
+    ]
+   }
+  },
+  {
+   "generation": 18,
+   "champion_id": "g12-20",
+   "champion_gate": {
+    "objective": 18.323,
+    "leakage_pct": 16.539,
+    "honest_block_rate": 3.011,
+    "honest_unpaid_rate": 0.279
+   },
+   "challenger": {
+    "id": "g18-15",
+    "params": {
+     "vel_usd_lo": 1215.0,
+     "vel_usd_width": 2000.0,
+     "vel_n_lo": 9.275,
+     "vel_n_width": 1.0,
+     "graph_dens_lo": 0.406,
+     "graph_dens_width": 0.096,
+     "graph_min_workers": 4,
+     "graph_size_width": 3.082,
+     "graph_share_min": 3,
+     "drift_min_history": 5,
+     "drift_ratio_lo": 4.359,
+     "drift_ratio_width": 3.796,
+     "drift_rate_lo": 3.678,
+     "drift_rate_width": 1.844,
+     "policy_cap_base_usd": 129.741,
+     "policy_cap_per_day_usd": 2.874,
+     "policy_cap_max_usd": 727.638,
+     "policy_window_mult": 3.285,
+     "w0_velocity": 1.0,
+     "w0_graph": 1.0,
+     "w0_drift": 0.676,
+     "w0_policy": 0.713,
+     "step_up_threshold": 0.481,
+     "hold_threshold": 0.55,
+     "eta": 0.005,
+     "min_weight": 0.027,
+     "l1_abstain": 0
+    },
+    "objective_a": 14.925,
+    "objective_b": 18.123,
+    "gate": {
+     "objective": 18.123,
+     "leakage_pct": 16.387,
+     "honest_block_rate": 2.918,
+     "honest_unpaid_rate": 0.277
+    }
+   },
+   "promoted": false,
+   "rolled_back": false,
+   "rollback": null,
+   "champion_id_after": "g12-20",
+   "attackers_scored_against": "g12-20",
+   "strongest_attacker": {
+    "ring": {
+     "family": "ring",
+     "params": {
+      "ring_size": 30,
+      "n_requesters": 5,
+      "rate_per_day": 1.229,
+      "amount_median": 115.054,
+      "amount_sigma": 0.621,
+      "account_age_days": 60.0,
+      "start_day": 0.0
+     },
+     "leaked_usd": 27762.86,
+     "attack_usd": 139852.07,
+     "leakage_pct": 19.852
+    },
+    "structuring": {
+     "family": "structuring",
+     "params": {
+      "n_accounts": 4,
+      "eps": 3.595,
+      "k": 5,
+      "burst_window_hours": 7.03,
+      "n_bursts": 3,
+      "account_age_days": 12.191,
+      "start_day": 4.578
+     },
+     "leaked_usd": 8437.13,
+     "attack_usd": 59567.46,
+     "leakage_pct": 14.164
+    }
+   },
+   "strongest_attacker_family": "ring",
+   "attacker_pools": {
+    "ring": [
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 5,
+       "rate_per_day": 1.229,
+       "amount_median": 115.054,
+       "amount_sigma": 0.621,
+       "account_age_days": 60.0,
+       "start_day": 0.0
+      },
+      "leaked_usd": 27762.86,
+      "attack_usd": 139852.07,
+      "leakage_pct": 19.852
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 3,
+       "rate_per_day": 1.5,
+       "amount_median": 120.0,
+       "amount_sigma": 0.505,
+       "account_age_days": 60.0,
+       "start_day": 0.0
+      },
+      "leaked_usd": 22027.71,
+      "attack_usd": 167990.68,
+      "leakage_pct": 13.113
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 4,
+       "rate_per_day": 1.181,
+       "amount_median": 106.564,
+       "amount_sigma": 0.598,
+       "account_age_days": 60.0,
+       "start_day": 0.0
+      },
+      "leaked_usd": 20606.52,
+      "attack_usd": 134952.73,
+      "leakage_pct": 15.269
+     }
+    ],
+    "structuring": [
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 3.595,
+       "k": 5,
+       "burst_window_hours": 7.03,
+       "n_bursts": 3,
+       "account_age_days": 12.191,
+       "start_day": 4.578
+      },
+      "leaked_usd": 8437.13,
+      "attack_usd": 59567.46,
+      "leakage_pct": 14.164
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 21.271,
+       "k": 6,
+       "burst_window_hours": 10.156,
+       "n_bursts": 3,
+       "account_age_days": 11.639,
+       "start_day": 4.767
+      },
+      "leaked_usd": 7659.88,
+      "attack_usd": 68928.64,
+      "leakage_pct": 11.113
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 11.884,
+       "k": 5,
+       "burst_window_hours": 12.0,
+       "n_bursts": 3,
+       "account_age_days": 11.609,
+       "start_day": 3.44
+      },
+      "leaked_usd": 6346.22,
+      "attack_usd": 58572.7,
+      "leakage_pct": 10.835
+     }
+    ]
+   },
+   "champion_weights": {
+    "velocity": 0.135,
+    "graph": 0.643,
+    "drift": 0.092,
+    "policy": 0.13
+   },
+   "fitness_best": 14.925,
+   "fitness_mean": 16.464,
+   "dream": {
+    "g": 18,
+    "lam": 0.197,
+    "lam_next": 0.197,
+    "gap_ema": 0.521,
+    "n_dreams": 32,
+    "mean_weight": 1.0,
+    "min_weight": 1.0,
+    "share_counts": {
+     "posterior": 24,
+     "uncertain": 0,
+     "recombined": 8
+    },
+    "n_observations": 20,
+    "fit_seconds": 1.394,
+    "arm": {
+     "use_wm": true,
+     "use_skeptic": false,
+     "use_calibration": true
+    },
+    "real_fitness": [
+     15.125,
+     15.13,
+     15.079,
+     15.085,
+     16.362,
+     15.601,
+     15.016,
+     16.468,
+     16.009,
+     15.197,
+     15.219,
+     15.169,
+     16.026,
+     22.208,
+     16.173,
+     16.37,
+     17.215,
+     15.717,
+     16.594,
+     14.925,
+     15.264,
+     15.666,
+     16.208,
+     17.387,
+     19.435,
+     16.935,
+     23.007,
+     16.388
+    ],
+    "blended_fitness": [
+     14.645,
+     14.651,
+     14.614,
+     14.623,
+     15.793,
+     15.05,
+     14.553,
+     15.661,
+     15.296,
+     14.729,
+     14.766,
+     14.712,
+     15.381,
+     20.312,
+     15.804,
+     15.731,
+     16.982,
+     15.37,
+     15.782,
+     14.468,
+     14.769,
+     15.157,
+     15.434,
+     16.465,
+     19.1,
+     16.316,
+     20.974,
+     15.982
+    ],
+    "dream_fitness": [
+     12.69,
+     12.703,
+     12.72,
+     12.741,
+     13.479,
+     12.804,
+     12.669,
+     12.375,
+     12.395,
+     12.827,
+     12.92,
+     12.849,
+     12.754,
+     12.59,
+     14.302,
+     13.133,
+     16.036,
+     13.958,
+     12.477,
+     12.607,
+     12.756,
+     13.085,
+     12.28,
+     12.713,
+     17.739,
+     13.795,
+     12.698,
+     14.33
+    ]
+   }
+  },
+  {
+   "generation": 19,
+   "champion_id": "g12-20",
+   "champion_gate": {
+    "objective": 18.67,
+    "leakage_pct": 16.88,
+    "honest_block_rate": 3.032,
+    "honest_unpaid_rate": 0.273
+   },
+   "challenger": {
+    "id": "g19-11",
+    "params": {
+     "vel_usd_lo": 1163.979,
+     "vel_usd_width": 1915.243,
+     "vel_n_lo": 10.0,
+     "vel_n_width": 1.214,
+     "graph_dens_lo": 0.406,
+     "graph_dens_width": 0.072,
+     "graph_min_workers": 4,
+     "graph_size_width": 3.372,
+     "graph_share_min": 4,
+     "drift_min_history": 5,
+     "drift_ratio_lo": 4.359,
+     "drift_ratio_width": 3.498,
+     "drift_rate_lo": 3.678,
+     "drift_rate_width": 1.844,
+     "policy_cap_base_usd": 143.96,
+     "policy_cap_per_day_usd": 4.477,
+     "policy_cap_max_usd": 547.907,
+     "policy_window_mult": 3.285,
+     "w0_velocity": 0.953,
+     "w0_graph": 1.0,
+     "w0_drift": 0.676,
+     "w0_policy": 0.844,
+     "step_up_threshold": 0.481,
+     "hold_threshold": 0.55,
+     "eta": 0.005,
+     "min_weight": 0.036,
+     "l1_abstain": 0
+    },
+    "objective_a": 16.835,
+    "objective_b": 18.801,
+    "gate": {
+     "objective": 18.801,
+     "leakage_pct": 16.802,
+     "honest_block_rate": 3.384,
+     "honest_unpaid_rate": 0.307
+    }
+   },
+   "promoted": false,
+   "rolled_back": false,
+   "rollback": null,
+   "champion_id_after": "g12-20",
+   "attackers_scored_against": "g12-20",
+   "strongest_attacker": {
+    "ring": {
+     "family": "ring",
+     "params": {
+      "ring_size": 30,
+      "n_requesters": 5,
+      "rate_per_day": 1.229,
+      "amount_median": 115.054,
+      "amount_sigma": 0.621,
+      "account_age_days": 60.0,
+      "start_day": 0.0
+     },
+     "leaked_usd": 27301.41,
+     "attack_usd": 150633.81,
+     "leakage_pct": 18.124
+    },
+    "structuring": {
+     "family": "structuring",
+     "params": {
+      "n_accounts": 4,
+      "eps": 21.271,
+      "k": 6,
+      "burst_window_hours": 10.156,
+      "n_bursts": 3,
+      "account_age_days": 11.639,
+      "start_day": 4.767
+     },
+     "leaked_usd": 11494.75,
+     "attack_usd": 68947.99,
+     "leakage_pct": 16.672
+    }
+   },
+   "strongest_attacker_family": "ring",
+   "attacker_pools": {
+    "ring": [
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 5,
+       "rate_per_day": 1.229,
+       "amount_median": 115.054,
+       "amount_sigma": 0.621,
+       "account_age_days": 60.0,
+       "start_day": 0.0
+      },
+      "leaked_usd": 27301.41,
+      "attack_usd": 150633.81,
+      "leakage_pct": 18.124
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 29,
+       "n_requesters": 5,
+       "rate_per_day": 0.94,
+       "amount_median": 116.51,
+       "amount_sigma": 0.695,
+       "account_age_days": 69.363,
+       "start_day": 0.0
+      },
+      "leaked_usd": 22032.31,
+      "attack_usd": 109239.26,
+      "leakage_pct": 20.169
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 4,
+       "rate_per_day": 1.181,
+       "amount_median": 106.564,
+       "amount_sigma": 0.598,
+       "account_age_days": 60.0,
+       "start_day": 0.0
+      },
+      "leaked_usd": 20346.05,
+      "attack_usd": 125703.05,
+      "leakage_pct": 16.186
+     }
+    ],
+    "structuring": [
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 21.271,
+       "k": 6,
+       "burst_window_hours": 10.156,
+       "n_bursts": 3,
+       "account_age_days": 11.639,
+       "start_day": 4.767
+      },
+      "leaked_usd": 11494.75,
+      "attack_usd": 68947.99,
+      "leakage_pct": 16.672
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 3,
+       "eps": 3.133,
+       "k": 5,
+       "burst_window_hours": 6.269,
+       "n_bursts": 3,
+       "account_age_days": 5.812,
+       "start_day": 3.314
+      },
+      "leaked_usd": 9443.02,
+      "attack_usd": 44708.46,
+      "leakage_pct": 21.121
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 3.595,
+       "k": 5,
+       "burst_window_hours": 7.03,
+       "n_bursts": 3,
+       "account_age_days": 12.191,
+       "start_day": 4.578
+      },
+      "leaked_usd": 7445.08,
+      "attack_usd": 59566.79,
+      "leakage_pct": 12.499
+     }
+    ]
+   },
+   "champion_weights": {
+    "velocity": 0.166,
+    "graph": 0.564,
+    "drift": 0.109,
+    "policy": 0.161
+   },
+   "fitness_best": 16.835,
+   "fitness_mean": 17.748,
+   "dream": {
+    "g": 19,
+    "lam": 0.197,
+    "lam_next": 0.197,
+    "gap_ema": 0.521,
+    "n_dreams": 32,
+    "mean_weight": 1.0,
+    "min_weight": 1.0,
+    "share_counts": {
+     "posterior": 24,
+     "uncertain": 0,
+     "recombined": 8
+    },
+    "n_observations": 20,
+    "fit_seconds": 4.969,
+    "arm": {
+     "use_wm": true,
+     "use_skeptic": false,
+     "use_calibration": true
+    },
+    "real_fitness": [
+     16.983,
+     16.911,
+     17.148,
+     17.151,
+     18.416,
+     17.492,
+     17.563,
+     17.937,
+     19.246,
+     17.55,
+     18.238,
+     19.182,
+     18.105,
+     18.329,
+     17.952,
+     16.835,
+     17.125,
+     17.15,
+     17.762,
+     19.119,
+     18.521,
+     17.179,
+     17.608,
+     17.145,
+     16.98,
+     18.714,
+     16.875,
+     17.716
+    ],
+    "blended_fitness": [
+     16.542,
+     16.483,
+     16.713,
+     16.723,
+     17.937,
+     17.145,
+     17.091,
+     17.412,
+     18.481,
+     17.056,
+     17.703,
+     18.422,
+     17.587,
+     17.811,
+     17.524,
+     16.465,
+     16.702,
+     16.749,
+     17.339,
+     18.36,
+     17.825,
+     16.757,
+     17.288,
+     16.75,
+     16.538,
+     17.977,
+     16.471,
+     17.417
+    ],
+    "dream_fitness": [
+     14.746,
+     14.741,
+     14.941,
+     14.98,
+     15.988,
+     15.736,
+     15.17,
+     15.276,
+     15.37,
+     15.047,
+     15.524,
+     15.328,
+     15.48,
+     15.701,
+     15.783,
+     14.957,
+     14.979,
+     15.116,
+     15.619,
+     15.272,
+     14.991,
+     15.039,
+     15.987,
+     15.143,
+     14.741,
+     14.978,
+     14.826,
+     16.2
+    ]
+   }
+  },
+  {
+   "generation": 20,
+   "champion_id": "g12-20",
+   "champion_gate": {
+    "objective": 19.19,
+    "leakage_pct": 17.44,
+    "honest_block_rate": 2.976,
+    "honest_unpaid_rate": 0.262
+   },
+   "challenger": {
+    "id": "g20-15",
+    "params": {
+     "vel_usd_lo": 1038.252,
+     "vel_usd_width": 1528.522,
+     "vel_n_lo": 9.887,
+     "vel_n_width": 1.209,
+     "graph_dens_lo": 0.406,
+     "graph_dens_width": 0.072,
+     "graph_min_workers": 4,
+     "graph_size_width": 3.372,
+     "graph_share_min": 3,
+     "drift_min_history": 6,
+     "drift_ratio_lo": 4.359,
+     "drift_ratio_width": 4.261,
+     "drift_rate_lo": 3.678,
+     "drift_rate_width": 1.844,
+     "policy_cap_base_usd": 143.96,
+     "policy_cap_per_day_usd": 2.874,
+     "policy_cap_max_usd": 679.739,
+     "policy_window_mult": 3.285,
+     "w0_velocity": 0.94,
+     "w0_graph": 1.0,
+     "w0_drift": 0.632,
+     "w0_policy": 0.793,
+     "step_up_threshold": 0.481,
+     "hold_threshold": 0.55,
+     "eta": 0.027,
+     "min_weight": 0.036,
+     "l1_abstain": 0
+    },
+    "objective_a": 16.772,
+    "objective_b": 18.596,
+    "gate": {
+     "objective": 18.596,
+     "leakage_pct": 16.772,
+     "honest_block_rate": 3.106,
+     "honest_unpaid_rate": 0.272
+    }
+   },
+   "promoted": true,
+   "rolled_back": false,
+   "rollback": null,
+   "champion_id_after": "g20-15",
+   "attackers_scored_against": "g12-20",
+   "strongest_attacker": {
+    "ring": {
+     "family": "ring",
+     "params": {
+      "ring_size": 28,
+      "n_requesters": 5,
+      "rate_per_day": 1.0,
+      "amount_median": 110.203,
+      "amount_sigma": 0.7,
+      "account_age_days": 82.316,
+      "start_day": 0.0
+     },
+     "leaked_usd": 24289.97,
+     "attack_usd": 115188.04,
+     "leakage_pct": 21.087
+    },
+    "structuring": {
+     "family": "structuring",
+     "params": {
+      "n_accounts": 4,
+      "eps": 21.271,
+      "k": 6,
+      "burst_window_hours": 10.156,
+      "n_bursts": 3,
+      "account_age_days": 11.639,
+      "start_day": 4.767
+     },
+     "leaked_usd": 8137.73,
+     "attack_usd": 68946.02,
+     "leakage_pct": 11.803
+    }
+   },
+   "strongest_attacker_family": "ring",
+   "attacker_pools": {
+    "ring": [
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 28,
+       "n_requesters": 5,
+       "rate_per_day": 1.0,
+       "amount_median": 110.203,
+       "amount_sigma": 0.7,
+       "account_age_days": 82.316,
+       "start_day": 0.0
+      },
+      "leaked_usd": 24289.97,
+      "attack_usd": 115188.04,
+      "leakage_pct": 21.087
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 5,
+       "rate_per_day": 1.013,
+       "amount_median": 120.0,
+       "amount_sigma": 0.592,
+       "account_age_days": 60.0,
+       "start_day": 0.0
+      },
+      "leaked_usd": 24186.94,
+      "attack_usd": 124690.96,
+      "leakage_pct": 19.398
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 29,
+       "n_requesters": 5,
+       "rate_per_day": 0.94,
+       "amount_median": 116.51,
+       "amount_sigma": 0.695,
+       "account_age_days": 69.363,
+       "start_day": 0.0
+      },
+      "leaked_usd": 23905.98,
+      "attack_usd": 114085.53,
+      "leakage_pct": 20.954
+     }
+    ],
+    "structuring": [
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 21.271,
+       "k": 6,
+       "burst_window_hours": 10.156,
+       "n_bursts": 3,
+       "account_age_days": 11.639,
+       "start_day": 4.767
+      },
+      "leaked_usd": 8137.73,
+      "attack_usd": 68946.02,
+      "leakage_pct": 11.803
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 3,
+       "eps": 3.133,
+       "k": 5,
+       "burst_window_hours": 6.269,
+       "n_bursts": 3,
+       "account_age_days": 5.812,
+       "start_day": 3.314
+      },
+      "leaked_usd": 7457.43,
+      "attack_usd": 44716.99,
+      "leakage_pct": 16.677
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 27.768,
+       "k": 6,
+       "burst_window_hours": 10.201,
+       "n_bursts": 2,
+       "account_age_days": 14.297,
+       "start_day": 5.584
+      },
+      "leaked_usd": 5669.47,
+      "attack_usd": 45339.6,
+      "leakage_pct": 12.505
+     }
+    ]
+   },
+   "champion_weights": {
+    "velocity": 0.205,
+    "graph": 0.47,
+    "drift": 0.129,
+    "policy": 0.195
+   },
+   "fitness_best": 16.772,
+   "fitness_mean": 17.75,
+   "dream": {
+    "g": 20,
+    "lam": 0.197,
+    "lam_next": 0.193,
+    "gap_ema": 0.554,
+    "n_dreams": 32,
+    "mean_weight": 1.0,
+    "min_weight": 1.0,
+    "share_counts": {
+     "posterior": 24,
+     "uncertain": 0,
+     "recombined": 8
+    },
+    "n_observations": 20,
+    "fit_seconds": 1.508,
+    "arm": {
+     "use_wm": true,
+     "use_skeptic": false,
+     "use_calibration": true
+    },
+    "predicted_gain": 0.006,
+    "realized_gain": 0.594,
+    "gap": 0.587,
+    "real_fitness": [
+     16.954,
+     16.943,
+     16.941,
+     16.914,
+     17.68,
+     17.118,
+     22.016,
+     17.216,
+     18.322,
+     18.23,
+     17.733,
+     17.787,
+     18.628,
+     17.255,
+     17.057,
+     17.467,
+     18.944,
+     18.411,
+     16.941,
+     16.772,
+     16.992,
+     17.499,
+     18.1,
+     19.75,
+     18.535,
+     17.036,
+     16.908,
+     16.864
+    ],
+    "blended_fitness": [
+     16.355,
+     16.353,
+     16.325,
+     16.307,
+     16.938,
+     16.497,
+     20.348,
+     16.586,
+     17.372,
+     17.479,
+     17.069,
+     17.093,
+     17.757,
+     16.781,
+     16.514,
+     16.836,
+     17.871,
+     17.46,
+     16.318,
+     16.192,
+     16.356,
+     16.823,
+     17.296,
+     18.562,
+     17.68,
+     16.445,
+     16.318,
+     16.296
+    ],
+    "dream_fitness": [
+     13.916,
+     13.952,
+     13.818,
+     13.837,
+     13.918,
+     13.969,
+     13.561,
+     14.025,
+     13.504,
+     14.425,
+     14.366,
+     14.268,
+     14.213,
+     14.853,
+     14.304,
+     14.264,
+     13.506,
+     13.59,
+     13.78,
+     13.831,
+     13.769,
+     14.071,
+     14.022,
+     13.726,
+     14.197,
+     14.036,
+     13.917,
+     13.988
+    ]
+   }
+  },
+  {
+   "generation": 21,
+   "champion_id": "g20-15",
+   "champion_gate": {
+    "objective": 19.416,
+    "leakage_pct": 17.569,
+    "honest_block_rate": 3.089,
+    "honest_unpaid_rate": 0.303
+   },
+   "challenger": {
+    "id": "g21-21",
+    "params": {
+     "vel_usd_lo": 1163.979,
+     "vel_usd_width": 1528.522,
+     "vel_n_lo": 10.0,
+     "vel_n_width": 1.177,
+     "graph_dens_lo": 0.406,
+     "graph_dens_width": 0.096,
+     "graph_min_workers": 4,
+     "graph_size_width": 2.843,
+     "graph_share_min": 4,
+     "drift_min_history": 5,
+     "drift_ratio_lo": 4.588,
+     "drift_ratio_width": 3.498,
+     "drift_rate_lo": 3.678,
+     "drift_rate_width": 1.844,
+     "policy_cap_base_usd": 143.96,
+     "policy_cap_per_day_usd": 2.874,
+     "policy_cap_max_usd": 679.739,
+     "policy_window_mult": 3.285,
+     "w0_velocity": 0.953,
+     "w0_graph": 1.0,
+     "w0_drift": 0.632,
+     "w0_policy": 0.766,
+     "step_up_threshold": 0.448,
+     "hold_threshold": 0.55,
+     "eta": 0.005,
+     "min_weight": 0.036,
+     "l1_abstain": 0
+    },
+    "objective_a": 18.015,
+    "objective_b": 19.069,
+    "gate": {
+     "objective": 19.069,
+     "leakage_pct": 17.356,
+     "honest_block_rate": 2.873,
+     "honest_unpaid_rate": 0.276
+    }
+   },
+   "promoted": false,
+   "rolled_back": false,
+   "rollback": null,
+   "champion_id_after": "g20-15",
+   "attackers_scored_against": "g20-15",
+   "strongest_attacker": {
+    "ring": {
+     "family": "ring",
+     "params": {
+      "ring_size": 29,
+      "n_requesters": 5,
+      "rate_per_day": 0.94,
+      "amount_median": 116.51,
+      "amount_sigma": 0.695,
+      "account_age_days": 69.363,
+      "start_day": 0.0
+     },
+     "leaked_usd": 25822.84,
+     "attack_usd": 114167.59,
+     "leakage_pct": 22.618
+    },
+    "structuring": {
+     "family": "structuring",
+     "params": {
+      "n_accounts": 4,
+      "eps": 21.393,
+      "k": 6,
+      "burst_window_hours": 10.513,
+      "n_bursts": 3,
+      "account_age_days": 10.796,
+      "start_day": 5.058
+     },
+     "leaked_usd": 10533.8,
+     "attack_usd": 68943.07,
+     "leakage_pct": 15.279
+    }
+   },
+   "strongest_attacker_family": "ring",
+   "attacker_pools": {
+    "ring": [
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 29,
+       "n_requesters": 5,
+       "rate_per_day": 0.94,
+       "amount_median": 116.51,
+       "amount_sigma": 0.695,
+       "account_age_days": 69.363,
+       "start_day": 0.0
+      },
+      "leaked_usd": 25822.84,
+      "attack_usd": 114167.59,
+      "leakage_pct": 22.618
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 28,
+       "n_requesters": 5,
+       "rate_per_day": 1.0,
+       "amount_median": 110.203,
+       "amount_sigma": 0.7,
+       "account_age_days": 82.316,
+       "start_day": 0.0
+      },
+      "leaked_usd": 24805.34,
+      "attack_usd": 107203.55,
+      "leakage_pct": 23.139
+     },
+     {
+      "family": "ring",
+      "params": {
+       "ring_size": 30,
+       "n_requesters": 5,
+       "rate_per_day": 1.013,
+       "amount_median": 120.0,
+       "amount_sigma": 0.592,
+       "account_age_days": 60.0,
+       "start_day": 0.0
+      },
+      "leaked_usd": 22286.16,
+      "attack_usd": 116719.94,
+      "leakage_pct": 19.094
+     }
+    ],
+    "structuring": [
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 21.393,
+       "k": 6,
+       "burst_window_hours": 10.513,
+       "n_bursts": 3,
+       "account_age_days": 10.796,
+       "start_day": 5.058
+      },
+      "leaked_usd": 10533.8,
+      "attack_usd": 68943.07,
+      "leakage_pct": 15.279
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 21.271,
+       "k": 6,
+       "burst_window_hours": 10.156,
+       "n_bursts": 3,
+       "account_age_days": 11.639,
+       "start_day": 4.767
+      },
+      "leaked_usd": 8142.54,
+      "attack_usd": 68960.58,
+      "leakage_pct": 11.807
+     },
+     {
+      "family": "structuring",
+      "params": {
+       "n_accounts": 4,
+       "eps": 27.768,
+       "k": 6,
+       "burst_window_hours": 10.201,
+       "n_bursts": 2,
+       "account_age_days": 14.297,
+       "start_day": 5.584
+      },
+      "leaked_usd": 7555.45,
+      "attack_usd": 45338.2,
+      "leakage_pct": 16.665
+     }
+    ]
+   },
+   "champion_weights": {
+    "velocity": 0.036,
+    "graph": 0.893,
+    "drift": 0.036,
+    "policy": 0.036
+   },
+   "fitness_best": 17.885,
+   "fitness_mean": 18.817,
+   "dream": {
+    "g": 21,
+    "lam": 0.193,
+    "lam_next": 0.193,
+    "gap_ema": 0.554,
+    "n_dreams": 32,
+    "mean_weight": 1.0,
+    "min_weight": 1.0,
+    "share_counts": {
+     "posterior": 24,
+     "uncertain": 0,
+     "recombined": 8
+    },
+    "n_observations": 20,
+    "fit_seconds": 2.249,
+    "arm": {
+     "use_wm": true,
+     "use_skeptic": false,
+     "use_calibration": true
+    },
+    "real_fitness": [
+     17.885,
+     17.955,
+     18.468,
+     20.49,
+     18.309,
+     18.011,
+     20.723,
+     18.056,
+     18.835,
+     19.624,
+     18.396,
+     18.835,
+     19.241,
+     19.344,
+     18.095,
+     18.525,
+     18.202,
+     18.708,
+     18.156,
+     18.805,
+     18.313,
+     18.877,
+     18.46,
+     19.105,
+     18.015,
+     21.954,
+     19.313,
+     18.175
+    ],
+    "blended_fitness": [
+     17.092,
+     17.186,
+     17.573,
+     19.244,
+     17.599,
+     17.201,
+     19.431,
+     17.236,
+     17.897,
+     18.59,
+     17.592,
+     17.936,
+     18.159,
+     18.785,
+     17.269,
+     17.723,
+     17.352,
+     17.789,
+     17.355,
+     17.952,
+     17.647,
+     18.198,
+     17.564,
+     18.183,
+     17.174,
+     20.624,
+     18.24,
+     17.339
+    ],
+    "dream_fitness": [
+     13.777,
+     13.972,
+     13.832,
+     14.034,
+     14.629,
+     13.816,
+     14.029,
+     13.81,
+     13.973,
+     14.267,
+     14.231,
+     14.178,
+     13.634,
+     16.449,
+     13.818,
+     14.373,
+     13.797,
+     13.944,
+     14.008,
+     14.384,
+     14.86,
+     15.358,
+     13.818,
+     14.33,
+     13.656,
+     15.063,
+     13.755,
+     13.844
+    ]
+   }
+  }
+ ],
+ "generations_run": 22,
+ "stopped_early": false,
+ "seconds": 3589.605,
+ "gen_seconds": [
+  89.109,
+  83.506,
+  84.343,
+  85.911,
+  85.465,
+  85.343,
+  87.194,
+  87.034,
+  87.148,
+  87.298,
+  88.008,
+  86.521,
+  87.597,
+  96.762,
+  96.76,
+  91.903,
+  252.619,
+  409.481,
+  393.299,
+  304.743,
+  420.96,
+  398.461
+ ]
+}

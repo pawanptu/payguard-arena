@@ -1,0 +1,134 @@
+[2026-11-08 22:02:18] M3+M4 start; keep-awake on
+  c1: shares (0.5, 0.25, 0.25) lambda0 0.3
+    held out ring        evo_seed=0 obj= 37.18
+    held out structuring evo_seed=0 obj= 20.29
+  c2: shares (0.5, 0.25, 0.25) lambda0 0.6
+    held out ring        evo_seed=0 obj= 37.18
+    held out structuring evo_seed=0 obj= 30.04
+  c3: shares (0.34, 0.33, 0.33) lambda0 0.3
+    held out ring        evo_seed=0 obj= 37.18
+    held out structuring evo_seed=0 obj= 38.60
+  c4: shares (0.34, 0.33, 0.33) lambda0 0.6
+    held out ring        evo_seed=0 obj= 37.18
+    held out structuring evo_seed=0 obj= 49.96
+  winner c1 (LOFO 28.74); K1 with evo seeds (0, 1)
+    held out ring        evo_seed=1 obj= 34.27
+    held out structuring evo_seed=1 obj= 26.04
+    held out ring        evo_seed=0 obj= 37.18
+    held out structuring evo_seed=0 obj= 70.40
+    held out ring        evo_seed=1 obj= 42.38
+    held out structuring evo_seed=1 obj= 26.04
+winner c1  K1 margin +14.55 (need >= 1.0)  -> K1 passed: proceed to the freeze
+wrote D:\project\paypal\wt\r3-int\eval\r3\dev_check.json
+[2026-11-09 08:00:00] dev check: K1 passed: proceed to the freeze
+winner c1  K1 margin +14.55  -> freeze ['dreamer_full', 'dreamer_nowm', 'dreamer_noskeptic', 'dreamer_nocalib'] on ('ring', 'structuring'), evo seed 0, EvolveConfig(seed=0, pop=28, gens=22, elites=3, tournament_k=3, pool_size=3, fresh_attackers=1, attacker_seeds=2, arena_episodes=3, fitness_seeds=(1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009), gate_seeds=(1010, 1011, 1012, 1013, 1014, 1015, 1016, 1017, 1018, 1019), mut_start=0.25, mut_end=0.05, atk_mut_start=0.25, atk_mut_end=0.1, budget_min=1000000000.0, families=('ring', 'structuring'), name='full')
+  dreamer_full: training ...
+  gen  0  91.5s  champion default  gate  19.96  challenger g0-12     19.91  best fitness  17.05  top attacker ring  13.0%
+  gen  1  88.2s  champion default  gate  20.05  challenger g0-12     20.00  best fitness  17.81  top attacker ring   9.5%
+  gen  2  88.4s  champion default  gate  19.72  challenger g2-23     19.95  best fitness  17.08  top attacker ring  10.6%
+  gen  3  90.2s  champion default  gate  19.23  challenger g3-21     18.94  best fitness  15.78  top attacker ring   9.7%
+  gen  4  90.5s  champion default  gate  18.23  challenger g4-9      17.77  best fitness  15.25  top attacker ring  12.7%
+  gen 5: PROMOTED g5-13 (gate 17.91 vs champion 18.66)
+  gen  5  90.4s  champion g5-13    gate  18.66  challenger g5-13     17.91  best fitness  15.77  top attacker ring  10.7%
+  gen  6  93.2s  champion g5-13    gate  17.82  challenger g6-4      17.40  best fitness  15.21  top attacker ring  11.2%
+  gen  7  91.4s  champion g5-13    gate  18.21  challenger g6-4      17.75  best fitness  14.41  top attacker ring  12.4%
+  gen  8  91.6s  champion g5-13    gate  18.09  challenger g8-12     17.62  best fitness  14.70  top attacker ring   9.3%
+  gen 9: PROMOTED g9-13 (gate 16.90 vs champion 17.80)
+  gen  9  92.9s  champion g9-13    gate  17.80  challenger g9-13     16.90  best fitness  14.42  top attacker ring  12.7%
+  gen 10  94.8s  champion g9-13    gate  16.19  challenger g10-19    17.13  best fitness  14.88  top attacker ring  11.5%
+  gen 11  93.7s  champion g9-13    gate  17.13  challenger g10-19    18.18  best fitness  15.06  top attacker ring  12.3%
+  gen 12  94.1s  champion g9-13    gate  16.84  challenger g12-1     17.45  best fitness  14.55  top attacker ring  13.9%
+  gen 13  92.8s  champion g9-13    gate  16.94  challenger g13-14    17.79  best fitness  14.47  top attacker ring  13.6%
+  gen 14  92.2s  champion g9-13    gate  17.03  challenger g14-15    16.83  best fitness  15.61  top attacker ring  11.7%
+  gen 15  92.7s  champion g9-13    gate  17.65  challenger g14-15    17.45  best fitness  15.46  top attacker ring  18.1%
+  gen 16  91.4s  champion g9-13    gate  17.46  challenger g15-0     17.51  best fitness  15.25  top attacker ring  13.2%
+  gen 17  91.7s  champion g9-13    gate  18.46  challenger g17-23    18.40  best fitness  15.67  top attacker ring  13.9%
+  gen 18  91.8s  champion g9-13    gate  18.71  challenger g17-23    18.68  best fitness  16.23  top attacker ring  20.8%
+  gen 19: PROMOTED g18-4 (gate 18.29 vs champion 18.81)
+  gen 19  93.1s  champion g18-4    gate  18.81  challenger g18-4     18.29  best fitness  16.56  top attacker ring  18.1%
+  gen 20  92.5s  champion g18-4    gate  18.32  challenger g20-19    18.20  best fitness  16.97  top attacker ring  15.0%
+  gen 21  92.3s  champion g18-4    gate  18.52  challenger g21-8     18.45  best fitness  17.46  top attacker ring  20.4%
+  dreamer_full: done in 33.7 min, 22 generations
+  dreamer_nowm: training ...
+  gen  0  89.3s  champion default  gate  19.96  challenger g0-8      20.24  best fitness  17.05  top attacker ring  13.0%
+  gen  1  84.0s  champion default  gate  20.05  challenger g0-12     20.00  best fitness  17.81  top attacker ring   9.5%
+  gen  2  84.5s  champion default  gate  19.72  challenger g2-11     19.89  best fitness  16.86  top attacker ring  10.6%
+  gen  3  85.6s  champion default  gate  19.23  challenger g3-15     19.12  best fitness  15.63  top attacker ring   9.7%
+  gen 4: PROMOTED g4-0 (gate 17.12 vs champion 18.23)
+  gen  4  85.8s  champion g4-0     gate  18.23  challenger g4-0      17.12  best fitness  14.48  top attacker ring  12.7%
+  gen  5  87.6s  champion g4-0     gate  17.45  challenger g5-17     17.50  best fitness  15.20  top attacker ring  10.7%
+  gen  6  85.4s  champion g4-0     gate  17.31  challenger g6-24     17.36  best fitness  14.74  top attacker ring  11.2%
+  gen  7  86.2s  champion g4-0     gate  17.69  challenger g7-4      17.40  best fitness  13.82  top attacker ring  12.4%
+  gen  8  85.7s  champion g4-0     gate  17.58  challenger g7-4      17.24  best fitness  14.43  top attacker ring   9.3%
+  gen  9  86.3s  champion g4-0     gate  17.38  challenger g7-4      17.04  best fitness  14.18  top attacker ring  12.7%
+  gen 10  84.4s  champion g4-0     gate  16.68  challenger g7-4      16.32  best fitness  14.55  top attacker ring  11.5%
+  gen 11  86.4s  champion g4-0     gate  17.25  challenger g11-0     17.01  best fitness  14.75  top attacker ring  11.9%
+  gen 12  85.2s  champion g4-0     gate  17.21  challenger g12-6     16.97  best fitness  14.38  top attacker ring  14.5%
+  gen 13  86.1s  champion g4-0     gate  17.42  challenger g10-21    16.97  best fitness  14.25  top attacker ring  14.0%
+  gen 14  85.6s  champion g4-0     gate  17.58  challenger g14-9     17.09  best fitness  15.75  top attacker ring  12.2%
+  gen 15: PROMOTED g15-20 (gate 17.66 vs champion 18.22)
+  gen 15  84.7s  champion g15-20   gate  18.22  challenger g15-20    17.66  best fitness  15.45  top attacker ring  19.6%
+  gen 16  87.0s  champion g15-20   gate  17.30  challenger g16-7     17.36  best fitness  15.23  top attacker ring  12.7%
+  gen 17  85.9s  champion g15-20   gate  18.08  challenger g16-20    18.12  best fitness  15.63  top attacker ring  13.5%
+  gen 18  84.7s  champion g15-20   gate  18.61  challenger g18-15    18.17  best fitness  15.87  top attacker ring  20.2%
+  gen 19: PROMOTED g19-20 (gate 18.37 vs champion 18.98)
+  gen 19  85.1s  champion g19-20   gate  18.98  challenger g19-20    18.37  best fitness  17.08  top attacker ring  17.8%
+  gen 20  86.4s  champion g19-20   gate  18.39  challenger g18-15    18.40  best fitness  17.57  top attacker ring  20.7%
+  gen 21  85.0s  champion g19-20   gate  19.10  challenger g18-15    19.11  best fitness  16.65  top attacker ring  21.2%
+  dreamer_nowm: done in 31.4 min, 22 generations
+  dreamer_noskeptic: training ...
+  gen  0  89.1s  champion default  gate  19.96  challenger g0-14     20.43  best fitness  17.05  top attacker ring  13.0%
+  gen  1  83.5s  champion default  gate  20.05  challenger g0-12     20.00  best fitness  17.81  top attacker ring   9.5%
+  gen  2  84.3s  champion default  gate  19.72  challenger g2-13     20.43  best fitness  17.08  top attacker ring  10.6%
+  gen  3  85.9s  champion default  gate  19.23  challenger g3-21     18.87  best fitness  15.78  top attacker ring   9.7%
+  gen  4  85.5s  champion default  gate  18.23  challenger g4-10     18.09  best fitness  15.04  top attacker ring  12.7%
+  gen 5: PROMOTED g5-18 (gate 17.76 vs champion 18.66)
+  gen  5  85.3s  champion g5-18    gate  18.66  challenger g5-18     17.76  best fitness  15.86  top attacker ring  10.7%
+  gen  6  87.2s  champion g5-18    gate  17.65  challenger g6-12     17.86  best fitness  14.97  top attacker ring  11.2%
+  gen  7  87.0s  champion g5-18    gate  18.05  challenger g6-12     18.36  best fitness  14.08  top attacker ring  12.4%
+  gen  8  87.1s  champion g5-18    gate  17.93  challenger g8-9      17.49  best fitness  14.33  top attacker ring   9.3%
+  gen  9  87.3s  champion g5-18    gate  17.61  challenger g8-9      17.25  best fitness  14.15  top attacker ring  12.9%
+  gen 10  88.0s  champion g5-18    gate  18.29  challenger g8-9      17.99  best fitness  13.67  top attacker ring  11.5%
+  gen 11  86.5s  champion g5-18    gate  18.19  challenger g8-9      17.71  best fitness  14.47  top attacker ring  11.4%
+  gen 12: PROMOTED g12-20 (gate 15.84 vs champion 16.61)
+  gen 12  87.6s  champion g12-20   gate  16.61  challenger g12-20    15.84  best fitness  14.00  top attacker ring  13.7%
+  gen 13  96.8s  champion g12-20   gate  16.80  challenger g13-1     16.78  best fitness  14.07  top attacker ring  13.1%
+  gen 14  96.8s  champion g12-20   gate  16.95  challenger g13-1     16.91  best fitness  15.45  top attacker ring  11.5%
+  gen 15  91.9s  champion g12-20   gate  17.47  challenger g13-1     17.43  best fitness  15.02  top attacker ring  17.6%
+  gen 16 252.6s  champion g12-20   gate  17.09  challenger g16-16    17.00  best fitness  14.97  top attacker ring  13.1%
+  gen 17 409.5s  champion g12-20   gate  17.88  challenger g13-1     17.84  best fitness  15.38  top attacker ring  13.9%
+  gen 18 393.3s  champion g12-20   gate  18.32  challenger g18-15    18.12  best fitness  14.93  top attacker ring  19.9%
+  gen 19 304.7s  champion g12-20   gate  18.67  challenger g19-11    18.80  best fitness  16.84  top attacker ring  18.1%
+  gen 20: PROMOTED g20-15 (gate 18.60 vs champion 19.19)
+  gen 20 421.0s  champion g20-15   gate  19.19  challenger g20-15    18.60  best fitness  16.77  top attacker ring  21.1%
+  gen 21 398.5s  champion g20-15   gate  19.42  challenger g21-21    19.07  best fitness  17.89  top attacker ring  22.6%
+  dreamer_noskeptic: done in 59.8 min, 22 generations
+  dreamer_nocalib: training ...
+  gen  0 409.1s  champion default  gate  19.96  challenger g0-12     19.91  best fitness  17.05  top attacker ring  13.0%
+  gen  1 368.7s  champion default  gate  20.05  challenger g0-12     20.00  best fitness  17.81  top attacker ring   9.5%
+  gen  2 364.7s  champion default  gate  19.72  challenger g2-23     19.95  best fitness  17.08  top attacker ring  10.6%
+  gen  3 368.4s  champion default  gate  19.23  challenger g3-21     18.94  best fitness  15.78  top attacker ring   9.7%
+  gen  4 369.8s  champion default  gate  18.23  challenger g4-9      17.77  best fitness  15.25  top attacker ring  12.7%
+  gen 5: PROMOTED g5-13 (gate 17.91 vs champion 18.66)
+  gen  5 395.3s  champion g5-13    gate  18.66  challenger g5-13     17.91  best fitness  15.77  top attacker ring  10.7%
+  gen  6 378.8s  champion g5-13    gate  17.82  challenger g6-4      17.40  best fitness  15.21  top attacker ring  11.2%
+  gen  7 387.0s  champion g5-13    gate  18.21  challenger g6-4      17.75  best fitness  14.41  top attacker ring  12.4%
+  gen  8 254.7s  champion g5-13    gate  18.09  challenger g8-12     17.62  best fitness  14.70  top attacker ring   9.3%
+  gen 9: PROMOTED g9-13 (gate 16.90 vs champion 17.80)
+  gen  9 111.2s  champion g9-13    gate  17.80  challenger g9-13     16.90  best fitness  14.42  top attacker ring  12.7%
+  gen 10 199.4s  champion g9-13    gate  16.19  challenger g10-19    17.13  best fitness  14.88  top attacker ring  11.5%
+  gen 11 201.0s  champion g9-13    gate  17.13  challenger g10-21    18.07  best fitness  15.06  top attacker ring  12.3%
+  gen 12 209.5s  champion g9-13    gate  16.84  challenger g10-21    17.52  best fitness  14.55  top attacker ring  13.9%
+  gen 13 190.2s  champion g9-13    gate  16.94  challenger g13-15    17.28  best fitness  14.29  top attacker ring  13.6%
+  gen 14 188.2s  champion g9-13    gate  17.03  challenger g13-15    17.36  best fitness  15.87  top attacker ring  11.7%
+  gen 15 185.2s  champion g9-13    gate  17.65  challenger g14-15    18.70  best fitness  15.69  top attacker ring  18.1%
+  gen 16 190.5s  champion g9-13    gate  17.46  challenger g16-1     18.09  best fitness  15.50  top attacker ring  13.2%
+  gen 17 189.8s  champion g9-13    gate  18.46  challenger g17-12    18.63  best fitness  15.80  top attacker ring  13.9%
+  gen 18 188.0s  champion g9-13    gate  18.71  challenger g17-12    18.59  best fitness  16.31  top attacker ring  20.8%
+  gen 19 143.8s  champion g9-13    gate  18.81  challenger g17-12    18.61  best fitness  17.19  top attacker ring  18.1%
+  gen 20 141.4s  champion g9-13    gate  18.59  challenger g17-12    18.53  best fitness  17.58  top attacker ring  16.2%
+  gen 21: PROMOTED g21-8 (gate 19.79 vs champion 20.44)
+  gen 21 187.8s  champion g21-8    gate  20.44  challenger g21-8     19.79  best fitness  17.85  top attacker ring  24.5%
+  dreamer_nocalib: done in 93.7 min, 22 generations
+wrote eval\r3\defender_freeze.json (git rev 6e5616d)
+[2026-11-09 11:39:23] M3+M4 done (freeze rc=0)

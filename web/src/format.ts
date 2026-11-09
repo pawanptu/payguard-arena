@@ -43,6 +43,10 @@ const DEFENDER_LABELS: Record<string, string> = {
   swarm_memory: "Swarm + memory",
   swarm_evolved_memory: "Swarm, evolved + memory",
   swarm_r2: "Swarm, robust (round 2)",
+  dreamer_full: "Dreamer, full",
+  dreamer_nowm: "Dreamer, no world model",
+  dreamer_noskeptic: "Dreamer, no skeptic",
+  dreamer_nocalib: "Dreamer, no calibration",
 };
 
 /** Human label for a raw defender id; unknown ids are shown as given. */

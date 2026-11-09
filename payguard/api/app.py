@@ -5,24 +5,31 @@ No secrets are needed; Replay mode works on any machine.
 """
 from __future__ import annotations
 
+import json
+import logging
 import os
 from dataclasses import asdict
 from datetime import datetime, timezone
 from pathlib import Path
 
 from fastapi import Depends, FastAPI, HTTPException, Query
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 
+from ..console.rounds import rounds_doc
 from ..rail import webhook
 from ..rail.base import PayoutReceipt, parse_iso
 from ..rail.events import WebhookEventLog
 from ..rail.store import ReceiptStore
+from .console_models import Explanations, Queue
 from .replay import Replay, load_replay
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_REPLAY = Path(__file__).resolve().parent / "fixtures" / "sample_replay.json"
 DEFAULT_WEB_DIST = REPO_ROOT / "web" / "dist"
+DEFAULT_CONSOLE_DIR = REPO_ROOT / "eval" / "console"            # queue.json, explanations.json
+DEFAULT_COPILOT_DIR = REPO_ROOT / "eval" / "copilot" / "sessions"  # recorded copilot sessions (*.json)
+log = logging.getLogger("payguard.api")
 MAX_EVENTS_PER_PAGE = 1000
 MAX_RUNTIME_RECEIPTS = 50
 DEFAULT_WEBHOOKS_LIMIT = 50
@@ -40,15 +47,21 @@ def default_replay_path() -> Path:
 
 
 def create_app(replay_path: str | Path | None = None, *, web_dist: str | Path | None = None,
-               receipt_store: ReceiptStore | None = None) -> FastAPI:
+               receipt_store: ReceiptStore | None = None, console_dir: str | Path | None = None,
+               copilot_dir: str | Path | None = None, results_root: str | Path | None = None) -> FastAPI:
     """Build the app. Raises ReplayError at startup if the replay file is missing or breaks the contract.
 
     `web_dist` overrides where the built React app is looked for (default: <repo>/web/dist).
     `receipt_store` is shared with the payout rails and the webhook (default: a fresh in-memory store).
+    `console_dir`, `copilot_dir` and `results_root` override where the ops console files (queue.json,
+    explanations.json), the recorded copilot sessions and the round result files (eval/final*/) are read from.
     """
     path = Path(replay_path) if replay_path else default_replay_path()
     replay: Replay = load_replay(path)
     dist = Path(web_dist) if web_dist is not None else DEFAULT_WEB_DIST
+    console_path = Path(console_dir) if console_dir is not None else DEFAULT_CONSOLE_DIR
+    copilot_path = Path(copilot_dir) if copilot_dir is not None else DEFAULT_COPILOT_DIR
+    results_path = Path(results_root) if results_root is not None else REPO_ROOT
 
     app = FastAPI(title="PayGuard Arena API", version="0.1.0")
     app.state.replay = replay
@@ -127,6 +140,76 @@ def create_app(replay_path: str | Path | None = None, *, web_dist: str | Path | 
             merged.setdefault(w.event_id, {**w.model_dump(), "outcome": None, "source": "replay"})
         ordered = sorted(merged.values(), key=lambda e: _when(e["received_at"]), reverse=True)
         return {"configured": bool(webhook_id), "events": ordered[:limit]}
+
+    # --- Ops console (docs/CONSOLE_CONTRACT.md): files built offline, read-only here. -----------------
+    console_cache: dict[str, tuple[tuple[int, int], dict]] = {}
+
+    def console_file(name: str, model) -> dict | JSONResponse:
+        """The validated file `name` from the console dir, or a JSON error response (404 not_built / 500)."""
+        f = console_path / name
+        try:
+            stat = f.stat()
+        except OSError:
+            return JSONResponse(status_code=404, content={
+                "error": "not_built", "detail": f"{name} has not been built (see docs/CONSOLE_CONTRACT.md)"})
+        stamp = (stat.st_mtime_ns, stat.st_size)
+        hit = console_cache.get(name)
+        if hit and hit[0] == stamp:
+            return hit[1]
+        try:
+            doc = model.model_validate_json(f.read_bytes()).model_dump(mode="json")
+        except ValueError as exc:  # invalid JSON or a contract violation; pydantic's ValidationError is one
+            log.error("console file %s is invalid: %s", f, str(exc).splitlines()[0] if str(exc) else type(exc))
+            return JSONResponse(status_code=500, content={
+                "error": "invalid", "detail": f"{name} does not follow the console contract"})
+        console_cache[name] = (stamp, doc)
+        return doc
+
+    @app.get("/api/console/queue")
+    def console_queue():
+        return console_file("queue.json", Queue)
+
+    @app.get("/api/console/explanations")
+    def console_explanations():
+        return console_file("explanations.json", Explanations)
+
+    @app.get("/api/copilot/sessions")
+    def copilot_sessions() -> dict:
+        sessions: list[dict] = []
+        for f in sorted(copilot_path.glob("*.json")) if copilot_path.is_dir() else []:
+            try:
+                doc = json.loads(f.read_text(encoding="utf-8"))
+            except (OSError, ValueError) as exc:
+                log.warning("skipping copilot session %s: not readable JSON (%s)", f.name, type(exc).__name__)
+                continue
+            if not isinstance(doc, dict) or doc.get("schema_version") != 1:
+                log.warning("skipping copilot session %s: not a JSON object with schema_version 1", f.name)
+                continue
+            sessions.append(doc)
+
+        def order_key(d: dict):
+            o = d.get("order")
+            has = isinstance(o, (int, float)) and not isinstance(o, bool)
+            return (0 if has else 1, o if has else 0, str(d.get("id", "")))
+
+        return {"sessions": sorted(sessions, key=order_key)}
+
+    rounds_cache: list[dict] = []  # filled by the first successful call
+
+    @app.get("/api/results/rounds")
+    def results_rounds():
+        if not rounds_cache:
+            try:
+                rounds_cache.append(rounds_doc(results_path))
+            except FileNotFoundError as exc:
+                return JSONResponse(status_code=404, content={
+                    "error": "not_built", "detail": f"result file missing: {Path(exc.filename or '').name}"})
+            except (ValueError, KeyError) as exc:
+                log.error("rounds_doc failed: %s", exc)
+                return JSONResponse(status_code=500, content={
+                    "error": "invalid", "detail": "the result files do not match the console contract"})
+        return rounds_cache[0]
+    # -----------------------------------------------------------------------------------------------
 
     @app.get("/api/{rest:path}", include_in_schema=False)
     def api_not_found(rest: str):

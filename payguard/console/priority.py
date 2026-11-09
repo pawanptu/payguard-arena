@@ -13,5 +13,10 @@ def priority_key(case: dict) -> tuple:
     Use decision-time fields only: verdict, risk, amount, scores, weights, vote_share, layer, features.
     Never `truth` or `outcome`: a reviewer does not know them when the case arrives (a test enforces this).
     """
-    # TODO(human): decide how a reviewer's queue is ordered (see the trade-offs in the console brief).
-    return (-case["risk"], case["event_id"])
+    # 1. HOLD before STEP_UP: a step-up already resolves through extra verification, a hold waits on a human.
+    # 2. Within a group, expected dollars at risk (risk x amount), largest first: the reviewer's first minutes go
+    #    where a wrong release would cost the most.
+    # 3. event_id last, so ties always sort the same way.
+    group = 0 if case["verdict"] == "HOLD" else 1
+    at_risk = round(case["risk"] * case["amount"], 3)
+    return (group, -at_risk, case["event_id"])

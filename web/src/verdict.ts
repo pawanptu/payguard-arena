@@ -5,7 +5,7 @@
 //   met     = mStatic >= 3.0 && mSingle >= 3.0 && primary.honest_block_rate <= static.honest_block_rate
 // "single" is the best single specialist, chosen on TRAIN (lowest TRAIN objective among single_* defenders).
 import type { ResultRow, Split } from "./types";
-import { num1, signed1 } from "./format";
+import { num1 } from "./format";
 
 export const MARGIN = 3.0;
 export const PRIMARY_DEFENDER = "swarm_evolved_memory";
@@ -29,13 +29,13 @@ export interface TestSpec {
   seenWhileBuilding?: Split[];
 }
 export const TESTS: TestSpec[] = [
-  { split: "TEST_SEEN", title: "Known attack families, new seeds", short: "known attacks", pillLabel: "Secondary check", decisive: false },
-  { split: "TEST_HELDOUT", title: "Never-seen attack family (round 1)", short: "a never-seen attack family", pillLabel: "Pre-registered test", decisive: true },
+  { split: "TEST_SEEN", title: "Known attack families, new seeds", short: "known attacks", pillLabel: "Extra check", decisive: false },
+  { split: "TEST_HELDOUT", title: "Never-seen attack family (round 1)", short: "a never-seen attack family", pillLabel: "Main test", decisive: true },
   {
     split: "TEST_HELDOUT2",
-    title: "Second sealed attack family (round 2)",
+    title: "Second never-seen family (round 2)",
     short: "a second never-seen family",
-    pillLabel: "Pre-registered test",
+    pillLabel: "Main test",
     decisive: true,
     primary: "swarm_r2",
     seenWhileBuilding: ["TEST_HELDOUT"],
@@ -43,10 +43,6 @@ export const TESTS: TestSpec[] = [
 ];
 
 export const SWARM_PREFIX = "swarm_";
-
-/** "a" / "a and b" / "a, b and c". */
-const joinList = (items: string[]) =>
-  items.length <= 2 ? items.join(" and ") : `${items.slice(0, -1).join(", ")} and ${items[items.length - 1]}`;
 
 export interface VerdictResult {
   primary: ResultRow;
@@ -129,9 +125,9 @@ export function singleCaveat(v: VerdictResult): string | null {
   // Nothing is hidden when the TRAIN pick is also the strongest single here (ties included).
   if (best.defender === v.single.defender || best.objective >= v.single.objective) return null;
   const lead = best.objective - v.primary.objective; // positive = primary is better
-  const under = lead < MARGIN ? `, under +${MARGIN.toFixed(1)}` : "";
   const name = best.defender.slice(SINGLE_PREFIX.length);
-  return `Best single on this split: ${name} ${num1(best.objective)} (lead ${signed1(lead)}${under}); the rule's single was fixed on TRAIN.`;
+  const gap = lead >= 0 ? `${lead < MARGIN ? "only " : ""}${num1(lead)} behind` : `${num1(-lead)} ahead`;
+  return `The best single agent on this test, ${name}, scored ${num1(best.objective)}, ${gap}. The rule compared against the agent chosen on training data.`;
 }
 
 /**
@@ -152,7 +148,7 @@ export function otherSwarmsCaveat(rows: ResultRow[], test: TestSpec, v: VerdictR
   if (passing.length === 0) return null;
   const range = passing.length === 1 ? num1(passing[0]) : `${num1(Math.min(...passing))}-${num1(Math.max(...passing))}`;
   const who = passing.length === others.length ? `All ${others.length} other swarms` : `${passing.length} of ${others.length} other swarms`;
-  return `${who} also pass this rule (${range}), so the result mostly reflects the swarm design.`;
+  return `${who} also pass (${range}), so the credit goes to the swarm design more than to this version.`;
 }
 
 /**
@@ -168,8 +164,8 @@ export function otherFamilyCaveat(rows: ResultRow[], test: TestSpec, v: VerdictR
     if (!other.decisive || other.split === test.split) continue;
     const ov = computeVerdict(rows, other.split, v.primary.defender);
     if (!ov || ov.met) continue;
-    const known = test.seenWhileBuilding?.includes(other.split) ? " (known while it was built, so not a clean test)" : "";
-    return `The same defender on the ${other.title.toLowerCase()}: ${num1(ov.primary.objective)} vs static rules ${num1(ov.static.objective)}, not met${known}.`;
+    const known = test.seenWhileBuilding?.includes(other.split) ? " It was built after that result, so this is not a clean test." : "";
+    return `On the ${other.title.toLowerCase()} the same defender scored ${num1(ov.primary.objective)} against static rules' ${num1(ov.static.objective)}: not met.${known}`;
   }
   return null;
 }
@@ -194,13 +190,4 @@ export function evaluateTests(rows: ResultRow[]): TestResult[] {
     if (v) out.push({ test, v });
   }
   return out;
-}
-
-/** Factual one-sentence headline built from the met and not-met tests (works for any number of cards). */
-export function headlineFor(results: TestResult[]): string {
-  const met = results.filter((r) => r.v.met).map((r) => r.test.short);
-  const unmet = results.filter((r) => !r.v.met).map((r) => r.test.short);
-  if (met.length === 0) return "Did not beat the baselines on this benchmark.";
-  if (unmet.length === 0) return `Beat the baselines on ${joinList(met)}.`;
-  return `Beat the baselines on ${joinList(met)}; did not on ${joinList(unmet)}.`;
 }

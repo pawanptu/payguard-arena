@@ -1,3 +1,5 @@
+import InfoTip from "../components/InfoTip";
+import { riskTip } from "../tips";
 import { clamp01, num } from "./labels";
 
 /** Risk 0-1 on a track split by the step-up and hold thresholds. Text and ticks carry the meaning, not colour alone. */
@@ -28,6 +30,7 @@ export default function RiskMeter({ risk, stepUp, hold }: { risk: number; stepUp
       </div>
       <p className="meter-read">
         <strong>Risk {num(risk)}</strong> <span className="muted">· {zone}</span>
+        <InfoTip label="the risk score">{riskTip(num(stepUp), num(hold))}</InfoTip>
       </p>
     </div>
   );

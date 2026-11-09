@@ -3,17 +3,15 @@ import type { ReactNode } from "react";
 import { fetchAllEvents, fetchPayouts, fetchSummary, fetchWebhooks } from "./api";
 import { useAsync } from "./hooks";
 import type { AsyncState } from "./hooks";
-import { shortTime } from "./format";
-import Hero from "./components/Hero";
-import type { LiveState } from "./components/Hero";
+import { plural, SEP } from "./format";
+import TestCards from "./components/Hero";
 import DecisionFeed from "./components/DecisionFeed";
 import EvolutionChart from "./components/EvolutionChart";
 import ResultsTable from "./components/ResultsTable";
 import Receipts from "./components/Receipts";
 import WebhookLog from "./components/WebhookLog";
-import InfoTip from "./components/InfoTip";
-import { ChartSkeleton, FeedSkeleton, HeroSkeleton, TableSkeleton } from "./components/Skeletons";
-import { ErrorCard, Pill } from "./components/ui";
+import { ChartSkeleton, FeedSkeleton, TableSkeleton } from "./components/Skeletons";
+import { ErrorCard } from "./components/ui";
 
 /** Skeleton while the first load runs, a per-section error card on failure, otherwise the content. */
 function Async<T>({
@@ -32,7 +30,17 @@ function Async<T>({
   return <>{children(state.data as T)}</>;
 }
 
-/** "How it works": the original replay dashboard (hero, decision feed, evolution, results, receipts, webhooks). */
+const STEPS: { title: string; text: string }[] = [
+  { title: "Score", text: "Four specialists score each payout: velocity, graph, drift and policy." },
+  { title: "Combine", text: "Their trust-weighted vote sets the risk. An anomaly layer can only raise it." },
+  {
+    title: "Review",
+    text: "Risk above the step-up or hold line queues the payout for a reviewer, with an AI explanation grounded in the evidence.",
+  },
+  { title: "Verify", text: "The ops copilot checks the PayPal sandbox through the official Agent Toolkit." },
+];
+
+/** "How it works": the four steps, then the learning curve, the replay and the PayPal sandbox proof. */
 export default function HowView() {
   const summary = useAsync(fetchSummary);
   const events = useAsync(fetchAllEvents);
@@ -47,36 +55,40 @@ export default function HowView() {
     return ids;
   }, [webhooks.data]);
 
-  const live: LiveState = useMemo(() => {
-    if (!payouts.data) return payouts.status === "error" ? "error" : "loading";
+  // "N LIVE payouts, K signature-verified webhooks" for the proof section (null until both are known).
+  const proofLine = useMemo(() => {
+    if (!payouts.data) return null;
     const liveIds = new Set(payouts.data.payouts.filter((p) => p.mode === "live").map((p) => p.payout_batch_id));
     const k = webhooks.data
       ? webhooks.data.events.filter((w) => w.payout_batch_id && liveIds.has(w.payout_batch_id)).length
       : null;
-    return { n: payouts.data.payouts.filter((p) => p.mode === "live").length, k };
-  }, [payouts.data, payouts.status, webhooks.data]);
+    return `${plural(liveIds.size, "LIVE payout")}${k !== null ? `${SEP}${plural(k, "signature-verified webhook")}` : ""}`;
+  }, [payouts.data, webhooks.data]);
 
-  const s = summary.data;
   return (
     <>
-      <p className="how-note" role="note">
-        <span>
-          <strong>SIMULATED</strong> replay on synthetic data. Only rows marked LIVE used the PayPal sandbox (test money).
-        </span>
-        {s?.synthetic_fixture && <Pill variant="sample">Sample data</Pill>}
-        {s && (
-          <InfoTip label="this replay">
-            Generated {shortTime(s.generated_at)}. Schema v{s.schema_version}.
-          </InfoTip>
-        )}
-      </p>
-      <section id="overview" aria-label="Overview">
-        <Async state={summary} what="the overview" skeleton={<HeroSkeleton />}>
-          {(sum) => <Hero results={sum.results} live={live} />}
-        </Async>
-      </section>
+      <div className="page-head">
+        <h1>How PayGuard works</h1>
+        <p className="page-sub">From a payout to a reviewer&apos;s decision, in four steps.</p>
+      </div>
+      <ol className="steps" aria-label="The four steps">
+        {STEPS.map((st, i) => (
+          <li key={st.title} className="step">
+            <span className="step-n" aria-hidden="true">{i + 1}</span>
+            <div>
+              <p className="step-title">{st.title}</p>
+              <p className="step-text">{st.text}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
 
       <div className="grid">
+        <div className="col-5">
+          <Async state={summary} what="the learning curve" skeleton={<ChartSkeleton />}>
+            {(sum) => <EvolutionChart rows={sum.evolution} />}
+          </Async>
+        </div>
         <div id="replay" className="col-7">
           <Async state={events} what="the replay" skeleton={<FeedSkeleton />}>
             {(ev) =>
@@ -90,31 +102,42 @@ export default function HowView() {
             }
           </Async>
         </div>
-        <div className="col-5">
-          <Async state={summary} what="the evolution chart" skeleton={<ChartSkeleton />}>
-            {(sum) => <EvolutionChart rows={sum.evolution} />}
-          </Async>
-        </div>
       </div>
 
-      <div className="grid">
-        <div className="col-12">
-          <Async state={summary} what="the results" skeleton={<TableSkeleton what="results" />}>
-            {(sum) => <ResultsTable rows={sum.results} />}
-          </Async>
+      <section id="paypal" className="proof-section" aria-labelledby="proof-h">
+        <div className="section-head">
+          <h2 id="proof-h">PayPal sandbox proof</h2>
+          <p className="page-sub">
+            Test-money payouts sent to the PayPal sandbox, and the webhooks PayPal sent back.
+            {proofLine && <> {proofLine}.</>}
+          </p>
         </div>
-      </div>
+        <div className="grid">
+          <div className="col-7">
+            <Async state={payouts} what="the receipts" skeleton={<TableSkeleton what="receipts" rows={4} />}>
+              {(p) => <Receipts payouts={p.payouts} verified={verifiedIds} />}
+            </Async>
+          </div>
+          <div className="col-5">
+            <WebhookLog state={webhooks} />
+          </div>
+        </div>
+      </section>
 
-      <div id="paypal" className="grid">
-        <div className="col-7">
-          <Async state={payouts} what="the receipts" skeleton={<TableSkeleton what="receipts" rows={4} />}>
-            {(p) => <Receipts payouts={p.payouts} verified={verifiedIds} />}
-          </Async>
-        </div>
-        <div className="col-5">
-          <WebhookLog state={webhooks} />
-        </div>
-      </div>
+      <details className="earlier">
+        <summary>Earlier test cards</summary>
+        <p className="page-sub">The first dashboard&apos;s held-out tests. Rounds 1 and 2 are also on the Results tab.</p>
+        <Async state={summary} what="the earlier tests" skeleton={<TableSkeleton what="earlier tests" rows={4} />}>
+          {(sum) => (
+            <>
+              <TestCards results={sum.results} />
+              <div className="earlier-table">
+                <ResultsTable rows={sum.results} />
+              </div>
+            </>
+          )}
+        </Async>
+      </details>
     </>
   );
 }

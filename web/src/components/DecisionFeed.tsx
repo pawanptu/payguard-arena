@@ -13,7 +13,7 @@ const SPEEDS = [
 const TICK_MS = 100;
 const VISIBLE_ROWS = 60;
 
-const SPLIT_PREFIX: Record<string, string> = { TRAIN: "Train", TEST_SEEN: "Seen-family", TEST_HELDOUT: "Held-out", TEST_HELDOUT2: "Round-2 held-out" };
+const SPLIT_PREFIX: Record<string, string> = { TRAIN: "Training", TEST_SEEN: "Known-family", TEST_HELDOUT: "Round 1", TEST_HELDOUT2: "Round 2" };
 
 /** Index of the first event with t > clock (events are sorted by time). */
 function countUpTo(events: EpisodeEvent[], clock: number): number {
@@ -32,11 +32,9 @@ function startEvent(events: EpisodeEvent[]): EpisodeEvent | undefined {
   return events.find((e) => e.is_attack);
 }
 
-function subtitle(events: EpisodeEvent[], episode: EpisodeMeta): string {
-  const families = new Set(events.filter((e) => e.is_attack).map((e) => e.family));
+function subtitle(episode: EpisodeMeta): string {
   const prefix = SPLIT_PREFIX[episode.split as Split] ?? episode.split;
-  const head = families.size === 1 ? `${prefix} ${[...families][0]} family` : `${prefix} episode`;
-  return `${head}${SEP}seed ${episode.seed}${SEP}${defenderLabel(episode.defender)}${SEP}${episode.n_events.toLocaleString("en-US")} payouts`;
+  return `${prefix} test episode${SEP}${episode.n_events.toLocaleString("en-US")} payouts${SEP}${defenderLabel(episode.defender)}`;
 }
 
 interface RowProps {
@@ -53,12 +51,12 @@ const FeedRow = memo(function FeedRow({ e, reveal, enter }: RowProps) {
       <span className="c-time" title={`Day ${days1(e.t)}`}>{days1(e.t)}d</span>
       <VerdictPill verdict={e.verdict} />
       <span className="c-amt">{usd(e.amount)}</span>
-      <span className="c-who">worker {e.worker_id} / requester {e.requester_id}</span>
+      <span className="c-who">Worker {e.worker_id}{SEP}Requester {e.requester_id}</span>
       <span className="c-paid">{e.paid ? "Paid" : "Never paid"}</span>
       {attack && (
         <span className="c-tag">
           {e.paid ? <AlertIcon size={12} /> : <ShieldIcon size={12} />}
-          Attack{SEP}{e.family}{SEP}{e.paid ? "leaked" : "blocked"}
+          Attack{SEP}{e.family}{SEP}{e.paid ? "got through" : "stopped"}
         </span>
       )}
     </li>
@@ -125,7 +123,7 @@ export default function DecisionFeed({ events, episode }: Props) {
     return out;
   }, [events, shown]);
 
-  const sub = useMemo(() => subtitle(events, episode), [events, episode]);
+  const sub = useMemo(() => subtitle(episode), [episode]);
 
   if (events.length === 0) {
     return (
@@ -160,8 +158,8 @@ export default function DecisionFeed({ events, episode }: Props) {
         title="Replay"
         subtitle={sub}
         tipLabel="ground truth"
-        tip="Defenders never see the attack label. It is revealed here after the fact."
-        actions={<Switch checked={reveal} onChange={setReveal} label="Reveal ground truth" />}
+        tip={`The simulator labels attacks; defenders never see the labels. Turn this on to see them after the fact. Episode seed ${episode.seed}.`}
+        actions={<Switch checked={reveal} onChange={setReveal} label="Show which are attacks" />}
       />
 
       <div className="controls">
@@ -206,7 +204,7 @@ export default function DecisionFeed({ events, episode }: Props) {
           <li>
             <Pill variant="leaked">
               <AlertIcon size={12} />
-              <span>Leaked attacks</span>
+              <span>Attacks that got through</span>
               <span className="pill-count">{cum.leaked[shown].toLocaleString("en-US")}</span>
             </Pill>
           </li>

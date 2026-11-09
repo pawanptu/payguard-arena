@@ -17,9 +17,9 @@ const STAT_LABELS: Record<string, string> = {
 export const statLabel = (name: string) => STAT_LABELS[name] ?? name.replace(/_/g, " ");
 
 export const DECIDED_BY: Record<DecidedBy, string> = {
-  swarm: "Specialist swarm",
+  swarm: "Defender agents",
   layer: "Anomaly layer",
-  both: "Swarm and anomaly layer",
+  both: "Agents and anomaly layer",
 };
 
 const FALLBACK_SPECIALISTS: SpecialistInfo[] = [

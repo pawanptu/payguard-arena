@@ -18,6 +18,7 @@ export default function QueueList({
   specialists,
   onSelect,
   onKeyDown,
+  onClear,
   label,
 }: {
   cases: ConsoleCase[];
@@ -26,25 +27,37 @@ export default function QueueList({
   specialists: Map<string, SpecialistInfo>;
   onSelect: (id: number) => void;
   onKeyDown: (e: KeyboardEvent<HTMLUListElement>) => void;
+  onClear: () => void;
   label: string;
 }) {
   const listRef = useRef<HTMLUListElement>(null);
+  const first = useRef(true);
 
-  // Keep the active row visible (keyboard moves, deep links, filter changes).
+  // Keep the active row visible (keyboard moves, deep links, filter changes). The desktop list scrolls inside its
+  // pane; below 1024 px the page scrolls instead.
   useEffect(() => {
     if (activeId === null) return;
     const el = document.getElementById(rowDomId(activeId));
     const box = listRef.current;
+    const initial = first.current;
+    first.current = false;
     if (!el || !box) return;
-    const top = el.offsetTop;
-    const bottom = top + el.offsetHeight;
-    if (top < box.scrollTop) box.scrollTop = top;
-    else if (bottom > box.scrollTop + box.clientHeight) box.scrollTop = bottom - box.clientHeight;
+    if (box.scrollHeight > box.clientHeight + 1) {
+      const top = el.offsetTop;
+      const bottom = top + el.offsetHeight;
+      if (top < box.scrollTop) box.scrollTop = top;
+      else if (bottom > box.scrollTop + box.clientHeight) box.scrollTop = bottom - box.clientHeight;
+    } else if (!initial) {
+      el.scrollIntoView({ block: "nearest" });
+    }
   }, [activeId, cases]);
 
   if (cases.length === 0) {
     return (
-      <EmptyState icon={<InboxIcon size={22} />} title="No cases match" cause="Try another filter or clear the search." />
+      <div className="qempty">
+        <EmptyState icon={<InboxIcon size={22} />} title="Nothing to show" cause="Change the filter or clear the search." />
+        <button type="button" className="btn" onClick={onClear}>Clear filter</button>
+      </div>
     );
   }
 
@@ -69,30 +82,28 @@ export default function QueueList({
             role="option"
             aria-selected={active}
             className={`qrow${active ? " active" : ""}`}
+            title={top ? `Main signal: ${top.label}` : undefined}
             onClick={() => {
               listRef.current?.focus({ preventScroll: true });
               onSelect(c.event_id);
             }}
           >
-            <div className="qrow-top">
-              <span className="qrow-id">#{c.event_id}</span>
-              <span className="qrow-amt">{usd(c.amount)}</span>
-              <VerdictPill verdict={c.verdict} />
-            </div>
-            <div className="qrow-sub">
-              <span className="qrisk" title={`Risk ${num(c.risk)}`}>
-                <span className="qrisk-bar" aria-hidden="true">
-                  <span className={`qrisk-fill ${RISK_CLASS[c.verdict]}`} style={{ width: `${clamp01(c.risk) * 100}%` }} />
-                </span>
-                <span className="qrisk-num">{num(c.risk)}</span>
+            <span className="qrow-id">#{c.event_id}</span>
+            <span className="qrow-amt">{usd(c.amount)}</span>
+            <span className="qrisk" title={`Risk ${num(c.risk)}`}>
+              <span className="qrisk-bar" aria-hidden="true">
+                <span className={`qrisk-fill ${RISK_CLASS[c.verdict]}`} style={{ width: `${clamp01(c.risk) * 100}%` }} />
               </span>
-              <span className="qrow-spec">{top?.label ?? "-"}</span>
+              <span className="qrisk-num">{num(c.risk)}</span>
+            </span>
+            <span className="qrow-end">
               {done && (
                 <span className="qdot" title="You decided this case">
                   <span className="visually-hidden">Reviewed</span>
                 </span>
               )}
-            </div>
+              <VerdictPill verdict={c.verdict} />
+            </span>
           </li>
         );
       })}

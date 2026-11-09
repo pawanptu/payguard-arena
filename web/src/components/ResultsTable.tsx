@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import type { ResultRow, Split } from "../types";
 import { defenderLabel, num1, num2, ordinal, pct, SEP, SPLIT_LABEL, SPLIT_ORDER } from "../format";
 import { pickBestSingle, PRIMARY_DEFENDER, SINGLE_PREFIX, TESTS } from "../verdict";
+import { TIPS } from "../tips";
 import InfoTip from "./InfoTip";
 import { InboxIcon, StarIcon } from "./Icons";
 import { CardHeader, EmptyState, Pill, Segmented, Switch } from "./ui";
@@ -16,26 +17,26 @@ interface Col {
 }
 
 const MAIN_COLS: Col[] = [
-  { key: "objective", label: "Objective", tip: "Leakage + 0.5 × honest blocked + honest unpaid. Lower is better.", fmt: num2 },
-  { key: "leakage_pct", label: "Leakage %", tip: "Share of attack value paid out.", fmt: pct },
-  { key: "honest_block_rate", label: "Honest blocked %", tip: "Honest workers put on HOLD.", fmt: pct },
-  { key: "honest_unpaid_rate", label: "Honest unpaid %", tip: "Honest workers never paid.", fmt: pct },
+  { key: "objective", label: "Score", tip: TIPS.score, fmt: num2 },
+  { key: "leakage_pct", label: "Fraud let through %", tip: TIPS.leakage, fmt: pct },
+  { key: "honest_block_rate", label: "Honest held %", tip: TIPS.honestHeld, fmt: pct },
+  { key: "honest_unpaid_rate", label: "Honest never paid %", tip: TIPS.honestNeverPaid, fmt: pct },
 ];
 const MORE_COLS: Col[] = [
   { key: "honest_median_ttp_h", label: "Median time to pay (h)", tip: "Hours until an honest worker is paid.", fmt: num1 },
   {
     key: "immunity_attempts",
-    label: "Attack payouts before containment",
+    label: "Attacks before containment",
     tip: "Attack payouts that slipped through before the pattern was caught.",
     fmt: num1,
   },
-  { key: "never_contained_rate", label: "Never contained %", tip: "Attack rings never stopped.", fmt: pct },
+  { key: "never_contained_rate", label: "Never contained %", tip: "Share of attack campaigns that were never stopped.", fmt: pct },
 ];
 
 /** swarm_r2 was designed after the round-1 result on TEST_HELDOUT was known, so its row there is not a clean test. */
 const POST_HOC: Partial<Record<Split, string>> = { TEST_HELDOUT: "swarm_r2" };
 
-/** The defender pinned as "Primary" for a split: the one under test there, else the round-1 primary. */
+/** The defender pinned as "Tested" for a split: the one under test there, else the round-1 primary. */
 const primaryFor = (split: Split) => TESTS.find((t) => t.split === split)?.primary ?? PRIMARY_DEFENDER;
 
 interface Note {
@@ -47,11 +48,11 @@ interface Note {
 /** A muted marker next to a defender name: why a row is not a clean test, or what a single_* row is (D-038). */
 function noteFor(r: ResultRow, ruleSingle?: ResultRow, splitBest?: ResultRow): Note | null {
   if (POST_HOC[r.split] === r.defender)
-    return { text: "Post-hoc", tipLabel: "why this row is not a clean test", tip: "Designed after the round-1 result on this split was known." };
+    return { text: "Built after this test", tipLabel: "why this row is not a clean test", tip: TIPS.postHoc };
   if (r === ruleSingle)
-    return { text: "Chosen on TRAIN", tipLabel: "which single the rule uses", tip: "The best single specialist on TRAIN. The pre-registered rule compares against this one." };
+    return { text: "Chosen on training data", tipLabel: "which single agent the rule uses", tip: "The best single agent on the training data. The pass rule compares against this one." };
   if (r === splitBest)
-    return { text: "Not pre-registered", tipLabel: "why this single is shown", tip: "The best single specialist on this split, shown for comparison. The rule's single was fixed on TRAIN before the test." };
+    return { text: "Not the rule's pick", tipLabel: "why this single agent is shown", tip: "The best single agent on this test set, shown for comparison. The rule's single agent was fixed on training data before the test." };
   return null;
 }
 
@@ -62,8 +63,8 @@ export default function ResultsTable({ rows }: { rows: ResultRow[] }) {
 
   if (rows.length === 0) {
     return (
-      <section id="results" className="card" aria-labelledby="res-h">
-        <CardHeader id="res-h" title="Results" />
+      <section id="all-defenders" className="card" aria-labelledby="res-h">
+        <CardHeader id="res-h" level={3} title="All defenders, by test" />
         <EmptyState icon={<InboxIcon size={22} />} title="No results" cause="This replay has no result rows." />
       </section>
     );
@@ -89,15 +90,16 @@ export default function ResultsTable({ rows }: { rows: ResultRow[] }) {
   const cols = more ? [...MAIN_COLS, ...MORE_COLS] : MAIN_COLS;
 
   return (
-    <section id="results" className="card" aria-labelledby="res-h">
+    <section id="all-defenders" className="card" aria-labelledby="res-h">
       <CardHeader
         id="res-h"
-        title="Results"
+        level={3}
+        title="All defenders, by test"
         subtitle={subtitle}
         actions={
           <>
             <Segmented
-              label="Data split"
+              label="Test set"
               options={available.map((s) => ({ value: s, label: SPLIT_LABEL[s] }))}
               value={split}
               onChange={setPicked}
@@ -106,9 +108,9 @@ export default function ResultsTable({ rows }: { rows: ResultRow[] }) {
           </>
         }
       />
-      <div className="table-wrap results-wrap" tabIndex={0} role="region" aria-label={`Results table, ${SPLIT_LABEL[split]} split`}>
+      <div className="table-wrap results-wrap" tabIndex={0} role="region" aria-label={`Results table, ${SPLIT_LABEL[split]}`}>
         <table className="results">
-          <caption className="visually-hidden">Defender results, {SPLIT_LABEL[split]} split. Lower is better.</caption>
+          <caption className="visually-hidden">Defender results, {SPLIT_LABEL[split]}. Lower is better.</caption>
           <thead>
             <tr>
               <th scope="col">Defender</th>
@@ -131,7 +133,7 @@ export default function ResultsTable({ rows }: { rows: ResultRow[] }) {
                   <th scope="row" title={r.defender}>
                     <span className="def">
                       {defenderLabel(r.defender)}
-                      {isPrimary && <Pill variant="headline">Primary</Pill>}
+                      {isPrimary && <Pill variant="headline">Tested</Pill>}
                       {note && (
                         <span className="def-note">
                           {note.text}

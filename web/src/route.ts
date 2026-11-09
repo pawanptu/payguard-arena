@@ -9,7 +9,7 @@ export interface Route {
 }
 
 export const VIEWS: { view: View; label: string }[] = [
-  { view: "console", label: "Console" },
+  { view: "console", label: "Review queue" },
   { view: "copilot", label: "Copilot" },
   { view: "results", label: "Results" },
   { view: "how", label: "How it works" },

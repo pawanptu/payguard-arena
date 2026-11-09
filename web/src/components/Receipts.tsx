@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import type { Payout } from "../types";
 import { plural, shortId, shortTime, usd } from "../format";
 import { CheckIcon, CopyIcon, InboxIcon } from "./Icons";
+import { TIPS } from "../tips";
 import { CardHeader, EmptyState, LivePill, Pill, SimPill } from "./ui";
 
 function PayoutTable({
@@ -93,18 +94,25 @@ export default function Receipts({ payouts, verified }: { payouts: Payout[]; ver
 
   return (
     <section className="card" aria-labelledby="rec-h">
-      <CardHeader id="rec-h" title="Receipts" />
+      <CardHeader
+        id="rec-h"
+        level={3}
+        title="PayPal sandbox receipts"
+        tipLabel="LIVE and SIM rows"
+        tip={TIPS.liveSim}
+        subtitle="Test-money payouts sent to the PayPal sandbox."
+      />
       <p className="visually-hidden" role="status" aria-live="polite">{msg}</p>
       {msg && <span className="toast" aria-hidden="true">{msg}</span>}
 
       {payouts.length === 0 ? (
-        <EmptyState icon={<InboxIcon size={22} />} title="No sandbox payouts yet" cause="Live receipts appear here after a payout run." />
+        <EmptyState icon={<InboxIcon size={22} />} title="No sandbox payouts yet" cause="LIVE receipts appear here after a payout run." />
       ) : (
         <>
           {live.length > 0 ? (
             <PayoutTable rows={live} verified={verified} onCopy={copy} caption="Live PayPal sandbox payouts" />
           ) : (
-            <p className="muted">No live payouts in this replay.</p>
+            <p className="muted">No LIVE payouts in this replay.</p>
           )}
           {sim.length > 0 && (
             <div className="sim-block">

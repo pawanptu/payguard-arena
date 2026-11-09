@@ -8,7 +8,7 @@ import ResultsView from "./results/ResultsView";
 import HowView from "./HowView";
 
 const TITLES: Record<View, string> = {
-  console: "Console",
+  console: "Review queue",
   copilot: "Copilot",
   results: "Results",
   how: "How it works",
@@ -43,7 +43,7 @@ export default function App() {
         Skip to content
       </a>
       <TopBar view={route.view} />
-      <main id="main" ref={mainRef} tabIndex={-1} className="container">
+      <main id="main" ref={mainRef} tabIndex={-1} className="main">
         {route.view === "console" && <ConsoleView />}
         {route.view === "copilot" && <CopilotView />}
         {route.view === "results" && <ResultsView />}

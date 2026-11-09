@@ -16,6 +16,7 @@ export default function InfoTip({ label, children }: { label: string; children: 
   const tipRef = useRef<HTMLSpanElement>(null);
   const timer = useRef<number | undefined>(undefined);
   const pointer = useRef<string>("key");
+  const hovered = useRef(false);
   const [open, setOpen] = useState(false);
   const [pos, setPos] = useState({ left: 0, top: 0, width: MAX_W });
 
@@ -68,10 +69,16 @@ export default function InfoTip({ label, children }: { label: string; children: 
       className="tip"
       onPointerEnter={(e) => {
         pointer.current = e.pointerType;
-        if (e.pointerType === "mouse") show();
+        if (e.pointerType === "mouse") {
+          hovered.current = true;
+          show();
+        }
       }}
       onPointerLeave={(e) => {
-        if (e.pointerType === "mouse") hideSoon();
+        if (e.pointerType === "mouse") {
+          hovered.current = false;
+          if (!btnRef.current?.matches(":focus-visible")) hideSoon();
+        }
       }}
     >
       <button
@@ -90,7 +97,11 @@ export default function InfoTip({ label, children }: { label: string; children: 
         onFocus={(e) => {
           if (e.currentTarget.matches(":focus-visible")) show();
         }}
-        onBlur={hideSoon}
+        onBlur={() => {
+          // Close at once on blur (no two bubbles open while tabbing), unless the pointer is still over the tip.
+          window.clearTimeout(timer.current);
+          if (!hovered.current) setOpen(false);
+        }}
         onClick={() => {
           // Mouse: hover already opened it, a click keeps it open. Touch and keyboard: toggle.
           if (pointer.current === "mouse") show();

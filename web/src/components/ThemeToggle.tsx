@@ -5,7 +5,7 @@ import { MonitorIcon, MoonIcon, SunIcon } from "./Icons";
 type Theme = "system" | "light" | "dark";
 const KEY = "payguard-theme";
 const NEXT: Record<Theme, Theme> = { system: "light", light: "dark", dark: "system" };
-const NAME: Record<Theme, string> = { system: "System", light: "Light", dark: "Dark" };
+const NAME: Record<Theme, string> = { system: "Auto", light: "Light", dark: "Dark" };
 const ICON: Record<Theme, ReactElement> = {
   system: <MonitorIcon size={18} />,
   light: <SunIcon size={18} />,
@@ -40,8 +40,9 @@ export default function ThemeToggle() {
 
   const text = `Theme: ${NAME[theme]}. Activate to switch to ${NAME[NEXT[theme]]}.`;
   return (
-    <button type="button" className="icon-btn" aria-label={text} title={`Theme: ${NAME[theme]}`} onClick={() => setTheme(NEXT[theme])}>
+    <button type="button" className="theme-btn" aria-label={text} title={`Theme: ${NAME[theme]}`} onClick={() => setTheme(NEXT[theme])}>
       {ICON[theme]}
+      <span className="theme-name" aria-hidden="true">{NAME[theme]}</span>
     </button>
   );
 }

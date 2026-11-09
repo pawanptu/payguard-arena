@@ -1,20 +1,14 @@
 import { hrefFor, VIEWS } from "../route";
 import type { View } from "../route";
-import { ShieldMark, WarnIcon } from "./Icons";
+import { TIPS } from "../tips";
+import { ShieldMark } from "./Icons";
+import InfoTip from "./InfoTip";
 import ThemeToggle from "./ThemeToggle";
 
-/** Sticky block: the permanent replay-mode banner over the product bar and the four view tabs. */
+/** Sticky top bar: brand, the four view tabs, the "Simulated data" chip and the theme toggle. */
 export default function TopBar({ view }: { view: View }) {
   return (
     <header className="top-block">
-      <div className="strip" role="note">
-        <div className="strip-in">
-          <WarnIcon size={14} />
-          <span className="strip-text">
-            <strong>Replay mode:</strong> simulated synthetic data. This public site never sends payouts.
-          </span>
-        </div>
-      </div>
       <div className="bar">
         <div className="bar-in">
           <a className="brand" href={hrefFor("console")} aria-label="PayGuard, payout fraud ops console">
@@ -31,6 +25,10 @@ export default function TopBar({ view }: { view: View }) {
               </a>
             ))}
           </nav>
+          <span className="sim-chip">
+            Simulated data
+            <InfoTip label="simulated data">{TIPS.simulated}</InfoTip>
+          </span>
           <ThemeToggle />
         </div>
       </div>

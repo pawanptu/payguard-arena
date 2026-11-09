@@ -1,19 +1,18 @@
-import { forwardRef } from "react";
+import { forwardRef, useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import type { AsyncState } from "../hooks";
 import type { CaseExplanation, ConsoleCase, ConsoleQueue, ExplanationsResult, SpecialistInfo, VerdictName } from "../types";
 import { SPECIALIST_KEYS } from "../types";
-import { num1, plural, SEP, usd } from "../format";
+import { days1, num1, plural, SEP, usd } from "../format";
+import { TIPS } from "../tips";
 import InfoTip from "../components/InfoTip";
 import { CheckIcon, CrossIcon, DiamondIcon, InboxIcon, SquareIcon } from "../components/Icons";
-import { EmptyState, Pill, Skeleton, VerdictPill } from "../components/ui";
+import { EmptyState, Pill, Skeleton, VERDICT_WORD, VerdictPill } from "../components/ui";
 import RiskMeter from "./RiskMeter";
 import { callMatchesTruth } from "../review";
 import { clamp01, DECIDED_BY, num, pct0, statLabel } from "./labels";
 
-const VERDICT_WORD: Record<VerdictName, string> = { RELEASE: "Release", STEP_UP: "Step-up", HOLD: "Hold" };
-
-/* ---------- Why it was held ---------- */
+/* ---------- Why it was flagged ---------- */
 
 function Why({ state, id }: { state: AsyncState<ExplanationsResult>; id: number }) {
   if (state.status === "loading" || (state.status === "ready" && state.data === null)) {
@@ -29,7 +28,7 @@ function Why({ state, id }: { state: AsyncState<ExplanationsResult>; id: number 
   if (state.status === "error") {
     return (
       <div className="inline-error" role="alert">
-        <p>Couldn&apos;t load the AI explanations.</p>
+        <p>Couldn&apos;t load the explanation.</p>
         <button type="button" className="btn" onClick={() => void state.reload()}>Retry</button>
       </div>
     );
@@ -39,23 +38,31 @@ function Why({ state, id }: { state: AsyncState<ExplanationsResult>; id: number 
     return (
       <EmptyState
         icon={<InboxIcon size={22} />}
-        title="AI explanations are not built yet"
-        cause="The evidence below is complete without them."
+        title="No AI explanation yet"
+        cause="The evidence below is complete without it."
       />
     );
   }
   const e: CaseExplanation | undefined = res.data.explanations[String(id)];
   if (!e) {
-    return <EmptyState icon={<InboxIcon size={22} />} title="No explanation for this case" cause="The evidence below still applies." />;
+    return (
+      <EmptyState
+        icon={<InboxIcon size={22} />}
+        title="No explanation for this case yet"
+        cause="The evidence below is still complete."
+      />
+    );
   }
   const ai = e.source === "llm";
   return (
     <div className="why">
       <div className="why-meta">
         <Pill variant="chip" className={ai ? "src-ai" : "src-template"}>
-          {ai ? `AI explanation${SEP}${res.data.model}${SEP}cached` : "Template (AI text failed the grounding check)"}
+          {ai ? "AI explanation" : "Standard explanation"}
         </Pill>
-        <InfoTip label="how explanations are checked">{res.data.grounding}</InfoTip>
+        <InfoTip label={ai ? "the AI explanation" : "the standard explanation"}>
+          {ai ? `Written ahead of time by ${res.data.model}. ${TIPS.grounding}` : TIPS.template}
+        </InfoTip>
       </div>
       <p className="why-summary">{e.summary}</p>
       {e.evidence.length > 0 && (
@@ -75,7 +82,7 @@ function Why({ state, id }: { state: AsyncState<ExplanationsResult>; id: number 
   );
 }
 
-/* ---------- Evidence by specialist ---------- */
+/* ---------- How each specialist voted ---------- */
 
 function Evidence({ c, specialists }: { c: ConsoleCase; specialists: Map<string, SpecialistInfo> }) {
   const rows = SPECIALIST_KEYS.map((k) => ({
@@ -89,6 +96,12 @@ function Evidence({ c, specialists }: { c: ConsoleCase; specialists: Map<string,
   const fired = c.layer?.fired ?? [];
   return (
     <>
+      <p className="spec-legend">
+        What each agent saw
+        <InfoTip label="the specialist columns">
+          Score: {TIPS.agentScore} Trust weight: {TIPS.trustWeight} Share of the risk: {TIPS.shareOfRisk}
+        </InfoTip>
+      </p>
       <ul className="spec-list">
         {rows.map((r) => {
           const silent = r.score <= 0;
@@ -96,9 +109,9 @@ function Evidence({ c, specialists }: { c: ConsoleCase; specialists: Map<string,
             <li key={r.key} className={`spec${silent ? " silent" : ""}`}>
               <div className="spec-head">
                 <span className="spec-name">{r.info?.label ?? r.key}</span>
-                {silent && <span className="spec-quiet">Silent</span>}
+                {r.info?.what && <InfoTip label={r.info.label}>{r.info.what}</InfoTip>}
+                {silent && <span className="spec-quiet">No signal</span>}
               </div>
-              <p className="spec-what">{r.info?.what}</p>
               <dl className="spec-metrics">
                 <div className="spec-m spec-score">
                   <dt>Score</dt>
@@ -110,11 +123,11 @@ function Evidence({ c, specialists }: { c: ConsoleCase; specialists: Map<string,
                   </dd>
                 </div>
                 <div className="spec-m">
-                  <dt>Reputation weight</dt>
+                  <dt>Trust weight</dt>
                   <dd className="spec-num">{num(r.weight)}</dd>
                 </div>
                 <div className="spec-m">
-                  <dt>Share of the vote</dt>
+                  <dt>Share of the risk</dt>
                   <dd className="spec-num">{pct0(r.share)}</dd>
                 </div>
               </dl>
@@ -124,12 +137,15 @@ function Evidence({ c, specialists }: { c: ConsoleCase; specialists: Map<string,
       </ul>
       <div className="layer">
         <div className="layer-head">
-          <span className="spec-name">{layerInfo?.label ?? "Anomaly layer"}</span>
+          <span className="spec-name">
+            {layerInfo?.label ?? "Anomaly layer"}
+            <InfoTip label="the anomaly layer">{TIPS.anomalyLayer}</InfoTip>
+          </span>
           {c.layer && <VerdictPill verdict={c.layer.verdict} />}
         </div>
-        {layerInfo && <p className="spec-what">{layerInfo.what}</p>}
+        <p className="spec-what">{TIPS.anomalyWhat}</p>
         {fired.length > 0 ? (
-          <ul className="chips" aria-label="Statistics that fired">
+          <ul className="chips" aria-label="Checks that fired">
             {fired.map((f) => (
               <li key={f}>
                 <Pill variant="chip" title={f}>{statLabel(f)}</Pill>
@@ -137,14 +153,14 @@ function Evidence({ c, specialists }: { c: ConsoleCase; specialists: Map<string,
             ))}
           </ul>
         ) : (
-          <p className="spec-what">No statistic crossed its cut-off.</p>
+          <p className="spec-what">No checks fired.</p>
         )}
       </div>
     </>
   );
 }
 
-/* ---------- Facts at decision time ---------- */
+/* ---------- Account facts ---------- */
 
 function sharing(n: number, what: string, one: string): string {
   return n <= 1 ? one : `${plural(n, "account")} use the same ${what}.`;
@@ -171,7 +187,7 @@ function Facts({ c }: { c: ConsoleCase }) {
   );
 }
 
-/* ---------- Truth and outcome (replay mode) ---------- */
+/* ---------- What really happened ---------- */
 
 function Match({ ok, who, call }: { ok: boolean; who: string; call: string }) {
   return (
@@ -180,13 +196,18 @@ function Match({ ok, who, call }: { ok: boolean; who: string; call: string }) {
       <span>
         {who}: <strong>{call}</strong>
         {SEP}
-        {ok ? "matched the truth" : "did not match the truth"}
+        {ok ? "was right" : "was wrong"}
       </span>
     </li>
   );
 }
 
 function TruthPanel({ c, decision }: { c: ConsoleCase; decision: VerdictName | undefined }) {
+  const ref = useRef<HTMLElement>(null);
+  // The panel appears after a click in the action bar: bring it into view if it is scrolled out.
+  useEffect(() => {
+    ref.current?.scrollIntoView({ block: "nearest" });
+  }, []);
   const t = c.truth;
   if (!t) return null;
   const o = c.outcome;
@@ -195,30 +216,28 @@ function TruthPanel({ c, decision }: { c: ConsoleCase; decision: VerdictName | u
     const after = o.delay_h != null ? ` after ${num1(o.delay_h)} h` : "";
     if (t.is_attack) {
       outcome = o.paid
-        ? `In the simulation this attack payout was paid${after}. That counts as leakage.`
-        : "In the simulation this attack payout was never paid: it was stopped.";
+        ? `This attack payout was paid${after}. That is leakage: fraud that got through.`
+        : "This attack payout was never paid: it was stopped.";
     } else {
       outcome = o.paid
-        ? `In the simulation this honest payout was paid${after}. The wait is the cost of the review.`
-        : "In the simulation this honest payout was never paid.";
+        ? `This honest payout was paid${after}. The wait is the cost of the review.`
+        : "This honest payout was never paid.";
     }
   }
   return (
-    <section className="truth" aria-label="What the simulator says" aria-live="polite">
+    <section ref={ref} className="truth" aria-label="What really happened" aria-live="polite">
       <div className="truth-head">
-        <h3>What the simulator says</h3>
-        <Pill variant="sim">SIM</Pill>
+        <h3>What really happened</h3>
       </div>
       <p className="truth-line">
         <Pill variant={t.is_attack ? "leaked" : "release"}>{t.is_attack ? "Attack" : "Honest payout"}</Pill>{" "}
-        {t.is_attack ? `Ground truth: attack, family ${t.family}.` : "Ground truth: a legitimate payout."}
+        {t.is_attack ? `Attack, family ${t.family}.` : "A legitimate payout."}
       </p>
       {outcome && <p className="truth-line">{outcome}</p>}
-      <ul className="checks truth-checks" aria-label="Did the calls match the truth?">
+      <ul className="checks truth-checks" aria-label="Were the calls right?">
         {decision && <Match ok={callMatchesTruth(decision, t.is_attack)} who="Your call" call={VERDICT_WORD[decision]} />}
-        <Match ok={callMatchesTruth(c.verdict, t.is_attack)} who="The swarm's call" call={VERDICT_WORD[c.verdict]} />
+        <Match ok={callMatchesTruth(c.verdict, t.is_attack)} who="The agents' call" call={VERDICT_WORD[c.verdict]} />
       </ul>
-      <p className="truth-note">In replay mode nothing is sent.</p>
     </section>
   );
 }
@@ -227,21 +246,11 @@ function TruthPanel({ c, decision }: { c: ConsoleCase; decision: VerdictName | u
 
 const ACTIONS: { v: VerdictName; label: string; icon: ReactNode; cls: string }[] = [
   { v: "RELEASE", label: "Release", icon: <CheckIcon size={16} />, cls: "release" },
-  { v: "STEP_UP", label: "Step-up", icon: <DiamondIcon size={16} />, cls: "step" },
-  { v: "HOLD", label: "Keep on hold", icon: <SquareIcon size={16} />, cls: "hold" },
+  { v: "STEP_UP", label: "Step up", icon: <DiamondIcon size={16} />, cls: "step" },
+  { v: "HOLD", label: "Hold", icon: <SquareIcon size={16} />, cls: "hold" },
 ];
 
-function Actions({
-  decision,
-  showReveal,
-  onDecide,
-  onReveal,
-}: {
-  decision: VerdictName | undefined;
-  showReveal: boolean;
-  onDecide: (v: VerdictName) => void;
-  onReveal: () => void;
-}) {
+function Actions({ decision, onDecide }: { decision: VerdictName | undefined; onDecide: (v: VerdictName) => void }) {
   return (
     <div className="actions" role="group" aria-label="Your call on this payout">
       <div className="actions-row">
@@ -257,13 +266,8 @@ function Actions({
             {a.label}
           </button>
         ))}
-        {showReveal && (
-          <button type="button" className="link-btn" onClick={onReveal}>
-            Reveal truth
-          </button>
-        )}
+        <p className="actions-note">Saved in this browser only. Nothing is sent.</p>
       </div>
-      <p className="actions-note">In replay mode a click is saved in this browser only. Nothing is sent.</p>
     </div>
   );
 }
@@ -280,20 +284,26 @@ const CaseDetail = forwardRef<
     decision: VerdictName | undefined;
     revealed: boolean;
     copilotHref: string;
+    narrow: boolean;
     onDecide: (v: VerdictName) => void;
     onReveal: () => void;
     onBack?: () => void;
   }
->(function CaseDetail({ c, queue, specialists, explanations, decision, revealed, copilotHref, onDecide, onReveal, onBack }, headingRef) {
+>(function CaseDetail({ c, queue, specialists, explanations, decision, revealed, copilotHref, narrow, onDecide, onReveal, onBack }, headingRef) {
   const showTruth = Boolean(decision) || revealed;
+  const [specOpen, setSpecOpen] = useState(!narrow);
   return (
     <section className="card detail" aria-labelledby="case-h">
-      <div className="detail-body">
-        {onBack && (
-          <button type="button" className="link-btn back" onClick={onBack}>
-            ← Back to the queue
+      {onBack && (
+        <div className="detail-bar">
+          <button type="button" className="back-btn" onClick={onBack}>
+            <span aria-hidden="true">←</span> Queue
           </button>
-        )}
+          <span className="detail-bar-id">#{c.event_id}</span>
+          <VerdictPill verdict={c.verdict} />
+        </div>
+      )}
+      <div className="detail-body">
         <header className="detail-head">
           <div className="detail-title">
             <h2 id="case-h" ref={headingRef} tabIndex={-1}>
@@ -301,18 +311,25 @@ const CaseDetail = forwardRef<
             </h2>
             <p className="detail-amt">{usd(c.amount)}</p>
             <p className="card-sub">
-              Worker {c.worker_id}{SEP}Requester {c.requester_id}{SEP}arrived at simulated hour {num1(c.t)}
+              Worker {c.worker_id}{SEP}Requester {c.requester_id}{SEP}Day {days1(c.t)} of the replay
             </p>
           </div>
           <div className="detail-side">
             <VerdictPill verdict={c.verdict} />
             <p className="detail-by">
-              Decided by: {DECIDED_BY[c.decided_by] ?? c.decided_by}
-              <InfoTip label="who decided">
-                The swarm votes from four specialists. The anomaly layer can only raise the severity of that verdict, never lower it.
+              Flagged by: {DECIDED_BY[c.decided_by] ?? c.decided_by}
+              <InfoTip label="who flagged it">
+                {TIPS.swarm} {TIPS.anomalyLayer}
               </InfoTip>
             </p>
-            <a className="btn btn-link" href={copilotHref}>Ask the copilot</a>
+            <div className="detail-links">
+              <a className="btn btn-link" href={copilotHref}>Ask copilot about #{c.event_id}</a>
+              {!showTruth && Boolean(c.truth) && (
+                <button type="button" className="btn" onClick={onReveal}>
+                  Show the answer
+                </button>
+              )}
+            </div>
           </div>
         </header>
 
@@ -321,22 +338,26 @@ const CaseDetail = forwardRef<
         <RiskMeter risk={c.risk} stepUp={queue.thresholds.step_up} hold={queue.thresholds.hold} />
 
         <section className="dsec" aria-labelledby="why-h">
-          <h3 id="why-h">Why it was held</h3>
+          <h3 id="why-h">Why it was flagged</h3>
           <Why state={explanations} id={c.event_id} />
         </section>
 
-        <section className="dsec" aria-labelledby="ev-h">
-          <h3 id="ev-h">Evidence by specialist</h3>
-          <Evidence c={c} specialists={specialists} />
-        </section>
-
         <section className="dsec" aria-labelledby="facts-h">
-          <h3 id="facts-h">Facts at decision time</h3>
+          <h3 id="facts-h">Account facts</h3>
           <Facts c={c} />
         </section>
+
+        <details
+          className="dsec spec-details"
+          open={specOpen}
+          onToggle={(e) => setSpecOpen((e.currentTarget as HTMLDetailsElement).open)}
+        >
+          <summary>How each specialist voted</summary>
+          <Evidence c={c} specialists={specialists} />
+        </details>
       </div>
       <footer className="detail-foot">
-        <Actions decision={decision} showReveal={!showTruth && Boolean(c.truth)} onDecide={onDecide} onReveal={onReveal} />
+        <Actions decision={decision} onDecide={onDecide} />
       </footer>
     </section>
   );

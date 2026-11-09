@@ -17,6 +17,7 @@ export function Pill({ variant, children, className = "", title }: { variant: Pi
 }
 
 const VERDICT_VARIANT: Record<VerdictName, PillVariant> = { RELEASE: "release", STEP_UP: "step", HOLD: "hold" };
+export const VERDICT_WORD: Record<VerdictName, string> = { RELEASE: "Release", STEP_UP: "Step-up", HOLD: "Hold" };
 const VERDICT_ICON: Record<VerdictName, ReactNode> = {
   RELEASE: <CheckIcon size={12} />,
   STEP_UP: <DiamondIcon size={12} />,
@@ -28,7 +29,7 @@ export function VerdictPill({ verdict, count }: { verdict: VerdictName; count?: 
   return (
     <Pill variant={VERDICT_VARIANT[verdict]} className="pill-verdict">
       {VERDICT_ICON[verdict]}
-      <span>{verdict}</span>
+      <span>{VERDICT_WORD[verdict]}</span>
       {count !== undefined && <span className="pill-count">{count.toLocaleString("en-US")}</span>}
     </Pill>
   );
@@ -140,6 +141,7 @@ export function CardHeader({
   tipLabel,
   subtitle,
   actions,
+  level = 2,
 }: {
   id: string;
   title: string;
@@ -147,14 +149,16 @@ export function CardHeader({
   tipLabel?: string;
   subtitle?: ReactNode;
   actions?: ReactNode;
+  level?: 2 | 3;
 }) {
+  const H = level === 2 ? "h2" : "h3";
   return (
     <header className="card-head">
       <div className="card-head-main">
-        <h2 id={id}>
-          {title}
+        <div className="card-title">
+          <H id={id}>{title}</H>
           {tip && <InfoTip label={tipLabel ?? title}>{tip}</InfoTip>}
-        </h2>
+        </div>
         {subtitle && <p className="card-sub">{subtitle}</p>}
       </div>
       {actions && <div className="card-actions">{actions}</div>}
@@ -184,11 +188,11 @@ export function ErrorCard({ what, message, onRetry }: { what: string; message: s
       <div className="error-row">
         <AlertIcon size={18} />
         <p className="error-title">Couldn&apos;t load {what}.</p>
-        <button type="button" className="btn" onClick={onRetry}>Retry</button>
+        <button type="button" className="btn" onClick={onRetry}>Try again</button>
       </div>
       {message && (
         <details className="error-details">
-          <summary>Details</summary>
+          <summary>Technical details</summary>
           <pre>{message}</pre>
         </details>
       )}

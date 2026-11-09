@@ -60,8 +60,8 @@ export function defenderLabel(id: string): string {
 
 export const SPLIT_ORDER: Split[] = ["TEST_HELDOUT2", "TEST_HELDOUT", "TEST_SEEN", "TRAIN"];
 export const SPLIT_LABEL: Record<Split, string> = {
-  TEST_HELDOUT: "Held-out",
-  TEST_SEEN: "Seen families",
-  TRAIN: "Train",
-  TEST_HELDOUT2: "New family (round 2)",
+  TEST_HELDOUT: "Round 1 family",
+  TEST_SEEN: "Known families",
+  TRAIN: "Training data",
+  TEST_HELDOUT2: "Round 2 family",
 };

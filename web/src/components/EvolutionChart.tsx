@@ -1,7 +1,7 @@
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import type { EvolutionRow } from "../types";
 import { useMediaQuery } from "../hooks";
-import { num1, num2, pct } from "../format";
+import { num1, num2, pct, SEP } from "../format";
 import { CardHeader, EmptyState } from "./ui";
 import { InboxIcon } from "./Icons";
 
@@ -41,7 +41,7 @@ function EvoTooltip({ active, payload }: TipProps) {
       <dl>
         <dt>Champion</dt><dd>{num2(r.champion_objective)}</dd>
         <dt>Challenger</dt><dd>{num2(r.challenger_objective)}</dd>
-        <dt>Attacker leakage</dt>
+        <dt>Fraud let through</dt>
         <dd>{r.attacker_leakage_pct == null ? "-" : pct(r.attacker_leakage_pct)}{r.attacker_family ? ` (${r.attacker_family})` : ""}</dd>
       </dl>
     </div>
@@ -54,7 +54,7 @@ export default function EvolutionChart({ rows }: { rows: EvolutionRow[] }) {
   if (rows.length === 0) {
     return (
       <section className="card" aria-labelledby="evo-h">
-        <CardHeader id="evo-h" title="Evolution" />
+        <CardHeader id="evo-h" title="How the swarm improved" />
         <EmptyState icon={<InboxIcon size={22} />} title="No evolution data" cause="This replay has no evolution generations." />
       </section>
     );
@@ -68,10 +68,10 @@ export default function EvolutionChart({ rows }: { rows: EvolutionRow[] }) {
     <section className="card evo-card" aria-labelledby="evo-h">
       <CardHeader
         id="evo-h"
-        title="Evolution"
-        subtitle={`Training objective ${num1(first)} → ${num1(last)} over ${rows.length} generations (${promotions} ${promotions === 1 ? "promotion" : "promotions"})`}
+        title="How the swarm improved"
+        subtitle={`Training score ${num1(first)} → ${num1(last)} over ${rows.length} generations${SEP}${promotions} ${promotions === 1 ? "promotion" : "promotions"}${SEP}not a test result`}
         tipLabel="the evolution chart"
-        tip="Lower is better. Diamond = a challenger was promoted. Dashed line = attacker leakage."
+        tip="Lower score is better. Diamond = a challenger was promoted. Dashed line = fraud let through (%)."
       />
 
       <ul className="legend" aria-hidden="true">
@@ -85,21 +85,21 @@ export default function EvolutionChart({ rows }: { rows: EvolutionRow[] }) {
         </li>
         <li>
           <svg width="30" height="12" viewBox="0 0 30 12"><line x1="0" y1="6" x2="30" y2="6" stroke="var(--c-atk)" strokeWidth="2" strokeDasharray="6 4" /></svg>
-          Attacker leakage
+          Fraud let through
         </li>
       </ul>
 
       <div className="chart-axes" aria-hidden="true">
-        <span>Objective</span>
-        {!narrow && <span className="axis-atk">Leakage %</span>}
+        <span>Score</span>
+        {!narrow && <span className="axis-atk">Fraud let through %</span>}
       </div>
       <div
         className="chart"
         role="img"
-        aria-label={`Line chart of champion objective over ${rows.length} generations with ${promotions} promotions. Lower is better. A data table follows.`}
+        aria-label={`Line chart of the champion score over ${rows.length} generations, from ${num1(first)} to ${num1(last)}, with ${promotions} promotions. Lower is better. A table follows.`}
       >
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={rows} margin={{ top: 8, right: narrow ? 8 : 0, bottom: 0, left: 0 }}>
+          <LineChart data={rows} margin={{ top: 8, right: narrow ? 8 : 0, bottom: 0, left: 0 }} accessibilityLayer={false}>
             <CartesianGrid vertical={false} stroke="var(--border)" />
             <XAxis dataKey="generation" axisLine={false} tickLine={false} tick={TICK} tickMargin={8} interval="equidistantPreserveStart" minTickGap={14} />
             <YAxis yAxisId="obj" width={40} axisLine={false} tickLine={false} tick={TICK} />
@@ -118,7 +118,7 @@ export default function EvolutionChart({ rows }: { rows: EvolutionRow[] }) {
               yAxisId="obj"
               type="stepAfter"
               dataKey="challenger_objective"
-              name="Challenger objective"
+              name="Challenger score"
               stroke="var(--c-chal)"
               strokeWidth={1.5}
               dot={{ r: 3, fill: "var(--c-chal)", stroke: "var(--c-chal)" }}
@@ -129,7 +129,7 @@ export default function EvolutionChart({ rows }: { rows: EvolutionRow[] }) {
               yAxisId="leak"
               type="monotone"
               dataKey="attacker_leakage_pct"
-              name="Attacker leakage"
+              name="Fraud let through"
               stroke="var(--c-atk)"
               strokeWidth={2}
               strokeDasharray="6 4"
@@ -142,7 +142,7 @@ export default function EvolutionChart({ rows }: { rows: EvolutionRow[] }) {
               yAxisId="obj"
               type="stepAfter"
               dataKey="champion_objective"
-              name="Champion objective"
+              name="Champion score"
               stroke="var(--c-champ)"
               strokeWidth={2.5}
               dot={<PromotionDot />}
@@ -154,18 +154,18 @@ export default function EvolutionChart({ rows }: { rows: EvolutionRow[] }) {
       </div>
 
       <details className="data-details">
-        <summary>View data</summary>
+        <summary>Show as a table</summary>
         <div className="table-wrap" tabIndex={0} role="region" aria-label="Evolution data table">
           <table>
             <caption className="visually-hidden">Evolution by generation</caption>
             <thead>
               <tr>
                 <th scope="col">Gen</th>
-                <th scope="col" className="num">Champion obj.</th>
-                <th scope="col" className="num">Challenger obj.</th>
+                <th scope="col" className="num">Champion score</th>
+                <th scope="col" className="num">Challenger score</th>
                 <th scope="col">Promoted</th>
                 <th scope="col">Attacker family</th>
-                <th scope="col" className="num">Attacker leakage</th>
+                <th scope="col" className="num">Fraud let through</th>
               </tr>
             </thead>
             <tbody>

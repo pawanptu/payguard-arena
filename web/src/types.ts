@@ -244,6 +244,8 @@ export interface Hypothesis {
   id: string;
   verdict: string;
   text: string;
+  /** Measured values behind the verdict (margin, objectives); keys vary by hypothesis. */
+  numbers?: Record<string, number>;
 }
 
 export interface PairedMargin {
@@ -271,7 +273,7 @@ export interface RoundInfo {
     immunity_attempts?: Record<string, number>;
     never_contained_rate?: Record<string, number>;
   };
-  spent_splits?: Record<string, number | { objective: number }>;
+  spent_splits?: Record<string, number | { objective: number; clean?: boolean; why_not_clean?: string }>;
 }
 
 export interface RoundsResponse {

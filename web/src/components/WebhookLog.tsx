@@ -2,6 +2,7 @@ import { useState } from "react";
 import type { WebhookEvent, WebhooksResponse } from "../types";
 import type { AsyncState } from "../hooks";
 import { plural, shortId, shortTime } from "../format";
+import { TIPS } from "../tips";
 import InfoTip from "./InfoTip";
 import { CheckIcon, InboxIcon, RefreshIcon } from "./Icons";
 import { CardHeader, EmptyState, ErrorCard, Pill } from "./ui";
@@ -30,7 +31,8 @@ export default function WebhookLog({ state }: { state: AsyncState<WebhooksRespon
     <section className="card" aria-labelledby="wh-h">
       <CardHeader
         id="wh-h"
-        title="Webhooks"
+        level={3}
+        title="PayPal webhooks"
         actions={
           <button
             type="button"
@@ -46,18 +48,19 @@ export default function WebhookLog({ state }: { state: AsyncState<WebhooksRespon
       />
       <p className="visually-hidden" role="status" aria-live="polite">{msg}</p>
 
-      {!data.configured ? (
-        <EmptyState icon={<InboxIcon size={22} />} title="Webhooks are off on this server." />
-      ) : data.events.length === 0 ? (
-        <EmptyState icon={<InboxIcon size={22} />} title="No verified webhooks yet." />
+      {data.events.length === 0 ? (
+        <EmptyState
+          icon={<InboxIcon size={22} />}
+          title={data.configured ? "No verified webhooks yet." : "Webhooks are not enabled on this server."}
+        />
       ) : (
         <>
           <p className="wh-summary">
             <CheckIcon size={14} />
-            All {data.events.length} {data.events.length === 1 ? "event" : "events"} signature-verified
-            <InfoTip label="signature verification">
-              Each event passed PayPal&apos;s signature verification before it was recorded. Only ids and statuses are kept.
-            </InfoTip>
+            {data.configured
+              ? `All ${data.events.length} ${data.events.length === 1 ? "event" : "events"} signature-verified`
+              : `Recorded from the live run: ${data.events.length} signature-verified ${data.events.length === 1 ? "webhook" : "webhooks"}. This public server does not receive new webhooks.`}
+            <InfoTip label="signature verification">{TIPS.signature}</InfoTip>
           </p>
           <div className="table-wrap" tabIndex={0} role="region" aria-label={`${plural(data.events.length, "verified webhook event")}, newest first`}>
             <table>

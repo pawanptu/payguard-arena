@@ -3,6 +3,7 @@
 **An ops console for PayPal payout fraud.** A self-evolving swarm of defender agents holds risky instant payouts, an AI explains every hold in plain language, and an ops copilot built on the official **PayPal Agent Toolkit** answers questions against the PayPal sandbox. We tested the swarm blind three times: one fail, one pass, one negative result.
 
 **Live demo:** https://payguard-arena.onrender.com (replay mode, simulated synthetic data; the public site never sends payouts; a free instance can take about a minute to wake up).
+**Demo video (2:21):** https://www.youtube.com/watch?v=JgTeyIBjaaE
 
 > **Status:** built for the PayPal AI Hackathon (Nov 2026). Every number here comes from a **simulated replay on synthetic data**, never real fraud data. Only a few sampled payouts went through the real PayPal sandbox (test money). Three pre-registered tests were run, each once, on a sealed attack family: **round 1 failed (NO-GO)**; **round 2 passed (GO), with caveats**; **round 3 passed H1 but failed H2**, because its world model made the defender worse. See [Results](#results).
 

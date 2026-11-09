@@ -38,6 +38,11 @@ def tripwire(monkeypatch, tmp_path):
     monkeypatch.setattr(fe3, "OUT_DIR", tmp_path / "final_r3")
     monkeypatch.setattr(fe3, "RESULTS_PATH", tmp_path / "final_r3" / "results.json")
     monkeypatch.setattr(fe3, "FREEZE_PATH", tmp_path / "defender_freeze.json")  # absent unless a test writes it
+    # Since P1's merge, collecting the sealed family's own test module imports the package before any test here runs. Forget it
+    # for the duration of each test (restored at teardown) so "not in sys.modules" checks only what the harness imports.
+    sealed = f"payguard.{SEALED_PKG}"
+    for name in [m for m in sys.modules if m == sealed or m.startswith(sealed + ".")]:
+        monkeypatch.delitem(sys.modules, name)
 
 
 def boom(*a, **kw):

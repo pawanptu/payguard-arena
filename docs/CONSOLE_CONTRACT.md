@@ -156,7 +156,7 @@ written by the director in `payguard/console/rounds.py`, never generated.
      "hypotheses": [{"id": "H1", "verdict": "GO", "text": "..."}, {"id": "H2", "verdict": "FAIL", "text": "..."}],
      "paired": [{"arm": "swarm_r2", "mean": -24.871, "ci95": [-29.883, -19.672]}],
      "report_only": {"immunity_attempts": {"dreamer_full": 9.5}},
-     "spent_splits": {"TRAIN": 18.69},
+     "spent_splits": {"TRAIN": {"objective": 18.686, "clean": false, "why_not_clean": "trained on"}},
      "...": "..."}
   ]
 }
@@ -164,6 +164,8 @@ written by the director in `payguard/console/rounds.py`, never generated.
 
 `role` is one of `primary`, `baseline`, `ablation`, `reference`, `llm`. Round 3's `paired` is arm minus
 dreamer_full, per episode, bootstrap 95% CI (2000 resamples, seed 0); negative means the arm leaked less.
+Round 3's `spent_splits` gives dreamer_full's objective on each earlier split, report-only: every entry has
+`clean: false` and says why (trained on, or spent in an earlier round), so none of them is evidence.
 
 ## Rules for every track
 

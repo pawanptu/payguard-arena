@@ -1,0 +1,947 @@
+{
+  "generated_at": "2026-11-09T06:40:17+00:00",
+  "started_at": "2026-11-09T06:37:53+00:00",
+  "finished_at": "2026-11-09T06:40:17+00:00",
+  "git_rev": "bb7ec15e1f625cace26dfb824691f06ac92cd031",
+  "simulated": true,
+  "pre_registration": "docs/PREREG_R3.md; eval/r3/SELECTION_RULE.md",
+  "objective": "leakage_pct + 0.5*honest_block_rate + 1.0*honest_unpaid_rate (lower is better)",
+  "defender_freeze": {
+    "path": "eval/r3/defender_freeze.json",
+    "sha256": "278d5e6b67afcad33e9dfa9686a7e6e6ae7f6d0933848167a2306babdbf1c7fa"
+  },
+  "split": {
+    "name": "TEST_HELDOUT3",
+    "seeds": [
+      5000,
+      5019
+    ],
+    "families": [
+      "h3"
+    ],
+    "n_episodes": 20
+  },
+  "bootstrap": {
+    "method": "percentile 95% of the mean over episodes, resampling episodes with replacement",
+    "n": 2000,
+    "seed": 0
+  },
+  "decision": {
+    "basis": "pooled objective over all episodes (payguard.sim.metrics.evaluate), as in round 1",
+    "h1": {
+      "rule": "dreamer_full objective >= 3.0 below BOTH static_rules and single_policy, and honest block rate <= static_rules'",
+      "margin": 3.0,
+      "objective": 49.57,
+      "static_rules": 103.372,
+      "single_policy": 66.21,
+      "margin_vs_static": 53.803,
+      "margin_vs_single": 16.64,
+      "honest_block_rate": 4.579,
+      "static_honest_block_rate": 9.646,
+      "pass": true
+    },
+    "h2": {
+      "rule": "dreamer_full objective >= 2.0 below dreamer_nowm",
+      "margin": 2.0,
+      "objective": 49.57,
+      "dreamer_nowm": 34.02,
+      "margin_vs_nowm": -15.55,
+      "pass": false
+    },
+    "verdict": "GO",
+    "h2_pass": false,
+    "cross_check_episode_means": {
+      "basis": "plain mean of per-episode objectives (cross-check)",
+      "h1": {
+        "rule": "dreamer_full objective >= 3.0 below BOTH static_rules and single_policy, and honest block rate <= static_rules'",
+        "margin": 3.0,
+        "objective": 53.961,
+        "static_rules": 103.742,
+        "single_policy": 74.381,
+        "margin_vs_static": 49.781,
+        "margin_vs_single": 20.42,
+        "honest_block_rate": 4.59,
+        "static_honest_block_rate": 9.64,
+        "pass": true
+      },
+      "h2": {
+        "rule": "dreamer_full objective >= 2.0 below dreamer_nowm",
+        "margin": 2.0,
+        "objective": 53.961,
+        "dreamer_nowm": 37.201,
+        "margin_vs_nowm": -16.76,
+        "pass": false
+      },
+      "verdict": "GO",
+      "h2_pass": false
+    }
+  },
+  "arms": {
+    "static_rules": {
+      "pooled": {
+        "n_episodes": 20,
+        "attack_usd": 355209.21,
+        "leaked_usd": 346688.04,
+        "leakage_pct": 97.601,
+        "leakage_pct_by_family": {
+          "h3": 97.601
+        },
+        "honest_n": 78153,
+        "honest_block_rate": 9.646,
+        "honest_unpaid_rate": 0.948,
+        "honest_median_ttp_h": 0.0,
+        "honest_p95_ttp_h": 24.0,
+        "immunity_attempts": 40.75,
+        "never_contained_rate": 100.0,
+        "llm_calls": 0,
+        "extra": {},
+        "objective": 103.372
+      },
+      "n_episodes": 20,
+      "per_episode_objective": [
+        105.61,
+        105.938,
+        105.746,
+        101.59,
+        105.984,
+        102.465,
+        105.886,
+        95.467,
+        98.451,
+        103.59,
+        105.931,
+        105.196,
+        101.569,
+        105.449,
+        103.959,
+        105.55,
+        101.185,
+        106.076,
+        105.483,
+        103.719
+      ],
+      "mean_episode": {
+        "objective": 103.742,
+        "leakage_pct": 97.974,
+        "honest_block_rate": 9.64,
+        "immunity_attempts": 39.683
+      },
+      "ci95": {
+        "objective": [
+          102.433,
+          104.857
+        ],
+        "leakage_pct": [
+          96.638,
+          99.102
+        ],
+        "honest_block_rate": [
+          9.448,
+          9.842
+        ],
+        "immunity_attempts": [
+          34.666,
+          44.558
+        ]
+      }
+    },
+    "single_policy": {
+      "pooled": {
+        "n_episodes": 20,
+        "attack_usd": 355209.21,
+        "leaked_usd": 231836.72,
+        "leakage_pct": 65.268,
+        "leakage_pct_by_family": {
+          "h3": 65.268
+        },
+        "honest_n": 78153,
+        "honest_block_rate": 1.629,
+        "honest_unpaid_rate": 0.128,
+        "honest_median_ttp_h": 0.0,
+        "honest_p95_ttp_h": 0.0,
+        "immunity_attempts": 26.882,
+        "never_contained_rate": 69.118,
+        "llm_calls": 0,
+        "extra": {},
+        "objective": 66.21
+      },
+      "n_episodes": 20,
+      "per_episode_objective": [
+        100.84,
+        71.954,
+        97.976,
+        31.669,
+        99.174,
+        41.208,
+        62.696,
+        49.075,
+        55.509,
+        74.383,
+        94.992,
+        79.538,
+        46.995,
+        73.091,
+        97.37,
+        94.71,
+        71.047,
+        83.05,
+        100.718,
+        61.63
+      ],
+      "mean_episode": {
+        "objective": 74.381,
+        "leakage_pct": 73.441,
+        "honest_block_rate": 1.623,
+        "immunity_attempts": 26.962
+      },
+      "ci95": {
+        "objective": [
+          65.101,
+          83.764
+        ],
+        "leakage_pct": [
+          64.05,
+          82.877
+        ],
+        "honest_block_rate": [
+          1.468,
+          1.792
+        ],
+        "immunity_attempts": [
+          22.112,
+          31.943
+        ]
+      }
+    },
+    "swarm_r2": {
+      "pooled": {
+        "n_episodes": 20,
+        "attack_usd": 355209.21,
+        "leaked_usd": 75376.75,
+        "leakage_pct": 21.22,
+        "leakage_pct_by_family": {
+          "h3": 21.22
+        },
+        "honest_n": 78153,
+        "honest_block_rate": 7.749,
+        "honest_unpaid_rate": 0.551,
+        "honest_median_ttp_h": 0.0,
+        "honest_p95_ttp_h": 4.0,
+        "immunity_attempts": 2.824,
+        "never_contained_rate": 0.0,
+        "llm_calls": 0,
+        "extra": {},
+        "objective": 25.646
+      },
+      "n_episodes": 20,
+      "per_episode_objective": [
+        38.334,
+        18.565,
+        30.308,
+        16.279,
+        32.682,
+        19.859,
+        19.823,
+        20.772,
+        30.063,
+        19.118,
+        36.924,
+        29.342,
+        23.705,
+        28.283,
+        28.814,
+        46.618,
+        26.474,
+        35.606,
+        58.954,
+        21.273
+      ],
+      "mean_episode": {
+        "objective": 29.09,
+        "leakage_pct": 24.66,
+        "honest_block_rate": 7.757,
+        "immunity_attempts": 2.933
+      },
+      "ci95": {
+        "objective": [
+          24.92,
+          33.783
+        ],
+        "leakage_pct": [
+          20.413,
+          29.327
+        ],
+        "honest_block_rate": [
+          7.287,
+          8.284
+        ],
+        "immunity_attempts": [
+          2.242,
+          3.642
+        ]
+      }
+    },
+    "dreamer_full": {
+      "pooled": {
+        "n_episodes": 20,
+        "attack_usd": 355209.21,
+        "leaked_usd": 166589.19,
+        "leakage_pct": 46.899,
+        "leakage_pct_by_family": {
+          "h3": 46.899
+        },
+        "honest_n": 78153,
+        "honest_block_rate": 4.579,
+        "honest_unpaid_rate": 0.381,
+        "honest_median_ttp_h": 0.0,
+        "honest_p95_ttp_h": 0.0,
+        "immunity_attempts": 9.544,
+        "never_contained_rate": 10.294,
+        "llm_calls": 0,
+        "extra": {},
+        "objective": 49.57
+      },
+      "n_episodes": 20,
+      "per_episode_objective": [
+        37.343,
+        39.065,
+        55.607,
+        43.092,
+        64.463,
+        43.834,
+        31.776,
+        58.019,
+        48.295,
+        24.675,
+        80.384,
+        56.057,
+        50.777,
+        55.047,
+        41.563,
+        79.503,
+        66.252,
+        74.17,
+        94.237,
+        35.061
+      ],
+      "mean_episode": {
+        "objective": 53.961,
+        "leakage_pct": 51.284,
+        "honest_block_rate": 4.59,
+        "immunity_attempts": 9.517
+      },
+      "ci95": {
+        "objective": [
+          46.324,
+          61.916
+        ],
+        "leakage_pct": [
+          43.603,
+          59.214
+        ],
+        "honest_block_rate": [
+          4.28,
+          4.881
+        ],
+        "immunity_attempts": [
+          7.013,
+          12.409
+        ]
+      }
+    },
+    "dreamer_nowm": {
+      "pooled": {
+        "n_episodes": 20,
+        "attack_usd": 355209.21,
+        "leaked_usd": 111166.79,
+        "leakage_pct": 31.296,
+        "leakage_pct_by_family": {
+          "h3": 31.296
+        },
+        "honest_n": 78153,
+        "honest_block_rate": 4.571,
+        "honest_unpaid_rate": 0.439,
+        "honest_median_ttp_h": 0.0,
+        "honest_p95_ttp_h": 0.0,
+        "immunity_attempts": 4.103,
+        "never_contained_rate": 0.0,
+        "llm_calls": 0,
+        "extra": {},
+        "objective": 34.02
+      },
+      "n_episodes": 20,
+      "per_episode_objective": [
+        35.697,
+        27.458,
+        33.059,
+        26.819,
+        38.173,
+        27.542,
+        21.474,
+        34.675,
+        39.315,
+        20.053,
+        50.216,
+        44.191,
+        34.817,
+        37.685,
+        34.573,
+        68.145,
+        33.157,
+        45.18,
+        66.885,
+        24.9
+      ],
+      "mean_episode": {
+        "objective": 37.201,
+        "leakage_pct": 34.469,
+        "honest_block_rate": 4.584,
+        "immunity_attempts": 4.187
+      },
+      "ci95": {
+        "objective": [
+          32.08,
+          42.916
+        ],
+        "leakage_pct": [
+          29.287,
+          40.252
+        ],
+        "honest_block_rate": [
+          4.109,
+          5.094
+        ],
+        "immunity_attempts": [
+          3.404,
+          5.062
+        ]
+      }
+    },
+    "dreamer_noskeptic": {
+      "pooled": {
+        "n_episodes": 20,
+        "attack_usd": 355209.21,
+        "leaked_usd": 107551.5,
+        "leakage_pct": 30.278,
+        "leakage_pct_by_family": {
+          "h3": 30.278
+        },
+        "honest_n": 78153,
+        "honest_block_rate": 3.347,
+        "honest_unpaid_rate": 0.308,
+        "honest_median_ttp_h": 0.0,
+        "honest_p95_ttp_h": 0.0,
+        "immunity_attempts": 4.559,
+        "never_contained_rate": 4.412,
+        "llm_calls": 0,
+        "extra": {},
+        "objective": 32.26
+      },
+      "n_episodes": 20,
+      "per_episode_objective": [
+        37.145,
+        24.278,
+        37.506,
+        19.755,
+        36.87,
+        20.755,
+        20.599,
+        34.225,
+        33.017,
+        18.523,
+        61.577,
+        45.35,
+        31.538,
+        25.315,
+        36.743,
+        62.59,
+        40.354,
+        47.774,
+        66.267,
+        27.509
+      ],
+      "mean_episode": {
+        "objective": 36.385,
+        "leakage_pct": 34.396,
+        "honest_block_rate": 3.358,
+        "immunity_attempts": 4.667
+      },
+      "ci95": {
+        "objective": [
+          30.416,
+          42.663
+        ],
+        "leakage_pct": [
+          28.473,
+          40.642
+        ],
+        "honest_block_rate": [
+          3.023,
+          3.693
+        ],
+        "immunity_attempts": [
+          3.479,
+          6.083
+        ]
+      }
+    },
+    "dreamer_nocalib": {
+      "pooled": {
+        "n_episodes": 20,
+        "attack_usd": 355209.21,
+        "leaked_usd": 148084.02,
+        "leakage_pct": 41.689,
+        "leakage_pct_by_family": {
+          "h3": 41.689
+        },
+        "honest_n": 78153,
+        "honest_block_rate": 2.981,
+        "honest_unpaid_rate": 0.289,
+        "honest_median_ttp_h": 0.0,
+        "honest_p95_ttp_h": 0.0,
+        "immunity_attempts": 10.191,
+        "never_contained_rate": 14.706,
+        "llm_calls": 0,
+        "extra": {},
+        "objective": 43.469
+      },
+      "n_episodes": 20,
+      "per_episode_objective": [
+        44.601,
+        30.485,
+        53.995,
+        28.635,
+        63.468,
+        33.765,
+        30.692,
+        43.442,
+        44.495,
+        22.631,
+        75.961,
+        54.639,
+        37.575,
+        47.919,
+        44.576,
+        82.567,
+        43.563,
+        77.849,
+        93.242,
+        29.112
+      ],
+      "mean_episode": {
+        "objective": 49.161,
+        "leakage_pct": 47.376,
+        "honest_block_rate": 2.99,
+        "immunity_attempts": 10.2
+      },
+      "ci95": {
+        "objective": [
+          40.743,
+          57.698
+        ],
+        "leakage_pct": [
+          38.908,
+          55.953
+        ],
+        "honest_block_rate": [
+          2.669,
+          3.327
+        ],
+        "immunity_attempts": [
+          6.783,
+          14.119
+        ]
+      }
+    }
+  },
+  "paired_margin_vs_dreamer_full": {
+    "static_rules": {
+      "mean": 49.781,
+      "ci95": [
+        42.025,
+        57.39
+      ]
+    },
+    "single_policy": {
+      "mean": 20.42,
+      "ci95": [
+        11.698,
+        29.74
+      ]
+    },
+    "swarm_r2": {
+      "mean": -24.871,
+      "ci95": [
+        -29.883,
+        -19.672
+      ]
+    },
+    "dreamer_nowm": {
+      "mean": -16.76,
+      "ci95": [
+        -20.691,
+        -12.828
+      ]
+    },
+    "dreamer_noskeptic": {
+      "mean": -17.576,
+      "ci95": [
+        -21.255,
+        -13.848
+      ]
+    },
+    "dreamer_nocalib": {
+      "mean": -4.8,
+      "ci95": [
+        -8.087,
+        -1.871
+      ]
+    }
+  },
+  "report_only": {
+    "h3_calibration_gap_trend": {
+      "dreamer_full": {
+        "n": 22,
+        "first": 0.0,
+        "last": 0.566,
+        "slope_per_generation": 0.025
+      },
+      "dreamer_nowm": {
+        "n": 22,
+        "first": 0.0,
+        "last": 0.263,
+        "slope_per_generation": 0.009
+      },
+      "dreamer_noskeptic": {
+        "n": 22,
+        "first": 0.0,
+        "last": 0.554,
+        "slope_per_generation": 0.025
+      },
+      "dreamer_nocalib": {
+        "n": 22,
+        "first": 0.0,
+        "last": 0.285,
+        "slope_per_generation": 0.019
+      }
+    },
+    "h4_time_to_immunity": {
+      "static_rules": {
+        "immunity_attempts": 40.75,
+        "never_contained_rate": 100.0
+      },
+      "single_policy": {
+        "immunity_attempts": 26.882,
+        "never_contained_rate": 69.118
+      },
+      "swarm_r2": {
+        "immunity_attempts": 2.824,
+        "never_contained_rate": 0.0
+      },
+      "dreamer_full": {
+        "immunity_attempts": 9.544,
+        "never_contained_rate": 10.294
+      },
+      "dreamer_nowm": {
+        "immunity_attempts": 4.103,
+        "never_contained_rate": 0.0
+      },
+      "dreamer_noskeptic": {
+        "immunity_attempts": 4.559,
+        "never_contained_rate": 4.412
+      },
+      "dreamer_nocalib": {
+        "immunity_attempts": 10.191,
+        "never_contained_rate": 14.706
+      }
+    }
+  },
+  "spent_splits": {
+    "TRAIN": {
+      "clean": false,
+      "why_not_clean": "trained on",
+      "arm": "dreamer_full",
+      "pooled": {
+        "n_episodes": 20,
+        "attack_usd": 730309.96,
+        "leaked_usd": 119276.06,
+        "leakage_pct": 16.332,
+        "leakage_pct_by_family": {
+          "ring": 20.998,
+          "structuring": 11.539
+        },
+        "honest_n": 78866,
+        "honest_block_rate": 4.059,
+        "honest_unpaid_rate": 0.325,
+        "honest_median_ttp_h": 0.0,
+        "honest_p95_ttp_h": 0.0,
+        "immunity_attempts": 7.438,
+        "never_contained_rate": 4.688,
+        "llm_calls": 0,
+        "extra": {},
+        "objective": 18.686
+      },
+      "n_episodes": 20,
+      "per_episode_objective": [
+        17.527,
+        11.91,
+        11.611,
+        16.901,
+        14.082,
+        9.831,
+        20.525,
+        17.553,
+        21.189,
+        17.298,
+        12.874,
+        32.107,
+        13.171,
+        22.905,
+        36.097,
+        18.523,
+        16.131,
+        32.813,
+        19.887,
+        25.694
+      ],
+      "mean_episode": {
+        "objective": 19.431,
+        "leakage_pct": 17.083,
+        "honest_block_rate": 4.049,
+        "immunity_attempts": 7.35
+      },
+      "ci95": {
+        "objective": [
+          16.515,
+          22.747
+        ],
+        "leakage_pct": [
+          14.224,
+          20.273
+        ],
+        "honest_block_rate": [
+          3.649,
+          4.427
+        ],
+        "immunity_attempts": [
+          5.521,
+          9.284
+        ]
+      }
+    },
+    "TEST_SEEN": {
+      "clean": false,
+      "why_not_clean": "spent in rounds 1-2",
+      "arm": "dreamer_full",
+      "pooled": {
+        "n_episodes": 20,
+        "attack_usd": 724102.24,
+        "leaked_usd": 118011.08,
+        "leakage_pct": 16.298,
+        "leakage_pct_by_family": {
+          "ring": 19.284,
+          "structuring": 10.634
+        },
+        "honest_n": 79243,
+        "honest_block_rate": 3.921,
+        "honest_unpaid_rate": 0.3,
+        "honest_median_ttp_h": 0.0,
+        "honest_p95_ttp_h": 0.0,
+        "immunity_attempts": 9.509,
+        "never_contained_rate": 3.774,
+        "llm_calls": 0,
+        "extra": {},
+        "objective": 18.558
+      },
+      "n_episodes": 20,
+      "per_episode_objective": [
+        17.987,
+        19.202,
+        18.614,
+        17.948,
+        17.925,
+        41.133,
+        18.31,
+        42.189,
+        31.081,
+        19.309,
+        24.491,
+        13.183,
+        21.559,
+        12.501,
+        15.448,
+        14.943,
+        16.491,
+        27.302,
+        13.558,
+        14.978
+      ],
+      "mean_episode": {
+        "objective": 20.908,
+        "leakage_pct": 18.633,
+        "honest_block_rate": 3.947,
+        "immunity_attempts": 9.146
+      },
+      "ci95": {
+        "objective": [
+          17.722,
+          24.804
+        ],
+        "leakage_pct": [
+          15.608,
+          22.463
+        ],
+        "honest_block_rate": [
+          3.44,
+          4.491
+        ],
+        "immunity_attempts": [
+          6.958,
+          11.679
+        ]
+      }
+    },
+    "TEST_HELDOUT": {
+      "clean": false,
+      "why_not_clean": "spent in round 1",
+      "arm": "dreamer_full",
+      "pooled": {
+        "n_episodes": 20,
+        "attack_usd": 204966.68,
+        "leaked_usd": 74749.96,
+        "leakage_pct": 36.469,
+        "leakage_pct_by_family": {
+          "sleeper": 36.469
+        },
+        "honest_n": 79635,
+        "honest_block_rate": 3.817,
+        "honest_unpaid_rate": 0.305,
+        "honest_median_ttp_h": 0.0,
+        "honest_p95_ttp_h": 0.0,
+        "immunity_attempts": 3.362,
+        "never_contained_rate": 34.783,
+        "llm_calls": 0,
+        "extra": {},
+        "objective": 38.683
+      },
+      "n_episodes": 20,
+      "per_episode_objective": [
+        71.125,
+        71.133,
+        50.992,
+        30.315,
+        52.274,
+        30.845,
+        7.85,
+        30.759,
+        71.019,
+        69.388,
+        48.997,
+        20.023,
+        30.784,
+        40.292,
+        29.48,
+        54.799,
+        10.567,
+        103.133,
+        60.807,
+        21.867
+      ],
+      "mean_episode": {
+        "objective": 45.322,
+        "leakage_pct": 43.105,
+        "honest_block_rate": 3.822,
+        "immunity_attempts": 3.504
+      },
+      "ci95": {
+        "objective": [
+          34.69,
+          55.815
+        ],
+        "leakage_pct": [
+          32.522,
+          53.663
+        ],
+        "honest_block_rate": [
+          3.42,
+          4.247
+        ],
+        "immunity_attempts": [
+          2.033,
+          5.196
+        ]
+      }
+    },
+    "TEST_HELDOUT2": {
+      "clean": false,
+      "why_not_clean": "spent in round 2",
+      "arm": "dreamer_full",
+      "pooled": {
+        "n_episodes": 20,
+        "attack_usd": 255023.37,
+        "leaked_usd": 95208.32,
+        "leakage_pct": 37.333,
+        "leakage_pct_by_family": {
+          "h2": 37.333
+        },
+        "honest_n": 81786,
+        "honest_block_rate": 4.045,
+        "honest_unpaid_rate": 0.342,
+        "honest_median_ttp_h": 0.0,
+        "honest_p95_ttp_h": 0.0,
+        "immunity_attempts": 5.475,
+        "never_contained_rate": 18.033,
+        "llm_calls": 0,
+        "extra": {},
+        "objective": 39.698
+      },
+      "n_episodes": 20,
+      "per_episode_objective": [
+        41.765,
+        35.771,
+        50.88,
+        35.727,
+        63.596,
+        27.491,
+        43.938,
+        64.355,
+        46.85,
+        36.812,
+        35.357,
+        53.358,
+        41.043,
+        22.15,
+        49.591,
+        23.467,
+        30.116,
+        54.586,
+        26.612,
+        45.765
+      ],
+      "mean_episode": {
+        "objective": 41.461,
+        "leakage_pct": 39.096,
+        "honest_block_rate": 4.045,
+        "immunity_attempts": 5.392
+      },
+      "ci95": {
+        "objective": [
+          36.304,
+          46.713
+        ],
+        "leakage_pct": [
+          33.955,
+          44.28
+        ],
+        "honest_block_rate": [
+          3.675,
+          4.437
+        ],
+        "immunity_attempts": [
+          4.746,
+          6.033
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+FROZEN_R3 files match
+== TEST_HELDOUT3: 20 episodes, 80,953 payouts
+  static_rules       obj=103.37  leak= 97.6%  block= 9.6%
+  single_policy      obj= 66.21  leak= 65.3%  block= 1.6%
+  swarm_r2           obj= 25.65  leak= 21.2%  block= 7.7%
+  dreamer_full       obj= 49.57  leak= 46.9%  block= 4.6%
+  dreamer_nowm       obj= 34.02  leak= 31.3%  block= 4.6%
+  dreamer_noskeptic  obj= 32.26  leak= 30.3%  block= 3.3%
+  dreamer_nocalib    obj= 43.47  leak= 41.7%  block= 3.0%
+  [not clean] TRAIN         dreamer_full obj= 18.69
+  [not clean] TEST_SEEN     dreamer_full obj= 18.56
+  [not clean] TEST_HELDOUT  dreamer_full obj= 38.68
+  [not clean] TEST_HELDOUT2 dreamer_full obj= 39.70
+TEST_HELDOUT3 dreamer_full obj=49.57  vs static +53.80  vs single_policy +16.64  block 4.6% (static 9.6%)  H1 pass=True
+H2 vs dreamer_nowm -15.55  pass=False
+VERDICT (H1 decides): GO
+wrote eval/final_r3/results.json in 144s
+rc=0

@@ -1,0 +1,9 @@
+# Extra dependencies for the ops copilot (scripts/copilot.py, payguard/copilot/). Render installs requirements.txt
+# only; the deployed site just replays recorded sessions.
+-r requirements.txt
+requests>=2.31
+
+# The PayPal Agent Toolkit is installed separately, WITHOUT its dependencies:
+#   pip install --no-deps paypal-agent-toolkit==1.11.0
+# Its pinned framework extras (openai-agents 0.0.2, langchain 0.3.23, crewai-tools 0.13.2) are not needed by its
+# framework-agnostic `shared` layer, which is the only part we import, and they do not install on Python 3.14.

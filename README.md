@@ -1,8 +1,34 @@
 # PayGuard Arena
 
-A co-evolving fraud arms race on instant gig payouts. A swarm of defender agents decides whether to **release, hold or step-up** each payout through **PayPal sandbox Payouts**, while a population of attackers mutates its tactics. The defenders self-evolve through outcome-driven reputation updates and a champion-challenger gate.
+**An ops console for PayPal payout fraud.** A self-evolving swarm of defender agents holds risky instant payouts, an AI explains every hold in plain language, and an ops copilot built on the official **PayPal Agent Toolkit** answers questions against the PayPal sandbox. We tested the swarm blind three times: one fail, one pass, one negative result.
 
-> **Status:** built for the PayPal AI Hackathon (Nov 2026). Every number shown by this project is from a **simulated replay** on synthetic data, never real-world fraud data, and only sampled payouts go through the real PayPal sandbox (test money). Two pre-registered tests were run, each once: **round 1 failed (NO-GO)** on a held-out sleeper family; **round 2 passed (GO)** on a second sealed family, with caveats stated next to it. See [Results](#results).
+**Live demo:** https://payguard-arena.onrender.com (replay mode, simulated synthetic data; the public site never sends payouts; a free instance can take about a minute to wake up).
+
+> **Status:** built for the PayPal AI Hackathon (Nov 2026). Every number here comes from a **simulated replay on synthetic data**, never real fraud data. Only a few sampled payouts went through the real PayPal sandbox (test money). Three pre-registered tests were run, each once, on a sealed attack family: **round 1 failed (NO-GO)**; **round 2 passed (GO), with caveats**; **round 3 passed H1 but failed H2**, because its world model made the defender worse. See [Results](#results).
+
+## The product
+
+Instant payouts are what gig workers want, and what fraud rings want too: once the money is out, it is gone. PayGuard decides **release, step-up or hold** for every payout and gives the human reviewer the reasons.
+
+| View | What you can do |
+|---|---|
+| **Console** (`#/console`, the default) | Work the review queue: the 352 payouts that the swarm held (215) or stepped up (137) in one published replay episode (TEST_HELDOUT2 seed 4000, 4,323 payouts). Holds come first, then the largest expected dollars at risk (risk x amount). Each case shows the risk meter, which specialist spoke up and how much its vote counted, the anomaly statistics that fired, the account facts, and an AI explanation. In replay mode you can keep a payout on hold or release it, and then see the simulator's ground truth. |
+| **Copilot** (`#/copilot`) | Sessions recorded live on the PayPal sandbox. An LLM agent calls read-only PayPal Agent Toolkit tools (transactions, disputes, invoices, orders), our own read-only Payouts lookup and the console data. Every tool call shows its source. No key is exposed on the site. |
+| **Results** (`#/results`) | The three pre-registered rounds side by side: tables, verdicts, caveats, and the round-3 dreamer panel (paired differences with 95% intervals). |
+| **How it works** (`#/how`) | The decision feed, the evolution chart (champion vs challenger), live sandbox payout receipts and signature-verified webhooks. |
+
+In that episode, attack payouts worth USD 19,300.36 were requested. The swarm stopped USD 14,655.25 of it (76%) and USD 4,645.11 leaked (simulated).
+
+## How it works
+
+1. **A swarm of specialists.** Four agents score every payout from 0 to 1: Velocity (count and volume in the last 24 h), Graph (accounts tied to the same requester, device or payout destination), Drift (rate against the account's own normal) and Policy (amount against the limit for the account's age). The coordinator combines them as risk = sum(w*s^2) / sum(w*s). It steps up at 0.3 and holds at 0.6. An anomaly layer of nine statistics, with cut-offs learned from honest traffic only, can raise the verdict but never lower it.
+2. **Self-evolution.** A genetic population search evolves the swarm's weights and thresholds against attackers that mutate their own tactics. A challenger replaces the champion only if it wins on held-out training seeds (a champion-challenger gate). Round 3 added a world model of the attackers, a dream loop and a Skeptic. On the sealed test that addition made things worse, and we report it that way ([Round 3](#round-3-the-swarm-that-dreams-and-doubts)).
+3. **AI explanations, checked.** Offline, an LLM (Google `gemini-3.5-flash-lite`) writes a plain-language reason for each held payout. It sees only what was known when the payout was decided (scores, weights, vote shares, anomaly statistics, account facts), never the ground truth or the outcome. A grounding check requires every number in the text to appear in that evidence. If any number fails, the console shows a fixed template instead and labels it as one (`payguard/console/explain.py`).
+4. **An ops copilot on the PayPal Agent Toolkit.** An LLM tool loop (`payguard/copilot/`) over the framework-agnostic `shared` layer of `paypal-agent-toolkit` 1.11.0.
+   - **Read-only.** Six read-only tools are enabled: list_transactions, list_disputes, get_dispute, list_invoices, get_invoice, get_order_details. The HTTP client handed to the Toolkit refuses POST, PUT and DELETE and any non-sandbox host.
+   - **Payouts.** The Toolkit has no Payouts tools, so payout batch status comes from our own read-only `GET /v1/payments/payouts/{id}`.
+   - **Privacy.** Personal data (emails, names, addresses, payer ids) is redacted before the model sees it and before a session is saved.
+5. **PayPal rails.** Released payouts can be paid as real sandbox Payouts batches through a guarded live rail (per-payout cap, session budget, receiver allowlist). PayPal's webhooks are verified with `verify-webhook-signature` before they change a receipt.
 
 ## Simulator and benchmark protocol
 
@@ -46,6 +72,7 @@ Attackers are parameterized generators. They are not an LLM. `sample_params` dra
 - **structuring:** 1-4 young accounts make bursts of 2-6 payouts within 1-12 hours. Each payout is just under the USD 500 review threshold (by 1-60 USD).
 - **sleeper (held out):** 1-4 accounts behave honestly for 2-9 days, then make 2-6 cash-outs spaced 2-36 hours apart. Each cash-out is 3-12 times the account's own baseline, capped at USD 450, so it stays under the threshold. Only the cash-outs count as attack (loss); the trust-building payouts before them are labelled honest, because in a real bust-out they produce no chargebacks, so no fraud label can reach a defender before the cash-out starts. This family is used only for the held-out split.
 - **h2, account takeover (sealed, round 2):** a crew takes over aged worker accounts (60-600 days) in one wave and drains their pending earnings. Amounts stay ordinary for the victim (about 1-4x its own median) and under the review threshold by a margin. The payouts go to 1-3 shared cash-out destinations from 1-3 attacker devices, while requesters look normal. It was written by a separate worker who never saw the round-2 defender, frozen by hash, and never built before that defender was frozen (`payguard/heldout2/`, design note `docs/HELDOUT2_FAMILY.md`). It is used only for TEST_HELDOUT2.
+- **h3, synthetic-identity account farm (sealed, round 3):** disposable accounts are seasoned for more than a day, then each cashes out a few flat, moderate payouts. They are linked only through shared devices and payout destinations. It was built blind by a separate worker, frozen by hash (`eval/FROZEN_R3.json`), and never built before the round-3 defenders were frozen (`payguard/heldout3/`, design note `docs/HELDOUT3_FAMILY.md`). It is used only for TEST_HELDOUT3.
 
 ### Verdicts and their costs
 
@@ -80,6 +107,7 @@ Defined in `payguard/protocol.py`. Each episode has 2-4 campaigns. They are pick
 | TEST_SEEN | 2000-2019 | ring, structuring | same families, unseen seeds |
 | TEST_HELDOUT | 3000-3019 | sleeper only | unseen family, never used for tuning |
 | TEST_HELDOUT2 | 4000-4019 | h2 only | round 2: second sealed family (`payguard/heldout2/protocol.py`); a test tripwire refuses these seeds |
+| TEST_HELDOUT3 | 5000-5019 | h3 only | round 3: third sealed family (`payguard/heldout3/protocol.py`); never used for tuning |
 
 ### Baselines
 
@@ -97,6 +125,7 @@ Pre-committed baselines, fixed before any swarm code was written:
 - **(e) evolved swarm** (implemented, `payguard/evolve/`): weights and thresholds evolved by population search against co-evolving attackers, with a champion-challenger gate on held-out TRAIN seeds. Champion `g17-7`.
 - **(f) evolved swarm + shared memory** (implemented, `payguard/swarm/memory.py`): the evolved swarm plus a shared, decaying memory of the workers, devices, destinations and requesters touched by confirmed fraud, aimed at faster time-to-immunity.
 - **(g) `swarm_r2`** (round 2, `payguard/robust/`): the L1 swarm plus an anomaly layer of 9 history-only statistics whose cut-offs are honest-only quantiles from TRAIN (budgets: 2% of honest events may be held, 5% stepped up). The verdict is the more severe of the swarm's and the layer's. It was selected on TRAIN only by leave-one-family-out ([Round 2](#round-2-second-sealed-family)).
+- **(h) dreamers** (round 3, `payguard/dream/`): the evolution loop plus a world model of the attackers, a dream loop and a Skeptic (`dreamer_full`), and three ablations that each remove one part (`dreamer_nowm`, `dreamer_noskeptic`, `dreamer_nocalib`). See [Round 3](#round-3-the-swarm-that-dreams-and-doubts).
 
 `scripts/run_baselines.py` runs the two bounds and `static_rules` on each split and prints a header per split, then one line per defender. `scripts/run_swarm.py` runs (a), (b), (d) and the L1 swarm on TRAIN only. The test splits were run once each, by `scripts/final_eval.py` (round 1) and `scripts/final_eval_r2.py` (round 2); see [Results](#results). Two known limits:
 - The Graph specialist's default cluster-size threshold (4 workers) sits just above the simulator's honest small-shop size (3 workers). That is a design choice that knows the simulator.
@@ -112,6 +141,8 @@ Pre-committed baselines, fixed before any swarm code was written:
 The freeze exists so that no defender is tuned against a moving benchmark. Changing a frozen file after the freeze needs a logged decision and a new freeze. The benchmark is frozen; `tests/test_frozen.py` fails if any frozen file changes.
 
 Round 2 adds two more freezes. `eval/FROZEN_R2.json` covers the sealed family (`python -m scripts.freeze --round 2`). `eval/final_r2/defender_freeze.json` covers the `swarm_r2` champion and the code it runs (`payguard/robust/`, `payguard/swarm/`); every round-2 command except the freeze itself refuses to run if any of those files changed.
+
+Round 3 adds `eval/FROZEN_R3.json` for the third sealed family (`python -m scripts.freeze --round 3`) and `eval/r3/defender_freeze.json` for the four dreamer champions and the `payguard/dream/` code they run.
 
 ### Honesty note
 
@@ -131,6 +162,7 @@ Everything here is a simulated replay on synthetic data. The parameters are desi
   - Every round-1 swarm also clears the rule there, so the result mostly shows that the swarm design handles a shared-channel family that static rules miss. The round-2 changes add about 2-4 points.
   - `swarm_r2` still loses on the round-1 sleeper family (45.10 vs 28.54 for static rules; not a clean test, since that failure was known while designing it).
   - Round 1 still failed; its numbers stand.
+- **Round 3: H1 passed (GO), H2 failed.** On a third sealed family (a synthetic-identity account farm), the full dreamer scored **49.57** against **103.37** for static rules and **66.21** for `single_policy`, so the swarm idea cleared the round-1 bar again (H1). But dreaming made it worse: the same pipeline without the world model scored **34.02** (H2 needed the full dreamer to be 2.0 better). The round-2 swarm, with no dreams, scored **25.65** and beat every dream variant.
 
 ### Objective and pass rule
 
@@ -148,7 +180,7 @@ Go/no-go rule, written before any TEST number existed (D-022). On the held-out s
 2. Its objective is at least **3.0 lower** than the best single specialist. That specialist is chosen on TRAIN (it is `single_policy`), not on the test.
 3. Its honest block rate is no higher than `static_rules`'.
 
-Each round's test splits were run once, by one script, after the defender was fixed. The scripts refuse to run again while their results file exists (`eval/final/results.json`, `eval/final_r2/results.json`).
+Each round's test splits were run once, by one script, after the defender was fixed. The scripts refuse to run again while their results file exists (`eval/final/results.json`, `eval/final_r2/results.json`, `eval/final_r3/results.json`).
 
 ### Round 1: held-out sleeper family
 
@@ -257,6 +289,45 @@ The Sarvam judge replayed all 83,173 payouts from cache with 0 fallbacks.
 - Every round-1 swarm scores 28.2-30.1 here, against 52.2 for static rules. The round-2 layer adds 1.9-3.8 points over them, at a higher honest block rate (7.4% vs 3.1-6.0%).
 - We did not analyse why static rules miss this family, and we will not tune anything on it. The two facts on record: the drains are about 1-4x the victim's own median and stay under the review threshold (design note), while the tuned static rules act at 2x the worker's median or USD 300.
 
+### Round 3: the swarm that dreams and doubts
+
+Pre-registered before any round-3 code existed (`docs/PREREG_R3.md`, approved by the user on 2026-11-08, D-041). The prior-art audit is in `docs/PRIOR_ART.md`. It found no direct match for this combination, but every ingredient exists elsewhere, and we do not claim to be first.
+
+**What it adds on top of the evolution loop:**
+
+1. **A world model of the attackers:** a posterior over each known family's attack settings, learned only from confirmed fraud with labels arriving 4-72 h late. The fit uses approximate Bayesian computation over 17 summary statistics.
+2. **A dream loop:** each generation, 32 imagined attackers are drawn: half from the world model, a quarter from regions the Skeptic marks uncertain, and a quarter from recombined tactics. Every candidate defender is also scored against these dreams.
+3. **A Skeptic:** it refits the model on part of the data and records where its predictions are wrong. Dreams from those regions count less.
+4. **Calibrated trust:** the weight on dreams shrinks when the gains they predicted miss the gains the real gate measured.
+
+Imagination can propose candidates but never promote them: the champion-challenger gate stays real and unchanged. The core uses no LLM.
+
+**Development checks (TRAIN only):**
+
+- **K2 (stability)** failed first: estimates moved by 0.057 of a range, over the 0.05 limit. With a larger reference table it passed (D-043).
+- **Selection:** setting c1 won by leave-one-family-out, with a rule written before the first run (`eval/r3/SELECTION_RULE.md`).
+- **K1 (does the world model help on TRAIN?)** passed, +14.55 against a 1.0 bar. But 2 of its 4 paired runs ended with identical defenders, so the margin rests on the other two. This was logged before the sealed test (D-045).
+
+**The sealed test** (TEST_HELDOUT3, family h3, 20 episodes, 80,953 payouts, run once; `eval/final_r3/results.json`):
+
+| Defender | Objective | Fraud leaked | Honest blocked | Arm minus full dreamer, per episode [95% CI] |
+|---|---|---|---|---|
+| static_rules | 103.37 | 97.6% | 9.6% | +49.78 [+42.02, +57.39] |
+| single_policy (best single, chosen on TRAIN) | 66.21 | 65.3% | 1.6% | +20.42 [+11.70, +29.74] |
+| **swarm_r2** (round 2, no dreams) | **25.65** | 21.2% | 7.7% | **-24.87** [-29.88, -19.67] |
+| **dreamer_full** | **49.57** | 46.9% | 4.6% | (reference) |
+| dreamer_nowm (no world model) | 34.02 | 31.3% | 4.6% | -16.76 [-20.69, -12.83] |
+| dreamer_noskeptic (no Skeptic) | 32.26 | 30.3% | 3.3% | -17.58 [-21.25, -13.85] |
+| dreamer_nocalib (fixed trust) | 43.47 | 41.7% | 3.0% | -4.80 [-8.09, -1.87] |
+
+The objective, leakage and block columns are pooled over all 20 episodes, and the pre-registered decision uses the pooled objective (D-042). The last column is the mean per-episode difference, with a bootstrap 95% interval (2000 resamples). Negative means that defender let less through than the full dreamer.
+
+- **H1 (is the swarm useful at all?): GO.** The full dreamer beat static rules by 53.80 and the best single specialist by 16.64, with fewer honest blocks (4.6% vs 9.6%). On this family the bar is low: static rules let 97.6% of the fraud through.
+- **H2 (do dreams add value?): FAIL.** The full dreamer was 15.55 *worse* than the same pipeline without a world model; it needed to be 2.0 better. Every ablation beat it, and so did the round-2 swarm. None of these intervals crosses zero.
+- **Report only:** about 9.5 attack attempts succeeded before the full dreamer shut a campaign out, against 4.1 without a world model and 2.8 for `swarm_r2`. 10.3% of the full dreamer's farm campaigns were never contained. The calibration measure had only 3 readings per run, too few to say anything.
+
+**Honest statement:** the swarm works, but the world model did not help; on the sealed family it hurt. Our guess, untested: the world model learns only from the two training families, so its dreams may have pushed the defender to specialise further on known attack shapes. The sealed set is spent, so this can only be tested on a new blind family, never by tuning on this one.
+
 ### LIVE rows (PayPal sandbox)
 
 The benchmark never calls PayPal. The LIVE rail is separate (`payguard/rail/live_rail.py`): `scripts/live_run.py` sends a small sample of the payouts the swarm released as real sandbox Payouts batches, guarded by a per-payout cap, a session budget and a receiver allowlist, then waits for PayPal's signed webhooks.
@@ -277,16 +348,19 @@ python -m scripts.run_baselines           # trivial bounds + static rules on eve
 python -m scripts.run_swarm               # TRAIN only: baselines, single specialists, swarm
 python -m scripts.final_eval --plan       # counts LLM payloads per split; makes no call and runs no defender
 python -m scripts.final_eval_r2 --plan    # the same for round 2 (checks the defender freeze first)
+python -m scripts.freeze --round 3        # checks the third sealed family against eval/FROZEN_R3.json
+python -m scripts.final_eval_r3 --plan    # round 3 plan; --run refuses, the one shot is spent
 ```
 
-The round-1 table is stored in `eval/final/results.json` and the round-2 table in `eval/final_r2/results.json` (champion hash, git rev, every row). `python -m scripts.final_eval --run` and `python -m scripts.final_eval_r2 --run` are the one-shots; each refuses to run while its results file exists. The LLM judges replay from `data/llm_cache.jsonl` (Sarvam) and `data/llm_cache_gemini.jsonl` (Gemini), so a rerun needs no API key.
+The round-1 table is stored in `eval/final/results.json`, the round-2 table in `eval/final_r2/results.json` and the round-3 table in `eval/final_r3/results.json` (champion hash, git rev, every row). `python -m scripts.final_eval --run` and `python -m scripts.final_eval_r2 --run` are the one-shots; each refuses to run while its results file exists. The LLM judges replay from `data/llm_cache.jsonl` (Sarvam) and `data/llm_cache_gemini.jsonl` (Gemini), so a rerun needs no API key.
 
 ### Limits
 
 - Simulator and attackers are our own design, and we wrote every attack family. Beating them says little about real fraud.
-- Round 1 used one decisive family and 20 episodes; round 2 used one more family and 20 episodes. Two families are not a general result, and the defender lost one of them.
+- Each round used one decisive family and 20 episodes. Three families are not a general result: the defender lost one, passed one, and the round-3 idea (dreams) failed on the third.
 - The Graph specialist's default cluster-size threshold (4 workers) sits just above the simulator's honest small-shop size (3 workers). That is a design choice that knows the simulator.
-- Online reputation learning (L1) added almost nothing measurable; the gains come from complementary specialists, from evolved thresholds (round 1) and from the honest-calibrated anomaly layer (round 2).
+- Online reputation learning (L1) added almost nothing measurable; the gains come from complementary specialists, from evolved thresholds (round 1) and from the honest-calibrated anomaly layer (round 2). The round-3 world model hurt.
+- The console queue, the explanations and the copilot sessions show one replay episode and one sandbox account. They demonstrate the workflow, not a measured gain for human reviewers.
 
 ## What is in the repo today
 
@@ -319,6 +393,13 @@ The round-1 table is stored in `eval/final/results.json` and the round-2 table i
 | `scripts/llm_warm.py` | Fills the LLM caches on TRAIN under an explicit call cap (the one-shot scripts warm their own test splits, also capped) |
 | `scripts/live_run.py` | Recorded live run: pays a few released replay events through the PayPal sandbox and records receipts and verified webhooks (dry run unless `--send`). `--reattach` carries recorded receipts onto a rebuilt replay without paying again, and refuses if any paid event is no longer a released payout there |
 | `eval/live/` | Kept live-run receipts |
+| `payguard/console/`, `scripts/build_console.py` | Ops console data: the review queue (`eval/console/queue.json`, parity-checked against the published replay), its priority order, and the three-rounds summary |
+| `scripts/explain_holds.py` | Offline AI explanations with the grounding check (`eval/console/explanations.json`, cache `data/llm_cache_explain.jsonl`) |
+| `payguard/copilot/`, `scripts/copilot.py` | Read-only ops copilot on the PayPal Agent Toolkit: tools, redaction, agent loop, session recording (`eval/copilot/sessions/`) |
+| `payguard/dream/`, `payguard/r3eval.py` | Round 3: world model, Imaginer, Skeptic, calibrated trust, and the round-3 evaluation |
+| `payguard/heldout3/`, `scripts/final_eval_r3.py` | Round 3: the sealed family h3 (frozen in `eval/FROZEN_R3.json`) and the one-shot (`eval/final_r3/results.json`) |
+| `scripts/r3_k2_check.py`, `scripts/r3_dev_check.py`, `scripts/r3_freeze_arms.py` | Round-3 kill criteria, TRAIN-only selection and the defender freeze (`eval/r3/`) |
+| `docs/` | Round-3 pre-registration and prior-art audit, the sealed-family design notes, the console contract |
 | `tests/` | Offline tests (no network, no keys) |
 
 ## Quick start
@@ -341,6 +422,15 @@ cd web && npm ci && npm run dev                 # UI development server, proxies
 cd web && npm run build                         # rebuild web/dist (commit it; the deploy has no Node)
 ```
 
+Ops copilot (local, read-only, PayPal sandbox). Your sandbox app needs Transaction Search and Invoicing enabled, and `.env` needs `PAYPAL_CLIENT_ID`, `PAYPAL_CLIENT_SECRET` and `GEMINI_API_KEY` (or `SARVAM_API_KEY`):
+
+```bash
+pip install -r requirements-copilot.txt
+pip install --no-deps paypal-agent-toolkit==1.11.0
+python -m scripts.copilot check                # prints only "sandbox auth OK" or the error name
+python -m scripts.copilot ask "Reconcile our live sandbox payouts with PayPal's transaction ledger"
+```
+
 Deploy (Render, Python only, no secrets needed for Replay mode): build `pip install -r requirements.txt`, start `uvicorn payguard.api.app:app --host 0.0.0.0 --port $PORT`, health check `/api/health`.
 
 The PayPal webhook (`POST /webhooks/paypal`) accepts nothing until `PAYPAL_WEBHOOK_ID` is set: it returns 503, and every event is checked with PayPal's verify-webhook-signature API before it changes a receipt.
@@ -351,6 +441,7 @@ The PayPal webhook (`POST /webhooks/paypal`) accepts nothing until `PAYPAL_WEBHO
 
 - **Payouts API** is the action the defenders take. A released payout becomes a sandbox batch (`POST /v1/payments/payouts`), and batch and item status are polled (`GET /v1/payments/payouts/{id}`). OAuth client credentials authenticate every call, and the client refuses any host other than `api-m.sandbox.paypal.com`.
 - **Webhooks:** `POST /webhooks/paypal` checks every event with PayPal's `verify-webhook-signature` API before it changes a payout receipt. The 11 payout events the handler maps are registered.
+- **PayPal Agent Toolkit** (`paypal-agent-toolkit` 1.11.0, `shared` layer): the ops copilot's six read-only tools for Transaction Search, Disputes, Invoicing and Orders, run with `Context(sandbox=True)`. Two issues in the Toolkit's `list_transactions` are worked around and tested in `payguard/copilot/toolkit_tools.py`: it sends `transaction_id=None` in the query, which makes PayPal return no rows, and its default dates carry no timezone, which PayPal rejects with HTTP 400.
 - **Guards:** the live rail has a per-payout cap, a session budget and a receiver allowlist. The hosted dashboard runs in replay mode and has no endpoint that sends payouts.
 
 **AI:**
@@ -358,6 +449,8 @@ The PayPal webhook (`POST /webhooks/paypal`) accepts nothing until `PAYPAL_WEBHO
 - **Self-evolving defenders:** the swarm's weights and thresholds are evolved by population search against attackers that mutate their parameters, with a champion-challenger gate. This is search, not an LLM.
 - **Learned calibration (round 2):** `swarm_r2` learns its anomaly cut-offs from honest TRAIN traffic only, under fixed friction budgets.
 - **LLM judges (baselines):** Sarvam `sarvam-105b-conversations` and Google `gemini-3.5-flash-lite` each decide payouts from a truth-free summary with structured output. They are baselines, not part of the swarm. Both scored worse than tuned static rules on the round-1 held-out family, and both did on round 2 as well (Sarvam 68.45, Gemini 56.77 against 52.21 for static rules; the Gemini judge blocked 26.6% of honest payouts). The Gemini row was added in a second run after the verdict (D-035) and changes no other row.
+- **Explanations:** `gemini-3.5-flash-lite` writes the console's hold explanations from decision-time evidence only, and a grounding check falls back to a template on any number it cannot trace.
+- **Copilot:** the same models drive the Agent Toolkit tool loop (a JSON tool-call protocol, at most 6 model calls per question, then a forced final answer).
 - The project was built with Claude Code (Anthropic models) for planning, coding and review.
 
 ## License

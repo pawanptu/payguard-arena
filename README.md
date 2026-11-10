@@ -95,7 +95,7 @@ Pass rule written first, sealed attack family, run once. **We publish the fail a
 **Pick a path**
 
 - **Judges:** [At a glance](#-at-a-glance) · [Results](#results) · [Objective chart](#objective-visualization) · [Round 1](#round-1-held-out-sleeper-family) · [Round 2](#round-2-second-sealed-family) · [Round 3](#round-3-the-swarm-that-dreams-and-doubts)
-- **Developers:** [Quick start](#-quick-start) · [Architecture](#-architecture) · [Request lifecycle](#request-lifecycle) · [Offline evolution loop](#offline-evolution-loop) · [Replay and sandbox boundaries](#replay-and-sandbox-boundaries) · [Repository map](#-what-is-in-the-repo-today)
+- **Developers:** [Quick start](#-quick-start) · [Architecture](#-architecture) · [Request lifecycle](#request-lifecycle) · [Offline evolution loop](#offline-evolution-loop) · [Replay and sandbox boundaries](#replay-and-sandbox-boundaries) · [How it works](#-how-it-works) · [Repository map](#-what-is-in-the-repo-today)
 - **Product users:** [Live demo](https://payguard-arena.onrender.com) · [Demo video](#-demo-video) · [Screenshots](#-see-it-in-action) · [Product views](#-the-product)
 - **Researchers:** [Benchmark protocol](#-simulator-and-benchmark-protocol) · [Metrics](#metrics) · [Splits](#protocol-splits) · [Baselines](#baselines) · [Reproduction](#how-to-reproduce) · [Limits](#limits)
 

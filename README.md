@@ -147,6 +147,11 @@ Pass rule written first, sealed attack family, run once. **We publish the fail a
 <br><sub>2:21 on YouTube: the review queue, a held payout and its AI explanation, the live copilot run, and the three blind tests.</sub>
 </div>
 
+<div align="center">
+<img src="docs/images/product-walkthrough.gif" alt="Animated walkthrough of PayGuard's review queue, a held payout and its AI explanation, the ops copilot, PayPal sandbox proof, and benchmark results.">
+<br><sub>Captured from the deployed app. The review queue uses replay data; the copilot view is a recorded session. This walkthrough triggers no live tool calls or payments.</sub>
+</div>
+
 ## 📸 See it in action
 
 <table>

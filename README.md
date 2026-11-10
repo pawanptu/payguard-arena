@@ -94,6 +94,7 @@ Pass rule written first, sealed attack family, run once. **We publish the fail a
   - [Deploy](#deploy)
 - [See it in action](#-see-it-in-action)
 - [Architecture](#-architecture)
+  - [Request lifecycle](#request-lifecycle)
 - [The product](#-the-product)
 - [How it works](#-how-it-works)
 - [Simulator and benchmark protocol](#-simulator-and-benchmark-protocol)
@@ -108,6 +109,7 @@ Pass rule written first, sealed attack family, run once. **We publish the fail a
   - [Honesty note](#honesty-note)
 - [Results](#results)
   - [Summary](#summary)
+  - [Objective visualization](#objective-visualization)
   - [Objective and pass rule](#objective-and-pass-rule)
   - [Round 1: held-out sleeper family](#round-1-held-out-sleeper-family)
   - [Round 2: second sealed family](#round-2-second-sealed-family)
@@ -214,6 +216,49 @@ flowchart LR
     classDef ui fill:#e0f2fe,stroke:#0284c7,color:#0c4a6e
     classDef ai fill:#fae8ff,stroke:#c026d3,color:#701a75
     classDef paypal fill:#003087,stroke:#001c64,color:#ffffff
+```
+
+### Request lifecycle
+
+```mermaid
+flowchart TD
+    EVT["Payout event<br/>+ prior platform history"] --> SWARM
+    subgraph SWARM["Defender"]
+        direction TB
+        V["Velocity"] --> C["Coordinator"]
+        G["Graph"] --> C
+        D["Drift"] --> C
+        P["Policy"] --> C
+        C --> A["Anomaly layer<br/>may raise, never lower"]
+    end
+    A --> R["Release"]
+    A --> S["Step-up"]
+    A --> H["Hold"]
+    H --> Q["Review queue"]
+    S --> Q
+    H --> E["Offline Gemini explanation<br/>decision-time evidence"]
+    E --> GROUND["Grounding check"]
+    GROUND --> Q
+    R -. "optional guarded live run" .-> GUARD["Caps + budget + allowlist"]
+    GUARD --> PAYOUTS["PayPal Payouts API"]
+    PAYOUTS --> SB[("PayPal sandbox")]
+    SB -- "signed webhook" --> VERIFY["Signature verification"]
+    VERIFY --> RECEIPT["Receipt / console"]
+    Q --> CONSOLE["Ops console / human reviewer"]
+    COP["Ops copilot"] -- "read-only tools" --> TK["PayPal Agent Toolkit"]
+    TK --> SB
+    classDef event fill:#e0f2fe,stroke:#0284c7,color:#0c4a6e
+    classDef specialist fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
+    classDef decision fill:#dcfce7,stroke:#16a34a,color:#14532d
+    classDef review fill:#fef3c7,stroke:#d97706,color:#78350f
+    classDef ai fill:#fae8ff,stroke:#c026d3,color:#701a75
+    classDef paypal fill:#dbeafe,stroke:#003087,color:#003087
+    class EVT event
+    class V,G,D,P,C,A specialist
+    class R,S decision
+    class H,Q,CONSOLE review
+    class E,GROUND,COP,TK ai
+    class GUARD,PAYOUTS,SB,VERIFY,RECEIPT paypal
 ```
 
 ## 📦 The product
@@ -375,6 +420,15 @@ Everything here is a simulated replay on synthetic data. The parameters are desi
   - `swarm_r2` still loses on the round-1 sleeper family (45.10 vs 28.54 for static rules; not a clean test, since that failure was known while designing it).
   - Round 1 still failed; its numbers stand.
 - **Round 3: H1 passed (GO), H2 failed.** On a third sealed family (a synthetic-identity account farm), the full dreamer scored **49.57** against **103.37** for static rules and **66.21** for `single_policy`, so the swarm idea cleared the round-1 bar again (H1). But dreaming made it worse: the same pipeline without the world model scored **34.02** (H2 needed the full dreamer to be 2.0 better). The round-2 swarm, with no dreams, scored **25.65** and beat every dream variant.
+
+<a id="objective-visualization"></a>
+
+#### Objective visualization
+
+<div align="center">
+<img src="docs/images/results-objectives.svg" alt="Horizontal bar chart of decisive held-out objective scores for rounds 1, 2, and 3. Lower is better. Round 1 is NO-GO, round 2 is GO with caveats, and round 3 is H1 GO and H2 FAIL." width="100%">
+<sub>Actual objective scores from the decisive synthetic held-out tests; lower is better. Round 3 includes the dreamer ablations and the round-2 swarm for context. Each round uses a different held-out family; interpret scores with the round-specific pass rule and caveats below.</sub>
+</div>
 
 ### Objective and pass rule
 

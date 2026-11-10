@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 730" role="img" aria-labelledby="title desc">
+  <title id="title">Decisive held-out benchmark objective scores</title>
+  <desc id="desc">Horizontal bars compare the actual objective scores for rounds 1, 2 and 3. Lower is better. Round 1: static rules 28.539, best single 64.153, primary swarm 80.557, verdict NO-GO. Round 2: swarm r2 26.298, static rules 52.206, best single 100.086, verdict GO with caveats. Round 3: swarm r2 25.65, dreamer without world model 34.02, without Skeptic 32.26, without calibration 43.47, full dreamer 49.57, best single 66.21, static rules 103.37, H1 GO and H2 FAIL. All scores are simulated and lower is better.</desc>
+  <style>
+    text { font-family: Inter, "Segoe UI", Arial, sans-serif; fill: #10233f; }
+    .title { font-size: 25px; font-weight: 750; }
+    .subtitle { font-size: 14px; fill: #52657e; }
+    .round { font-size: 18px; font-weight: 700; }
+    .label { font-size: 14px; }
+    .value { font-size: 13px; font-weight: 700; }
+    .axis { font-size: 12px; fill: #64748b; }
+    .badge { font-size: 12px; font-weight: 700; }
+    .red { fill: #b91c1c; }
+    .green { fill: #166534; }
+    .amber { fill: #92400e; }
+    .legend { font-size: 12px; fill: #334155; }
+  </style>
+  <rect x="1" y="1" width="1198" height="728" rx="18" fill="#f8fafc" stroke="#d7e1ef" stroke-width="2"/>
+  <text x="36" y="43" class="title">Decisive held-out objective scores</text>
+  <text x="36" y="68" class="subtitle">Lower is better · shared 0–110 scale · all values are simulated benchmark results</text>
+
+  <rect x="36" y="91" width="1128" height="143" rx="12" fill="#ffffff" stroke="#e2e8f0"/>
+  <text x="56" y="120" class="round">Round 1 · sleeper</text>
+  <rect x="934" y="101" width="92" height="25" rx="12" fill="#fee2e2"/>
+  <text x="980" y="118" text-anchor="middle" class="badge red">NO-GO</text>
+  <text x="56" y="148" class="label">static_rules</text>
+  <rect x="300" y="135" width="171.2" height="18" rx="5" fill="#64748b"/>
+  <text x="480" y="149" class="value">28.539</text>
+  <text x="56" y="180" class="label">single_policy</text>
+  <rect x="300" y="167" width="384.9" height="18" rx="5" fill="#8b5cf6"/>
+  <text x="694" y="181" class="value">64.153</text>
+  <text x="56" y="212" class="label">swarm_evolved_memory</text>
+  <rect x="300" y="199" width="483.3" height="18" rx="5" fill="#2563eb"/>
+  <text x="792" y="213" class="value">80.557</text>
+
+  <rect x="36" y="246" width="1128" height="143" rx="12" fill="#ffffff" stroke="#e2e8f0"/>
+  <text x="56" y="275" class="round">Round 2 · account takeover</text>
+  <rect x="934" y="256" width="188" height="25" rx="12" fill="#dcfce7"/>
+  <text x="1028" y="273" text-anchor="middle" class="badge green">GO · CAVEATS</text>
+  <text x="56" y="303" class="label">swarm_r2</text>
+  <rect x="300" y="290" width="157.8" height="18" rx="5" fill="#2563eb"/>
+  <text x="467" y="304" class="value">26.298</text>
+  <text x="56" y="335" class="label">static_rules</text>
+  <rect x="300" y="322" width="313.2" height="18" rx="5" fill="#64748b"/>
+  <text x="623" y="336" class="value">52.206</text>
+  <text x="56" y="367" class="label">single_policy</text>
+  <rect x="300" y="354" width="600.5" height="18" rx="5" fill="#8b5cf6"/>
+  <text x="910" y="368" class="value">100.086</text>
+
+  <rect x="36" y="401" width="1128" height="277" rx="12" fill="#ffffff" stroke="#e2e8f0"/>
+  <text x="56" y="430" class="round">Round 3 · synthetic-identity farm</text>
+  <rect x="934" y="411" width="188" height="25" rx="12" fill="#fef3c7"/>
+  <text x="1028" y="428" text-anchor="middle" class="badge amber">H1 GO · H2 FAIL</text>
+  <text x="56" y="462" class="label">swarm_r2</text>
+  <rect x="300" y="449" width="153.9" height="18" rx="5" fill="#2563eb"/>
+  <text x="463" y="463" class="value">25.65</text>
+  <text x="56" y="492" class="label">dreamer_nowm</text>
+  <rect x="300" y="479" width="204.1" height="18" rx="5" fill="#f59e0b"/>
+  <text x="514" y="493" class="value">34.02</text>
+  <text x="56" y="522" class="label">dreamer_noskeptic</text>
+  <rect x="300" y="509" width="193.6" height="18" rx="5" fill="#f59e0b"/>
+  <text x="503" y="523" class="value">32.26</text>
+  <text x="56" y="552" class="label">dreamer_nocalib</text>
+  <rect x="300" y="539" width="260.8" height="18" rx="5" fill="#f59e0b"/>
+  <text x="570" y="553" class="value">43.47</text>
+  <text x="56" y="582" class="label">dreamer_full</text>
+  <rect x="300" y="569" width="297.4" height="18" rx="5" fill="#f59e0b"/>
+  <text x="607" y="583" class="value">49.57</text>
+  <text x="56" y="612" class="label">single_policy</text>
+  <rect x="300" y="599" width="397.3" height="18" rx="5" fill="#8b5cf6"/>
+  <text x="707" y="613" class="value">66.21</text>
+  <text x="56" y="642" class="label">static_rules</text>
+  <rect x="300" y="629" width="620.2" height="18" rx="5" fill="#64748b"/>
+  <text x="930" y="643" class="value">103.37</text>
+
+  <line x1="300" y1="691" x2="960" y2="691" stroke="#94a3b8" stroke-width="1"/>
+  <g stroke="#cbd5e1" stroke-width="1">
+    <line x1="300" y1="686" x2="300" y2="697"/>
+    <line x1="450" y1="686" x2="450" y2="697"/>
+    <line x1="600" y1="686" x2="600" y2="697"/>
+    <line x1="750" y1="686" x2="750" y2="697"/>
+    <line x1="900" y1="686" x2="900" y2="697"/>
+    <line x1="960" y1="686" x2="960" y2="697"/>
+  </g>
+  <text x="300" y="714" text-anchor="middle" class="axis">0</text>
+  <text x="450" y="714" text-anchor="middle" class="axis">25</text>
+  <text x="600" y="714" text-anchor="middle" class="axis">50</text>
+  <text x="750" y="714" text-anchor="middle" class="axis">75</text>
+  <text x="900" y="714" text-anchor="middle" class="axis">100</text>
+  <text x="960" y="714" text-anchor="middle" class="axis">110</text>
+  <g transform="translate(735 46)">
+    <rect x="0" y="0" width="10" height="10" rx="2" fill="#64748b"/>
+    <text x="15" y="10" class="legend">Static rules</text>
+    <rect x="106" y="0" width="10" height="10" rx="2" fill="#8b5cf6"/>
+    <text x="121" y="10" class="legend">Best single</text>
+    <rect x="211" y="0" width="10" height="10" rx="2" fill="#2563eb"/>
+    <text x="226" y="10" class="legend">Swarm</text>
+    <rect x="285" y="0" width="10" height="10" rx="2" fill="#f59e0b"/>
+    <text x="300" y="10" class="legend">Dreamer</text>
+  </g>
+</svg>

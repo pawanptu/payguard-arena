@@ -2,6 +2,8 @@
 
 <img src="docs/images/banner.svg" alt="PayGuard: an ops console for PayPal payout fraud" width="100%">
 
+<h1>PayGuard Arena</h1>
+
 <br>
 
 <a href="https://payguard-arena.onrender.com"><img src="https://img.shields.io/badge/%E2%96%B6%20Live%20demo-open%20the%20console-16a34a?style=for-the-badge" alt="Live demo"></a>
@@ -32,6 +34,86 @@
 
 > [!IMPORTANT]
 > **Simulated, synthetic data.** Built for the PayPal AI Hackathon (Nov 2026). Every number here comes from a **simulated replay on synthetic data**, never real fraud data. Only a few USD 1.00 test payouts went through the real PayPal **sandbox**. Three pre-registered tests were run, each once, on a sealed attack family: **round 1 failed (NO-GO)**; **round 2 passed (GO), with caveats**; **round 3 passed H1 but failed H2**, because its world model made the defender worse. See [Results](#results).
+
+<details>
+<summary><strong>📚 Table of contents</strong></summary>
+
+- [Demo video](#-demo-video)
+- [At a glance](#-at-a-glance)
+- [Quick start](#-quick-start)
+  - [Local setup and sandbox smoke tests](#local-setup-and-sandbox-smoke-tests)
+  - [Dashboard](#dashboard)
+  - [Ops copilot](#ops-copilot)
+  - [Deploy](#deploy)
+- [See it in action](#-see-it-in-action)
+- [Architecture](#-architecture)
+- [The product](#-the-product)
+- [How it works](#-how-it-works)
+- [Simulator and benchmark protocol](#-simulator-and-benchmark-protocol)
+  - [What a defender sees](#what-a-defender-sees)
+  - [Honest population and hard negatives](#honest-population-and-hard-negatives)
+  - [Attack families](#attack-families)
+  - [Verdicts and their costs](#verdicts-and-their-costs)
+  - [Metrics](#metrics)
+  - [Protocol splits](#protocol-splits)
+  - [Baselines](#baselines)
+  - [Freeze](#freeze)
+  - [Honesty note](#honesty-note)
+- [Results](#results)
+  - [Summary](#summary)
+  - [Objective and pass rule](#objective-and-pass-rule)
+  - [Round 1: held-out sleeper family](#round-1-held-out-sleeper-family)
+  - [Round 2: second sealed family](#round-2-second-sealed-family)
+  - [Round 3: the swarm that dreams and doubts](#round-3-the-swarm-that-dreams-and-doubts)
+  - [LIVE rows (PayPal sandbox)](#live-rows-paypal-sandbox)
+  - [How to reproduce](#how-to-reproduce)
+  - [Limits](#limits)
+- [What is in the repo today](#-what-is-in-the-repo-today)
+- [How PayPal and AI are used](#-how-paypal-and-ai-are-used)
+- [License](#-license)
+
+</details>
+
+## 🚀 Quick start
+
+### Local setup and sandbox smoke tests
+
+```bash
+python -m venv .venv
+.venv\Scripts\activate          # Windows; use source .venv/bin/activate elsewhere
+pip install -e ".[dev]"
+pytest                           # offline, needs no keys
+cp .env.example .env             # then fill in your own sandbox credentials
+python -m scripts.smoke_paypal_payouts
+python -m scripts.smoke_sarvam
+```
+
+### Dashboard
+
+Dashboard (no keys needed). It replays the file in `PAYGUARD_REPLAY_PATH`, else `eval/replay_live.json`, else `eval/replay.json`, else the sample fixture:
+
+```bash
+uvicorn payguard.api.app:app --port 8000        # serves the API and the built UI at http://127.0.0.1:8000
+cd web && npm ci && npm run dev                 # UI development server, proxies /api to port 8000
+cd web && npm run build                         # rebuild web/dist (commit it; the deploy has no Node)
+```
+
+### Ops copilot
+
+Ops copilot (local, read-only, PayPal sandbox). Your sandbox app needs Transaction Search and Invoicing enabled, and `.env` needs `PAYPAL_CLIENT_ID`, `PAYPAL_CLIENT_SECRET` and `GEMINI_API_KEY` (or `SARVAM_API_KEY`):
+
+```bash
+pip install -r requirements-copilot.txt
+pip install --no-deps paypal-agent-toolkit==1.11.0
+python -m scripts.copilot check                # prints only "sandbox auth OK" or the error name
+python -m scripts.copilot ask "Reconcile our live sandbox payouts with PayPal's transaction ledger"
+```
+
+### Deploy
+
+Deploy (Render, Python only, no secrets needed for Replay mode): build `pip install -r requirements.txt`, start `uvicorn payguard.api.app:app --host 0.0.0.0 --port $PORT`, health check `/api/health`.
+
+The PayPal webhook (`POST /webhooks/paypal`) accepts nothing until `PAYPAL_WEBHOOK_ID` is set: it returns 503, and every event is checked with PayPal's verify-webhook-signature API before it changes a receipt.
 
 ## 🎬 Demo video
 
@@ -71,8 +153,8 @@ Pass rule written first, sealed attack family, run once. **We publish the fail a
 </tr>
 </table>
 
-| | Round 1 · sleeper | Round 2 · account takeover | Round 3 · synthetic-identity farm |
-|---|:---:|:---:|:---:|
+|  | Round 1 · sleeper | Round 2 · account takeover | Round 3 · synthetic-identity farm |
+| --- | :---: | :---: | :---: |
 | **Verdict** | ![NO-GO](https://img.shields.io/badge/NO--GO-failed-dc2626?style=flat-square) | ![GO](https://img.shields.io/badge/GO-with%20caveats-16a34a?style=flat-square) | ![H1 GO, H2 FAIL](https://img.shields.io/badge/H1%20GO-H2%20FAIL-d97706?style=flat-square) |
 | **Tested defender** (lower is better) | 80.56 | 26.30 | 49.57 |
 | **Static rules** | 28.54 | 52.21 | 103.37 |
@@ -144,7 +226,7 @@ flowchart LR
 Instant payouts are what gig workers want, and what fraud rings want too: once the money is out, it is gone. PayGuard decides **release, step-up or hold** for every payout and gives the human reviewer the reasons.
 
 | View | What you can do |
-|---|---|
+| --- | --- |
 | **Console** (`#/console`, the default) | Work the review queue: the 352 payouts that the swarm held (215) or stepped up (137) in one published replay episode (TEST_HELDOUT2 seed 4000, 4,323 payouts). Holds come first, then the largest expected dollars at risk (risk x amount). Each case shows the risk meter, which specialist spoke up and how much its vote counted, the anomaly statistics that fired, the account facts, and an AI explanation. In replay mode you can keep a payout on hold or release it, and then see the simulator's ground truth. |
 | **Copilot** (`#/copilot`) | Sessions recorded live on the PayPal sandbox. An LLM agent calls read-only PayPal Agent Toolkit tools (transactions, disputes, invoices, orders), our own read-only Payouts lookup and the console data. Every tool call shows its source. No key is exposed on the site. |
 | **Results** (`#/results`) | The three pre-registered rounds side by side: tables, verdicts, caveats, and the round-3 dreamer panel (paired differences with 95% intervals). |
@@ -235,7 +317,7 @@ Containment: a campaign is contained at the first point after which 3 consecutiv
 Defined in `payguard/protocol.py`. Each episode has 2-4 campaigns. They are picked round-robin from the split's families, starting at a random family, with parameters drawn uniformly within bounds.
 
 | Split | Seeds | Families | Intended use (from the module docstring) |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | TRAIN | 1000-1019 | ring, structuring | may be used for tuning |
 | TEST_SEEN | 2000-2019 | ring, structuring | same families, unseen seeds |
 | TEST_HELDOUT | 3000-3019 | sleeper only | unseen family, never used for tuning |
@@ -324,7 +406,7 @@ Primary defender: `swarm_evolved_memory` (champion `g17-7`, SHA-256 `0fefe00f549
 **Verdict: NO-GO.**
 
 | Check | Split | Swarm | Static rules | Best single | Margin vs static | Margin vs single | Honest block (swarm / static) | Pass |
-|---|---|---|---|---|---|---|---|---|
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | Decisive | TEST_HELDOUT (sleeper) | 80.557 | 28.539 | 64.153 | -52.019 | -16.404 | 2.835 / 9.595 | no |
 | Secondary | TEST_SEEN (ring, structuring) | 17.142 | 65.639 | 70.371 | +48.496 | +53.229 | 3.085 / 9.849 | yes |
 
@@ -333,7 +415,7 @@ A margin is the other defender's objective minus the swarm's. A pass needs +3.0 
 #### TEST_HELDOUT (seeds 3000-3019, sleeper only). Decisive.
 
 | Defender | Objective | Leakage % | Honest block % | Honest unpaid % |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | always_release | 100.000 | 100.000 | 0.000 | 0.000 |
 | always_hold | 71.453 | 11.513 | 100.000 | 9.940 |
 | static_rules | **28.539** | 22.783 | 9.595 | 0.958 |
@@ -349,7 +431,7 @@ A margin is the other defender's objective minus the swarm's. A pass needs +3.0 
 #### TEST_SEEN (seeds 2000-2019, ring and structuring). Secondary.
 
 | Defender | Objective | Leakage % | Honest block % | Honest unpaid % |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | always_release | 100.000 | 100.000 | 0.000 | 0.000 |
 | always_hold | 70.040 | 10.130 | 100.000 | 9.910 |
 | static_rules | 65.639 | 59.831 | 9.849 | 0.883 |
@@ -387,7 +469,7 @@ Decided before the round-2 defender existed (D-034, amended by D-035):
 **Verdict: GO** (`eval/final_r2/results.json`).
 
 | Check | Split | swarm_r2 | Static rules | Best single (TRAIN pick) | Margin vs static | Margin vs single | Honest block (swarm_r2 / static) | Pass |
-|---|---|---|---|---|---|---|---|---|
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | Decisive | TEST_HELDOUT2 (h2) | 26.298 | 52.206 | 100.086 | +25.908 | +73.788 | 7.385 / 9.745 | yes |
 
 #### TEST_HELDOUT2 (seeds 4000-4019, h2 only; 20 episodes, 83,173 payouts). Decisive for round 2.
@@ -395,7 +477,7 @@ Decided before the round-2 defender existed (D-034, amended by D-035):
 All rows, sorted by objective:
 
 | Defender | Objective | Leakage % | Honest block % | Honest unpaid % |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | swarm_r2 (primary) | **26.298** | 22.085 | 7.385 | 0.521 |
 | swarm_memory | 28.190 | 24.800 | 5.947 | 0.417 |
 | swarm_evolved_memory (round-1 primary) | 28.849 | 27.007 | 3.085 | 0.300 |
@@ -446,7 +528,7 @@ Imagination can propose candidates but never promote them: the champion-challeng
 **The sealed test** (TEST_HELDOUT3, family h3, 20 episodes, 80,953 payouts, run once; `eval/final_r3/results.json`):
 
 | Defender | Objective | Fraud leaked | Honest blocked | Arm minus full dreamer, per episode [95% CI] |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | static_rules | 103.37 | 97.6% | 9.6% | +49.78 [+42.02, +57.39] |
 | single_policy (best single, chosen on TRAIN) | 66.21 | 65.3% | 1.6% | +20.42 [+11.70, +29.74] |
 | **swarm_r2** (round 2, no dreams) | **25.65** | 21.2% | 7.7% | **-24.87** [-29.88, -19.67] |
@@ -500,7 +582,7 @@ The round-1 table is stored in `eval/final/results.json`, the round-2 table in `
 ## 🗂 What is in the repo today
 
 | Path | Purpose |
-|---|---|
+| --- | --- |
 | `payguard/paypal_client.py` | Sandbox-only PayPal client: OAuth, create payout batch, get batch |
 | `payguard/config.py` | Reads secrets from a local `.env` (never committed) |
 | `scripts/smoke_paypal_payouts.py` | Day-0 gate: one real sandbox payout batch |
@@ -536,39 +618,6 @@ The round-1 table is stored in `eval/final/results.json`, the round-2 table in `
 | `scripts/r3_k2_check.py`, `scripts/r3_dev_check.py`, `scripts/r3_freeze_arms.py` | Round-3 kill criteria, TRAIN-only selection and the defender freeze (`eval/r3/`) |
 | `docs/` | Round-3 pre-registration and prior-art audit, the sealed-family design notes, the console contract |
 | `tests/` | Offline tests (no network, no keys) |
-
-## 🚀 Quick start
-
-```bash
-python -m venv .venv
-.venv\Scripts\activate          # Windows; use source .venv/bin/activate elsewhere
-pip install -e ".[dev]"
-pytest                           # offline, needs no keys
-cp .env.example .env             # then fill in your own sandbox credentials
-python -m scripts.smoke_paypal_payouts
-python -m scripts.smoke_sarvam
-```
-
-Dashboard (no keys needed). It replays the file in `PAYGUARD_REPLAY_PATH`, else `eval/replay_live.json`, else `eval/replay.json`, else the sample fixture:
-
-```bash
-uvicorn payguard.api.app:app --port 8000        # serves the API and the built UI at http://127.0.0.1:8000
-cd web && npm ci && npm run dev                 # UI development server, proxies /api to port 8000
-cd web && npm run build                         # rebuild web/dist (commit it; the deploy has no Node)
-```
-
-Ops copilot (local, read-only, PayPal sandbox). Your sandbox app needs Transaction Search and Invoicing enabled, and `.env` needs `PAYPAL_CLIENT_ID`, `PAYPAL_CLIENT_SECRET` and `GEMINI_API_KEY` (or `SARVAM_API_KEY`):
-
-```bash
-pip install -r requirements-copilot.txt
-pip install --no-deps paypal-agent-toolkit==1.11.0
-python -m scripts.copilot check                # prints only "sandbox auth OK" or the error name
-python -m scripts.copilot ask "Reconcile our live sandbox payouts with PayPal's transaction ledger"
-```
-
-Deploy (Render, Python only, no secrets needed for Replay mode): build `pip install -r requirements.txt`, start `uvicorn payguard.api.app:app --host 0.0.0.0 --port $PORT`, health check `/api/health`.
-
-The PayPal webhook (`POST /webhooks/paypal`) accepts nothing until `PAYPAL_WEBHOOK_ID` is set: it returns 503, and every event is checked with PayPal's verify-webhook-signature API before it changes a receipt.
 
 ## 💳 How PayPal and AI are used
 

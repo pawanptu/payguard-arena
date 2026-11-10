@@ -10,14 +10,19 @@
 <a href="https://www.youtube.com/watch?v=JgTeyIBjaaE">Watch demo (2:21)</a> &nbsp;·&nbsp;
 <a href="#results">Explore blind-test results</a></p>
 
-<a href="https://github.com/paypal/agent-toolkit"><img src="https://img.shields.io/badge/PayPal%20Agent%20Toolkit-1.11.0-003087?logo=paypal&logoColor=white" alt="PayPal Agent Toolkit 1.11.0"></a>
-<img src="https://img.shields.io/badge/PayPal-sandbox%20only-0070e0?logo=paypal&logoColor=white" alt="PayPal sandbox only">
-<img src="https://img.shields.io/badge/Gemini-explanations%20%2B%20copilot-8e75b2?logo=googlegemini&logoColor=white" alt="Gemini">
+<p><sub><strong>STACK</strong></sub><br>
 <img src="https://img.shields.io/badge/Python-3.11%2B-3776ab?logo=python&logoColor=white" alt="Python 3.11+">
 <img src="https://img.shields.io/badge/React-19-149eca?logo=react&logoColor=white" alt="React 19">
-<img src="https://img.shields.io/badge/FastAPI-replay%20API-009688?logo=fastapi&logoColor=white" alt="FastAPI">
+<img src="https://img.shields.io/badge/FastAPI-replay%20API-009688?logo=fastapi&logoColor=white" alt="FastAPI"></p>
+
+<p><sub><strong>AI + PAYMENTS</strong></sub><br>
+<a href="https://github.com/paypal/agent-toolkit"><img src="https://img.shields.io/badge/PayPal%20Agent%20Toolkit-1.11.0-003087?logo=paypal&logoColor=white" alt="PayPal Agent Toolkit 1.11.0"></a>
+<img src="https://img.shields.io/badge/PayPal-sandbox%20only-0070e0?logo=paypal&logoColor=white" alt="PayPal sandbox only">
+<img src="https://img.shields.io/badge/Gemini-explanations%20%2B%20copilot-8e75b2?logo=googlegemini&logoColor=white" alt="Gemini"></p>
+
+<p><sub><strong>PROJECT</strong></sub><br>
 <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-22c55e" alt="MIT license"></a>
-<img src="https://img.shields.io/badge/data-simulated%20%26%20synthetic-f59e0b" alt="Simulated, synthetic data">
+<img src="https://img.shields.io/badge/data-simulated%20%26%20synthetic-f59e0b" alt="Simulated, synthetic data"></p>
 
 <p><strong>A self-evolving swarm holds risky payouts. An Agent Toolkit copilot explains why.<br>Tested blind 3 times: 1 fail, 1 pass, 1 negative result.</strong></p>
 
@@ -47,25 +52,27 @@
 
 <table>
 <tr>
-<td width="25%" valign="top">
+<td width="50%" valign="top">
 
 ### 🛡️ Holds risky payouts
 Four specialist agents score every instant payout. **Release, step-up or hold**, with holds and the most dollars at risk first in the queue.
 
 </td>
-<td width="25%" valign="top">
+<td width="50%" valign="top">
 
 ### 💬 Explains every hold
 Gemini writes a plain-English reason from decision-time evidence only. A **grounding check** rejects any number it cannot trace.
 
 </td>
-<td width="25%" valign="top">
+</tr>
+<tr>
+<td width="50%" valign="top">
 
 ### 🤖 Agent Toolkit copilot
 Ask ops questions against the **PayPal sandbox**. Read-only tools; every tool call shows its source.
 
 </td>
-<td width="25%" valign="top">
+<td width="50%" valign="top">
 
 ### 🧪 Tested blind, 3 times
 Pass rule written first, sealed attack family, run once. **We publish the fail and the negative result too.**
@@ -84,6 +91,16 @@ Pass rule written first, sealed attack family, run once. **We publish the fail a
 <sub>Objective = leakage % + 0.5 × honest block % + honest unpaid %. Simulated replay, 20 episodes per round. Full tables and caveats in [Results](#results).</sub>
 
 ## 📚 Navigate
+
+**Pick a path**
+
+- **Judges:** [At a glance](#-at-a-glance) · [Results](#results) · [Objective chart](#objective-visualization) · [Round 1](#round-1-held-out-sleeper-family) · [Round 2](#round-2-second-sealed-family) · [Round 3](#round-3-the-swarm-that-dreams-and-doubts)
+- **Developers:** [Quick start](#-quick-start) · [Architecture](#-architecture) · [Request lifecycle](#request-lifecycle) · [How it works](#-how-it-works) · [Repository map](#-what-is-in-the-repo-today)
+- **Product users:** [Live demo](https://payguard-arena.onrender.com) · [Demo video](#-demo-video) · [Screenshots](#-see-it-in-action) · [Product views](#-the-product)
+- **Researchers:** [Benchmark protocol](#-simulator-and-benchmark-protocol) · [Metrics](#metrics) · [Splits](#protocol-splits) · [Baselines](#baselines) · [Reproduction](#how-to-reproduce) · [Limits](#limits)
+
+<details>
+<summary><strong>Full section index</strong></summary>
 
 - [Demo video](#-demo-video)
 - [At a glance](#-at-a-glance)
@@ -120,6 +137,28 @@ Pass rule written first, sealed attack family, run once. **We publish the fail a
 - [What is in the repo today](#-what-is-in-the-repo-today)
 - [How PayPal and AI are used](#-how-paypal-and-ai-are-used)
 - [License](#-license)
+
+</details>
+
+## 🎬 Demo video
+
+<div align="center">
+<a href="https://www.youtube.com/watch?v=JgTeyIBjaaE"><img src="docs/images/video-thumbnail.jpg" alt="Watch the 2:21 demo on YouTube" width="85%"></a>
+<br><sub>2:21 on YouTube: the review queue, a held payout and its AI explanation, the live copilot run, and the three blind tests.</sub>
+</div>
+
+## 📸 See it in action
+
+<table>
+<tr>
+<td width="50%"><img src="docs/images/g3-copilot-light.jpg" alt="Ops copilot session"><br><sub>🤖 <b>Copilot</b> on the PayPal Agent Toolkit: matched all 5 live sandbox payouts to PayPal's transaction ledger.</sub></td>
+<td width="50%"><img src="docs/images/g4-results-light.jpg" alt="Results of the three blind tests"><br><sub>🧪 <b>Results</b>: three blind tests, each judged by a rule written first.</sub></td>
+</tr>
+<tr>
+<td width="50%"><img src="docs/images/g6-replay-light.jpg" alt="How it works: evolution chart and replay"><br><sub>🧬 <b>How it works</b>: the swarm's evolution (champion vs challenger) and a replay of the round-2 test.</sub></td>
+<td width="50%"><img src="docs/images/g5-paypal-light.jpg" alt="PayPal sandbox receipts and verified webhooks"><br><sub>💸 <b>PayPal sandbox proof</b>: 5 live USD 1.00 test payouts, all SUCCESS, 15 signature-verified webhooks.</sub></td>
+</tr>
+</table>
 
 ## 🚀 Quick start
 
@@ -161,26 +200,6 @@ python -m scripts.copilot ask "Reconcile our live sandbox payouts with PayPal's 
 Deploy (Render, Python only, no secrets needed for Replay mode): build `pip install -r requirements.txt`, start `uvicorn payguard.api.app:app --host 0.0.0.0 --port $PORT`, health check `/api/health`.
 
 The PayPal webhook (`POST /webhooks/paypal`) accepts nothing until `PAYPAL_WEBHOOK_ID` is set: it returns 503, and every event is checked with PayPal's verify-webhook-signature API before it changes a receipt.
-
-## 🎬 Demo video
-
-<div align="center">
-<a href="https://www.youtube.com/watch?v=JgTeyIBjaaE"><img src="docs/images/video-thumbnail.jpg" alt="Watch the 2:21 demo on YouTube" width="85%"></a>
-<br><sub>2:21 on YouTube: the review queue, a held payout and its AI explanation, the live copilot run, and the three blind tests.</sub>
-</div>
-
-## 📸 See it in action
-
-<table>
-<tr>
-<td width="50%"><img src="docs/images/g3-copilot-light.jpg" alt="Ops copilot session"><br><sub>🤖 <b>Copilot</b> on the PayPal Agent Toolkit: matched all 5 live sandbox payouts to PayPal's transaction ledger.</sub></td>
-<td width="50%"><img src="docs/images/g4-results-light.jpg" alt="Results of the three blind tests"><br><sub>🧪 <b>Results</b>: three blind tests, each judged by a rule written first.</sub></td>
-</tr>
-<tr>
-<td width="50%"><img src="docs/images/g6-replay-light.jpg" alt="How it works: evolution chart and replay"><br><sub>🧬 <b>How it works</b>: the swarm's evolution (champion vs challenger) and a replay of the round-2 test.</sub></td>
-<td width="50%"><img src="docs/images/g5-paypal-light.jpg" alt="PayPal sandbox receipts and verified webhooks"><br><sub>💸 <b>PayPal sandbox proof</b>: 5 live USD 1.00 test payouts, all SUCCESS, 15 signature-verified webhooks.</sub></td>
-</tr>
-</table>
 
 ## 🏗️ Architecture
 
@@ -689,3 +708,5 @@ The round-1 table is stored in `eval/final/results.json`, the round-2 table in `
 ## 📄 License
 
 MIT, see [LICENSE](LICENSE).
+
+Repository social-preview artwork: [docs/images/social-preview.png](docs/images/social-preview.png). To use it on GitHub, upload it under **Settings → General → Social preview**.

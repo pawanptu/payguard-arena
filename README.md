@@ -95,7 +95,7 @@ Pass rule written first, sealed attack family, run once. **We publish the fail a
 **Pick a path**
 
 - **Judges:** [At a glance](#-at-a-glance) · [Results](#results) · [Objective chart](#objective-visualization) · [Round 1](#round-1-held-out-sleeper-family) · [Round 2](#round-2-second-sealed-family) · [Round 3](#round-3-the-swarm-that-dreams-and-doubts)
-- **Developers:** [Quick start](#-quick-start) · [Architecture](#-architecture) · [Request lifecycle](#request-lifecycle) · [How it works](#-how-it-works) · [Repository map](#-what-is-in-the-repo-today)
+- **Developers:** [Quick start](#-quick-start) · [Architecture](#-architecture) · [Request lifecycle](#request-lifecycle) · [Offline evolution loop](#offline-evolution-loop) · [Replay and sandbox boundaries](#replay-and-sandbox-boundaries) · [Repository map](#-what-is-in-the-repo-today)
 - **Product users:** [Live demo](https://payguard-arena.onrender.com) · [Demo video](#-demo-video) · [Screenshots](#-see-it-in-action) · [Product views](#-the-product)
 - **Researchers:** [Benchmark protocol](#-simulator-and-benchmark-protocol) · [Metrics](#metrics) · [Splits](#protocol-splits) · [Baselines](#baselines) · [Reproduction](#how-to-reproduce) · [Limits](#limits)
 
@@ -112,6 +112,8 @@ Pass rule written first, sealed attack family, run once. **We publish the fail a
 - [See it in action](#-see-it-in-action)
 - [Architecture](#-architecture)
   - [Request lifecycle](#request-lifecycle)
+  - [Offline evolution loop](#offline-evolution-loop)
+  - [Replay and sandbox boundaries](#replay-and-sandbox-boundaries)
 - [The product](#-the-product)
 - [How it works](#-how-it-works)
 - [Simulator and benchmark protocol](#-simulator-and-benchmark-protocol)
@@ -209,80 +211,173 @@ The PayPal webhook (`POST /webhooks/paypal`) accepts nothing until `PAYPAL_WEBHO
 ## 🏗️ Architecture
 
 ```mermaid
-flowchart LR
-    SIM["🎲 Payout simulator<br/>synthetic gig platform"]:::sim --> SW
-    ATK["🦹 Attackers<br/>mutate their tactics"]:::sim --> SIM
-    subgraph SW["🛡️ Defender swarm"]
+flowchart TB
+    subgraph OFFLINE["Offline experiment and artifact build"]
         direction TB
-        V[Velocity]:::agent
-        G[Graph]:::agent
-        D[Drift]:::agent
-        P[Policy]:::agent
-        C{{"Coordinator<br/>+ anomaly layer"}}:::coord
-        V & G & D & P --> C
+        SIM["Deterministic simulator<br/>synthetic episodes"]:::sim
+        ATK["Attacker families<br/>mutated in training"]:::sim --> SIM
+        SIM --> TRAIN["Swarm + benchmark runner"]:::agent
+        TRAIN --> EVOLVE["Population search<br/>fitness, gate, promotion / rollback"]:::evo
+        CAL["Honest TRAIN traffic<br/>anomaly calibration"]:::sim
+        EVOLVE --> FROZEN["Frozen defender + calibrated layer<br/>evaluated on registered splits"]:::evo
+        CAL --> FROZEN
+        FROZEN --> REPLAY["Replay + benchmark artifacts"]:::artifact
+        REPLAY --> BUILD["Offline builders<br/>queue + grounded explanations"]:::artifact
+        COPREC["Recorded copilot sessions<br/>from sandbox runs"]:::artifact
     end
-    EVO["🧬 Evolution<br/>champion vs challenger"]:::evo -.tunes.-> SW
-    C --> VER["✅ Release · ⚠️ Step-up · ⛔ Hold"]:::verdict
-    VER --> CON["🖥️ Ops console<br/>review queue"]:::ui
-    GEM["💬 Gemini explanations<br/>+ grounding check"]:::ai --> CON
-    CON --> COP["🤖 Ops copilot"]:::ai
-    COP -- read-only --> TK["PayPal Agent Toolkit"]:::paypal
-    VER -- released, guarded --> PO["PayPal Payouts API"]:::paypal
-    TK --> SB[("PayPal sandbox")]:::paypal
-    PO --> SB
-    SB -- signed webhooks --> CON
+    BUILD --> FILES["Replay, queue, explanations,<br/>results and session files"]:::artifact
+    COPREC --> FILES
+    FILES --> API["FastAPI replay / read API"]:::ui
+    API --> WEB["Built React dashboard"]:::ui
 
     classDef sim fill:#fef3c7,stroke:#d97706,color:#78350f
     classDef agent fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
-    classDef coord fill:#bfdbfe,stroke:#1d4ed8,color:#1e3a8a
     classDef evo fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
-    classDef verdict fill:#dcfce7,stroke:#16a34a,color:#14532d
+    classDef artifact fill:#f3f4f6,stroke:#6b7280,color:#111827
     classDef ui fill:#e0f2fe,stroke:#0284c7,color:#0c4a6e
-    classDef ai fill:#fae8ff,stroke:#c026d3,color:#701a75
-    classDef paypal fill:#003087,stroke:#001c64,color:#ffffff
 ```
+
+The deployed dashboard is a **replay viewer**, not a live inference service: it reads the replay and prebuilt console, explanation, results and copilot-session artifacts. It does not score incoming production payouts or send PayPal payouts. The copilot sessions displayed there are recordings; the separately run local copilot uses read-only sandbox tools.
 
 ### Request lifecycle
 
 ```mermaid
 flowchart TD
-    EVT["Payout event<br/>+ prior platform history"] --> SWARM
-    subgraph SWARM["Defender"]
-        direction TB
-        V["Velocity"] --> C["Coordinator"]
-        G["Graph"] --> C
-        D["Drift"] --> C
-        P["Policy"] --> C
-        C --> A["Anomaly layer<br/>may raise, never lower"]
-    end
-    A --> R["Release"]
-    A --> S["Step-up"]
-    A --> H["Hold"]
-    H --> Q["Review queue"]
-    S --> Q
-    H --> E["Offline Gemini explanation<br/>decision-time evidence"]
-    E --> GROUND["Grounding check"]
-    GROUND --> Q
-    R -. "optional guarded live run" .-> GUARD["Caps + budget + allowlist"]
-    GUARD --> PAYOUTS["PayPal Payouts API"]
+    EVT["Synthetic payout event"] --> INPUT["Event + PlatformLog snapshot<br/>history excludes current event"]
+    INPUT --> V["Velocity<br/>24 h count + USD total"]
+    INPUT --> G["Graph<br/>requester overlap + shared device / destination"]
+    INPUT --> D["Drift<br/>worker amount + rate vs own history"]
+    INPUT --> P["Policy<br/>age-scaled amount + 24 h exposure limits"]
+    V --> COORD["Coordinator<br/>reputation × confidence weighted risk<br/>sum(w·s²) / sum(w·s)"]
+    G --> COORD
+    D --> COORD
+    P --> COORD
+    COORD --> BASE["Map risk to verdict<br/>candidate step-up and hold thresholds"]
+    INPUT --> STATS["Nine event + history statistics"]
+    HONEST["Honest TRAIN events only"] --> CAL["Offline calibration<br/>fixed union false-positive budgets"]
+    CAL --> CUTS["Per-statistic step-up / hold cut-offs"]
+    STATS --> LAYER["Anomaly union layer<br/>any breached cut-off can flag"]
+    CUTS --> LAYER
+    BASE --> MAX["Take the more severe verdict<br/>swarm or anomaly layer"]
+    LAYER --> MAX
+    MAX --> ROUTE{"Replay / benchmark route"}
+    ROUTE -->|Release| RELEASE["Simulated release / replay row"]
+    ROUTE -->|Step-up or hold| QUEUE["Prebuilt review queue<br/>priority: holds, then dollars at risk"]
+    QUEUE --> EXPLAIN["Offline explanation builder<br/>decision-time evidence only"]
+    EXPLAIN --> CHECK["Grounding validator<br/>reject unsupported numbers"]
+    CHECK -->|Pass| Q["Queue + explanation artifacts"]
+    CHECK -->|Fail or no model reply| TEMPLATE["Evidence-only template fallback"]
+    TEMPLATE --> Q
+    QUEUE --> REVIEW["Dashboard review<br/>browser-only replay action"]
+    REVIEW --> TRUTH["Optional ground-truth reveal<br/>replay demonstration only"]
+    LABEL["Simulator label arrives later<br/>4–72 h in the experiment"] -.-> LEARN["Update specialist weights<br/>for later simulated decisions"]
+    COORD -. "all specialist scores retained until label" .-> LEARN
+    LIVE["Separate scripts/live_run.py<br/>released replay rows; dry-run unless --send"] -. "optional, outside dashboard" .-> GUARD["LiveRail guards<br/>receiver allowlist · payout cap · session budget"]
+    MAX --> ADD["Add event to PlatformLog<br/>for later simulated payouts"]
+    ADD --> INPUT
+    GUARD --> PAYOUTS["PayPal Payouts API<br/>sandbox only"]
     PAYOUTS --> SB[("PayPal sandbox")]
-    SB -- "signed webhook" --> VERIFY["Signature verification"]
-    VERIFY --> RECEIPT["Receipt / console"]
-    Q --> CONSOLE["Ops console / human reviewer"]
-    COP["Ops copilot"] -- "read-only tools" --> TK["PayPal Agent Toolkit"]
-    TK --> SB
+    SB --> WH["Configured POST /webhooks/paypal"]
+    WH --> VERIFY["Verify signature with PayPal<br/>deduplicate + handle payout status"]
+    VERIFY --> RECEIPT["Update receipt / verified-event store"]
     classDef event fill:#e0f2fe,stroke:#0284c7,color:#0c4a6e
     classDef specialist fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef decision fill:#dcfce7,stroke:#16a34a,color:#14532d
     classDef review fill:#fef3c7,stroke:#d97706,color:#78350f
     classDef ai fill:#fae8ff,stroke:#c026d3,color:#701a75
     classDef paypal fill:#dbeafe,stroke:#003087,color:#003087
-    class EVT event
-    class V,G,D,P,C,A specialist
-    class R,S decision
-    class H,Q,CONSOLE review
-    class E,GROUND,COP,TK ai
-    class GUARD,PAYOUTS,SB,VERIFY,RECEIPT paypal
+    class EVT,INPUT event
+    class V,G,D,P,COORD,STATS,CAL,CUTS,LAYER specialist
+    class BASE,MAX,ROUTE,RELEASE decision
+    class QUEUE,REVIEW,TRUTH,Q,TEMPLATE review
+    class EXPLAIN,CHECK ai
+    class LIVE,GUARD,PAYOUTS,SB,WH,VERIFY,RECEIPT paypal
+```
+
+The four specialists share the event history but look through different lenses. A zero score abstains from the coordinator vote rather than diluting another specialist's signal. The default step-up and hold thresholds are 0.30 and 0.60; evolution can tune a candidate's thresholds. In the benchmark runner, labels are delivered after the event; no label or outcome is available to the decision-time scorers or explanation builder. The live rail is an explicit, separate script—not a branch the hosted replay dashboard can invoke.
+
+### Offline evolution loop
+
+```mermaid
+flowchart TD
+    POOL["Per-family attacker pools"] --> MUTATE["Mutate existing attackers<br/>+ draw fresh candidates"]
+    CHAMP["Current champion"] --> ATTACK["Score attackers against champion<br/>TRAIN_A seeds"]
+    MUTATE --> ATTACK
+    ATTACK --> SELECT["Keep strongest attackers<br/>by leaked USD"]
+    SELECT --> POOL
+    SELECT --> ARENA["Build training + gate arena episodes"]
+    POP["Defender population<br/>genes: weights + thresholds"] --> FITNESS["Evaluate fitness<br/>TRAIN_A + training arena"]
+    ARENA --> FITNESS
+    FITNESS --> OBJECTIVE["Real objective<br/>leakage + 0.5 × honest block<br/>+ honest unpaid"]
+    OBJECTIVE --> RANK["Rank candidates<br/>selection / breeding"]
+    OBJECTIVE --> CHALLENGER["Select challenger"]
+    GATESET["Independent gate episodes<br/>TRAIN_B + gate arena"] --> GATE["Evaluate champion + challenger<br/>real gate metrics"]
+    CHAMP --> GATE
+    CHALLENGER --> GATE
+    GATE --> RULE{"Gate passes?<br/>objective improves ≥ 0.5<br/>honest block rises ≤ 1 pp"}
+    RULE -->|Yes| PROMOTE["Promote challenger"]
+    RULE -->|No| KEEP["Keep champion"]
+    PROMOTE --> BREED["Keep elites + champion<br/>tournament, crossover,<br/>sparse mutation"]
+    KEEP --> BREED
+    BREED --> POP
+    PROMOTE --> CHAMP
+    KEEP --> CHAMP
+    PROMOTE --> ROLLBACK["Next gate rechecks<br/>against predecessor"]
+    ROLLBACK -->|Regression &gt; 0.5 objective points| RESTORE["Restore predecessor"]
+    RESTORE --> CHAMP
+    DREAMS["Optional Round 3 dream path<br/>prior observations → world model / Imaginer<br/>Skeptic + calibration → predicted fitness"] -.-> RANK
+    DREAMS -. "can influence selection only" .-> CHALLENGER
+    GATE -. "real metrics alone decide" .-> RULE
+    classDef data fill:#e0f2fe,stroke:#0284c7,color:#0c4a6e
+    classDef search fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    classDef eval fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
+    classDef gate fill:#fef3c7,stroke:#d97706,color:#78350f
+    classDef result fill:#dcfce7,stroke:#16a34a,color:#14532d
+    classDef dream fill:#fae8ff,stroke:#c026d3,color:#701a75
+    class POOL,MUTATE,ATTACK,SELECT,ARENA data
+    class POP,FITNESS,RANK,CHALLENGER search
+    class OBJECTIVE,GATESET,GATE eval
+    class RULE,ROLLBACK gate
+    class PROMOTE,KEEP,BREED,RESTORE result
+    class DREAMS dream
+```
+
+The dream path is optional and can affect candidate ranking, but promotion and rollback use real gate-set objectives. The Round 3 world-model experiment did not improve the sealed result; see [Round 3](#round-3-the-swarm-that-dreams-and-doubts).
+
+### Replay and sandbox boundaries
+
+```mermaid
+flowchart LR
+    subgraph HOSTED["Hosted replay dashboard"]
+        ART["Committed replay + prebuilt artifacts"] --> API["FastAPI read endpoints<br/>+ optional webhook receiver"]
+        API --> UI["React dashboard"]
+        NOOUT["No hosted payout-send endpoint"]
+    end
+    subgraph LOCAL["Separate, explicitly run local workflow"]
+        ROWS["Released events from replay"] --> SCRIPT["scripts/live_run.py<br/>dry run unless --send"]
+        SCRIPT --> GUARD["LiveRail<br/>allowlist + per-payout cap + session budget<br/>idempotent event submission"]
+        GUARD --> PP[("PayPal sandbox")]
+        SCRIPT --> OUT["Output replay<br/>receipts + verified_webhooks"]
+    end
+    subgraph COPILOT["Separate local copilot"]
+        OP["Operator question"] --> AGENT["LLM tool loop"]
+        AGENT --> RO["Read-only PayPal Agent Toolkit<br/>and GET Payouts lookup"]
+        RO --> PP
+    end
+    PP -- "webhook callback" --> API
+    API -- "GET /api/webhooks/recent" --> SCRIPT
+    OUT -. "operator deploys as PAYGUARD_REPLAY_PATH" .-> ART
+    REC["Recorded copilot session files"] --> ART
+    classDef file fill:#f3f4f6,stroke:#6b7280,color:#111827
+    classDef hosted fill:#e0f2fe,stroke:#0284c7,color:#0c4a6e
+    classDef guarded fill:#fef3c7,stroke:#d97706,color:#78350f
+    classDef paypal fill:#dbeafe,stroke:#003087,color:#003087
+    classDef ai fill:#fae8ff,stroke:#c026d3,color:#701a75
+    class ART,REC,OUT file
+    class API,UI,NOOUT hosted
+    class ROWS,SCRIPT,GUARD guarded
+    class PP,RO paypal
+    class OP,AGENT ai
 ```
 
 ## 📦 The product

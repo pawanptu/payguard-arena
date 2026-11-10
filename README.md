@@ -808,5 +808,3 @@ The round-1 table is stored in `eval/final/results.json`, the round-2 table in `
 ## 📄 License
 
 MIT, see [LICENSE](LICENSE).
-
-Repository social-preview artwork: [docs/images/social-preview.png](docs/images/social-preview.png). To use it on GitHub, upload it under **Settings → General → Social preview**.

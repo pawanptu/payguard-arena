@@ -6,9 +6,9 @@
 
 <br>
 
-<a href="https://payguard-arena.onrender.com"><img src="https://img.shields.io/badge/%E2%96%B6%20Live%20demo-open%20the%20console-16a34a?style=for-the-badge" alt="Live demo"></a>
-<a href="https://www.youtube.com/watch?v=JgTeyIBjaaE"><img src="https://img.shields.io/badge/Demo%20video-2%3A21-ff0033?style=for-the-badge&logo=youtube&logoColor=white" alt="Demo video"></a>
-<a href="#results"><img src="https://img.shields.io/badge/Results-3%20blind%20tests-7c3aed?style=for-the-badge" alt="Results"></a>
+<p><a href="https://payguard-arena.onrender.com"><strong>▶ Launch live demo</strong></a> &nbsp;·&nbsp;
+<a href="https://www.youtube.com/watch?v=JgTeyIBjaaE">Watch demo (2:21)</a> &nbsp;·&nbsp;
+<a href="#results">Explore blind-test results</a></p>
 
 <a href="https://github.com/paypal/agent-toolkit"><img src="https://img.shields.io/badge/PayPal%20Agent%20Toolkit-1.11.0-003087?logo=paypal&logoColor=white" alt="PayPal Agent Toolkit 1.11.0"></a>
 <img src="https://img.shields.io/badge/PayPal-sandbox%20only-0070e0?logo=paypal&logoColor=white" alt="PayPal sandbox only">
@@ -19,7 +19,7 @@
 <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-22c55e" alt="MIT license"></a>
 <img src="https://img.shields.io/badge/data-simulated%20%26%20synthetic-f59e0b" alt="Simulated, synthetic data">
 
-<h3>A self-evolving swarm holds risky payouts. An Agent Toolkit copilot explains why.<br>Tested blind 3 times: 1 fail, 1 pass, 1 negative result.</h3>
+<p><strong>A self-evolving swarm holds risky payouts. An Agent Toolkit copilot explains why.<br>Tested blind 3 times: 1 fail, 1 pass, 1 negative result.</strong></p>
 
 <a href="#-the-product">Product</a> ·
 <a href="#-see-it-in-action">Screenshots</a> ·
@@ -32,11 +32,58 @@
 
 <br>
 
+<div align="center">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/g2-console-dark.jpg">
+  <img src="docs/images/g1-console-light.jpg" alt="Review queue: payout #3759 held, with its risk meter and AI explanation" width="100%">
+</picture>
+<sub><b>Review queue.</b> 352 payouts the swarm held or stepped up, holds first. Each case shows the risk, the agents' votes and a grounded AI explanation.</sub>
+</div>
+
 > [!IMPORTANT]
 > **Simulated, synthetic data.** Built for the PayPal AI Hackathon (Nov 2026). Every number here comes from a **simulated replay on synthetic data**, never real fraud data. Only a few USD 1.00 test payouts went through the real PayPal **sandbox**. Three pre-registered tests were run, each once, on a sealed attack family: **round 1 failed (NO-GO)**; **round 2 passed (GO), with caveats**; **round 3 passed H1 but failed H2**, because its world model made the defender worse. See [Results](#results).
 
-<details>
-<summary><strong>📚 Table of contents</strong></summary>
+## ✨ At a glance
+
+<table>
+<tr>
+<td width="25%" valign="top">
+
+### 🛡️ Holds risky payouts
+Four specialist agents score every instant payout. **Release, step-up or hold**, with holds and the most dollars at risk first in the queue.
+
+</td>
+<td width="25%" valign="top">
+
+### 💬 Explains every hold
+Gemini writes a plain-English reason from decision-time evidence only. A **grounding check** rejects any number it cannot trace.
+
+</td>
+<td width="25%" valign="top">
+
+### 🤖 Agent Toolkit copilot
+Ask ops questions against the **PayPal sandbox**. Read-only tools; every tool call shows its source.
+
+</td>
+<td width="25%" valign="top">
+
+### 🧪 Tested blind, 3 times
+Pass rule written first, sealed attack family, run once. **We publish the fail and the negative result too.**
+
+</td>
+</tr>
+</table>
+
+|  | Round 1 · sleeper | Round 2 · account takeover | Round 3 · synthetic-identity farm |
+| --- | :---: | :---: | :---: |
+| **Verdict** | ![NO-GO](https://img.shields.io/badge/NO--GO-failed-dc2626?style=flat-square) | ![GO](https://img.shields.io/badge/GO-with%20caveats-16a34a?style=flat-square) | ![H1 GO, H2 FAIL](https://img.shields.io/badge/H1%20GO-H2%20FAIL-d97706?style=flat-square) |
+| **Tested defender** (lower is better) | 80.56 | 26.30 | 49.57 |
+| **Static rules** | 28.54 | 52.21 | 103.37 |
+| **What it means** | Static rules beat us | The swarm design wins on a shared-channel family | Beats baselines, but dreaming made it worse |
+
+<sub>Objective = leakage % + 0.5 × honest block % + honest unpaid %. Simulated replay, 20 episodes per round. Full tables and caveats in [Results](#results).</sub>
+
+## 📚 Navigate
 
 - [Demo video](#-demo-video)
 - [At a glance](#-at-a-glance)
@@ -71,8 +118,6 @@
 - [What is in the repo today](#-what-is-in-the-repo-today)
 - [How PayPal and AI are used](#-how-paypal-and-ai-are-used)
 - [License](#-license)
-
-</details>
 
 ## 🚀 Quick start
 
@@ -122,57 +167,7 @@ The PayPal webhook (`POST /webhooks/paypal`) accepts nothing until `PAYPAL_WEBHO
 <br><sub>2:21 on YouTube: the review queue, a held payout and its AI explanation, the live copilot run, and the three blind tests.</sub>
 </div>
 
-## ✨ At a glance
-
-<table>
-<tr>
-<td width="25%" valign="top">
-
-### 🛡️ Holds risky payouts
-Four specialist agents score every instant payout. **Release, step-up or hold**, with holds and the most dollars at risk first in the queue.
-
-</td>
-<td width="25%" valign="top">
-
-### 💬 Explains every hold
-Gemini writes a plain-English reason from decision-time evidence only. A **grounding check** rejects any number it cannot trace.
-
-</td>
-<td width="25%" valign="top">
-
-### 🤖 Agent Toolkit copilot
-Ask ops questions against the **PayPal sandbox**. Read-only tools; every tool call shows its source.
-
-</td>
-<td width="25%" valign="top">
-
-### 🧪 Tested blind, 3 times
-Pass rule written first, sealed attack family, run once. **We publish the fail and the negative result too.**
-
-</td>
-</tr>
-</table>
-
-|  | Round 1 · sleeper | Round 2 · account takeover | Round 3 · synthetic-identity farm |
-| --- | :---: | :---: | :---: |
-| **Verdict** | ![NO-GO](https://img.shields.io/badge/NO--GO-failed-dc2626?style=flat-square) | ![GO](https://img.shields.io/badge/GO-with%20caveats-16a34a?style=flat-square) | ![H1 GO, H2 FAIL](https://img.shields.io/badge/H1%20GO-H2%20FAIL-d97706?style=flat-square) |
-| **Tested defender** (lower is better) | 80.56 | 26.30 | 49.57 |
-| **Static rules** | 28.54 | 52.21 | 103.37 |
-| **What it means** | Static rules beat us | The swarm design wins on a shared-channel family | Beats baselines, but dreaming made it worse |
-
-<sub>Objective = leakage % + 0.5 × honest block % + honest unpaid %. Simulated replay, 20 episodes per round. Full tables and caveats in [Results](#results).</sub>
-
 ## 📸 See it in action
-
-<div align="center">
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/images/g2-console-dark.jpg">
-  <img src="docs/images/g1-console-light.jpg" alt="Review queue: payout #3759 held, with its risk meter and AI explanation" width="100%">
-</picture>
-<sub><b>Review queue.</b> 352 payouts the swarm held or stepped up, holds first. Each case shows the risk, the agents' votes and a grounded AI explanation.</sub>
-</div>
-
-<br>
 
 <table>
 <tr>
